@@ -17,7 +17,13 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ng-bs-form-components": [
+        "dist/ng-bs-form-components/ng-bs-form-components",
+        "dist/ng-bs-form-components"
+      ]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
