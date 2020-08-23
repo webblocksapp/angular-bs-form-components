@@ -7,13 +7,6 @@ export class NgSmartAdminService {
   private smartAdminAppConfig: any;
   private smartAdminApp: any;
 
-  constructor() {
-    setTimeout(() => {
-      this.smartAdminAppConfig = window['myapp_config'];
-      this.smartAdminApp = window['initApp'];
-    }, 1000);
-  }
-
   initNavigation() {
     this.loadDefaults();
     this.buildNavigation();
@@ -22,10 +15,13 @@ export class NgSmartAdminService {
 
   refreshDom() {
     setTimeout(() => {
+      this.smartAdminAppConfig = window['myapp_config'];
+      this.smartAdminApp = window['initApp'];
+
       this.loadDefaults();
       this.domReadyMisc();
       this.appForms();
-    });
+    }, 1000);
   }
 
   private loadDefaults(): void {

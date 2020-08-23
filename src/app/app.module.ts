@@ -9,10 +9,16 @@ import { MenuHeaderComponent } from './common/components/menu-header/menu-header
 import { StyleManagerService } from './common/services/style-manager.service';
 import { ScriptManagerService } from './common/services/script-manager.service';
 import { NgSmartAdminService } from './common/services/ng-smart-admin.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent, BasicInputComponent, MenuHeaderComponent],
-  imports: [BrowserModule, AppRoutingModule, NgBsFormComponentsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgBsFormComponentsModule,
+    FormsModule,
+  ],
   providers: [StyleManagerService, ScriptManagerService, NgSmartAdminService],
   bootstrap: [AppComponent],
 })

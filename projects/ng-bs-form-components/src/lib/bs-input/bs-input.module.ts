@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
-import { BsInputComponent } from './bs-input.component';
 import { CommonModule } from '@angular/common';
+import { BsInputComponent } from './bs-input.component';
 
 @NgModule({
   declarations: [BsInputComponent],

@@ -7,6 +7,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BasicInputComponent implements OnInit {
   constructor() {}
+  public myModel: any = {
+    fieldValue: '',
+  };
 
   ngOnInit(): void {}
+
+  onKeyup(event) {
+    console.log(this.myModel);
+  }
 }

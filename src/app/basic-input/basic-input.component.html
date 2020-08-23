@@ -1,13 +1,18 @@
 <p>Basic input examples:</p>
 
-<bs-input label="Basic Input" name="basicInput"></bs-input>
+<bs-input label="Basic input"></bs-input>
 <bs-input
-  label="Input with help"
-  name="inputWithHelp"
-  help="It's an input with help"
+  label="Input with placeholder"
+  placeholder="Type text here"
 ></bs-input>
+<bs-input label="Input with help" help="It's an input with help"></bs-input>
+<bs-input label="Input with start icon" startIcon="@"></bs-input>
+<bs-input label="Input with end icon" endIcon="$"></bs-input>
+<bs-input label="Input with small size" size="small"></bs-input>
+<bs-input label="Input with large size" size="large"></bs-input>
+<bs-input label="Input with id" id="inputWithId"></bs-input>
 <bs-input
-  label="Input with start icon"
-  name="inputWithStartIcon"
-  startIcon="@"
+  label="Input with two way data binding value"
+  [value]="{ model: myModel, key: 'fieldValue' }"
+  (keyup)="onKeyup($event)"
 ></bs-input>
