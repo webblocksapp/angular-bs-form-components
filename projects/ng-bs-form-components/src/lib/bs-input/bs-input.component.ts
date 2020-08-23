@@ -1,5 +1,8 @@
 import { Component, HostBinding, Input } from '@angular/core';
 import { BsBaseComponent } from '../common/components/bs-base.component';
+import { setValueByPath } from '../common/utils';
+import { InputValue, isInputValue } from '../common/types';
+import { BsInputInterface } from './interfaces';
 
 @Component({
   selector: 'bs-input',
@@ -41,9 +44,37 @@ import { BsBaseComponent } from '../common/components/bs-base.component';
     `,
   ],
 })
-export class BsInputComponent extends BsBaseComponent {
+export class BsInputComponent extends BsBaseComponent
+  implements BsInputInterface {
   @HostBinding('class') class = 'form-group';
+  @Input() value: InputValue;
 
   setConfigsOnInit() {}
-  bindKeyupEvents() {}
+
+  keyup(event: any): void {
+    this.keyupEvent.emit(event);
+  }
+
+  setKeyupEvents(event: any): void {
+    this.setAlwaysKeyupEvents(event);
+    event = this.bindKeyupEvents(event);
+    this.keyup(event);
+  }
+
+  setAlwaysKeyupEvents(event: any): void {
+    this.fillValue(event);
+  }
+
+  bindKeyupEvents(event: any): any {
+    return event;
+  }
+
+  fillValue(event: any): void {
+    if (this.value !== undefined && isInputValue(this.value)) {
+      const { model, path } = this.value;
+      setValueByPath(model, path, event.target.value);
+    } else {
+      console.error('Value provided is not of type InputValue');
+    }
+  }
 }

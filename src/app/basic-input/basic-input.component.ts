@@ -9,6 +9,7 @@ export class BasicInputComponent implements OnInit {
   constructor() {}
   public myModel: any = {
     fieldValue: '',
+    complexFieldValue: [{ fieldValue: '' }],
   };
 
   ngOnInit(): void {}

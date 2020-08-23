@@ -7,12 +7,11 @@ import {
   EventEmitter,
   Output,
 } from '@angular/core';
-import { Type, Size, InputValue } from '../types';
-import { BsBaseInterface, BsBaseEventsInterface } from '../interfaces';
+import { Type, Size } from '../types';
+import { BsBaseInterface } from '../interfaces';
 import * as uuid from 'uuid';
 
-export class BsBaseComponent
-  implements OnInit, OnChanges, BsBaseInterface, BsBaseEventsInterface {
+export class BsBaseComponent implements OnInit, OnChanges, BsBaseInterface {
   @Input()
   @HostBinding('id')
   id: string;
@@ -27,7 +26,6 @@ export class BsBaseComponent
   @Input() endIcon: string;
   @Input() endIconHtml: string;
   @Input() size: Size = 'default';
-  @Input() value: InputValue;
 
   @Output() keyupEvent: EventEmitter<any> = new EventEmitter();
 
@@ -85,35 +83,6 @@ export class BsBaseComponent
       default:
         this.inputSize = '';
         break;
-    }
-  }
-
-  /**
-   * Common event input methods
-   */
-
-  keyup(event: any): void {
-    this.keyupEvent.emit(event);
-  }
-
-  setKeyupEvents(event: any): void {
-    this.setAlwaysKeyupEvents(event);
-    event = this.bindKeyupEvents(event);
-    this.keyup(event);
-  }
-
-  setAlwaysKeyupEvents(event: any): void {
-    this.fillValue(event);
-  }
-
-  bindKeyupEvents(event: any): any {
-    return event;
-  }
-
-  fillValue(event: any): void {
-    if (this.value !== undefined) {
-      const { model, key } = this.value;
-      model[key] = event.target.value;
     }
   }
 }

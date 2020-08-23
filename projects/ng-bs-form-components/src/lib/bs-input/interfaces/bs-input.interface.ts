@@ -1,4 +1,4 @@
-export interface BsBaseEventsInterface {
+export interface BsInputInterface {
   /**
    * Emits keyup event.
    */
@@ -15,4 +15,8 @@ export interface BsBaseEventsInterface {
    * Register on this method new actions to be bind on keyup event.
    */
   bindKeyupEvents(event: any): any;
+  /**
+   * Fills the input value according to the model provided
+   */
+  fillValue(event: any): void;
 }

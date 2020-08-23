@@ -13,6 +13,11 @@
 <bs-input label="Input with id" id="inputWithId"></bs-input>
 <bs-input
   label="Input with two way data binding value"
-  [value]="{ model: myModel, key: 'fieldValue' }"
+  [value]="{ model: myModel, path: 'fieldValue' }"
+  (keyup)="onKeyup($event)"
+></bs-input>
+<bs-input
+  label="Input with two way data binding COMPLEX value"
+  [value]="{ model: myModel, path: 'complexFieldValue.0.fieldValue' }"
   (keyup)="onKeyup($event)"
 ></bs-input>

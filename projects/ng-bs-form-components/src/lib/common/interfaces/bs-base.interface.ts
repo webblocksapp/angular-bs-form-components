@@ -83,8 +83,4 @@ export interface BsBaseInterface {
    * Computes component size class.
    */
   getInputSize(): void;
-  /**
-   * Fills the input value according to the model provided
-   */
-  fillValue(event: any): void;
 }
