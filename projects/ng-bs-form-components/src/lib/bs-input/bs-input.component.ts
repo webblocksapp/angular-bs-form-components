@@ -70,11 +70,13 @@ export class BsInputComponent extends BsBaseComponent
   }
 
   fillValue(event: any): void {
-    if (this.value !== undefined && isInputValue(this.value)) {
-      const { model, path } = this.value;
-      setValueByPath(model, path, event.target.value);
-    } else {
-      console.error('Value provided is not of type InputValue');
+    if (this.value !== undefined) {
+      if (isInputValue(this.value)) {
+        const { model, path } = this.value;
+        setValueByPath(model, path, event.target.value);
+      } else {
+        console.error('Value provided is not of type InputValue');
+      }
     }
   }
 }
