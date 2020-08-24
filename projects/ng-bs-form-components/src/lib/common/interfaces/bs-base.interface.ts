@@ -1,4 +1,4 @@
-import { Type, Size } from '../types/input.type';
+import { InputType, InputSize } from '../types';
 
 export interface BsBaseInterface {
   /**
@@ -18,33 +18,37 @@ export interface BsBaseInterface {
    */
   placeholder: string;
   /**
-   * Form input type.
-   */
-  type: Type;
-  /**
    * Form input hint text.
    */
   help: string;
   /**
-   * Appends an icon at the beginning of the input.
+   * Appends an slot at the beginning of the input.
    */
-  startIcon: string;
+  startSlot: string;
   /**
-   * Appends an html tag with an icon class at the beginning of the input.
+   * Appends an slot with rendered html at the beginning of the input.
    */
-  startIconHtml: string;
+  startSlotHtml: string;
   /**
-   * Appends an icon at the end of the input.
+   * Appends an slot at the end of the input.
    */
-  endIcon: string;
+  endSlot: string;
   /**
-   * Appends an html tag with an icon class at the end of the input.
+   * Appends an slot with rendered html at the end of the input.
    */
-  endIconHtml: string;
+  endSlotHtml: string;
+  /**
+   * Form input type.
+   */
+  type: InputType;
   /**
    * Form input size.
    */
-  size: Size;
+  size: InputSize;
+  /**
+   * Computes component size class.
+   */
+  getInputSize(): void;
   /**
    * Parent component method to set default component configs.
    * Do not override this method on a child component
@@ -56,12 +60,9 @@ export interface BsBaseInterface {
    */
   setConfigsOnInit(): void;
   /**
-   * A callback method that is invoked immediately after
-   * a default set of properties changes occurs.
-   * Do not override this method on a child component
-   * that inherits it.
+   * Detects always the registered properties changes on this method
    */
-  alwaysDetectChanges(propName: string): void;
+  alwaysDetectPropertiesChanges(propName: string): void;
   /**
    * A callback method that is invoked immediately after
    * a property change occurs.
@@ -71,16 +72,4 @@ export interface BsBaseInterface {
    * Sets component id attribute.
    */
   setComponentUniqueId(): void;
-  /**
-   * Sets component name attribute.
-   */
-  setComponentUniqueName(): void;
-  /**
-   * Sets component placeholder attribute.
-   */
-  setComponentEmptyPlaceholder(): void;
-  /**
-   * Computes component size class.
-   */
-  getInputSize(): void;
 }

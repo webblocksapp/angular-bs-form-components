@@ -1,2 +1,2 @@
-export type Type = 'text' | 'password' | 'email';
-export type Size = 'default' | 'large' | 'small';
+export type InputType = 'text' | 'password' | 'email';
+export type InputSize = 'default' | 'large' | 'small';

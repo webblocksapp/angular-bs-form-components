@@ -6,18 +6,36 @@
   placeholder="Type text here"
 ></bs-input>
 <bs-input label="Input with help" help="It's an input with help"></bs-input>
-<bs-input label="Input with start icon" startIcon="@"></bs-input>
-<bs-input label="Input with end icon" endIcon="$"></bs-input>
-<bs-input label="Input with small size" size="small"></bs-input>
-<bs-input label="Input with large size" size="large"></bs-input>
-<bs-input label="Input with id" id="inputWithId"></bs-input>
+<bs-input label="Input with start icon" startSlot="@"></bs-input>
+<bs-input label="Input with end icon" endSlot="$"></bs-input>
+<bs-input startSlot="Input with small size" size="small"></bs-input>
+<bs-input startSlot="Input with large size" size="large"></bs-input>
 <bs-input
-  label="Input with two way data binding value"
-  [value]="{ model: myModel, path: 'fieldValue' }"
-  (keyup)="onKeyup($event)"
+  startSlotHtml="Input with large size and icon <i class='ml-2 fas fa-ambulance'></i>"
+  size="large"
+></bs-input>
+<bs-input label="Input with id" id="inputWithId"></bs-input>
+
+<hr />
+
+<h3>Example of a form with a DTO</h3>
+<bs-input
+  [model]="exampleModel1"
+  name="title"
+  label="Title"
+  (keyup)="example1($event)"
 ></bs-input>
 <bs-input
-  label="Input with two way data binding COMPLEX value"
-  [value]="{ model: myModel, path: 'complexFieldValue.0.fieldValue' }"
-  (keyup)="onKeyup($event)"
+  [model]="exampleModel1"
+  name="text"
+  label="Text"
+  (keyup)="example1($event)"
+></bs-input>
+<hr />
+
+<h3>Example of input events</h3>
+<bs-input label="Example of click" (click)="onClick($event)"></bs-input>
+<bs-input
+  label="Example of focusout"
+  (focusout)="onFocusout($event)"
 ></bs-input>
