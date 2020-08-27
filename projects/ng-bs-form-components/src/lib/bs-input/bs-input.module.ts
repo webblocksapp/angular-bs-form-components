@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BsInputComponent } from './bs-input.component';
 
 @NgModule({
-  declarations: [BsInputComponent],
-  imports: [CommonModule],
   exports: [BsInputComponent],
+  imports: [CommonModule],
+  declarations: [BsInputComponent],
 })
 export class BsInputModule {}
