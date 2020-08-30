@@ -41,6 +41,7 @@ export class BsBaseComponent
   @Input() endSlot: string;
   @Input() endSlotHtml: string;
   @Input() model: BaseModel;
+  @Input() isReactiveForm = true;
 
   @Output() focusoutEvent: EventEmitter<any> = new EventEmitter();
   @Output() blurEvent: EventEmitter<any> = new EventEmitter();
@@ -62,6 +63,7 @@ export class BsBaseComponent
   @Output() wheelEvent: EventEmitter<any> = new EventEmitter();
 
   public inputSize: string;
+  public error: string;
 
   ngOnInit() {
     this.alwaysSetConfigsOnInit();
@@ -291,5 +293,34 @@ export class BsBaseComponent
 
       this.model.setValue(this.name, value);
     }
+  }
+
+  validateFieldOnFocusOut(): void {
+    if (this.isReactiveForm === false) return;
+    if (this.isReactiveForm === true) {
+      if (this.name === undefined) {
+        console.error('Input name attribute is not defined');
+        return;
+      }
+
+      this.validateField();
+    }
+  }
+
+  validateField(): void {
+    this.model
+      .validateField(this.name)
+      .then(() => {
+        this.error = '';
+      })
+      .catch((error) => {
+        this.setError(error);
+      });
+  }
+
+  setError(error: any): void {
+    const { constraints } = error[0];
+    this.error = (Object.values(constraints)[0] as string) || '';
+    this.error = this.error.charAt(0).toUpperCase() + this.error.slice(1);
   }
 }

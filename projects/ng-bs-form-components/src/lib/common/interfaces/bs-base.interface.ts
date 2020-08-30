@@ -46,6 +46,14 @@ export interface BsBaseInterface {
    */
   size: InputSize;
   /**
+   * Form input error.
+   */
+  error: string;
+  /**
+   * Determines if the form is reactive.
+   */
+  isReactiveForm: boolean;
+  /**
    * Computes component size class.
    */
   getInputSize(): void;
@@ -72,4 +80,16 @@ export interface BsBaseInterface {
    * Sets component id attribute.
    */
   setComponentUniqueId(): void;
+  /**
+   * Validates component field on focus out.
+   */
+  validateFieldOnFocusOut(): void;
+  /**
+   * Validates component field.
+   */
+  validateField(): void;
+  /**
+   * Sets component error attribute.
+   */
+  setError(error: any): void;
 }

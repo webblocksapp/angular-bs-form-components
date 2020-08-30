@@ -41,7 +41,19 @@
 ></bs-input>
 
 <h3>Example of data groups</h3>
-<data-group>
-  <bs-input label="Input 1"></bs-input>
-  <bs-input label="Input 2" placeholder="Type text here"></bs-input>
+
+<data-group [model]="exampleModel2">
+  <data-body>
+    <bs-input label="Input 1" name="title"></bs-input>
+    <bs-input
+      label="Input 2"
+      name="text"
+      placeholder="Type text here"
+    ></bs-input>
+  </data-body>
+  <data-footer>
+    <button class="btn btn-primary waves-effect waves-themed" #submit>
+      Enviar
+    </button>
+  </data-footer>
 </data-group>

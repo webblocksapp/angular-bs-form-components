@@ -7,7 +7,10 @@ import { BsBaseComponent } from '../common/components/bs-base.component';
     <label class="form-label" *ngIf="label" attr.for="{{ id }}-bs">{{
       label
     }}</label>
-    <div class="input-group {{ inputSize }}">
+    <div
+      class="input-group {{ inputSize }}"
+      [ngClass]="{ 'is-invalid': error }"
+    >
       <div *ngIf="startSlot" class="input-group-prepend">
         <span class="input-group-text">{{ startSlot }}</span>
       </div>
@@ -19,6 +22,7 @@ import { BsBaseComponent } from '../common/components/bs-base.component';
         [type]="type"
         [attr.placeholder]="placeholder"
         class="form-control"
+        [ngClass]="{ 'is-invalid': error }"
         id="{{ id }}-bs"
         (focusout)="focusout($event)"
         (blur)="blur($event)"
@@ -46,6 +50,7 @@ import { BsBaseComponent } from '../common/components/bs-base.component';
     <small *ngIf="help" class="form-text text-muted">
       {{ help }}
     </small>
+    <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
   `,
   styles: [
     `
@@ -59,6 +64,11 @@ export class BsInputComponent extends BsBaseComponent {
   @HostBinding('class') class = 'form-group';
 
   setConfigsOnInit() {}
+
+  bindFocusoutEvents(event: any): any {
+    this.validateFieldOnFocusOut();
+    return event;
+  }
 
   bindKeyupEvents(event: any): any {
     this.fillModel(event);

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseModel } from '@webblocksapp/class-validator';
-import { Example1Dto } from '../common/dtos';
+import { Example1Dto, Example2Dto } from '../common/dtos';
 
 @Component({
   selector: 'app-basic-input',
@@ -11,11 +11,12 @@ export class BasicInputComponent implements OnInit {
   constructor() {}
 
   public exampleModel1 = new BaseModel(Example1Dto);
+  public exampleModel2 = new BaseModel(Example2Dto);
 
   ngOnInit(): void {}
 
   example1(event) {
-    console.log(this.exampleModel1);
+    console.log(this.exampleModel1, event);
   }
 
   onClick(event) {
