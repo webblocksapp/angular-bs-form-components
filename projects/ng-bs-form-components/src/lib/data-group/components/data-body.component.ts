@@ -6,7 +6,6 @@ import {
   AfterContentInit,
   Input,
 } from '@angular/core';
-import { BsInputComponent } from '../../bs-input/bs-input.component';
 
 @Component({
   selector: 'data-body',
@@ -20,8 +19,8 @@ export class DataBodyComponent implements OnInit, AfterContentInit {
   @Input()
   class: string;
 
-  @ContentChildren(BsInputComponent) bsInputs: QueryList<BsInputComponent>;
-  public inputDataComponents: any = [];
+  @ContentChildren('dataInput') dataInputs: QueryList<any>;
+  public inputDataComponents: Array<any> = [];
 
   constructor() {}
 
@@ -32,8 +31,8 @@ export class DataBodyComponent implements OnInit, AfterContentInit {
   }
 
   loadInputDataComponents(): void {
-    this.bsInputs.forEach((bsInput) => {
-      this.inputDataComponents.push(bsInput);
+    this.dataInputs.forEach((dataInput) => {
+      this.inputDataComponents.push(dataInput);
     });
   }
 

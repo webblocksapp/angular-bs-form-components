@@ -2,8 +2,11 @@ import {
   Component,
   OnInit,
   ContentChild,
+  ContentChildren,
+  QueryList,
   Input,
   AfterContentInit,
+  ElementRef,
 } from '@angular/core';
 import { DataBodyComponent } from './components/data-body.component';
 import { DataFooterComponent } from './components/data-footer.component';
@@ -24,8 +27,10 @@ export class DataGroupComponent implements OnInit, AfterContentInit {
 
   @ContentChild(DataBodyComponent) dataBodyComponent: DataBodyComponent;
   @ContentChild(DataFooterComponent) dataFooterComponent: DataFooterComponent;
-  public inputDataComponents: any = [];
-  private submitDataButton: any;
+  @ContentChildren('dataInput') dataInputs: QueryList<any>;
+  @ContentChildren('submit') submitButtons: QueryList<ElementRef>;
+  public inputDataComponents: Array<any> = [];
+  private submitDataButtons: Array<any> = [];
 
   constructor() {}
 
@@ -33,25 +38,44 @@ export class DataGroupComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit(): void {
     this.initInputDataComponents();
-    this.initSubmitDataButton();
+    this.initSubmitDataButtons();
   }
 
   initInputDataComponents(): void {
-    this.inputDataComponents = this.dataBodyComponent.getInputDataComponents();
+    this.dataInputs.forEach((dataInput) => {
+      this.inputDataComponents.push(dataInput);
+    });
+
+    if (this.dataBodyComponent !== undefined) {
+      this.inputDataComponents = this.inputDataComponents.concat(
+        this.dataBodyComponent.getInputDataComponents(),
+      );
+    }
+
     this.inputDataComponents.forEach((inputDataComponent) => {
       inputDataComponent.model = this.model;
     });
   }
 
-  initSubmitDataButton(): void {
-    this.submitDataButton = this.dataFooterComponent.getSubmitButtonNativeElement();
-    this.submitDataButton.addEventListener('click', () => {
-      this.submitData();
+  initSubmitDataButtons(): void {
+    this.submitButtons.forEach((submitButton) => {
+      this.submitDataButtons.push(submitButton.nativeElement);
+    });
+
+    if (this.dataFooterComponent !== undefined) {
+      this.submitDataButtons = this.submitDataButtons.concat(
+        this.dataFooterComponent.getSubmitButtonsNativeElements(),
+      );
+    }
+
+    this.submitDataButtons.forEach((submitDataButton) => {
+      submitDataButton.addEventListener('click', () => {
+        this.submitData();
+      });
     });
   }
 
   submitData(): void {
-    //TODO: pending to refactor using validate all.
     this.inputDataComponents.forEach((inputDataComponent) => {
       inputDataComponent.validateField();
     });

@@ -2,7 +2,8 @@ import {
   Component,
   OnInit,
   Input,
-  ContentChild,
+  ContentChildren,
+  QueryList,
   ElementRef,
 } from '@angular/core';
 
@@ -16,13 +17,18 @@ import {
 })
 export class DataFooterComponent implements OnInit {
   @Input() class: string;
-  @ContentChild('submit') submitButton: ElementRef;
+  @ContentChildren('submit') submitButtons: QueryList<ElementRef>;
+  public submitButtonsNativeElements: Array<any> = [];
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  getSubmitButtonNativeElement(): any {
-    return this.submitButton.nativeElement;
+  getSubmitButtonsNativeElements(): Array<any> {
+    this.submitButtons.forEach((submitButton) => {
+      this.submitButtonsNativeElements.push(submitButton.nativeElement);
+    });
+
+    return this.submitButtonsNativeElements;
   }
 }
