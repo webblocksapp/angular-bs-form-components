@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { BsInputModule } from './bs-input/bs-input.module';
-import { DataGroupModule } from './data-group/data-group.module';
+import { DataGroupsModule } from './data-group/data-groups.module';
 
 @NgModule({
   declarations: [],
-  imports: [BsInputModule, DataGroupModule],
-  exports: [BsInputModule, DataGroupModule],
+  imports: [BsInputModule, DataGroupsModule],
+  exports: [BsInputModule, DataGroupsModule],
 })
 export class NgBsFormComponentsModule {}

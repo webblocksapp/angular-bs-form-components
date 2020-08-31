@@ -12,18 +12,33 @@ export class BasicInputComponent implements OnInit {
 
   public exampleModel1 = new BaseModel(Example1Dto);
   public exampleModel2 = new BaseModel(Example2Dto);
+  public isActive = false;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    setInterval(() => {
+      this.isActive = !this.isActive;
+    }, 5000);
+  }
 
   example1(event) {
     console.log(this.exampleModel1, event);
   }
 
-  onClick(event) {
+  click(event) {
     console.log('Element clicked with value:', event.target.value);
   }
 
-  onFocusout(event) {
+  focusout(event) {
     console.log('Element focused out with value:', event.target.value);
+  }
+
+  onSubmit(event) {
+    event
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(({ errors }) => {
+        console.log(errors);
+      });
   }
 }

@@ -296,14 +296,16 @@ export class BsBaseComponent
   }
 
   validateFieldOnFocusOut(): void {
-    if (this.isReactiveForm === false) return;
-    if (this.isReactiveForm === true) {
-      if (this.name === undefined) {
-        console.error('Input name attribute is not defined');
-        return;
-      }
+    if (this.model !== undefined) {
+      if (this.isReactiveForm === false) return;
+      if (this.isReactiveForm === true) {
+        if (this.name === undefined) {
+          console.error('Input name attribute is not defined');
+          return;
+        }
 
-      this.validateField();
+        this.validateField();
+      }
     }
   }
 

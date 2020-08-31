@@ -8,14 +8,14 @@ import {
 } from '@angular/core';
 
 @Component({
-  selector: 'data-body',
+  selector: 'data-group',
   template: `
     <div [class]="class">
       <ng-content></ng-content>
     </div>
   `,
 })
-export class DataBodyComponent implements OnInit, AfterContentInit {
+export class DataGroupComponent implements OnInit, AfterContentInit {
   @Input()
   class: string;
 

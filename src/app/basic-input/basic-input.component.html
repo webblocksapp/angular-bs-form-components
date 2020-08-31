@@ -34,27 +34,29 @@
 <hr />
 
 <h3>Example of input events</h3>
-<bs-input label="Example of click" (click)="onClick($event)"></bs-input>
-<bs-input
-  label="Example of focusout"
-  (focusout)="onFocusout($event)"
-></bs-input>
+<bs-input label="Example of click" (click)="click($event)"></bs-input>
+<bs-input label="Example of focusout" (focusout)="focusout($event)"></bs-input>
 
 <h3>Example of data groups</h3>
 
-<data-group [model]="exampleModel2">
-  <data-body>
-    <bs-input #dataInput label="Input 1" name="title"></bs-input>
+<data-groups [model]="exampleModel2" (submit)="onSubmit($event)">
+  <data-group>
+    <bs-input
+      *ngIf="isActive"
+      #dataInput
+      label="Input 1"
+      name="title"
+    ></bs-input>
     <bs-input
       #dataInput
       label="Input 2"
       name="text"
       placeholder="Type text here"
     ></bs-input>
-  </data-body>
+  </data-group>
   <data-footer>
     <button class="btn btn-primary waves-effect waves-themed" #submit>
       Enviar
     </button>
   </data-footer>
-</data-group>
+</data-groups>
