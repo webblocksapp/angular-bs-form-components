@@ -90,7 +90,10 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   applyModelMap(): void {
     this.modelMap.forEach((map) => {
       map.dataInputComponents.forEach((dataInputComponent) => {
+        const { name } = dataInputComponent.component;
+
         dataInputComponent.component.model = map.model;
+        dataInputComponent.component.value = map.model.getValue(name);
 
         if (!dataInputComponent.component.error)
           dataInputComponent.component.error = dataInputComponent.error;

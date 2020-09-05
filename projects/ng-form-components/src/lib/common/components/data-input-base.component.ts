@@ -65,6 +65,7 @@ export class DataInputBaseComponent
 
   public inputSize: string;
   public error: string;
+  public value: any;
 
   ngOnInit() {
     this.alwaysSetConfigsOnInit();
@@ -293,6 +294,7 @@ export class DataInputBaseComponent
       }
 
       this.model.setValue(this.name, value);
+      this.value = this.model.getValue(this.name);
     }
   }
 

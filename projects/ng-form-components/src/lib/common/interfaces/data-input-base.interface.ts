@@ -50,6 +50,10 @@ export interface DataInputBaseInterface {
    */
   error: string;
   /**
+   * Form input value.
+   */
+  value: any;
+  /**
    * Determines if the form is reactive.
    */
   isReactiveForm: boolean;

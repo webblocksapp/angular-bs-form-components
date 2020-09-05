@@ -16,23 +16,6 @@
 ></bs-input>
 <bs-input label="Input with id" id="inputWithId"></bs-input>
 
-<hr />
-
-<h3>Example of a form with a DTO</h3>
-<bs-input
-  [model]="exampleModel1"
-  name="title"
-  label="Title"
-  (keyup)="example1($event)"
-></bs-input>
-<bs-input
-  [model]="exampleModel1"
-  name="text"
-  label="Text"
-  (keyup)="example1($event)"
-></bs-input>
-<hr />
-
 <h3>Example of input events</h3>
 <bs-input label="Example of click" (click)="click($event)"></bs-input>
 <bs-input label="Example of focusout" (focusout)="focusout($event)"></bs-input>

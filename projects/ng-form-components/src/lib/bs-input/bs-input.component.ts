@@ -1,4 +1,4 @@
-import { Component, HostBinding, Input } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { DataInputBaseComponent } from '../common/components/data-input-base.component';
 
 @Component({
@@ -19,6 +19,7 @@ import { DataInputBaseComponent } from '../common/components/data-input-base.com
       </div>
       <input
         [attr.name]="name"
+        [attr.value]="value"
         [type]="type"
         [attr.placeholder]="placeholder"
         class="form-control"
