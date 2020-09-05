@@ -54,6 +54,20 @@
       placeholder="Type text here"
     ></bs-input>
   </data-group>
+  <data-group>
+    <bs-input
+      *ngIf="isActive"
+      #dataInput
+      label="Input 1"
+      name="title"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      label="Input 2"
+      name="text"
+      placeholder="Type text here"
+    ></bs-input>
+  </data-group>
   <data-footer>
     <button class="btn btn-primary waves-effect waves-themed" #submit>
       Enviar

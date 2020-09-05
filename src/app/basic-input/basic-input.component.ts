@@ -11,7 +11,10 @@ export class BasicInputComponent implements OnInit {
   constructor() {}
 
   public exampleModel1 = new BaseModel(Example1Dto);
-  public exampleModel2 = new BaseModel(Example2Dto);
+  public exampleModel2 = [
+    new BaseModel(Example2Dto),
+    new BaseModel(Example2Dto),
+  ];
   public isActive = false;
 
   ngOnInit(): void {

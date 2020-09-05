@@ -11,7 +11,14 @@ import {
 } from '@angular/core';
 import { DataGroupComponent } from './components/data-group.component';
 import { DataFooterComponent } from './components/data-footer.component';
-import { BaseModel } from '@webblocksapp/class-validator';
+import { BaseModel, ValidationError } from '@webblocksapp/class-validator';
+import {
+  Error,
+  ValidationResult,
+  FormattedValidationResult,
+  ModelMap,
+} from './types';
+import { capitalize } from '../common/utils/capitalize';
 
 @Component({
   selector: 'data-groups',
@@ -33,7 +40,7 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   @ContentChild(DataFooterComponent)
   dataFooterComponent: DataFooterComponent;
 
-  private modelMap: Array<any>;
+  private modelMap: Array<ModelMap>;
 
   constructor() {}
 
@@ -111,29 +118,87 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
 
     this.modelMap.forEach((map) => {
       promises.push(
-        new Promise((resolve, reject) => {
-          map.model
-            .validate()
-            .then((validatedData) => {
-              resolve({ isValid: true, data: validatedData, errors: null });
-            })
-            .catch((errors) => {
-              reject({ isValid: true, data: {}, errors });
-            });
+        new Promise((resolve) => {
+          map.model.validate().then((validationResult: ValidationResult) => {
+            const { isValid, validatedData, errors } = validationResult;
+            if (isValid) {
+              resolve(validationResult);
+            } else {
+              const formattedErrors: Error[] = this.formatErrors(errors);
+              const formattedValidationResult: FormattedValidationResult = {
+                isValid,
+                validatedData,
+                errors: formattedErrors,
+              };
+
+              resolve(formattedValidationResult);
+            }
+          });
         }),
       );
     });
 
     this.submit.emit(
-      new Promise((resolve, reject) => {
-        Promise.all(promises)
-          .then((validatedData) => {
-            resolve(validatedData);
-          })
-          .catch((errors) => {
-            reject(errors);
-          });
+      new Promise((resolve) => {
+        const currentPromise =
+          promises.length > 1 ? Promise.all(promises) : promises[0];
+
+        currentPromise.then(
+          (validationResults: FormattedValidationResult[]) => {
+            this.manageErrors(validationResults);
+            resolve(validationResults);
+          },
+        );
       }),
     );
+  }
+
+  formatErrors(errors: ValidationError[]): any {
+    const formattedErrors = [];
+
+    errors.forEach((error, index) => {
+      const errorData: Error = {
+        property: error.property,
+        message: Object.values(error.constraints)[0],
+      };
+
+      formattedErrors[index] = errorData;
+    });
+
+    return formattedErrors;
+  }
+
+  manageErrors(validationResults: FormattedValidationResult[]): void {
+    validationResults = !Array.isArray(validationResults)
+      ? [validationResults]
+      : validationResults;
+
+    this.modelMap.forEach((map, index) => {
+      const { inputDataComponents } = map;
+      const { isValid, errors } = validationResults[index];
+
+      if (isValid) {
+        inputDataComponents.forEach((inputDataComponent) => {
+          inputDataComponent.error = null;
+        });
+      } else {
+        inputDataComponents.forEach((inputDataComponent) => {
+          const { name } = inputDataComponent;
+          const filteredError = errors.filter(
+            (error) => error.property === name,
+          );
+
+          if (filteredError.length) {
+            inputDataComponent.error = filteredError[0].message;
+          } else {
+            inputDataComponent.error = null;
+          }
+
+          inputDataComponent.component.error = capitalize(
+            inputDataComponent.error,
+          );
+        });
+      }
+    });
   }
 }

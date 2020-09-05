@@ -17,6 +17,7 @@ import {
 import * as uuid from 'uuid';
 import { BaseModel } from '@webblocksapp/class-validator';
 import { InputType, InputSize } from '../types';
+import { capitalize } from '../utils/capitalize';
 
 export class BsBaseComponent
   implements
@@ -323,6 +324,6 @@ export class BsBaseComponent
   setError(error: any): void {
     const { constraints } = error[0];
     this.error = (Object.values(constraints)[0] as string) || '';
-    this.error = this.error.charAt(0).toUpperCase() + this.error.slice(1);
+    this.error = capitalize(this.error);
   }
 }
