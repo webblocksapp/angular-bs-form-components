@@ -20,23 +20,23 @@ export class DataGroupComponent implements OnInit, AfterContentInit {
   class: string;
 
   @ContentChildren('dataInput') dataInputs: QueryList<any>;
-  public inputDataComponents: Array<any> = [];
+  public dataInputComponents: Array<any> = [];
 
   constructor() {}
 
   ngOnInit(): void {}
 
   ngAfterContentInit(): void {
-    this.loadInputDataComponents();
+    this.loadDataInputComponents();
   }
 
-  loadInputDataComponents(): void {
+  loadDataInputComponents(): void {
     this.dataInputs.forEach((dataInput) => {
-      this.inputDataComponents.push(dataInput);
+      this.dataInputComponents.push(dataInput);
     });
   }
 
-  getInputDataComponents(): Array<any> {
-    return this.inputDataComponents;
+  getDataInputComponents(): Array<any> {
+    return this.dataInputComponents;
   }
 }

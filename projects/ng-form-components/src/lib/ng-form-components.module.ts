@@ -7,4 +7,4 @@ import { DataGroupsModule } from './data-group/data-groups.module';
   imports: [BsInputModule, DataGroupsModule],
   exports: [BsInputModule, DataGroupsModule],
 })
-export class NgBsFormComponentsModule {}
+export class NgFormComponentsModule {}

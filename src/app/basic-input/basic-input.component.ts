@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseModel } from '@webblocksapp/class-validator';
 import { Example1Dto, Example2Dto } from '../common/dtos';
 
 @Component({
@@ -10,11 +9,8 @@ import { Example1Dto, Example2Dto } from '../common/dtos';
 export class BasicInputComponent implements OnInit {
   constructor() {}
 
-  public exampleModel1 = new BaseModel(Example1Dto);
-  public exampleModel2 = [
-    new BaseModel(Example2Dto),
-    new BaseModel(Example2Dto),
-  ];
+  public exampleModel1 = Example1Dto;
+  public exampleModel2 = [Example2Dto, Example2Dto];
   public isActive = false;
 
   ngOnInit(): void {

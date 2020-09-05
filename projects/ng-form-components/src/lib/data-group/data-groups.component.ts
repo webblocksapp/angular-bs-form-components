@@ -55,7 +55,13 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   }
 
   initBaseModel(): void {
-    if (!Array.isArray(this.model)) this.model = [this.model];
+    if (!Array.isArray(this.model)) {
+      this.model = [new BaseModel(this.model)];
+    } else {
+      this.model.forEach((model, index) => {
+        this.model[index] = new BaseModel(model);
+      });
+    }
   }
 
   initModelMap(): void {
@@ -66,15 +72,15 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   generateModelMap(): void {
     this.modelMap = [];
     this.model.forEach((model, index) => {
-      this.modelMap.push({ model, inputDataComponents: [] });
+      this.modelMap.push({ model, dataInputComponents: [] });
 
       const dataGroupComponent = this.dataGroupComponents.toArray()[index];
-      const inputDataComponents = dataGroupComponent.getInputDataComponents();
+      const dataInputComponents = dataGroupComponent.getDataInputComponents();
 
-      inputDataComponents.forEach((inputDataComponent, i) => {
-        this.modelMap[index].inputDataComponents[i] = {
-          component: inputDataComponent,
-          name: inputDataComponent.name,
+      dataInputComponents.forEach((dataInputComponent, i) => {
+        this.modelMap[index].dataInputComponents[i] = {
+          component: dataInputComponent,
+          name: dataInputComponent.name,
           error: null,
         };
       });
@@ -83,11 +89,11 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
 
   applyModelMap(): void {
     this.modelMap.forEach((map) => {
-      map.inputDataComponents.forEach((inputDataComponent) => {
-        inputDataComponent.component.model = map.model;
+      map.dataInputComponents.forEach((dataInputComponent) => {
+        dataInputComponent.component.model = map.model;
 
-        if (!inputDataComponent.component.error)
-          inputDataComponent.component.error = inputDataComponent.error;
+        if (!dataInputComponent.component.error)
+          dataInputComponent.component.error = dataInputComponent.error;
       });
     });
   }
@@ -105,7 +111,7 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   listenQueryListChanges(): void {
     this.dataGroupComponents.forEach((dataGroupComponent) => {
       dataGroupComponent.dataInputs.changes.subscribe(() => {
-        dataGroupComponent.loadInputDataComponents();
+        dataGroupComponent.loadDataInputComponents();
         setTimeout(() => {
           this.initModelMap();
         });
@@ -174,28 +180,28 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
       : validationResults;
 
     this.modelMap.forEach((map, index) => {
-      const { inputDataComponents } = map;
+      const { dataInputComponents } = map;
       const { isValid, errors } = validationResults[index];
 
       if (isValid) {
-        inputDataComponents.forEach((inputDataComponent) => {
-          inputDataComponent.error = null;
+        dataInputComponents.forEach((dataInputComponent) => {
+          dataInputComponent.error = null;
         });
       } else {
-        inputDataComponents.forEach((inputDataComponent) => {
-          const { name } = inputDataComponent;
+        dataInputComponents.forEach((dataInputComponent) => {
+          const { name } = dataInputComponent;
           const filteredError = errors.filter(
             (error) => error.property === name,
           );
 
           if (filteredError.length) {
-            inputDataComponent.error = filteredError[0].message;
+            dataInputComponent.error = filteredError[0].message;
           } else {
-            inputDataComponent.error = null;
+            dataInputComponent.error = null;
           }
 
-          inputDataComponent.component.error = capitalize(
-            inputDataComponent.error,
+          dataInputComponent.component.error = capitalize(
+            dataInputComponent.error,
           );
         });
       }

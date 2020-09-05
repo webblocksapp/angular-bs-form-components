@@ -1,6 +1,6 @@
 import { InputType, InputSize } from '../types';
 
-export interface BsBaseInterface {
+export interface DataInputBaseInterface {
   /**
    * Form input unique id.
    */

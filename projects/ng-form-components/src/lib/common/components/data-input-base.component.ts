@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 
 import {
-  BsBaseInterface,
+  DataInputBaseInterface,
   FormEventsInterface,
   KeyboardEventsInterface,
   MouseEventsInterface,
@@ -19,11 +19,11 @@ import { BaseModel } from '@webblocksapp/class-validator';
 import { InputType, InputSize } from '../types';
 import { capitalize } from '../utils/capitalize';
 
-export class BsBaseComponent
+export class DataInputBaseComponent
   implements
     OnInit,
     OnChanges,
-    BsBaseInterface,
+    DataInputBaseInterface,
     FormEventsInterface,
     KeyboardEventsInterface,
     MouseEventsInterface {

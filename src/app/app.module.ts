@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BasicInputComponent } from './basic-input/basic-input.component';
-import { NgBsFormComponentsModule } from 'projects/ng-bs-form-components/src/public-api';
+import { NgFormComponentsModule } from 'projects/ng-form-components/src/public-api';
 import { MenuHeaderComponent } from './common/components/menu-header/menu-header.component';
 import { StyleManagerService } from './common/services/style-manager.service';
 import { ScriptManagerService } from './common/services/script-manager.service';
@@ -16,7 +16,7 @@ import { FormsModule } from '@angular/forms';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    NgBsFormComponentsModule,
+    NgFormComponentsModule,
     FormsModule,
   ],
   providers: [StyleManagerService, ScriptManagerService, NgSmartAdminService],
