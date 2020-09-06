@@ -9,18 +9,16 @@ import { Example1Dto, Example2Dto } from '../common/dtos';
 export class BasicInputComponent implements OnInit {
   constructor() {}
 
-  public exampleModel1 = Example1Dto;
   public exampleModel2 = [Example2Dto, Example2Dto];
   public isActive = false;
+  public group = 'only-text';
 
   ngOnInit(): void {
     setInterval(() => {
       this.isActive = !this.isActive;
+      this.group = this.group === 'only-text' ? 'default' : 'only-text';
+      console.log(this.group);
     }, 5000);
-  }
-
-  example1(event) {
-    console.log(this.exampleModel1, event);
   }
 
   click(event) {

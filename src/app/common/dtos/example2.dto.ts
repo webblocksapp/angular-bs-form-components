@@ -1,9 +1,9 @@
 import { IsNotEmpty } from '@webblocksapp/class-validator';
 
 export class Example2Dto {
-  @IsNotEmpty()
+  @IsNotEmpty({ groups: ['default'] })
   title: string;
 
-  @IsNotEmpty()
+  @IsNotEmpty({ groups: ['default', 'only-text'] })
   text: string;
 }

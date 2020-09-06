@@ -31,6 +31,7 @@ import { capitalize } from '../common/utils/capitalize';
 export class DataGroupsComponent implements OnInit, AfterContentInit {
   @Input() class: string;
   @Input() model: Array<BaseModel>;
+  @Input() group: string;
 
   @Output() submit: EventEmitter<any> = new EventEmitter();
 
@@ -128,21 +129,23 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
     this.modelMap.forEach((map) => {
       promises.push(
         new Promise((resolve) => {
-          map.model.validate().then((validationResult: ValidationResult) => {
-            const { isValid, validatedData, errors } = validationResult;
-            if (isValid) {
-              resolve(validationResult);
-            } else {
-              const formattedErrors: Error[] = this.formatErrors(errors);
-              const formattedValidationResult: FormattedValidationResult = {
-                isValid,
-                validatedData,
-                errors: formattedErrors,
-              };
+          map.model
+            .validate({ groups: [this.group] })
+            .then((validationResult: ValidationResult) => {
+              const { isValid, validatedData, errors } = validationResult;
+              if (isValid) {
+                resolve(validationResult);
+              } else {
+                const formattedErrors: Error[] = this.formatErrors(errors);
+                const formattedValidationResult: FormattedValidationResult = {
+                  isValid,
+                  validatedData,
+                  errors: formattedErrors,
+                };
 
-              resolve(formattedValidationResult);
-            }
-          });
+                resolve(formattedValidationResult);
+              }
+            });
         }),
       );
     });

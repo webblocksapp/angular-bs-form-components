@@ -22,7 +22,11 @@
 
 <h3>Example of data groups</h3>
 
-<data-groups [model]="exampleModel2" (submit)="onSubmit($event)">
+<data-groups
+  [group]="group"
+  [model]="exampleModel2"
+  (submit)="onSubmit($event)"
+>
   <data-group>
     <bs-input
       *ngIf="isActive"
