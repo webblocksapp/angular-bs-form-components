@@ -9,6 +9,9 @@
   "dependencies": {
     "uuid": "^8.3.0",
     "@webblocksapp/class-validator": "^0.12.2",
-    "generic-type-guard": "^3.2.0"
+    "generic-type-guard": "^3.2.0",
+    "bootstrap": "^4.5.2",
+    "jquery": "^3.5.1",
+    "select2": "^4.0.13"
   }
 }
