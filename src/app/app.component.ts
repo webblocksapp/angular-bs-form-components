@@ -8,5 +8,12 @@ import { Component } from '@angular/core';
       <router-outlet></router-outlet>
     </div>
   `,
+  styles: [
+    `
+      .page-content {
+        min-height: calc(100vh - 56px);
+      }
+    `,
+  ],
 })
 export class AppComponent {}
