@@ -19,7 +19,7 @@ import { BaseModel } from '@webblocksapp/class-validator';
 import { InputType, InputSize } from '../types';
 import { capitalize } from '../utils/capitalize';
 
-export class DataInputBaseComponent
+export abstract class DataInputBase
   implements
     OnInit,
     OnChanges,

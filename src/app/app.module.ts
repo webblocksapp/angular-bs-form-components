@@ -10,9 +10,10 @@ import { StyleManagerService } from './common/services/style-manager.service';
 import { ScriptManagerService } from './common/services/script-manager.service';
 import { NgSmartAdminService } from './common/services/ng-smart-admin.service';
 import { FormsModule } from '@angular/forms';
+import { SelectComponent } from './select/select.component';
 
 @NgModule({
-  declarations: [AppComponent, BasicInputComponent, MenuHeaderComponent],
+  declarations: [AppComponent, BasicInputComponent, MenuHeaderComponent, SelectComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

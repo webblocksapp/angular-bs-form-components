@@ -5,10 +5,14 @@ import { ScriptManagerService } from './script-manager.service';
 @Injectable()
 export class ThemeService {
   private defaultTheme = {
-    styles: ['assets/bootstrap/css/bootstrap.min.css'],
+    styles: [
+      'assets/bootstrap/css/bootstrap.min.css',
+      'assets/select2/css/select2.min.css',
+    ],
     scripts: [
       'assets/jquery/jquery.min.js',
       'assets/bootstrap/js/bootstrap.min.js',
+      'assets/select2/js/select2.min.js',
     ],
   };
 

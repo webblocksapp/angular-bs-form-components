@@ -1,5 +1,5 @@
 import { Component, HostBinding } from '@angular/core';
-import { DataInputBaseComponent } from '../common/components/data-input-base.component';
+import { DataInputBase } from '../common/classes/data-input-base';
 
 @Component({
   selector: 'bs-input',
@@ -61,7 +61,7 @@ import { DataInputBaseComponent } from '../common/components/data-input-base.com
     `,
   ],
 })
-export class BsInputComponent extends DataInputBaseComponent {
+export class BsInputComponent extends DataInputBase {
   @HostBinding('class') class = 'form-group';
 
   setConfigsOnInit() {}

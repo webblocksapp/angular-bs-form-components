@@ -1,7 +1,7 @@
-import { DataInputBaseComponent } from '../../common/components/data-input-base.component';
+import { DataInputBase } from '../../common/classes/data-input-base';
 
 export type DataInputComponent = {
-  component: DataInputBaseComponent;
+  component: DataInputBase;
   name: string;
   error: string;
 };
