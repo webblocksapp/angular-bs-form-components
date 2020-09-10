@@ -8,4 +8,4 @@ import { BsSelect2Module } from './bs-select/bs-select2.module';
   imports: [BsInputModule, BsSelect2Module, DataGroupsModule],
   exports: [BsInputModule, BsSelect2Module, DataGroupsModule],
 })
-export class NgFormComponentsModule {}
+export class NgFormsModule {}

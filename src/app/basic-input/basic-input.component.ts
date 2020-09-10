@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Example1Dto, Example2Dto } from '../common/dtos';
+import { Example2Dto } from '../common/dtos';
+import { BaseModel } from '@webblocksapp/class-validator';
 
 @Component({
   selector: 'app-basic-input',
@@ -9,7 +10,10 @@ import { Example1Dto, Example2Dto } from '../common/dtos';
 export class BasicInputComponent implements OnInit {
   constructor() {}
 
-  public exampleModel2 = [Example2Dto, Example2Dto];
+  public exampleModel2: Array<BaseModel> = [
+    new BaseModel(Example2Dto),
+    new BaseModel(Example2Dto),
+  ];
   public isActive = false;
   public group = 'only-text';
 

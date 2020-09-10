@@ -45,24 +45,12 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
 
   constructor() {}
 
-  ngOnInit(): void {
-    this.initBaseModel();
-  }
+  ngOnInit(): void {}
 
   ngAfterContentInit(): void {
     this.initModelMap();
     this.initSubmitDataButtons();
     this.listenQueryListChanges();
-  }
-
-  initBaseModel(): void {
-    if (!Array.isArray(this.model)) {
-      this.model = [new BaseModel(this.model)];
-    } else {
-      this.model.forEach((model, index) => {
-        this.model[index] = new BaseModel(model);
-      });
-    }
   }
 
   initModelMap(): void {
