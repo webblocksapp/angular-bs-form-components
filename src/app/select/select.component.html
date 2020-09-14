@@ -1,1 +1,13 @@
-<bs-select2 label="Select 1" name="title"></bs-select2>
+<bs-input
+  label="Input with placeholder"
+  placeholder="Type text here"
+></bs-input>
+<bs-select2
+  placeholder="Select a value"
+  [options]="options"
+  [theme]="theme"
+  label="Select 1"
+  name="title"
+  (changeEvent)="onChange($event)"
+  (selectedEvent)="onSelected($event)"
+></bs-select2>

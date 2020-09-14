@@ -17,8 +17,11 @@
 <bs-input label="Input with id" id="inputWithId"></bs-input>
 
 <h3>Example of input events</h3>
-<bs-input label="Example of click" (click)="click($event)"></bs-input>
-<bs-input label="Example of focusout" (focusout)="focusout($event)"></bs-input>
+<bs-input label="Example of click" (clickEvent)="click($event)"></bs-input>
+<bs-input
+  label="Example of focusout"
+  (focusoutEvent)="focusout($event)"
+></bs-input>
 
 <h3>Example of data groups</h3>
 

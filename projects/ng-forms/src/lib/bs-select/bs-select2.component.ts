@@ -4,8 +4,13 @@ import {
   AfterViewInit,
   ViewChild,
   ElementRef,
+  Input,
+  Output,
+  ViewEncapsulation,
+  EventEmitter,
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
+import { Option, OptionGroup } from '../common/types';
 
 @Component({
   selector: 'bs-select2',
@@ -25,7 +30,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
       </div>
 
       <select
-        #select2
+        #select2ElementRef
         style="width: 100%"
         [attr.name]="name"
         [attr.value]="value"
@@ -33,43 +38,17 @@ import { DataInputBase } from '../common/classes/data-input-base';
         class="form-control select2"
         [ngClass]="{ 'is-invalid': error }"
         id="{{ id }}-bs"
-        (focusout)="focusout($event)"
-        (blur)="blur($event)"
-        (change)="change($event)"
-        (input)="input($event)"
-        (keyup)="keyup($event)"
-        (keydown)="keydown($event)"
-        (keypress)="keypress($event)"
-        (click)="click($event)"
-        (dblclick)="dblclick($event)"
-        (mousedown)="mousedown($event)"
-        (mousemove)="mousemove($event)"
-        (mouseout)="mouseout($event)"
-        (mouseover)="mouseover($event)"
-        (mouseup)="mouseup($event)"
-        (wheel)="wheel($event)"
       >
-        <optgroup label="Alaskan/Hawaiian Time Zone">
-          <option value="AK">Alaska</option>
-          <option value="HI">Hawaii</option>
-        </optgroup>
-        <optgroup label="Pacific Time Zone">
-          <option value="CA">California</option>
-          <option value="NV">Nevada</option>
-          <option value="OR">Oregon</option>
-          <option value="WA">Washington</option>
-        </optgroup>
-        <optgroup label="Mountain Time Zone">
-          <option value="AZ">Arizona</option>
-          <option value="CO">Colorado</option>
-          <option value="ID">Idaho</option>
-          <option value="MT">Montana</option>
-          <option value="NE">Nebraska</option>
-          <option value="NM">New Mexico</option>
-          <option value="ND">North Dakota</option>
-          <option value="UT">Utah</option>
-          <option value="WY">Wyoming</option>
-        </optgroup>
+        <option *ngIf="placeholder"></option>
+        <ng-container *ngFor="let option of options">
+          <option
+            *ngIf="option.group === undefined"
+            [attr.disabled]="option.disabled"
+            [value]="option.value"
+          >
+            {{ option.viewValue }}
+          </option>
+        </ng-container>
       </select>
 
       <div *ngIf="endSlot" class="input-group-append">
@@ -86,17 +65,31 @@ import { DataInputBase } from '../common/classes/data-input-base';
   `,
   styles: [
     `
-      :host {
-        display: block;
+      .select2-container--bootstrap .select2-selection {
+        border: 1px solid #ced4da;
+        box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
+        height: 38px;
+        line-height: 1.6;
+        font-size: 16px;
+        border-bottom-right-radius: 4px !important;
+        border-top-right-radius: 4px !important;
       }
     `,
   ],
+  encapsulation: ViewEncapsulation.None,
 })
 export class BsSelect2Component extends DataInputBase implements AfterViewInit {
   @HostBinding('class') class = 'form-group';
-  @ViewChild('select2', { read: ElementRef }) select2: ElementRef;
+  @ViewChild('select2ElementRef', { read: ElementRef })
+  select2ElementRef: ElementRef;
 
-  private jQueryEl: any;
+  @Input() theme: string;
+  @Input() options: Array<Option> | Array<OptionGroup>;
+  @Input() configs: any;
+
+  @Output() selectedEvent: EventEmitter<any> = new EventEmitter();
+
+  private select2: any;
 
   ngAfterViewInit(): void {
     this.initJQueryEl();
@@ -104,10 +97,35 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
   }
 
   initJQueryEl(): void {
-    this.jQueryEl = $(this.select2.nativeElement);
+    this.select2 = $(this.select2ElementRef.nativeElement);
   }
 
   initSelect2(): void {
-    this.jQueryEl.select2();
+    this.bindEventsToSelect2();
+    const configs = this.buildSelect2Configs();
+    this.select2.select2(configs);
+  }
+
+  bindEventsToSelect2(): void {
+    this.select2.on('change', (event) => {
+      this.validateField();
+      this.change(event);
+    });
+
+    this.select2.on('select2:select', (event) => {
+      const value = event.params.data.id;
+      this.fillModel(value);
+      this.selectedEvent.emit(event.params.data);
+    });
+  }
+
+  buildSelect2Configs(): any {
+    const defaultConfigs = {
+      theme: this.theme,
+      placeholder: this.placeholder,
+      allowClear: true,
+    };
+
+    return Object.assign(defaultConfigs, this.configs);
   }
 }

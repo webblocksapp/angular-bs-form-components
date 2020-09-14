@@ -277,10 +277,8 @@ export abstract class DataInputBase
   // ----- Component data methods ---------
   // --------------------------------------
 
-  fillModel(event: any): void {
+  fillModel(value: any): void {
     if (this.model !== undefined) {
-      const value = event.target.value;
-
       if (!(this.model instanceof BaseModel)) {
         console.error(
           'Model is not instance of BaseModel from @webblocksapp/class-validator',
@@ -298,7 +296,7 @@ export abstract class DataInputBase
     }
   }
 
-  validateFieldOnFocusOut(): void {
+  validateField(): void {
     if (this.model !== undefined) {
       if (this.isReactiveForm === false) return;
       if (this.isReactiveForm === true) {
@@ -307,20 +305,16 @@ export abstract class DataInputBase
           return;
         }
 
-        this.validateField();
+        this.model
+          .validateField(this.name)
+          .then(() => {
+            this.error = '';
+          })
+          .catch((error) => {
+            this.setError(error);
+          });
       }
     }
-  }
-
-  validateField(): void {
-    this.model
-      .validateField(this.name)
-      .then(() => {
-        this.error = '';
-      })
-      .catch((error) => {
-        this.setError(error);
-      });
   }
 
   setError(error: any): void {

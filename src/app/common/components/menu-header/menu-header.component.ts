@@ -22,14 +22,10 @@ import { NgSmartAdminService } from '../../services/ng-smart-admin.service';
               Themes
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" (click)="setTheme('default')" href="#">
+              <a class="dropdown-item" (click)="setTheme('default')">
                 Default Bootstrap theme
               </a>
-              <a
-                class="dropdown-item"
-                (click)="setTheme('smartAdmin')"
-                href="#"
-              >
+              <a class="dropdown-item" (click)="setTheme('smartAdmin')">
                 Smart Admin
               </a>
             </div>

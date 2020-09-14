@@ -69,12 +69,14 @@ export class BsInputComponent extends DataInputBase {
   setConfigsOnInit() {}
 
   bindFocusoutEvents(event: any): any {
-    this.validateFieldOnFocusOut();
+    this.validateField();
     return event;
   }
 
   bindKeyupEvents(event: any): any {
-    this.fillModel(event);
+    const value = event.target.value;
+
+    this.fillModel(value);
     return event;
   }
 }

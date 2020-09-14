@@ -85,10 +85,6 @@ export interface DataInputBaseInterface {
    */
   setComponentUniqueId(): void;
   /**
-   * Validates component field on focus out.
-   */
-  validateFieldOnFocusOut(): void;
-  /**
    * Validates component field.
    */
   validateField(): void;
