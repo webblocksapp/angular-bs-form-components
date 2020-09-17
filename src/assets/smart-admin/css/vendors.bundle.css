@@ -2,7 +2,7 @@
 ========================================================================== */
 /* Looks good on chrome default color profile */
 /* We will manually convert these primary colors to rgb for the dark mode option of the theme */
-/* looks good in sRGB but washed up on chrome default 
+/* looks good in sRGB but washed up on chrome default
 $color-primary:						#826bb0;
 $color-success:						#31cb55;
 $color-info:						#5e93ec;
@@ -105,7 +105,7 @@ http://www.standardista.com/px-to-rem-conversion-if-root-font-size-is-16px/
 /*  Z-INDEX declearation
 ========================================================================== */
 /* we adjust bootstrap z-index to be higher than our higest z-index*/
-/*  CUSTOM ICON PREFIX 
+/*  CUSTOM ICON PREFIX
 ========================================================================== */
 /*  PRINT CSS (landscape or portrait)
 ========================================================================== */
@@ -143,11 +143,11 @@ aside.page-sidebar ($nav-width, $nav-background)
 		ul.nav-menu
 			li
 				a (parent level-0..., $nav-link-color, $nav-link-hover-color, $nav-link-hover-bg-color, $nav-link-hover-left-border-color)
-					icon 
+					icon
 					span
-					collapse-sign 
-					
-				ul.nav-menu-sub-one  
+					collapse-sign
+
+				ul.nav-menu-sub-one
 					li
 						a ($nav-level-1... $nav-sub-link-height)
 							span
@@ -186,13 +186,13 @@ aside.page-sidebar ($nav-width, $nav-background)
 /* List Table */
 /*   PAGE SETTINGS
 ========================================================================== */
-/*   PAGE BREADCRUMB 
+/*   PAGE BREADCRUMB
 ========================================================================== */
-/*   PAGE COMPONENT PANELS 
+/*   PAGE COMPONENT PANELS
 ========================================================================== */
-/*   PAGE COMPONENT PROGRESSBARS 
+/*   PAGE COMPONENT PROGRESSBARS
 ========================================================================== */
-/*   PAGE COMPONENT MESSENGER 
+/*   PAGE COMPONENT MESSENGER
 ========================================================================== */
 /*   FOOTER
 ========================================================================== */
@@ -2265,7 +2265,7 @@ textarea.form-control {
   background-position: top calc(0.3675em + 0.25rem) right calc(0.3675em + 0.25rem); }
 
 .was-validated .custom-select:invalid, .custom-select.is-invalid {
-  border-color: #fd3995;
+  border-color: #fd3995 !important;
   padding-right: calc(0.75em + 2.625rem);
   background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='4' height='5' viewBox='0 0 4 5'%3e%3cpath fill='%23343a40' d='M2 0L0 2h4zm0 5L0 3h4z'/%3e%3c/svg%3e") no-repeat right 0.875rem center/8px 10px, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23fd3995' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23fd3995' stroke='none'/%3e%3c/svg%3e") #fff no-repeat center right 1.875rem/calc(0.735em + 0.5rem) calc(0.735em + 0.5rem); }
   .was-validated .custom-select:invalid:focus, .custom-select.is-invalid:focus {
@@ -8647,10 +8647,10 @@ a.text-dark:hover, a.text-dark:focus {
 /* #BOOTSTRAP AND MIXINS - Base Unmodified Bootstrap file with theme mixins
 ========================================================================== */
 /*---------------------------------------------------
-    SASS ELements (based on LESS Elements 0.9 http://lesselements.com) 
+    SASS ELements (based on LESS Elements 0.9 http://lesselements.com)
   -------------------------------- -------------------
     LESS ELEMENTS made by Dmitry Fadeyev (http://fadeyev.net)
-    SASS port by Samuel Beek (http://samuelbeek.com) 
+    SASS port by Samuel Beek (http://samuelbeek.com)
   ---------------------------------------------------*/
 /*------------------------
     Usage
@@ -8658,7 +8658,7 @@ a.text-dark:hover, a.text-dark:focus {
   $color-white: hexToRGBString(#fff) => "255,255,255"
   $color-white: hexToRGBString(rgb(255,255,255)) => "255,255,255"
   $color-white: hexToRGBString(rgba(#fff,1)) => "255,255,255"
-  
+
 ------------------------*/
 /*------------------------
     Usage
@@ -8685,16 +8685,16 @@ From this W3C document: http://www.webmasterworld.com/r.cgi?f=88&d=9769&url=http
 
 usage:
 @include text-contrast($bgcolor)
-      
-Color brightness is determined by the following formula: 
+
+Color brightness is determined by the following formula:
 ((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
 ------------------------*/
 /*------------------------
- color factory 
+ color factory
   eg: contrast-ink($contrastvalue)
 ------------------------*/
 /*------------------------
- color factory 
+ color factory
   eg: @include paint($blue-grey-50, bg-blue-grey-50);
 ------------------------*/
 /* backface visibility */
@@ -8705,7 +8705,7 @@ Color brightness is determined by the following formula:
 ========================================================================== */
 /* Looks good on chrome default color profile */
 /* We will manually convert these primary colors to rgb for the dark mode option of the theme */
-/* looks good in sRGB but washed up on chrome default 
+/* looks good in sRGB but washed up on chrome default
 $color-primary:						#826bb0;
 $color-success:						#31cb55;
 $color-info:						#5e93ec;
@@ -8808,7 +8808,7 @@ http://www.standardista.com/px-to-rem-conversion-if-root-font-size-is-16px/
 /*  Z-INDEX declearation
 ========================================================================== */
 /* we adjust bootstrap z-index to be higher than our higest z-index*/
-/*  CUSTOM ICON PREFIX 
+/*  CUSTOM ICON PREFIX
 ========================================================================== */
 /*  PRINT CSS (landscape or portrait)
 ========================================================================== */
@@ -8846,11 +8846,11 @@ aside.page-sidebar ($nav-width, $nav-background)
 		ul.nav-menu
 			li
 				a (parent level-0..., $nav-link-color, $nav-link-hover-color, $nav-link-hover-bg-color, $nav-link-hover-left-border-color)
-					icon 
+					icon
 					span
-					collapse-sign 
-					
-				ul.nav-menu-sub-one  
+					collapse-sign
+
+				ul.nav-menu-sub-one
 					li
 						a ($nav-level-1... $nav-sub-link-height)
 							span
@@ -8889,13 +8889,13 @@ aside.page-sidebar ($nav-width, $nav-background)
 /* List Table */
 /*   PAGE SETTINGS
 ========================================================================== */
-/*   PAGE BREADCRUMB 
+/*   PAGE BREADCRUMB
 ========================================================================== */
-/*   PAGE COMPONENT PANELS 
+/*   PAGE COMPONENT PANELS
 ========================================================================== */
-/*   PAGE COMPONENT PROGRESSBARS 
+/*   PAGE COMPONENT PROGRESSBARS
 ========================================================================== */
-/*   PAGE COMPONENT MESSENGER 
+/*   PAGE COMPONENT MESSENGER
 ========================================================================== */
 /*   FOOTER
 ========================================================================== */
@@ -8969,8 +8969,8 @@ h6 small,
   text-shadow: none; }
 
 /* looking for font size? Check _helpers.scss */
-/* PLACEHOLDER 
-============================================= 
+/* PLACEHOLDER
+=============================================
 
 EXAMPLE:
 
@@ -9032,7 +9032,7 @@ RESULT:
 			left: 0;
 			top: 0;
 			border-radius: 50%;
-		} 
+		}
 	}*/
 /* patterns */
 /* #WEBFONT ICONS IMPORTS

@@ -2,12 +2,23 @@
   label="Input with placeholder"
   placeholder="Type text here"
 ></bs-input>
-<bs-select2
-  placeholder="Select a value"
-  [options]="options"
-  [theme]="theme"
-  label="Select 1"
-  name="title"
-  (changeEvent)="onChange($event)"
-  (selectedEvent)="onSelected($event)"
-></bs-select2>
+
+<data-groups [model]="example3Model" (submit)="onSubmit($event)">
+  <data-group>
+    <bs-select2
+      #dataInput
+      placeholder="Select a value"
+      [options]="options"
+      [theme]="theme"
+      label="Select 1"
+      name="country"
+      (changeEvent)="onChange($event)"
+      (selectedEvent)="onSelected($event)"
+    ></bs-select2>
+  </data-group>
+  <data-footer>
+    <button class="btn btn-primary waves-effect waves-themed" #submit>
+      Enviar
+    </button>
+  </data-footer>
+</data-groups>

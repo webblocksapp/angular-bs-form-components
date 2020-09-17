@@ -63,19 +63,7 @@ import { Option, OptionGroup } from '../common/types';
     </small>
     <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
   `,
-  styles: [
-    `
-      .select2-container--bootstrap .select2-selection {
-        border: 1px solid #ced4da;
-        box-shadow: inset 0 0 0 rgba(0, 0, 0, 0);
-        height: 38px;
-        line-height: 1.6;
-        font-size: 16px;
-        border-bottom-right-radius: 4px !important;
-        border-top-right-radius: 4px !important;
-      }
-    `,
-  ],
+  styleUrls: ['./bs-select2.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
 export class BsSelect2Component extends DataInputBase implements AfterViewInit {
@@ -87,7 +75,9 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
   @Input() options: Array<Option> | Array<OptionGroup>;
   @Input() configs: any;
 
-  @Output() selectedEvent: EventEmitter<any> = new EventEmitter();
+  @Output() selectEvent: EventEmitter<any> = new EventEmitter();
+  @Output() clearEvent: EventEmitter<any> = new EventEmitter();
+  @Output() closeEvent: EventEmitter<any> = new EventEmitter();
 
   private select2: any;
 
@@ -108,14 +98,57 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
 
   bindEventsToSelect2(): void {
     this.select2.on('change', (event) => {
-      this.validateField();
       this.change(event);
     });
 
     this.select2.on('select2:select', (event) => {
       const value = event.params.data.id;
       this.fillModel(value);
-      this.selectedEvent.emit(event.params.data);
+      this.validateField();
+      this.selectEvent.emit(event.params.data);
+    });
+
+    this.select2.on('select2:clear', (event) => {
+      this.fillModel(null);
+      this.validateField();
+      this.clearEvent.emit(event.params.data);
+    });
+
+    this.select2.on('select2:close', (event) => {
+      /**
+       * Equivalent to a validate on focusout
+       */
+      setTimeout(() => {
+        this.addIsInvalidClass(event);
+        this.validateField();
+        this.closeEvent.emit(event.params.data);
+      });
+    });
+  }
+
+  addIsInvalidClass(event): void {
+    setTimeout(() => {
+      /**
+       * For a custom bootstrap theme, make the border-color property important inside this
+       * style line of css classes on your bootstrap custom main theme stylesheet,
+       * to show the invalid border color on select2 component
+       *
+       * .was-validated .custom-select:invalid, .custom-select.is-invalid {
+       *   border-color: #your-color !important;
+       * }
+       */
+
+      const select2Selection = $(this.select2.data('select2').$container).find(
+        '.select2-selection',
+      );
+
+      if (event.target.classList.contains('is-invalid')) {
+        select2Selection.addClass('custom-select');
+        select2Selection.addClass('is-invalid');
+      } else {
+        select2Selection.removeClass('custom-select');
+        select2Selection.removeClass('is-invalid');
+      }
     });
   }
 

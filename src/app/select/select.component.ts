@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseModel } from '@webblocksapp/class-validator';
+import { Example3Dto } from '../common/dtos';
 
 @Component({
   selector: 'app-select',
@@ -14,6 +16,8 @@ export class SelectComponent implements OnInit {
     { value: '4', viewValue: 'Value 4' },
   ];
 
+  public example3Model = new BaseModel(Example3Dto);
+
   constructor() {}
 
   ngOnInit(): void {
@@ -27,5 +31,15 @@ export class SelectComponent implements OnInit {
 
   onSelected($event) {
     console.log('On selected event:', $event);
+  }
+
+  onSubmit(event) {
+    event
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(({ errors }) => {
+        console.log(errors);
+      });
   }
 }

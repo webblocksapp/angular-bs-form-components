@@ -45,12 +45,18 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
 
   constructor() {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initBaseModel();
+  }
 
   ngAfterContentInit(): void {
     this.initModelMap();
     this.initSubmitDataButtons();
     this.listenQueryListChanges();
+  }
+
+  initBaseModel(): void {
+    if (!Array.isArray(this.model)) this.model = [this.model];
   }
 
   initModelMap(): void {
@@ -113,12 +119,13 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
 
   submitData(): void {
     const promises = [];
+    const groups = this.group !== undefined ? { groups: [this.group] } : {};
 
     this.modelMap.forEach((map) => {
       promises.push(
         new Promise((resolve) => {
           map.model
-            .validate({ groups: [this.group] })
+            .validate(groups)
             .then((validationResult: ValidationResult) => {
               const { isValid, validatedData, errors } = validationResult;
               if (isValid) {
