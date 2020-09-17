@@ -86,6 +86,11 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
     this.initSelect2();
   }
 
+  detectPropertiesChanges(propName: string): void {
+    console.log(propName);
+    if (propName === 'error') this.addOrRemoveIsInvalidClass();
+  }
+
   initJQueryEl(): void {
     this.select2 = $(this.select2ElementRef.nativeElement);
   }
@@ -119,14 +124,24 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
        * Equivalent to a validate on focusout
        */
       setTimeout(() => {
-        this.addIsInvalidClass(event);
+        this.addOrRemoveIsInvalidClass();
         this.validateField();
         this.closeEvent.emit(event.params.data);
       });
     });
   }
 
-  addIsInvalidClass(event): void {
+  buildSelect2Configs(): any {
+    const defaultConfigs = {
+      theme: this.theme,
+      placeholder: this.placeholder,
+      allowClear: true,
+    };
+
+    return Object.assign(defaultConfigs, this.configs);
+  }
+
+  addOrRemoveIsInvalidClass(): void {
     setTimeout(() => {
       /**
        * For a custom bootstrap theme, make the border-color property important inside this
@@ -142,7 +157,7 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
         '.select2-selection',
       );
 
-      if (event.target.classList.contains('is-invalid')) {
+      if (this.error) {
         select2Selection.addClass('custom-select');
         select2Selection.addClass('is-invalid');
       } else {
@@ -152,13 +167,7 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
     });
   }
 
-  buildSelect2Configs(): any {
-    const defaultConfigs = {
-      theme: this.theme,
-      placeholder: this.placeholder,
-      allowClear: true,
-    };
-
-    return Object.assign(defaultConfigs, this.configs);
+  refresh(): void {
+    this.addOrRemoveIsInvalidClass();
   }
 }

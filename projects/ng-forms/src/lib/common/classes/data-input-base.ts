@@ -322,4 +322,6 @@ export abstract class DataInputBase
     this.error = (Object.values(constraints)[0] as string) || '';
     this.error = capitalize(this.error);
   }
+
+  refresh(): void {}
 }

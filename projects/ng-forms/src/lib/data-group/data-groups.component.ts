@@ -204,6 +204,8 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
           dataInputComponent.component.error = capitalize(
             dataInputComponent.error,
           );
+
+          dataInputComponent.component.refresh();
         });
       }
     });

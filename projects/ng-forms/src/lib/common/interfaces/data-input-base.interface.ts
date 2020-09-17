@@ -92,4 +92,8 @@ export interface DataInputBaseInterface {
    * Sets component error attribute.
    */
   setError(error: any): void;
+  /**
+   * Wildcard method to add component methods that need to be executed again.
+   */
+  refresh(): void;
 }
