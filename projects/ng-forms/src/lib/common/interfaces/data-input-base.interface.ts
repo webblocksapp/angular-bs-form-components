@@ -18,6 +18,10 @@ export interface DataInputBaseInterface {
    */
   placeholder: string;
   /**
+   * Disabled input attribute.
+   */
+  disabled: boolean;
+  /**
    * Form input hint text.
    */
   help: string;

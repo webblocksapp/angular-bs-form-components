@@ -23,6 +23,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
         [attr.value]="value"
         [type]="type"
         [attr.placeholder]="placeholder"
+        [attr.disabled]="disabled"
         class="form-control"
         [ngClass]="{ 'is-invalid': error }"
         id="{{ id }}-bs"

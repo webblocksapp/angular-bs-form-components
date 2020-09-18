@@ -35,6 +35,7 @@ import { Option, OptionGroup } from '../common/types';
         [attr.name]="name"
         [attr.value]="value"
         [attr.placeholder]="placeholder"
+        [attr.multiple]="multiple"
         class="form-control select2"
         [ngClass]="{ 'is-invalid': error }"
         id="{{ id }}-bs"
@@ -44,11 +45,23 @@ import { Option, OptionGroup } from '../common/types';
           <option
             *ngIf="option.group === undefined"
             [attr.disabled]="option.disabled"
+            [attr.selected]="option.selected"
             [value]="option.value"
           >
             {{ option.viewValue }}
           </option>
-        </ng-container>
+
+          <optgroup *ngIf="option.group !== undefined" [label]="option.group">
+            <option
+              *ngFor="let option of option.groupValues"
+              [attr.disabled]="option.disabled"
+              [attr.selected]="option.selected"
+              [value]="option.value"
+            >
+              {{ option.viewValue }}
+            </option>
+          </optgroup></ng-container
+        >
       </select>
 
       <div *ngIf="endSlot" class="input-group-append">
@@ -67,13 +80,15 @@ import { Option, OptionGroup } from '../common/types';
   encapsulation: ViewEncapsulation.None,
 })
 export class BsSelect2Component extends DataInputBase implements AfterViewInit {
-  @HostBinding('class') class = 'form-group';
+  @HostBinding('class') class = 'ng-select2 form-group';
   @ViewChild('select2ElementRef', { read: ElementRef })
   select2ElementRef: ElementRef;
 
   @Input() theme: string;
   @Input() options: Array<Option> | Array<OptionGroup>;
   @Input() configs: any;
+  @Input() multiple: string;
+  @Input() noResults: string;
 
   @Output() selectEvent: EventEmitter<any> = new EventEmitter();
   @Output() clearEvent: EventEmitter<any> = new EventEmitter();
@@ -87,8 +102,8 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
   }
 
   detectPropertiesChanges(propName: string): void {
-    console.log(propName);
-    if (propName === 'error') this.addOrRemoveIsInvalidClass();
+    if (propName === 'disabled') this.enableOrDisableSelect2();
+    if (propName === 'options') this.enableOrDisableSelect2Options();
   }
 
   initJQueryEl(): void {
@@ -97,8 +112,10 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
 
   initSelect2(): void {
     this.bindEventsToSelect2();
-    const configs = this.buildSelect2Configs();
-    this.select2.select2(configs);
+    this.buildSelect2Configs();
+    this.select2.select2(this.configs);
+    this.initSelectedOptions();
+    this.enableOrDisableSelect2();
   }
 
   bindEventsToSelect2(): void {
@@ -131,14 +148,19 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
     });
   }
 
-  buildSelect2Configs(): any {
+  buildSelect2Configs(): void {
     const defaultConfigs = {
       theme: this.theme,
       placeholder: this.placeholder,
       allowClear: true,
+      language: {
+        noResults: () => {
+          return this.noResults || 'No results found';
+        },
+      },
     };
 
-    return Object.assign(defaultConfigs, this.configs);
+    this.configs = Object.assign(defaultConfigs, this.configs);
   }
 
   addOrRemoveIsInvalidClass(): void {
@@ -167,6 +189,54 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
     });
   }
 
+  initSelectedOptions(): void {
+    setTimeout(() => {
+      if (
+        this.model !== undefined &&
+        this.model.getValue(this.name) !== undefined
+      ) {
+        if (this.multiple === 'multiple') {
+          /**
+           * Load selected values when is multiple select
+           */
+        } else {
+          /**
+           * Load selected value when is single select
+           */
+          const selectedOption: any = (this.options as any[]).filter(
+            // tslint:disable-next-line: triple-equals
+            (option) => option.value == this.model.getValue(this.name),
+          );
+
+          if (selectedOption.length) {
+            selectedOption[0].selected = true;
+          }
+
+          this.refreshSelect2();
+        }
+      }
+    });
+  }
+
+  enableOrDisableSelect2(): void {
+    if (this.select2 !== undefined && this.disabled !== undefined)
+      this.select2.select2('enable', [!this.disabled]);
+  }
+
+  enableOrDisableSelect2Options(): void {
+    if (this.select2 !== undefined) this.refreshSelect2();
+  }
+
+  refreshSelect2(): void {
+    setTimeout(() => {
+      this.select2.select2(this.configs);
+    });
+  }
+
+  /**
+   * Wildcard method. Executed when data is injected directly through component
+   * without using @Input() decorators.
+   */
   refresh(): void {
     this.addOrRemoveIsInvalidClass();
   }

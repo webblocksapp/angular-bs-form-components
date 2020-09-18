@@ -1,4 +1,9 @@
+import { Option } from './option.type';
+
 export type OptionGroup = {
-  value: number | string;
-  viewValue: number | string;
+  group: string;
+  groupValues: Array<Option>;
+  value?: number | string;
+  viewValue?: number | string;
+  disabled?: boolean;
 };

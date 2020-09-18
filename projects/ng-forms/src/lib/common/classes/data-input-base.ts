@@ -36,6 +36,7 @@ export abstract class DataInputBase
   @Input() type: InputType = 'text';
   @Input() size: InputSize = 'default';
   @Input() placeholder: string;
+  @Input() disabled: boolean;
   @Input() help: string;
   @Input() startSlot: string;
   @Input() startSlotHtml: string;

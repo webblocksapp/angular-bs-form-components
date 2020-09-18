@@ -15,6 +15,17 @@
       (changeEvent)="onChange($event)"
       (selectedEvent)="onSelected($event)"
     ></bs-select2>
+
+    <bs-select2
+      #dataInput
+      placeholder="Select a value"
+      [options]="optionGroup"
+      [theme]="theme"
+      label="Select with groups"
+      name="city"
+      (changeEvent)="onChange($event)"
+      (selectedEvent)="onSelected($event)"
+    ></bs-select2>
   </data-group>
   <data-footer>
     <button class="btn btn-primary waves-effect waves-themed" #submit>
@@ -22,3 +33,22 @@
     </button>
   </data-footer>
 </data-groups>
+
+<hr />
+
+<bs-select2
+  #dataInput
+  placeholder="Select a value"
+  [options]="optionsWithDisabled"
+  [theme]="theme"
+  label="Select with disabled options"
+  noResults="No cities found"
+></bs-select2>
+
+<bs-select2
+  [disabled]="disabled"
+  placeholder="Select a value"
+  [options]="options"
+  [theme]="theme"
+  label="Select 1"
+></bs-select2>
