@@ -11,6 +11,7 @@ import {
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 import { Option, OptionGroup } from '../common/types';
+import { isNull } from '../common/utils';
 
 @Component({
   selector: 'bs-select2',
@@ -40,7 +41,7 @@ import { Option, OptionGroup } from '../common/types';
         [ngClass]="{ 'is-invalid': error }"
         id="{{ id }}-bs"
       >
-        <option *ngIf="placeholder"></option>
+        <option *ngIf="placeholder && multiple !== 'multiple'"></option>
         <ng-container *ngFor="let option of options">
           <option
             *ngIf="option.group === undefined"
@@ -86,7 +87,7 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
 
   @Input() theme: string;
   @Input() options: Array<Option> | Array<OptionGroup>;
-  @Input() configs: any;
+  @Input() configs: any = {};
   @Input() multiple: string;
   @Input() noResults: string;
 
@@ -103,7 +104,10 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
 
   detectPropertiesChanges(propName: string): void {
     if (propName === 'disabled') this.enableOrDisableSelect2();
-    if (propName === 'options') this.enableOrDisableSelect2Options();
+    if (propName === 'options') {
+      this.disableSelect2WhenOptionsAreEmpty();
+      this.enableOrDisableSelect2Options();
+    }
   }
 
   initJQueryEl(): void {
@@ -116,17 +120,18 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
     this.select2.select2(this.configs);
     this.initSelectedOptions();
     this.enableOrDisableSelect2();
+    this.disableSelect2WhenOptionsAreEmpty();
   }
 
   bindEventsToSelect2(): void {
     this.select2.on('change', (event) => {
+      const value = this.select2.select2('val');
+      this.fillModel(value);
+      this.validateField();
       this.change(event);
     });
 
     this.select2.on('select2:select', (event) => {
-      const value = event.params.data.id;
-      this.fillModel(value);
-      this.validateField();
       this.selectEvent.emit(event.params.data);
     });
 
@@ -160,7 +165,19 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
       },
     };
 
+    this.setSelect2ConfigsOverrides();
     this.configs = Object.assign(defaultConfigs, this.configs);
+  }
+
+  setSelect2ConfigsOverrides(): void {
+    /**
+     * Overrides
+     *
+     * - allowClear is not used in multiple select
+     */
+    if (this.multiple === 'multiple') {
+      this.configs = Object.assign(this.configs, { allowClear: false });
+    }
   }
 
   addOrRemoveIsInvalidClass(): void {
@@ -199,23 +216,39 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
           /**
            * Load selected values when is multiple select
            */
+          const values = this.model.getValue(this.name);
+
+          values.forEach((value) => {
+            this.setSelectedValue(value);
+          });
         } else {
           /**
            * Load selected value when is single select
            */
-          const selectedOption: any = (this.options as any[]).filter(
-            // tslint:disable-next-line: triple-equals
-            (option) => option.value == this.model.getValue(this.name),
-          );
-
-          if (selectedOption.length) {
-            selectedOption[0].selected = true;
-          }
-
-          this.refreshSelect2();
+          const value = this.model.getValue(this.name);
+          this.setSelectedValue(value);
         }
+
+        this.refreshSelect2();
       }
     });
+  }
+
+  setSelectedValue(value): void {
+    const selectedOption: any = (this.options as any[]).filter(
+      // tslint:disable-next-line: triple-equals
+      (option) => option.value == value,
+    );
+
+    if (selectedOption.length) {
+      selectedOption[0].selected = true;
+    }
+  }
+
+  disableSelect2WhenOptionsAreEmpty(): void {
+    if (this.select2 !== undefined && isNull(this.options)) {
+      this.select2.select2('enable', false);
+    }
   }
 
   enableOrDisableSelect2(): void {

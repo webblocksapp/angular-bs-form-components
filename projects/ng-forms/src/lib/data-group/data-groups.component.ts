@@ -18,7 +18,7 @@ import {
   FormattedValidationResult,
   ModelMap,
 } from './types';
-import { capitalize } from '../common/utils/capitalize';
+import { capitalize } from '../common/utils';
 
 @Component({
   selector: 'data-groups',

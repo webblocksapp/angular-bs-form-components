@@ -1,4 +1,8 @@
-import { IsNotEmpty } from '@webblocksapp/class-validator';
+import {
+  IsArray,
+  IsNotEmpty,
+  ArrayMinSize,
+} from '@webblocksapp/class-validator';
 
 export class Example3Dto {
   @IsNotEmpty()
@@ -6,4 +10,8 @@ export class Example3Dto {
 
   @IsNotEmpty()
   city: number;
+
+  @ArrayMinSize(1)
+  @IsArray()
+  cities: Array<number>;
 }

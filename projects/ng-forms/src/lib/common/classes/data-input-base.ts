@@ -17,7 +17,7 @@ import {
 import * as uuid from 'uuid';
 import { BaseModel } from '@webblocksapp/class-validator';
 import { InputType, InputSize } from '../types';
-import { capitalize } from '../utils/capitalize';
+import { capitalize } from '../utils';
 
 export abstract class DataInputBase
   implements

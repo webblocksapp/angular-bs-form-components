@@ -40,7 +40,7 @@ export class SelectComponent implements OnInit {
       groupValues: [
         { value: '5', viewValue: 'Value 5' },
         { value: '6', viewValue: 'Value 6' },
-        { value: '7', viewValue: 'Value 7', selected: true },
+        { value: '7', viewValue: 'Value 7' },
         { value: '8', viewValue: 'Value 8' },
       ],
     },
@@ -54,7 +54,14 @@ export class SelectComponent implements OnInit {
     { value: '1', viewValue: 'Value 1', disabled: true },
     { value: '2', viewValue: 'Value 2' },
     { value: '3', viewValue: 'Value 3' },
-    { value: '4', viewValue: 'Value 4', selected: true },
+    { value: '4', viewValue: 'Value 4' },
+  ];
+
+  public multipleSelectOptions = [
+    { value: '1', viewValue: 'Value 1' },
+    { value: '2', viewValue: 'Value 2' },
+    { value: '3', viewValue: 'Value 3' },
+    { value: '4', viewValue: 'Value 4' },
   ];
 
   public example3Model = new BaseModel(Example3Dto);
@@ -63,6 +70,7 @@ export class SelectComponent implements OnInit {
 
   ngOnInit(): void {
     this.example3Model.fill({ country: 1 });
+    this.example3Model.fill({ cities: [1, 2] });
 
     const theme = localStorage.getItem('theme');
     if (theme === 'default') this.theme = 'bootstrap';
