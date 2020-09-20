@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Example2Dto } from '../../common/dtos';
-import { BaseModel } from '@webblocksapp/class-validator';
+import { BaseModel } from 'projects/ng-forms/src/public-api';
 
 @Component({
   selector: 'app-basic-input',

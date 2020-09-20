@@ -11,7 +11,8 @@ import {
 } from '@angular/core';
 import { DataGroupComponent } from './components/data-group.component';
 import { DataFooterComponent } from './components/data-footer.component';
-import { BaseModel, ValidationError } from '@webblocksapp/class-validator';
+import { ValidationError } from '@webblocksapp/class-validator';
+import { BaseModel } from '../common/classes/base-model';
 import {
   Error,
   ValidationResult,

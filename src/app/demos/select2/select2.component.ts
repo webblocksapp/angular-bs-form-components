@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseModel } from '@webblocksapp/class-validator';
+import { BaseModel } from 'projects/ng-forms/src/public-api';
 import { Example3Dto } from '../../common/dtos';
 
 @Component({
