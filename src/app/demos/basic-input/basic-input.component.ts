@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Example2Dto } from '../common/dtos';
+import { Example2Dto } from '../../common/dtos';
 import { BaseModel } from '@webblocksapp/class-validator';
 
 @Component({

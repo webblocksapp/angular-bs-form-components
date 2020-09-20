@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseModel } from '@webblocksapp/class-validator';
-import { Example3Dto } from '../common/dtos';
+import { Example3Dto } from '../../common/dtos';
 
 @Component({
   selector: 'app-select',
-  templateUrl: './select.component.html',
+  templateUrl: './select2.component.html',
   styles: [``],
 })
-export class SelectComponent implements OnInit {
+export class Select2Component implements OnInit {
   public theme: string;
   public disabled = true;
 

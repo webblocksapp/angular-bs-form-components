@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { BasicInputComponent } from './basic-input/basic-input.component';
-import { SelectComponent } from './select/select.component';
+import { BasicInputComponent } from './demos/basic-input/basic-input.component';
+import { Select2Component } from './demos/select2/select2.component';
 
 const routes: Routes = [
   { path: '', component: BasicInputComponent },
   { path: 'basic-input', component: BasicInputComponent },
-  { path: 'select', component: SelectComponent },
+  { path: 'select2', component: Select2Component },
   { path: '**', redirectTo: '' },
 ];
 
