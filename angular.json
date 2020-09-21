@@ -22,8 +22,13 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": ["src/styles.css"],
             "scripts": [
-              "src/assets/jquery/jquery.min.js",
-              "src/assets/select2/js/select2.min.js"
+              "node_modules/jquery/dist/jquery.min.js",
+              "src/assets/throttle/index.js",
+              "src/assets/popper/js/popper.min.js",
+              "src/assets/bootstrap/js/bootstrap.min.js",
+              "src/assets/select2/js/select2.min.js",
+              "src/assets/bootstrap-select/js/bootstrap-select.min.js",
+              "src/assets/smart-admin/js/app.bundle.js"
             ]
           },
           "configurations": {

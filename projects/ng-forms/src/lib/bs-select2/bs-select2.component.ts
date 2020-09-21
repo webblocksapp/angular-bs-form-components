@@ -61,8 +61,8 @@ import { isNull } from '../common/utils';
             >
               {{ option.viewValue }}
             </option>
-          </optgroup></ng-container
-        >
+          </optgroup>
+        </ng-container>
       </select>
 
       <div *ngIf="endSlot" class="input-group-append">

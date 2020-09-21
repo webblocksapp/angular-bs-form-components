@@ -11,6 +11,7 @@ import { ScriptManagerService } from './common/services/script-manager.service';
 import { NgSmartAdminService } from './common/services/ng-smart-admin.service';
 import { FormsModule } from '@angular/forms';
 import { Select2Component } from './demos/select2/select2.component';
+import { SelectComponent } from './demos/select/select.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { Select2Component } from './demos/select2/select2.component';
     BasicInputComponent,
     MenuHeaderComponent,
     Select2Component,
+    SelectComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgFormsModule, FormsModule],
   providers: [StyleManagerService, ScriptManagerService, NgSmartAdminService],

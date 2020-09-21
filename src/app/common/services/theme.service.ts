@@ -8,12 +8,10 @@ export class ThemeService {
     styles: [
       'assets/bootstrap/css/bootstrap.min.css',
       'assets/select2/css/select2.min.css',
+      'assets/bootstrap-select/css/bootstrap-select.min.css',
       'assets/select2/css/select2-bootstrap.min.css',
     ],
-    scripts: [
-      'assets/jquery/jquery.min.js',
-      'assets/bootstrap/js/bootstrap.min.js',
-    ],
+    scripts: [],
   };
 
   private smartAdminTheme = {
@@ -25,8 +23,9 @@ export class ThemeService {
       'assets/smart-admin/css/vendors.bundle.css',
       'assets/smart-admin/css/app.bundle.css',
       'assets/select2/css/select2.bundle.css',
+      'assets/bootstrap-select/css/bootstrap-select.min.css',
     ],
-    scripts: ['assets/smart-admin/js/vendors-and-app.bundle.js'],
+    scripts: [],
   };
 
   constructor(

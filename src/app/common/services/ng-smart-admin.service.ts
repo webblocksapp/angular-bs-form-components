@@ -17,7 +17,6 @@ export class NgSmartAdminService {
     setTimeout(() => {
       this.smartAdminAppConfig = window['myapp_config'];
       this.smartAdminApp = window['initApp'];
-
       this.loadDefaults();
       this.domReadyMisc();
       this.appForms();
