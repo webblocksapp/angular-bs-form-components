@@ -28,6 +28,7 @@
               "src/assets/bootstrap/js/bootstrap.min.js",
               "src/assets/select2/js/select2.min.js",
               "src/assets/bootstrap-select/js/bootstrap-select.min.js",
+              "node_modules/node-waves/dist/waves.min.js",
               "src/assets/smart-admin/js/app.bundle.js"
             ]
           },

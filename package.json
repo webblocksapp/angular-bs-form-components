@@ -26,6 +26,7 @@
     "generic-type-guard": "^3.2.0",
     "jquery": "^3.5.1",
     "jquery-debounce-throttle": "^1.0.6-rc.0",
+    "node-waves": "^0.7.6",
     "popper.js": "^1.14.3",
     "rxjs": "~6.5.4",
     "select2": "^4.0.13",
