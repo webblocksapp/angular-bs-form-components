@@ -115,9 +115,9 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
   }
 
   initSelect2(): void {
-    this.bindEventsToSelect2();
     this.buildSelect2Configs();
     this.select2.select2(this.configs);
+    this.bindEventsToSelect2();
     this.initSelectedOptions();
     this.enableOrDisableSelect2();
     this.disableSelect2WhenOptionsAreEmpty();

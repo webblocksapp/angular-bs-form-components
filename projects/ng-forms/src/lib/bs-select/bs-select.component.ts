@@ -31,12 +31,17 @@ import { Option, OptionGroup } from '../common/types';
         style="width: 100%"
         [attr.name]="name"
         [attr.value]="value"
-        [attr.placeholder]="placeholder"
+        [attr.title]="placeholder"
+        [attr.multiple]="multiple"
         class="form-control selectpicker"
         [ngClass]="{ 'is-invalid': error }"
         id="{{ id }}-bs"
       >
         <ng-container *ngFor="let option of options">
+          <option
+            *ngIf="placeholder && multiple !== 'multiple'"
+            hidden
+          ></option>
           <option
             *ngIf="option.group === undefined"
             [attr.disabled]="option.disabled"
@@ -76,6 +81,18 @@ import { Option, OptionGroup } from '../common/types';
       .ng-select.form-group {
         display: block;
       }
+
+      .ng-select .bootstrap-select .dropdown-menu.inner {
+        display: initial;
+      }
+
+      .ng-select .dropdown-menu .dropdown-menu {
+        visibility: initial;
+      }
+
+      .ng-select .dropdown-toggle:focus {
+        outline: 0 !important;
+      }
     `,
   ],
 })
@@ -85,6 +102,8 @@ export class BsSelectComponent extends DataInputBase implements AfterViewInit {
   selectElementRef: ElementRef;
 
   @Input() options: Array<Option> | Array<OptionGroup>;
+  @Input() configs: any = {};
+  @Input() multiple: string;
 
   private select: any;
 
@@ -98,6 +117,24 @@ export class BsSelectComponent extends DataInputBase implements AfterViewInit {
   }
 
   initSelect(): void {
-    this.select.selectpicker();
+    this.buildSelectConfigs();
+    this.select.selectpicker(this.configs);
+    this.addAutoCloseClass();
+    this.bindEventsToSelect();
+  }
+
+  buildSelectConfigs(): void {
+    const defaultConfigs = {
+      style: '',
+      styleBase: 'form-control',
+    };
+
+    this.configs = Object.assign(defaultConfigs, this.configs);
+  }
+
+  bindEventsToSelect(): void {}
+
+  addAutoCloseClass(): void {
+    this.select.parent().find('.dropdown-menu').addClass('js-auto-close');
   }
 }
