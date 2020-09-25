@@ -1,3 +1,4 @@
+import { KeyValueDiffer } from '@angular/core';
 import { InputType, InputSize } from '../types';
 
 export interface DataInputBaseInterface {
@@ -100,4 +101,12 @@ export interface DataInputBaseInterface {
    * Wildcard method to add component methods that need to be executed again.
    */
   refresh(): void;
+  /**
+   * Watches model changes to execute events related to this changes
+   */
+  watchModel(): void;
+  /**
+   * Wildcard method to add events on model changes
+   */
+  bindWatchModelEvents(): void;
 }

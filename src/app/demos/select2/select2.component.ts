@@ -69,8 +69,10 @@ export class Select2Component implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    this.example3Model.fill({ country: 1 });
-    this.example3Model.fill({ cities: [1, 2] });
+    setTimeout(() => {
+      this.example3Model.fill({ cities: [1, 2, 3] });
+      console.log('model changed');
+    }, 5000);
 
     const theme = localStorage.getItem('theme');
     if (theme === 'default') this.theme = 'bootstrap';

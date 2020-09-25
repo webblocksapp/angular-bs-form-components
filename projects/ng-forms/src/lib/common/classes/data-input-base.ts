@@ -6,6 +6,8 @@ import {
   OnChanges,
   SimpleChanges,
   HostBinding,
+  KeyValueDiffers,
+  KeyValueDiffer,
 } from '@angular/core';
 
 import {
@@ -19,6 +21,7 @@ import { BaseModel } from '../classes/base-model';
 import { InputType, InputSize } from '../types';
 import { capitalize } from '../utils';
 
+// tslint:disable-next-line: no-conflicting-lifecycle
 export abstract class DataInputBase
   implements
     OnInit,
@@ -67,6 +70,9 @@ export abstract class DataInputBase
   public inputSize: string;
   public error: string;
   public value: any;
+  private modelDiffer: KeyValueDiffer<string, any>;
+
+  constructor(private differs: KeyValueDiffers) {}
 
   ngOnInit() {
     this.alwaysSetConfigsOnInit();
@@ -310,13 +316,17 @@ export abstract class DataInputBase
           .validateField(this.name)
           .then(() => {
             this.error = '';
+            this.bindEventsAfterValidateField();
           })
           .catch((error) => {
             this.setError(error);
+            this.bindEventsAfterValidateField();
           });
       }
     }
   }
+
+  bindEventsAfterValidateField(): void {}
 
   setError(error: any): void {
     const { constraints } = error[0];
@@ -325,4 +335,26 @@ export abstract class DataInputBase
   }
 
   refresh(): void {}
+
+  watchModel(): void {
+    if (this.model !== undefined && this.name !== undefined) {
+      if (this.modelDiffer === undefined) {
+        this.modelDiffer = this.differs.find(this.model).create();
+      }
+
+      let value = this.model.getValue(this.name);
+
+      if (typeof value !== 'object') {
+        value = [value];
+      }
+
+      const changes = this.modelDiffer.diff(value);
+
+      if (changes) {
+        this.bindWatchModelEvents();
+      }
+    }
+  }
+
+  bindWatchModelEvents(): void {}
 }

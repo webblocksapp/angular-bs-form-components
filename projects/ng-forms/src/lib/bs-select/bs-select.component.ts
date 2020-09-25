@@ -6,9 +6,13 @@ import {
   ViewEncapsulation,
   Input,
   AfterViewInit,
+  DoCheck,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 import { Option, OptionGroup } from '../common/types';
+import { isNull } from '../common/utils';
 
 @Component({
   selector: 'bs-select',
@@ -33,8 +37,9 @@ import { Option, OptionGroup } from '../common/types';
         [attr.value]="value"
         [attr.title]="placeholder"
         [attr.multiple]="multiple"
+        [attr.disabled]="disabled"
         class="form-control selectpicker"
-        [ngClass]="{ 'is-invalid': error }"
+        [ngClass]="{ 'is-invalid': error, disabled: disabled }"
         id="{{ id }}-bs"
       >
         <ng-container *ngFor="let option of options">
@@ -96,7 +101,9 @@ import { Option, OptionGroup } from '../common/types';
     `,
   ],
 })
-export class BsSelectComponent extends DataInputBase implements AfterViewInit {
+export class BsSelectComponent
+  extends DataInputBase
+  implements AfterViewInit, DoCheck {
   @HostBinding('class') class = 'ng-select form-group';
   @ViewChild('selectElementRef', { read: ElementRef })
   selectElementRef: ElementRef;
@@ -105,11 +112,21 @@ export class BsSelectComponent extends DataInputBase implements AfterViewInit {
   @Input() configs: any = {};
   @Input() multiple: string;
 
+  @Output() closeEvent: EventEmitter<any> = new EventEmitter();
+
   private select: any;
 
   ngAfterViewInit(): void {
     this.initJQueryEl();
     this.initSelect();
+  }
+
+  ngDoCheck(): void {
+    this.watchModel();
+  }
+
+  bindWatchModelEvents(): void {
+    this.initSelectedOptions();
   }
 
   initJQueryEl(): void {
@@ -132,9 +149,61 @@ export class BsSelectComponent extends DataInputBase implements AfterViewInit {
     this.configs = Object.assign(defaultConfigs, this.configs);
   }
 
-  bindEventsToSelect(): void {}
+  bindEventsToSelect(): void {
+    this.select.on('change', this.select, (event) => {
+      const value = this.select.val();
+      this.fillModel(value);
+      this.validateField();
+      this.change(event);
+    });
+
+    this.select.on('hidden.bs.select', (event) => {
+      /**
+       * Equivalent to a validate on focusout
+       */
+      if (
+        this.model !== undefined &&
+        this.name !== undefined &&
+        isNull(this.model.getValue(this.name))
+      ) {
+        this.validateField();
+        this.closeEvent.emit(event);
+      }
+    });
+  }
+
+  bindEventsAfterValidateField(): void {
+    this.addOrRemoveIsInvalidClass();
+  }
 
   addAutoCloseClass(): void {
     this.select.parent().find('.dropdown-menu').addClass('js-auto-close');
+  }
+
+  addOrRemoveIsInvalidClass(): void {
+    const inputGroup = this.select.closest('.input-group');
+    const selectButton = this.select.parent().find('button.form-control');
+
+    if (this.error) {
+      inputGroup.addClass('is-invalid');
+      selectButton.addClass('is-invalid');
+    } else {
+      inputGroup.removeClass('is-invalid');
+      selectButton.removeClass('is-invalid');
+    }
+  }
+
+  initSelectedOptions(): void {
+    this.select.selectpicker('val', this.model.getValue(this.name));
+  }
+
+  refreshSelect(): void {
+    setTimeout(() => {
+      this.select.selectpicker('refresh');
+    });
+  }
+
+  refresh(): void {
+    this.addOrRemoveIsInvalidClass();
   }
 }

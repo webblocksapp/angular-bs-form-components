@@ -8,6 +8,7 @@ import {
   Output,
   ViewEncapsulation,
   EventEmitter,
+  DoCheck,
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 import { Option, OptionGroup } from '../common/types';
@@ -80,7 +81,9 @@ import { isNull } from '../common/utils';
   styleUrls: ['./bs-select2.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class BsSelect2Component extends DataInputBase implements AfterViewInit {
+export class BsSelect2Component
+  extends DataInputBase
+  implements AfterViewInit, DoCheck {
   @HostBinding('class') class = 'ng-select2 form-group';
   @ViewChild('select2ElementRef', { read: ElementRef })
   select2ElementRef: ElementRef;
@@ -102,6 +105,14 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
     this.initSelect2();
   }
 
+  ngDoCheck(): void {
+    this.watchModel();
+  }
+
+  bindWatchModelEvents(): void {
+    this.initSelectedOptions();
+  }
+
   detectPropertiesChanges(propName: string): void {
     if (propName === 'disabled') this.enableOrDisableSelect2();
     if (propName === 'options') {
@@ -118,7 +129,6 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
     this.buildSelect2Configs();
     this.select2.select2(this.configs);
     this.bindEventsToSelect2();
-    this.initSelectedOptions();
     this.enableOrDisableSelect2();
     this.disableSelect2WhenOptionsAreEmpty();
   }
@@ -146,11 +156,20 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
        * Equivalent to a validate on focusout
        */
       setTimeout(() => {
-        this.addOrRemoveIsInvalidClass();
-        this.validateField();
-        this.closeEvent.emit(event.params.data);
+        if (
+          this.model !== undefined &&
+          this.name !== undefined &&
+          isNull(this.model.getValue(this.name))
+        ) {
+          this.validateField();
+          this.closeEvent.emit(event.params.data);
+        }
       });
     });
+  }
+
+  bindEventsAfterValidateField(): void {
+    this.addOrRemoveIsInvalidClass();
   }
 
   buildSelect2Configs(): void {
@@ -207,41 +226,10 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
   }
 
   initSelectedOptions(): void {
-    setTimeout(() => {
-      if (
-        this.model !== undefined &&
-        this.model.getValue(this.name) !== undefined
-      ) {
-        if (this.multiple === 'multiple') {
-          /**
-           * Load selected values when is multiple select
-           */
-          const values = this.model.getValue(this.name);
+    const selectedOptions = this.model.getValue(this.name);
 
-          values.forEach((value) => {
-            this.setSelectedValue(value);
-          });
-        } else {
-          /**
-           * Load selected value when is single select
-           */
-          const value = this.model.getValue(this.name);
-          this.setSelectedValue(value);
-        }
-
-        this.refreshSelect2();
-      }
-    });
-  }
-
-  setSelectedValue(value): void {
-    const selectedOption: any = (this.options as any[]).filter(
-      // tslint:disable-next-line: triple-equals
-      (option) => option.value == value,
-    );
-
-    if (selectedOption.length) {
-      selectedOption[0].selected = true;
+    if (!isNull(selectedOptions)) {
+      this.select2.val(selectedOptions).trigger('change');
     }
   }
 
@@ -266,10 +254,6 @@ export class BsSelect2Component extends DataInputBase implements AfterViewInit {
     });
   }
 
-  /**
-   * Wildcard method. Executed when data is injected directly through component
-   * without using @Input() decorators.
-   */
   refresh(): void {
     this.addOrRemoveIsInvalidClass();
   }

@@ -3,3 +3,33 @@
   [options]="options"
   label="Select"
 ></bs-select>
+
+<bs-select
+  placeholder="Select an option"
+  [options]="options"
+  label="Disabled Select"
+  [disabled]="true"
+></bs-select>
+
+<bs-select
+  label="Select with disabled options"
+  placeholder="Select an option"
+  [options]="optionsWithDisabled"
+></bs-select>
+
+<data-groups [model]="model">
+  <data-group>
+    <bs-select
+      #dataInput
+      label="Select with default values"
+      name="city"
+      placeholder="Select an option"
+      [options]="options"
+    ></bs-select>
+  </data-group>
+  <data-footer>
+    <button class="btn btn-primary waves-effect waves-themed" #submit>
+      Enviar
+    </button>
+  </data-footer>
+</data-groups>
