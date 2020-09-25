@@ -156,11 +156,7 @@ export class BsSelect2Component
        * Equivalent to a validate on focusout
        */
       setTimeout(() => {
-        if (
-          this.model !== undefined &&
-          this.name !== undefined &&
-          isNull(this.model.getValue(this.name))
-        ) {
+        if (isNull(this.model.getValue(this.name))) {
           this.validateField();
           this.closeEvent.emit(event.params.data);
         }

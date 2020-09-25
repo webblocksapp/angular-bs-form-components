@@ -304,25 +304,19 @@ export abstract class DataInputBase
   }
 
   validateField(): void {
-    if (this.model !== undefined) {
-      if (this.isReactiveForm === false) return;
-      if (this.isReactiveForm === true) {
-        if (this.name === undefined) {
-          console.error('Input name attribute is not defined');
-          return;
-        }
+    if (this.isReactiveForm === false) return;
 
-        this.model
-          .validateField(this.name)
-          .then(() => {
-            this.error = '';
-            this.bindEventsAfterValidateField();
-          })
-          .catch((error) => {
-            this.setError(error);
-            this.bindEventsAfterValidateField();
-          });
-      }
+    if (this.isReactiveForm === true) {
+      this.model
+        .validateField(this.name)
+        .then(() => {
+          this.error = '';
+          this.bindEventsAfterValidateField();
+        })
+        .catch((error) => {
+          this.setError(error);
+          this.bindEventsAfterValidateField();
+        });
     }
   }
 

@@ -1,27 +1,77 @@
 <p>Basic input examples:</p>
 
-<bs-input label="Basic input"></bs-input>
-<bs-input
-  label="Input with placeholder"
-  placeholder="Type text here"
-></bs-input>
-<bs-input label="Input with help" help="It's an input with help"></bs-input>
-<bs-input label="Input with start icon" startSlot="@"></bs-input>
-<bs-input label="Input with end icon" endSlot="$"></bs-input>
-<bs-input startSlot="Input with small size" size="small"></bs-input>
-<bs-input startSlot="Input with large size" size="large"></bs-input>
-<bs-input
-  startSlotHtml="Input with large size and icon <i class='ml-2 fas fa-ambulance'></i>"
-  size="large"
-></bs-input>
-<bs-input label="Input with id" id="inputWithId"></bs-input>
+<data-groups [model]="exampleModel1">
+  <data-group>
+    <bs-input #dataInput label="Basic input" name="test"></bs-input>
+    <bs-input
+      #dataInput
+      label="Input with placeholder"
+      placeholder="Type text here"
+      name="test"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      label="Input with help"
+      help="It's an input with help"
+      name="test"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      label="Input with start icon"
+      startSlot="@"
+      name="test"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      label="Input with end icon"
+      endSlot="$"
+      name="test"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      startSlot="Input with small size"
+      size="small"
+      name="test"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      startSlot="Input with large size"
+      size="large"
+      name="test"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      startSlotHtml="Input with large size and icon <i class='ml-2 fas fa-ambulance'></i>"
+      size="large"
+      name="test"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      label="Input with id"
+      id="inputWithId"
+      name="test"
+    ></bs-input>
 
-<h3>Example of input events</h3>
-<bs-input label="Example of click" (clickEvent)="click($event)"></bs-input>
-<bs-input
-  label="Example of focusout"
-  (focusoutEvent)="focusout($event)"
-></bs-input>
+    <h3>Example of input events</h3>
+    <bs-input
+      #dataInput
+      label="Example of click"
+      (clickEvent)="click($event)"
+      name="test"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      label="Example of focusout"
+      (focusoutEvent)="focusout($event)"
+      name="test"
+    ></bs-input>
+  </data-group>
+  <data-footer>
+    <button class="btn btn-primary waves-effect waves-themed" #submit>
+      Enviar
+    </button>
+  </data-footer>
+</data-groups>
 
 <h3>Example of data groups</h3>
 

@@ -112,9 +112,11 @@ export class BsSelectComponent
   @Input() configs: any = {};
   @Input() multiple: string;
 
-  @Output() closeEvent: EventEmitter<any> = new EventEmitter();
+  @Output() shownEvent: EventEmitter<any> = new EventEmitter();
+  @Output() hiddenEvent: EventEmitter<any> = new EventEmitter();
 
   private select: any;
+  private isOnHidden: boolean;
 
   ngAfterViewInit(): void {
     this.initJQueryEl();
@@ -152,28 +154,37 @@ export class BsSelectComponent
   bindEventsToSelect(): void {
     this.select.on('change', this.select, (event) => {
       const value = this.select.val();
+      this.isOnHidden = false;
+
       this.fillModel(value);
       this.validateField();
       this.change(event);
     });
 
-    this.select.on('hidden.bs.select', (event) => {
+    this.select.parent().on('shown.bs.dropdown', (event) => {
       /**
        * Equivalent to a validate on focusout
        */
-      if (
-        this.model !== undefined &&
-        this.name !== undefined &&
-        isNull(this.model.getValue(this.name))
-      ) {
+      if (isNull(this.model.getValue(this.name))) {
+        this.isOnHidden = false;
         this.validateField();
-        this.closeEvent.emit(event);
       }
+
+      this.shownEvent.emit(event);
+    });
+
+    this.select.parent().on('hidden.bs.select', (event) => {
+      if (isNull(this.model.getValue(this.name))) {
+        this.isOnHidden = true;
+        this.validateField();
+      }
+
+      this.hiddenEvent.emit(event);
     });
   }
 
   bindEventsAfterValidateField(): void {
-    this.addOrRemoveIsInvalidClass();
+    if (this.isOnHidden === true) this.addOrRemoveIsInvalidClass();
   }
 
   addAutoCloseClass(): void {

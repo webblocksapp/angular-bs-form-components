@@ -1,8 +1,3 @@
-<bs-input
-  label="Input with placeholder"
-  placeholder="Type text here"
-></bs-input>
-
 <data-groups [model]="example3Model" (submit)="onSubmit($event)">
   <data-group>
     <bs-select2
@@ -43,22 +38,3 @@
     </button>
   </data-footer>
 </data-groups>
-
-<hr />
-
-<bs-select2
-  #dataInput
-  placeholder="Select a value"
-  [options]="optionsWithDisabled"
-  [theme]="theme"
-  label="Select with disabled options"
-  noResults="No cities found"
-></bs-select2>
-
-<bs-select2
-  [disabled]="disabled"
-  placeholder="Select a value"
-  [options]="options"
-  [theme]="theme"
-  label="Select 1"
-></bs-select2>

@@ -67,8 +67,6 @@ import { DataInputBase } from '../common/classes/data-input-base';
 export class BsInputComponent extends DataInputBase {
   @HostBinding('class') class = 'form-group';
 
-  setConfigsOnInit() {}
-
   bindFocusoutEvents(event: any): any {
     this.validateField();
     return event;

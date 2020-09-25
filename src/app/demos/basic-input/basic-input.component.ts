@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Example2Dto } from '../../common/dtos';
+import { Example1Dto, Example2Dto } from '../../common/dtos';
 import { BaseModel } from 'projects/ng-forms/src/public-api';
 
 @Component({
@@ -9,6 +9,8 @@ import { BaseModel } from 'projects/ng-forms/src/public-api';
 })
 export class BasicInputComponent implements OnInit {
   constructor() {}
+
+  public exampleModel1: BaseModel = new BaseModel(Example1Dto);
 
   public exampleModel2: Array<BaseModel> = [
     new BaseModel(Example2Dto),
