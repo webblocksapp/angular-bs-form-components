@@ -117,7 +117,7 @@ export class BsSelect2Component
     if (propName === 'disabled') this.enableOrDisableSelect2();
     if (propName === 'options') {
       this.disableSelect2WhenOptionsAreEmpty();
-      this.enableOrDisableSelect2Options();
+      this.refreshSelect2();
     }
   }
 
@@ -240,14 +240,12 @@ export class BsSelect2Component
       this.select2.select2('enable', [!this.disabled]);
   }
 
-  enableOrDisableSelect2Options(): void {
-    if (this.select2 !== undefined) this.refreshSelect2();
-  }
-
   refreshSelect2(): void {
-    setTimeout(() => {
-      this.select2.select2(this.configs);
-    });
+    if (this.select2 !== undefined) {
+      setTimeout(() => {
+        this.select2.select2(this.configs);
+      });
+    }
   }
 
   refresh(): void {

@@ -37,30 +37,47 @@ import { isNull } from '../common/utils';
         [attr.value]="value"
         [attr.title]="placeholder"
         [attr.multiple]="multiple"
-        [attr.disabled]="disabled"
+        [attr.data-live-search]="liveSearch"
+        [attr.data-max-options]="maxOptions"
+        [attr.data-max-options-text]="maxOptionsText"
+        [attr.data-selected-text-format]="selectedTextFormat"
+        [attr.data-count-selected-text]="countSelectedText"
         class="form-control selectpicker"
-        [ngClass]="{ 'is-invalid': error, disabled: disabled }"
+        [ngClass]="{
+          'is-invalid': error,
+          disabled: disabled,
+          'show-tick': showTick
+        }"
         id="{{ id }}-bs"
       >
         <ng-container *ngFor="let option of options">
-          <option
-            *ngIf="placeholder && multiple !== 'multiple'"
-            hidden
-          ></option>
+          <option *ngIf="placeholder && multiple === false" hidden></option>
           <option
             *ngIf="option.group === undefined"
             [attr.disabled]="option.disabled"
             [attr.selected]="option.selected"
+            [attr.data-tokens]="option.keyWords"
+            [attr.title]="option.title"
+            [attr.class]="option.class"
+            [ngStyle]="option.style"
             [value]="option.value"
           >
             {{ option.viewValue }}
           </option>
 
-          <optgroup *ngIf="option.group !== undefined" [label]="option.group">
+          <optgroup
+            *ngIf="option.group !== undefined"
+            [label]="option.group"
+            [attr.data-max-options]="option.maxOptions"
+          >
             <option
               *ngFor="let option of option.groupValues"
               [attr.disabled]="option.disabled"
               [attr.selected]="option.selected"
+              [attr.data-tokens]="option.keyWords"
+              [attr.title]="option.title"
+              [attr.class]="option.class"
+              [ngStyle]="option.style"
               [value]="option.value"
             >
               {{ option.viewValue }}
@@ -110,13 +127,19 @@ export class BsSelectComponent
 
   @Input() options: Array<Option> | Array<OptionGroup>;
   @Input() configs: any = {};
-  @Input() multiple: string;
+  @Input() multiple: boolean;
+  @Input() liveSearch: boolean;
+  @Input() maxOptions: number;
+  @Input() maxOptionsText: string;
+  @Input() selectedTextFormat: string;
+  @Input() countSelectedText: string;
+  @Input() showTick: boolean;
 
   @Output() shownEvent: EventEmitter<any> = new EventEmitter();
   @Output() hiddenEvent: EventEmitter<any> = new EventEmitter();
 
   private select: any;
-  private isOnHidden: boolean;
+  private onShown = false;
 
   ngAfterViewInit(): void {
     this.initJQueryEl();
@@ -131,6 +154,14 @@ export class BsSelectComponent
     this.initSelectedOptions();
   }
 
+  detectPropertiesChanges(propName: string): void {
+    if (propName === 'disabled') this.enableOrDisableSelect();
+    if (propName === 'options') {
+      this.refreshSelect();
+      this.disableSelectWhenOptionsAreEmpty();
+    }
+  }
+
   initJQueryEl(): void {
     this.select = $(this.selectElementRef.nativeElement);
   }
@@ -138,6 +169,7 @@ export class BsSelectComponent
   initSelect(): void {
     this.buildSelectConfigs();
     this.select.selectpicker(this.configs);
+    this.enableOrDisableSelect();
     this.addAutoCloseClass();
     this.bindEventsToSelect();
   }
@@ -151,22 +183,34 @@ export class BsSelectComponent
     this.configs = Object.assign(defaultConfigs, this.configs);
   }
 
+  disableSelectWhenOptionsAreEmpty(): void {
+    if (this.select !== undefined && isNull(this.options)) {
+      this.select.prop('disabled', true);
+      this.refreshSelect();
+    }
+  }
+
+  enableOrDisableSelect(): void {
+    if (this.select !== undefined && this.disabled !== undefined) {
+      this.select.prop('disabled', this.disabled);
+      this.refreshSelect();
+    }
+  }
+
   bindEventsToSelect(): void {
     this.select.on('change', this.select, (event) => {
       const value = this.select.val();
-      this.isOnHidden = false;
 
+      this.onShown = false;
       this.fillModel(value);
       this.validateField();
       this.change(event);
     });
 
     this.select.parent().on('shown.bs.dropdown', (event) => {
-      /**
-       * Equivalent to a validate on focusout
-       */
+      this.onShown = true;
+
       if (isNull(this.model.getValue(this.name))) {
-        this.isOnHidden = false;
         this.validateField();
       }
 
@@ -174,8 +218,9 @@ export class BsSelectComponent
     });
 
     this.select.parent().on('hidden.bs.select', (event) => {
+      this.onShown = false;
+
       if (isNull(this.model.getValue(this.name))) {
-        this.isOnHidden = true;
         this.validateField();
       }
 
@@ -184,7 +229,9 @@ export class BsSelectComponent
   }
 
   bindEventsAfterValidateField(): void {
-    if (this.isOnHidden === true) this.addOrRemoveIsInvalidClass();
+    if (this.onShown === false) {
+      this.addOrRemoveIsInvalidClass();
+    }
   }
 
   addAutoCloseClass(): void {
@@ -209,9 +256,11 @@ export class BsSelectComponent
   }
 
   refreshSelect(): void {
-    setTimeout(() => {
-      this.select.selectpicker('refresh');
-    });
+    if (this.select !== undefined) {
+      setTimeout(() => {
+        this.select.selectpicker('refresh');
+      });
+    }
   }
 
   refresh(): void {
