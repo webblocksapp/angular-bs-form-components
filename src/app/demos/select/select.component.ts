@@ -45,8 +45,12 @@ export class SelectComponent implements OnInit, AfterViewInit {
       maxOptions: 2,
       groupValues: [
         { value: '1', viewValue: 'Value 1' },
-        { value: '2', viewValue: 'Value 2' },
-        { value: '3', viewValue: 'Value 3' },
+        {
+          value: '2',
+          viewValue: 'Value 2',
+          content: '<span class="badge badge-success">Value 2</span>',
+        },
+        { value: '3', viewValue: 'Value 3', subtext: 'Value 3 subtext' },
         { value: '4', viewValue: 'Value 4' },
       ],
     },
@@ -62,6 +66,7 @@ export class SelectComponent implements OnInit, AfterViewInit {
           style: { 'background-color': '#fcf5de' },
         },
         { value: '8', viewValue: 'Value 8', title: 'Option 8 alias' },
+        { value: '9', viewValue: 'Value 9', icon: 'fas fa-sun' },
       ],
     },
   ];

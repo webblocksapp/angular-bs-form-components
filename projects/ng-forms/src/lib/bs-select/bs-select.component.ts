@@ -42,6 +42,7 @@ import { isNull } from '../common/utils';
         [attr.data-max-options-text]="maxOptionsText"
         [attr.data-selected-text-format]="selectedTextFormat"
         [attr.data-count-selected-text]="countSelectedText"
+        [attr.data-actions-box]="actionsBox"
         class="form-control selectpicker"
         [ngClass]="{
           'is-invalid': error,
@@ -59,6 +60,9 @@ import { isNull } from '../common/utils';
             [attr.data-tokens]="option.keyWords"
             [attr.title]="option.title"
             [attr.class]="option.class"
+            [attr.data-icon]="option.icon"
+            [attr.data-content]="option.content"
+            [attr.data-subtext]="option.subtext"
             [ngStyle]="option.style"
             [value]="option.value"
           >
@@ -77,6 +81,9 @@ import { isNull } from '../common/utils';
               [attr.data-tokens]="option.keyWords"
               [attr.title]="option.title"
               [attr.class]="option.class"
+              [attr.data-icon]="option.icon"
+              [attr.data-content]="option.content"
+              [attr.data-subtext]="option.subtext"
               [ngStyle]="option.style"
               [value]="option.value"
             >
@@ -134,6 +141,8 @@ export class BsSelectComponent
   @Input() selectedTextFormat: string;
   @Input() countSelectedText: string;
   @Input() showTick: boolean;
+  @Input() iconBase: string;
+  @Input() actionsBox: boolean;
 
   @Output() shownEvent: EventEmitter<any> = new EventEmitter();
   @Output() hiddenEvent: EventEmitter<any> = new EventEmitter();
@@ -178,9 +187,17 @@ export class BsSelectComponent
     const defaultConfigs = {
       style: '',
       styleBase: 'form-control',
+      iconBase: 'fontAwesome',
     };
 
+    this.setSelectConfigsOverrides();
     this.configs = Object.assign(defaultConfigs, this.configs);
+  }
+
+  setSelectConfigsOverrides(): void {
+    if (this.iconBase !== 'undefined') {
+      this.configs = Object.assign(this.configs, { iconBase: this.iconBase });
+    }
   }
 
   disableSelectWhenOptionsAreEmpty(): void {

@@ -19,6 +19,7 @@
     "@angular/platform-browser": "~9.0.3",
     "@angular/platform-browser-dynamic": "~9.0.3",
     "@angular/router": "~9.0.3",
+    "@fortawesome/fontawesome-free": "^5.1.0-9",
     "@types/jquery": "^3.5.1",
     "@webblocksapp/class-validator": "^0.12.2",
     "bootstrap": "^4.5.2",
