@@ -29,12 +29,14 @@ export class SelectComponent implements OnInit, AfterViewInit {
       groupValues: [
         { value: '5', viewValue: 'Value 5' },
         { value: '6', viewValue: 'Value 6', keyWords: 'dog, cat' },
+        { divider: true },
         { value: '7', viewValue: 'Value 7' },
         { value: '8', viewValue: 'Value 8' },
       ],
     },
     { value: '9', viewValue: 'Value 9' },
     { value: '10', viewValue: 'Value 10' },
+    { divider: true },
     { value: '11', viewValue: 'Value 11' },
     { value: '12', viewValue: 'Value 12' },
   ];
@@ -42,6 +44,7 @@ export class SelectComponent implements OnInit, AfterViewInit {
   public optionGroupMax = [
     {
       group: 'Group 1',
+      icon: 'fas fa-sun',
       maxOptions: 2,
       groupValues: [
         { value: '1', viewValue: 'Value 1' },

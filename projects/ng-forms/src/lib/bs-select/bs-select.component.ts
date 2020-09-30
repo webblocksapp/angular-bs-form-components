@@ -43,11 +43,14 @@ import { isNull } from '../common/utils';
         [attr.data-selected-text-format]="selectedTextFormat"
         [attr.data-count-selected-text]="countSelectedText"
         [attr.data-actions-box]="actionsBox"
+        [attr.data-header]="dataHeader"
+        [attr.data-dropup-auto]="direction === 'up' ? false : true"
         class="form-control selectpicker"
         [ngClass]="{
           'is-invalid': error,
           disabled: disabled,
-          'show-tick': showTick
+          'show-tick': showTick,
+          dropup: direction === 'up'
         }"
         id="{{ id }}-bs"
       >
@@ -64,7 +67,8 @@ import { isNull } from '../common/utils';
             [attr.data-content]="option.content"
             [attr.data-subtext]="option.subtext"
             [ngStyle]="option.style"
-            [value]="option.value"
+            [attr.value]="option.value"
+            [attr.data-divider]="option.divider"
           >
             {{ option.viewValue }}
           </option>
@@ -73,6 +77,7 @@ import { isNull } from '../common/utils';
             *ngIf="option.group !== undefined"
             [label]="option.group"
             [attr.data-max-options]="option.maxOptions"
+            [attr.data-icon]="option.icon"
           >
             <option
               *ngFor="let option of option.groupValues"
@@ -85,7 +90,8 @@ import { isNull } from '../common/utils';
               [attr.data-content]="option.content"
               [attr.data-subtext]="option.subtext"
               [ngStyle]="option.style"
-              [value]="option.value"
+              [attr.value]="option.value"
+              [attr.data-divider]="option.divider"
             >
               {{ option.viewValue }}
             </option>
@@ -143,6 +149,10 @@ export class BsSelectComponent
   @Input() showTick: boolean;
   @Input() iconBase: string;
   @Input() actionsBox: boolean;
+  @Input() deselectAllText: string;
+  @Input() selectAllText: string;
+  @Input() dataHeader: string;
+  @Input() direction: string;
 
   @Output() shownEvent: EventEmitter<any> = new EventEmitter();
   @Output() hiddenEvent: EventEmitter<any> = new EventEmitter();
@@ -198,6 +208,18 @@ export class BsSelectComponent
     if (this.iconBase !== 'undefined') {
       this.configs = Object.assign(this.configs, { iconBase: this.iconBase });
     }
+
+    if (this.selectAllText !== 'undefined') {
+      this.configs = Object.assign(this.configs, {
+        selectAllText: this.selectAllText,
+      });
+    }
+
+    if (this.deselectAllText !== 'undefined') {
+      this.configs = Object.assign(this.configs, {
+        deselectAllText: this.deselectAllText,
+      });
+    }
   }
 
   disableSelectWhenOptionsAreEmpty(): void {
@@ -217,7 +239,6 @@ export class BsSelectComponent
   bindEventsToSelect(): void {
     this.select.on('change', this.select, (event) => {
       const value = this.select.val();
-
       this.onShown = false;
       this.fillModel(value);
       this.validateField();

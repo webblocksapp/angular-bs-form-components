@@ -13,7 +13,6 @@
     ></bs-select>
     <bs-select
       #dataInput
-      [actionsBox]="true"
       label="Select with max options per group"
       name="city"
       placeholder="Select an option"
@@ -24,6 +23,11 @@
       selectedTextFormat="count > 3"
       countSelectedText="Selected items {0}"
       [showTick]="true"
+      [actionsBox]="true"
+      selectAllText="Select items"
+      deselectAllText="Unselect items"
+      dataHeader="Test of header"
+      direction="up"
     ></bs-select>
   </data-group>
   <data-footer>
