@@ -12,6 +12,7 @@ import { NgSmartAdminService } from './common/services/ng-smart-admin.service';
 import { FormsModule } from '@angular/forms';
 import { Select2Component } from './demos/select2/select2.component';
 import { SelectComponent } from './demos/select/select.component';
+import { CheckboxComponent } from './demos/checkbox/checkbox.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { SelectComponent } from './demos/select/select.component';
     MenuHeaderComponent,
     Select2Component,
     SelectComponent,
+    CheckboxComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgFormsModule, FormsModule],
   providers: [StyleManagerService, ScriptManagerService, NgSmartAdminService],

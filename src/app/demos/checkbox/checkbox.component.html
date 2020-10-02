@@ -1,0 +1,17 @@
+<data-groups [model]="model">
+  <data-group>
+    <bs-checks
+      #dataInput
+      label="Checkbox example"
+      name="cities"
+      help="Select at least one option"
+      [options]="options"
+      [disabled]="disabled"
+    ></bs-checks>
+  </data-group>
+  <data-footer>
+    <button class="btn btn-primary waves-effect waves-themed" #submit>
+      Enviar
+    </button>
+  </data-footer>
+</data-groups>
