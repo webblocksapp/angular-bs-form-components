@@ -10,7 +10,6 @@ import {
   AfterContentInit,
 } from '@angular/core';
 import { DataGroupComponent } from './components/data-group.component';
-import { DataFooterComponent } from './components/data-footer.component';
 import { ValidationError } from '@webblocksapp/class-validator';
 import { BaseModel } from '../common/classes/base-model';
 import {
@@ -24,9 +23,9 @@ import { capitalize } from '../common/utils';
 @Component({
   selector: 'data-groups',
   template: `
-    <div>
+    <form (ngSubmit)="submitData()">
       <ng-content></ng-content>
-    </div>
+    </form>
   `,
 })
 export class DataGroupsComponent implements OnInit, AfterContentInit {
@@ -34,13 +33,10 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   @Input() model: Array<BaseModel>;
   @Input() group: string;
 
-  @Output() submit: EventEmitter<any> = new EventEmitter();
+  @Output() submitEvent: EventEmitter<any> = new EventEmitter();
 
   @ContentChildren(DataGroupComponent)
   dataGroupComponents: QueryList<DataGroupComponent>;
-
-  @ContentChild(DataFooterComponent)
-  dataFooterComponent: DataFooterComponent;
 
   private modelMap: Array<ModelMap>;
 
@@ -52,7 +48,6 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
 
   ngAfterContentInit(): void {
     this.initModelMap();
-    this.initSubmitDataButtons();
     this.listenQueryListChanges();
   }
 
@@ -97,16 +92,6 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
     });
   }
 
-  initSubmitDataButtons(): void {
-    const submitDataButtons = this.dataFooterComponent.getSubmitButtonsNativeElements();
-
-    submitDataButtons.forEach((submitDataButton) => {
-      submitDataButton.addEventListener('click', () => {
-        this.submitData();
-      });
-    });
-  }
-
   listenQueryListChanges(): void {
     this.dataGroupComponents.forEach((dataGroupComponent) => {
       dataGroupComponent.dataInputs.changes.subscribe(() => {
@@ -146,7 +131,7 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
       );
     });
 
-    this.submit.emit(
+    this.submitEvent.emit(
       new Promise((resolve) => {
         const currentPromise =
           promises.length > 1 ? Promise.all(promises) : promises[0];

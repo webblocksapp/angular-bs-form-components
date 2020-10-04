@@ -66,11 +66,8 @@
       name="test"
     ></bs-input>
   </data-group>
-  <data-footer>
-    <button class="btn btn-primary waves-effect waves-themed" #submit>
-      Enviar
-    </button>
-  </data-footer>
+
+  <button class="btn btn-primary waves-effect waves-themed">Enviar</button>
 </data-groups>
 
 <h3>Example of data groups</h3>
@@ -78,7 +75,7 @@
 <data-groups
   [group]="group"
   [model]="exampleModel2"
-  (submit)="onSubmit($event)"
+  (submitEvent)="onSubmit($event)"
 >
   <data-group>
     <bs-input
@@ -108,9 +105,5 @@
       placeholder="Type text here"
     ></bs-input>
   </data-group>
-  <data-footer>
-    <button class="btn btn-primary waves-effect waves-themed" #submit>
-      Enviar
-    </button>
-  </data-footer>
+  <button class="btn btn-primary waves-effect waves-themed">Enviar</button>
 </data-groups>

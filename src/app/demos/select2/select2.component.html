@@ -1,4 +1,4 @@
-<data-groups [model]="example3Model" (submit)="onSubmit($event)">
+<data-groups [model]="example3Model" (submitEvent)="onSubmit($event)">
   <data-group>
     <bs-select2
       #dataInput
@@ -32,9 +32,5 @@
       label="Multiple select"
     ></bs-select2>
   </data-group>
-  <data-footer>
-    <button class="btn btn-primary waves-effect waves-themed" #submit>
-      Enviar
-    </button>
-  </data-footer>
+  <button class="btn btn-primary waves-effect waves-themed">Enviar</button>
 </data-groups>
