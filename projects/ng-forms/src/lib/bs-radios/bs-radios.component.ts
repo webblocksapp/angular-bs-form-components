@@ -12,7 +12,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
   selector: 'bs-radios',
   template: `
     <label class="form-label" *ngIf="label">{{ label }}</label>
-    <div class="form-group" [ngClass]="{ 'form-radio': display === undefined }">
+    <div class="form-group">
       <div
         class="custom-control custom-radio"
         [ngClass]="{
@@ -53,7 +53,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
   `,
   styles: [
     `
-      .form-radio > .custom-radio {
+      .custom-radio {
         margin-bottom: 10px;
       }
     `,

@@ -12,7 +12,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
   selector: 'bs-checks',
   template: `
     <label class="form-label" *ngIf="label">{{ label }}</label>
-    <div class="form-group" [ngClass]="{ 'form-check': display === undefined }">
+    <div class="form-group">
       <div
         class="custom-control custom-checkbox"
         [ngClass]="{
@@ -52,7 +52,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
   `,
   styles: [
     `
-      .form-check > .custom-checkbox {
+      .custom-checkbox {
         margin-bottom: 10px;
       }
     `,
