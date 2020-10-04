@@ -13,9 +13,14 @@ import { DataInputBase } from '../common/classes/data-input-base';
   selector: 'bs-checks',
   template: `
     <label class="form-label" *ngIf="label">{{ label }}</label>
-    <div class="form-check form-group">
+    <div class="form-group" [ngClass]="{ 'form-check': display === undefined }">
       <div
         class="custom-control custom-checkbox"
+        [ngClass]="{
+          'custom-control-inline': display === 'inline',
+          'is-invalid': error,
+          'custom-checkbox-circle': circle
+        }"
         *ngFor="let option of options; let i = index"
       >
         <input
@@ -33,10 +38,13 @@ import { DataInputBase } from '../common/classes/data-input-base';
         <label class="custom-control-label" for="{{ id }}-{{ i }}-bs">
           {{ option.viewValue }}
         </label>
-        <ng-container *ngIf="i === options.length - 1">
+        <ng-container *ngIf="i === options.length - 1 && display === undefined">
           <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
         </ng-container>
       </div>
+      <ng-container *ngIf="display === 'inline'">
+        <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
+      </ng-container>
       <small *ngIf="help" class="form-text text-muted">
         {{ help }}
       </small>
@@ -52,6 +60,8 @@ import { DataInputBase } from '../common/classes/data-input-base';
 })
 export class BsChecksComponent extends DataInputBase implements DoCheck {
   @Input() options: Array<any>;
+  @Input() display: string;
+  @Input() circle: boolean;
 
   @ViewChildren('checkbox') checkboxes: QueryList<ElementRef>;
 
