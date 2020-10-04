@@ -53,8 +53,12 @@ import { DataInputBase } from '../common/classes/data-input-base';
   `,
   styles: [
     `
-      .custom-radio {
-        margin-bottom: 10px;
+      :host .custom-radio {
+        margin-bottom: 0.8rem;
+      }
+
+      :host .form-label {
+        margin-bottom: 0.5rem;
       }
     `,
   ],

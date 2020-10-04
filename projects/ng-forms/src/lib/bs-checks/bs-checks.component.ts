@@ -52,8 +52,12 @@ import { DataInputBase } from '../common/classes/data-input-base';
   `,
   styles: [
     `
-      .custom-checkbox {
-        margin-bottom: 10px;
+      :host .custom-checkbox {
+        margin-bottom: 0.8rem;
+      }
+
+      :host .form-label {
+        margin-bottom: 0.7rem;
       }
     `,
   ],
