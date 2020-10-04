@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { Select2Component } from './demos/select2/select2.component';
 import { SelectComponent } from './demos/select/select.component';
 import { CheckboxComponent } from './demos/checkbox/checkbox.component';
+import { RadioComponent } from './demos/radio/radio.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { CheckboxComponent } from './demos/checkbox/checkbox.component';
     Select2Component,
     SelectComponent,
     CheckboxComponent,
+    RadioComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgFormsModule, FormsModule],
   providers: [StyleManagerService, ScriptManagerService, NgSmartAdminService],

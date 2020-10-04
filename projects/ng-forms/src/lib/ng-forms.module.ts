@@ -4,6 +4,7 @@ import { DataGroupsModule } from './data-group/data-groups.module';
 import { BsSelect2Module } from './bs-select2/bs-select2.module';
 import { BsSelectModule } from './bs-select/bs-select.module';
 import { BsChecksModule } from './bs-checks/bs-checks.module';
+import { BsRadiosModule } from './bs-radios/bs-radios.module';
 
 @NgModule({
   declarations: [],
@@ -12,6 +13,7 @@ import { BsChecksModule } from './bs-checks/bs-checks.module';
     BsSelect2Module,
     BsSelectModule,
     BsChecksModule,
+    BsRadiosModule,
     DataGroupsModule,
   ],
   exports: [
@@ -19,6 +21,7 @@ import { BsChecksModule } from './bs-checks/bs-checks.module';
     BsSelect2Module,
     BsSelectModule,
     BsChecksModule,
+    BsRadiosModule,
     DataGroupsModule,
   ],
 })

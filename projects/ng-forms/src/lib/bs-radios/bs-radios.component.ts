@@ -9,26 +9,27 @@ import {
 import { DataInputBase } from '../common/classes/data-input-base';
 
 @Component({
-  selector: 'bs-checks',
+  selector: 'bs-radios',
   template: `
     <label class="form-label" *ngIf="label">{{ label }}</label>
-    <div class="form-group" [ngClass]="{ 'form-check': display === undefined }">
+    <div class="form-group" [ngClass]="{ 'form-radio': display === undefined }">
       <div
-        class="custom-control custom-checkbox"
+        class="custom-control custom-radio"
         [ngClass]="{
           'custom-control-inline': display === 'inline',
           'is-invalid': error,
-          'custom-checkbox-circle': circle,
+          'custom-radio-rounded': rounded,
           'custom-switch': switch
         }"
         *ngFor="let option of options; let i = index"
       >
         <input
-          #checkbox
-          type="checkbox"
+          #radio
+          type="radio"
           class="custom-control-input"
           [ngClass]="{ 'is-invalid': error }"
           id="{{ id }}-{{ i }}-bs"
+          name="{{ name }}-{{ id }}-bs[]"
           [attr.value]="option.value"
           [attr.checked]="option.checked"
           [attr.disabled]="option.disabled"
@@ -52,87 +53,86 @@ import { DataInputBase } from '../common/classes/data-input-base';
   `,
   styles: [
     `
-      .form-check > .custom-checkbox {
+      .form-radio > .custom-radio {
         margin-bottom: 10px;
       }
     `,
   ],
 })
-export class BsChecksComponent extends DataInputBase implements DoCheck {
+export class BsRadiosComponent extends DataInputBase implements DoCheck {
   @Input() options: Array<any>;
   @Input() display: string;
-  @Input() circle: boolean;
+  @Input() rounded: boolean;
   @Input() switch: boolean;
 
-  @ViewChildren('checkbox') checkboxes: QueryList<ElementRef>;
+  @ViewChildren('radio') radios: QueryList<ElementRef>;
 
   ngDoCheck(): void {
     this.watchModel();
   }
 
   bindWatchModelEvents(): void {
-    this.initCheckedOptions();
+    this.initCheckedOption();
   }
 
   detectPropertiesChanges(propName: string): void {
-    if (propName === 'disabled') this.enableOrDisableCheckboxes();
+    if (propName === 'disabled') this.enableOrDisableRadios();
     if (propName === 'options') {
-      this.refreshCheckboxes();
+      this.refreshRadios();
     }
   }
 
   bindClickEvents(event: any): any {
-    this.refreshCheckboxes();
+    this.refreshRadios();
     this.validateField();
     return event;
   }
 
-  getCheckboxesValues(): Array<any> {
-    const values = [];
-    this.checkboxes.forEach((checkboxElementRef) => {
-      const checkbox = checkboxElementRef.nativeElement;
+  getRadiosValue(): Array<any> {
+    let value;
 
-      if (checkbox.checked === true) {
-        values.push(checkbox.value);
+    this.radios.forEach((radioElementRef) => {
+      const radio = radioElementRef.nativeElement;
+
+      if (radio.checked === true) {
+        value = radio.value;
       }
     });
 
-    return values;
+    return value;
   }
 
-  enableOrDisableCheckboxes(): void {
+  enableOrDisableRadios(): void {
     setTimeout(() => {
-      if (this.checkboxes !== undefined) {
-        this.checkboxes.forEach((checkboxElementRef) => {
-          const checkbox = checkboxElementRef.nativeElement;
-          checkbox.disabled = this.disabled;
+      if (this.radios !== undefined) {
+        this.radios.forEach((radioElementRef) => {
+          const radio = radioElementRef.nativeElement;
+          radio.disabled = this.disabled;
         });
       }
     });
   }
 
-  initCheckedOptions(): void {
+  initCheckedOption(): void {
     setTimeout(() => {
-      this.checkboxes.forEach((checkboxElementRef) => {
-        const checkbox = checkboxElementRef.nativeElement;
-        const values = this.model.getValue(this.name);
+      this.radios.forEach((radioElementRef) => {
+        const radio = radioElementRef.nativeElement;
+        const value = this.model.getValue(this.name);
 
-        if (values !== undefined) {
-          values.forEach((value) => {
-            // tslint:disable-next-line: triple-equals
-            if (checkbox.value == value) {
-              checkbox.checked = true;
-            }
-          });
+        if (value !== undefined) {
+          // tslint:disable-next-line: triple-equals
+          if (radio.value == value) {
+            radio.checked = true;
+          }
         }
       });
     });
   }
 
-  refreshCheckboxes(): void {
-    if (this.checkboxes !== undefined) {
-      const values = this.getCheckboxesValues();
-      this.fillModel(values);
+  refreshRadios(): void {
+    if (this.radios !== undefined) {
+      const value = this.getRadiosValue();
+      this.fillModel(value);
     }
   }
 }
