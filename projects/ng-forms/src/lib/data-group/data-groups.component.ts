@@ -18,7 +18,7 @@ import {
   FormattedValidationResult,
   ModelMap,
 } from './types';
-import { capitalize } from '../common/utils';
+import { capitalize, isNull } from '../common/utils';
 
 @Component({
   selector: 'data-groups',
@@ -164,11 +164,14 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
 
   generateFormData(validatedData): any {
     const formData = new FormData();
-    const keys = Object.keys(validatedData);
 
-    keys.forEach((key) => {
-      formData.append(key, validatedData[key]);
-    });
+    if (!isNull(validatedData)) {
+      const keys = Object.keys(validatedData);
+
+      keys.forEach((key) => {
+        formData.append(key, validatedData[key]);
+      });
+    }
 
     return formData;
   }
