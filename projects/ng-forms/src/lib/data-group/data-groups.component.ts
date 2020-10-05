@@ -32,6 +32,7 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   @Input() class: string;
   @Input() model: Array<BaseModel>;
   @Input() group: string;
+  @Input() enctype: string;
 
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
 
@@ -136,14 +137,40 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
         const currentPromise =
           promises.length > 1 ? Promise.all(promises) : promises[0];
 
-        currentPromise.then(
-          (validationResults: FormattedValidationResult[]) => {
-            this.manageErrors(validationResults);
-            resolve(validationResults);
-          },
-        );
+        currentPromise.then((validationResult) => {
+          this.manageErrors(validationResult);
+
+          if (this.enctype === 'multipart/form-data') {
+            if (!Array.isArray(validationResult)) {
+              (validationResult as any).validatedData = this.generateFormData(
+                validationResult.validatedData,
+              );
+            } else {
+              (validationResult as FormattedValidationResult[]).forEach(
+                (item) => {
+                  item.validatedData = this.generateFormData(
+                    item.validatedData,
+                  );
+                },
+              );
+            }
+          }
+
+          resolve(validationResult);
+        });
       }),
     );
+  }
+
+  generateFormData(validatedData): any {
+    const formData = new FormData();
+    const keys = Object.keys(validatedData);
+
+    keys.forEach((key) => {
+      formData.append(key, validatedData[key]);
+    });
+
+    return formData;
   }
 
   formatErrors(errors: ValidationError[]): any {
