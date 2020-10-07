@@ -14,6 +14,7 @@ import { Select2Component } from './demos/select2/select2.component';
 import { SelectComponent } from './demos/select/select.component';
 import { CheckboxComponent } from './demos/checkbox/checkbox.component';
 import { RadioComponent } from './demos/radio/radio.component';
+import { FileComponent } from './demos/file/file.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { RadioComponent } from './demos/radio/radio.component';
     SelectComponent,
     CheckboxComponent,
     RadioComponent,
+    FileComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgFormsModule, FormsModule],
   providers: [StyleManagerService, ScriptManagerService, NgSmartAdminService],

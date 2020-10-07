@@ -5,6 +5,7 @@ import { BsSelect2Module } from './bs-select2/bs-select2.module';
 import { BsSelectModule } from './bs-select/bs-select.module';
 import { BsChecksModule } from './bs-checks/bs-checks.module';
 import { BsRadiosModule } from './bs-radios/bs-radios.module';
+import { BsFileModule } from './bs-file/bs-file.module';
 
 @NgModule({
   declarations: [],
@@ -15,6 +16,7 @@ import { BsRadiosModule } from './bs-radios/bs-radios.module';
     BsChecksModule,
     BsRadiosModule,
     DataGroupsModule,
+    BsFileModule,
   ],
   exports: [
     BsInputModule,
@@ -23,6 +25,7 @@ import { BsRadiosModule } from './bs-radios/bs-radios.module';
     BsChecksModule,
     BsRadiosModule,
     DataGroupsModule,
+    BsFileModule,
   ],
 })
 export class NgFormsModule {}
