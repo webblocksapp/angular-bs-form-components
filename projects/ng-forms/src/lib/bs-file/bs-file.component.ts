@@ -101,14 +101,18 @@ export class BsFileComponent extends DataInputBase {
   private clicked = false;
 
   bindChangeEvents(event: any): any {
+    const customFileLabel = this.customFileLabel.nativeElement;
     const value = this.getFileOrFiles();
 
     this.fillModel(value);
     this.validateField();
 
     setTimeout(() => {
-      if (value === undefined) {
-        this.customFileLabel.nativeElement.innerText = this.placeholder;
+      if (value === undefined || value.length === 0) {
+        customFileLabel.innerText = this.placeholder;
+      } else {
+        const fileNames = this.getFileNames(value);
+        customFileLabel.innerText = fileNames;
       }
     });
 
@@ -119,8 +123,10 @@ export class BsFileComponent extends DataInputBase {
     const value = this.getFileOrFiles();
 
     if (this.clicked === true && value === undefined) {
-      this.validateField();
-      this.clicked = false;
+      setTimeout(() => {
+        this.validateField();
+        this.clicked = false;
+      }, 100);
     }
 
     return event;
@@ -134,6 +140,23 @@ export class BsFileComponent extends DataInputBase {
   getFileOrFiles(): any {
     const files = this.fileInput.nativeElement.files;
     return this.multiple === true ? files : files[0];
+  }
+
+  getFileNames(files): string {
+    let fileNames = '';
+
+    if (files.length >= 1) {
+      const fileItems = Object.values(files);
+      fileItems.forEach((file: any) => {
+        fileNames += `${file.name}, `;
+      });
+    } else {
+      const file = files;
+      fileNames += `${file.name}`;
+      return fileNames;
+    }
+
+    return fileNames.slice(0, -2);
   }
 
   @HostListener('click')
