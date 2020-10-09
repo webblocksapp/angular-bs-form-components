@@ -3,6 +3,7 @@ import {
   ElementRef,
   HostBinding,
   HostListener,
+  Input,
   ViewChild,
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
@@ -30,16 +31,14 @@ import { DataInputBase } from '../common/classes/data-input-base';
           [attr.name]="name"
           type="file"
           [attr.disabled]="disabled"
+          [attr.multiple]="multiple"
           class="custom-file-input"
           [ngClass]="{ 'is-invalid': error }"
           id="{{ id }}-bs"
           (change)="change($event)"
+          (focus)="focus($event)"
         />
-        <label
-          class="custom-file-label"
-          [style]="'--endSlot: ' + endSlot"
-          for="{{ id }}-bs"
-        >
+        <label #customFileLabel class="custom-file-label" for="{{ id }}-bs">
           {{ placeholder }}
         </label>
       </div>
@@ -73,6 +72,12 @@ import { DataInputBase } from '../common/classes/data-input-base';
         display: block;
       }
 
+      :host .custom-file-label {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
       :host .custom-file-label::after {
         content: none !important;
       }
@@ -87,32 +92,52 @@ export class BsFileComponent extends DataInputBase {
   @HostBinding('class') class = 'form-group';
 
   @ViewChild('fileInput', { read: ElementRef }) fileInput: ElementRef;
+  @ViewChild('customFileLabel', { read: ElementRef })
+  customFileLabel: ElementRef;
+
+  @Input() multiple: boolean;
 
   public endSlotHtml = '<i class="fa fa-upload" aria-hidden="true"></i>';
+  private clicked = false;
 
-  bindFocusoutEvents(event: any): any {
+  bindChangeEvents(event: any): any {
+    const value = this.getFileOrFiles();
+
+    this.fillModel(value);
     this.validateField();
+
+    setTimeout(() => {
+      if (value === undefined) {
+        this.customFileLabel.nativeElement.innerText = this.placeholder;
+      }
+    });
+
     return event;
   }
 
-  bindKeyupEvents(event: any): any {
-    const value = event.target.value;
+  bindFocusEvents(event: any): any {
+    const value = this.getFileOrFiles();
 
-    this.fillModel(value);
+    if (this.clicked === true && value === undefined) {
+      this.validateField();
+      this.clicked = false;
+    }
+
     return event;
   }
 
   clickFileInput(): void {
+    this.clicked = true;
     this.fileInput.nativeElement.click();
   }
 
-  @HostListener('mouseenter')
-  onMouseoverHost() {
-    this.fileInput.nativeElement.focus();
+  getFileOrFiles(): any {
+    const files = this.fileInput.nativeElement.files;
+    return this.multiple === true ? files : files[0];
   }
 
-  @HostListener('mouseleave')
-  onMouseoutHost() {
-    this.fileInput.nativeElement.blur();
+  @HostListener('click')
+  onClickHost() {
+    this.clicked = true;
   }
 }

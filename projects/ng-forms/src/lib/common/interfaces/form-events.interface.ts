@@ -2,6 +2,10 @@ import { EventEmitter } from '@angular/core';
 
 export interface FormEventsInterface {
   /**
+   * focus event emitter.
+   */
+  focusEvent: EventEmitter<any>;
+  /**
    * focusout event emitter.
    */
   focusoutEvent: EventEmitter<any>;
@@ -17,6 +21,10 @@ export interface FormEventsInterface {
    * input event emitter.
    */
   inputEvent: EventEmitter<any>;
+  /**
+   * Emits focus event.
+   */
+  focus(event: any): void;
   /**
    * Emits focusout event.
    */

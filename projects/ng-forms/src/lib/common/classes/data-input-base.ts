@@ -48,6 +48,7 @@ export abstract class DataInputBase
   @Input() model: BaseModel;
   @Input() isReactiveForm = true;
 
+  @Output() focusEvent: EventEmitter<any> = new EventEmitter();
   @Output() focusoutEvent: EventEmitter<any> = new EventEmitter();
   @Output() blurEvent: EventEmitter<any> = new EventEmitter();
   @Output() changeEvent: EventEmitter<any> = new EventEmitter();
@@ -127,6 +128,15 @@ export abstract class DataInputBase
   // --------------------------------------
   // ------- Component forms events -------
   // --------------------------------------
+
+  focus(event: any): void {
+    event = this.bindFocusEvents(event);
+    this.focusEvent.emit(event);
+  }
+
+  bindFocusEvents(event: any): any {
+    return event;
+  }
 
   focusout(event: any): void {
     event = this.bindFocusoutEvents(event);

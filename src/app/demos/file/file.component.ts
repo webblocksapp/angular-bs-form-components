@@ -7,7 +7,7 @@ import { Example4Dto } from '../../common/dtos/example4.dto';
   templateUrl: './file.component.html',
 })
 export class FileComponent implements OnInit {
-  public model = new BaseModel(Example4Dto);
+  public exampleModel: BaseModel = new BaseModel(Example4Dto);
 
   ngOnInit(): void {}
 }
