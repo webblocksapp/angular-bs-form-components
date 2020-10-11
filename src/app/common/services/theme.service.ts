@@ -10,6 +10,7 @@ export class ThemeService {
       'assets/select2/css/select2.min.css',
       'assets/bootstrap-select/css/bootstrap-select.min.css',
       'assets/select2/css/select2-bootstrap.min.css',
+      'assets/bootstrap-datepicker/css/bootstrap-datepicker.min.css',
     ],
     scripts: [],
   };
@@ -24,6 +25,7 @@ export class ThemeService {
       'assets/smart-admin/css/app.bundle.css',
       'assets/select2/css/select2.bundle.css',
       'assets/bootstrap-select/css/bootstrap-select.min.css',
+      'assets/smart-admin/formplugins/bootstrap-datepicker/bootstrap-datepicker.css',
     ],
     scripts: [],
   };

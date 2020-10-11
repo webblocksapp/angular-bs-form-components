@@ -6,6 +6,7 @@ import { BsSelectModule } from './bs-select/bs-select.module';
 import { BsChecksModule } from './bs-checks/bs-checks.module';
 import { BsRadiosModule } from './bs-radios/bs-radios.module';
 import { BsFileModule } from './bs-file/bs-file.module';
+import { BsDatepickerModule } from './bs-datepicker/bs-datepicker.module';
 
 @NgModule({
   declarations: [],
@@ -17,6 +18,7 @@ import { BsFileModule } from './bs-file/bs-file.module';
     BsRadiosModule,
     DataGroupsModule,
     BsFileModule,
+    BsDatepickerModule,
   ],
   exports: [
     BsInputModule,
@@ -26,6 +28,7 @@ import { BsFileModule } from './bs-file/bs-file.module';
     BsRadiosModule,
     DataGroupsModule,
     BsFileModule,
+    BsDatepickerModule,
   ],
 })
 export class NgFormsModule {}
