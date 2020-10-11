@@ -81,6 +81,33 @@ export class BsDatepickerComponent
   inputElementRef: ElementRef;
 
   @Input() configs: any = {};
+  @Input() calendarWeeks = false;
+  @Input() clearBtn = false;
+  @Input() datesDisabled: Array<string> | string;
+  @Input() daysOfWeekDisabled: Array<string> | string;
+  @Input() daysOfWeekHighlighted: Array<string> | string;
+  @Input() defaultViewDate = 'day';
+  @Input() disableTouchKeyboard = false;
+  @Input() enableOnReadonly = true;
+  @Input() endDate: string;
+  @Input() forceParse = true;
+  @Input() format = 'yyyy-mm-dd';
+  @Input() immediateUpdates = false;
+  @Input() keyboardNavigation = true;
+  @Input() maxViewMode = 'centuries';
+  @Input() minViewMode = 'days';
+  @Input() multidate: false;
+  @Input() multidateSeparator: ', ';
+  @Input() orientation: 'auto';
+  @Input() showOnFocus = true;
+  @Input() startDate: string;
+  @Input() startView = 'days';
+  @Input() showWeekDays = true;
+  @Input() title: string;
+  @Input() todayBtn = false;
+  @Input() todayHighlight = false;
+  @Input() weekStart = 0;
+  @Input() zIndexOffset = 10;
 
   private datepicker: any;
 
@@ -106,6 +133,33 @@ export class BsDatepickerComponent
   buildDatepickerConfigs(): void {
     const defaultConfigs = {
       container: '#' + this.hostId,
+      calendarWeeks: this.calendarWeeks,
+      clearBtn: this.clearBtn,
+      defaultViewDate: this.defaultViewDate,
+      disableTouchKeyboard: this.disableTouchKeyboard,
+      datesDisabled: this.datesDisabled,
+      daysOfWeekDisabled: this.daysOfWeekDisabled,
+      daysOfWeekHighlighted: this.daysOfWeekHighlighted,
+      enableOnReadonly: this.enableOnReadonly,
+      endDate: this.endDate,
+      forceParse: this.forceParse,
+      format: this.format,
+      immediateUpdates: this.immediateUpdates,
+      keyboardNavigation: this.keyboardNavigation,
+      maxViewMode: this.maxViewMode,
+      minViewMode: this.minViewMode,
+      multidate: this.multidate,
+      multidateSeparator: this.multidateSeparator,
+      orientation: this.orientation,
+      showOnFocus: this.showOnFocus,
+      startDate: this.startDate,
+      startView: this.startView,
+      showWeekDays: this.showWeekDays,
+      title: this.title,
+      todayBtn: this.todayBtn,
+      todayHighlight: this.todayHighlight,
+      weekStart: this.weekStart,
+      zIndexOffset: this.zIndexOffset,
     };
 
     this.setDatepickerConfigsOverrides();
