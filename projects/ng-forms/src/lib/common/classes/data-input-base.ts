@@ -100,6 +100,7 @@ export abstract class DataInputBase
 
   alwaysDetectPropertiesChanges(propName: string): void {
     if (propName === 'size') this.getInputSize();
+    if (propName === 'disabled') this.computeDisabledProperty();
   }
 
   detectPropertiesChanges(propName: string): void {}
@@ -121,6 +122,20 @@ export abstract class DataInputBase
         break;
       default:
         this.inputSize = '';
+        break;
+    }
+  }
+
+  computeDisabledProperty(): void {
+    switch (this.disabled) {
+      case true:
+        this.disabled = true;
+        break;
+      case false:
+        this.disabled = undefined;
+        break;
+      default:
+        this.disabled = undefined;
         break;
     }
   }

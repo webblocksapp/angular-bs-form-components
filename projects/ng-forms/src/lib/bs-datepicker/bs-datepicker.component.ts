@@ -4,10 +4,14 @@ import {
   ElementRef,
   HostBinding,
   Input,
+  Output,
   ViewChild,
   ViewEncapsulation,
+  EventEmitter,
+  DoCheck,
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
+import { isNull } from '../common/utils';
 
 @Component({
   selector: 'bs-datepicker',
@@ -73,7 +77,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
 })
 export class BsDatepickerComponent
   extends DataInputBase
-  implements AfterViewInit {
+  implements AfterViewInit, DoCheck {
   @HostBinding('class') class = 'ng-datepicker form-group';
   @HostBinding('id') hostId: string;
 
@@ -81,6 +85,7 @@ export class BsDatepickerComponent
   inputElementRef: ElementRef;
 
   @Input() configs: any = {};
+  @Input() autoclose = true;
   @Input() calendarWeeks = false;
   @Input() clearBtn = false;
   @Input() datesDisabled: Array<string> | string;
@@ -96,7 +101,7 @@ export class BsDatepickerComponent
   @Input() keyboardNavigation = true;
   @Input() maxViewMode = 'centuries';
   @Input() minViewMode = 'days';
-  @Input() multidate: false;
+  @Input() multidate = false;
   @Input() multidateSeparator: ', ';
   @Input() orientation: 'auto';
   @Input() showOnFocus = true;
@@ -108,6 +113,17 @@ export class BsDatepickerComponent
   @Input() todayHighlight = false;
   @Input() weekStart = 0;
   @Input() zIndexOffset = 10;
+  @Input() utc = false;
+  @Input() autocomplete = false;
+
+  @Output() showEvent: EventEmitter<any> = new EventEmitter();
+  @Output() hideEvent: EventEmitter<any> = new EventEmitter();
+  @Output() clearDateEvent: EventEmitter<any> = new EventEmitter();
+  @Output() changeDateEvent: EventEmitter<any> = new EventEmitter();
+  @Output() changeMonthEvent: EventEmitter<any> = new EventEmitter();
+  @Output() changeYearEvent: EventEmitter<any> = new EventEmitter();
+  @Output() changeDecadeEvent: EventEmitter<any> = new EventEmitter();
+  @Output() changeCenturyEvent: EventEmitter<any> = new EventEmitter();
 
   private datepicker: any;
 
@@ -118,6 +134,67 @@ export class BsDatepickerComponent
   ngAfterViewInit(): void {
     this.initJQueryEl();
     this.initDatepicker();
+  }
+
+  bindFocusoutEvents(event: any): any {
+    const value = this.getValue();
+    this.fillModel(value);
+
+    setTimeout(() => {
+      if (!isNull(value)) {
+        this.validateField();
+      }
+    }, 100);
+
+    return event;
+  }
+
+  detectPropertiesChanges(propName: string): void {
+    if (this.datepicker !== undefined) {
+      if (propName === 'startDate') this.setStartDate();
+      if (propName === 'endDate') this.setEndDate();
+      if (propName === 'datesDisabled') this.setDatesDisabled();
+      if (propName === 'daysOfWeekDisabled') this.setDaysOfWeekDisabled();
+      if (propName === 'daysOfWeekHighlighted') this.setDaysOfWeekHighlighted();
+    }
+  }
+
+  setStartDate(): void {
+    this.datepicker.datepicker('setStartDate', this.startDate);
+  }
+
+  setEndDate(): void {
+    this.datepicker.datepicker('setEndDate', this.endDate);
+  }
+
+  setDatesDisabled(): void {
+    this.datepicker.datepicker('setDatesDisabled', this.datesDisabled);
+  }
+
+  setDaysOfWeekDisabled(): void {
+    this.datepicker.datepicker(
+      'setDaysOfWeekDisabled',
+      this.daysOfWeekDisabled,
+    );
+  }
+
+  setDaysOfWeekHighlighted(): void {
+    this.datepicker.datepicker(
+      'setDaysOfWeekHighlighted',
+      this.daysOfWeekHighlighted,
+    );
+  }
+
+  ngDoCheck(): void {
+    this.watchModel();
+  }
+
+  bindWatchModelEvents(): void {
+    this.initSelectedDate();
+  }
+
+  initSelectedDate(): void {
+    this.setValue();
   }
 
   initJQueryEl(): void {
@@ -132,6 +209,7 @@ export class BsDatepickerComponent
 
   buildDatepickerConfigs(): void {
     const defaultConfigs = {
+      autoclose: this.autoclose,
       container: '#' + this.hostId,
       calendarWeeks: this.calendarWeeks,
       clearBtn: this.clearBtn,
@@ -170,35 +248,105 @@ export class BsDatepickerComponent
 
   bindEventsToDatepicker(): void {
     this.datepicker.on('show', (event) => {
-      console.log('show event');
+      this.showEvent.emit(event);
     });
 
     this.datepicker.on('hide', (event) => {
-      console.log('hide event');
+      const value = this.getValue();
+
+      if (isNull(value)) {
+        this.validateField();
+      }
+
+      this.hideEvent.emit(event);
     });
 
     this.datepicker.on('clearDate', (event) => {
-      console.log('clearDate event');
+      this.clearDateEvent.emit(event);
     });
 
     this.datepicker.on('changeDate', (event) => {
-      console.log('changeDate event');
+      const value = this.getValue();
+
+      this.fillModel(value);
+      this.validateField();
+
+      this.changeDateEvent.emit(event);
     });
 
     this.datepicker.on('changeMonth', (event) => {
-      console.log('changeMonth event');
+      this.changeMonthEvent.emit(event);
     });
 
     this.datepicker.on('changeYear', (event) => {
-      console.log('changeYear event');
+      this.changeYearEvent.emit(event);
     });
 
     this.datepicker.on('changeDecade', (event) => {
-      console.log('changeDecade event');
+      this.changeDecadeEvent.emit(event);
     });
 
     this.datepicker.on('changeCentury', (event) => {
-      console.log('changeCentury event');
+      this.changeCenturyEvent.emit(event);
     });
+
+    /**
+     * Disables autocomplete
+     */
+    if (this.autocomplete === false) {
+      this.datepicker.attr('autocomplete', 'off');
+    }
+  }
+
+  getValue(): any {
+    if (this.multidate === true) {
+      return this.getDates();
+    }
+
+    return this.getDate();
+  }
+
+  setValue(): void {
+    const value = this.model.getValue(this.name);
+
+    if (value !== undefined) {
+      if (this.multidate === true) {
+        this.setDates(value);
+      }
+
+      this.setDate(value);
+    }
+  }
+
+  setDate(value): void {
+    if (this.utc === true) {
+      this.datepicker.datepicker('setUTCDate', value);
+    }
+
+    this.datepicker.datepicker('setDate', value);
+  }
+
+  setDates(value): void {
+    if (this.utc === true) {
+      this.datepicker.datepicker('setUTCDates', value);
+    }
+
+    this.datepicker.datepicker('setDates', value);
+  }
+
+  getDate(): any {
+    if (this.utc === true) {
+      return this.datepicker.datepicker('getUTCDate');
+    }
+
+    return this.datepicker.datepicker('getDate');
+  }
+
+  getDates(): any {
+    if (this.utc === true) {
+      return this.datepicker.datepicker('getUTCDates');
+    }
+
+    return this.datepicker.datepicker('getDates');
   }
 }

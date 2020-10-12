@@ -1,1 +1,14 @@
-<bs-datepicker></bs-datepicker>
+<data-groups [model]="exampleModel5">
+  <data-group>
+    <bs-datepicker
+      #dataInput
+      label="Example date"
+      placeholder="YYYY-MM-DD"
+      name="date"
+      [clearBtn]="true"
+      [startDate]="'2020-01-01'"
+      [disabled]="disabled"
+      [daysOfWeekDisabled]="daysOfWeekDisabled"
+    ></bs-datepicker>
+  </data-group>
+</data-groups>

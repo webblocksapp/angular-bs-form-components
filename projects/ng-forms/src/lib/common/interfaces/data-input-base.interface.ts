@@ -67,6 +67,10 @@ export interface DataInputBaseInterface {
    */
   getInputSize(): void;
   /**
+   * Computes disabled state
+   */
+  computeDisabledProperty(): void;
+  /**
    * Parent component method to set default component configs.
    * Do not override this method on a child component
    * that inherits it.
