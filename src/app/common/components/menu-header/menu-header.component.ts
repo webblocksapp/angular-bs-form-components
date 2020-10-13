@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 import { ThemeService } from '../../services/theme.service';
 import { NgSmartAdminService } from '../../services/ng-smart-admin.service';
 
@@ -6,9 +6,19 @@ import { NgSmartAdminService } from '../../services/ng-smart-admin.service';
   selector: 'app-menu-header',
   template: `
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="#">Angular Bootstrap Input Component</a>
+      <a class="navbar-brand" href="#">NG Forms</a>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link"
+              routerLink="docs"
+              role="button"
+              data-toggle="dropdown"
+            >
+              Documentation
+            </a>
+          </li>
           <li class="nav-item dropdown">
             <a
               class="nav-link dropdown-toggle"
@@ -34,10 +44,18 @@ import { NgSmartAdminService } from '../../services/ng-smart-admin.service';
       </div>
     </nav>
   `,
-  styles: [``],
+  styles: [
+    `
+      :host > nav {
+        width: 100%;
+      }
+    `,
+  ],
   providers: [ThemeService],
 })
 export class MenuHeaderComponent implements OnInit {
+  @HostBinding('class') class = 'row';
+
   constructor(
     private readonly themeService: ThemeService,
     private readonly ngSmartAdminService: NgSmartAdminService,

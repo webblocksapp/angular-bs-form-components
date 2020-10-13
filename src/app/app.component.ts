@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-root',
   template: `
-    <app-menu-header></app-menu-header>
-    <div class="page-content p-4">
+    <div class="container-fluid min-vh-100 d-flex flex-column">
+      <app-menu-header></app-menu-header>
       <router-outlet></router-outlet>
     </div>
   `,

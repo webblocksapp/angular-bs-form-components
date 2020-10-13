@@ -3,33 +3,15 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BasicInputComponent } from './demos/basic-input/basic-input.component';
-import { NgFormsModule } from 'projects/ng-forms/src/public-api';
 import { MenuHeaderComponent } from './common/components/menu-header/menu-header.component';
+import { NgFormsModule } from 'projects/ng-forms/src/public-api';
 import { StyleManagerService } from './common/services/style-manager.service';
 import { ScriptManagerService } from './common/services/script-manager.service';
 import { NgSmartAdminService } from './common/services/ng-smart-admin.service';
-import { FormsModule } from '@angular/forms';
-import { Select2Component } from './demos/select2/select2.component';
-import { SelectComponent } from './demos/select/select.component';
-import { CheckboxComponent } from './demos/checkbox/checkbox.component';
-import { RadioComponent } from './demos/radio/radio.component';
-import { FileComponent } from './demos/file/file.component';
-import { DatepickerComponent } from './demos/datepicker/datepicker.component';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    BasicInputComponent,
-    MenuHeaderComponent,
-    Select2Component,
-    SelectComponent,
-    CheckboxComponent,
-    RadioComponent,
-    FileComponent,
-    DatepickerComponent,
-  ],
-  imports: [BrowserModule, AppRoutingModule, NgFormsModule, FormsModule],
+  declarations: [AppComponent, MenuHeaderComponent],
+  imports: [BrowserModule, AppRoutingModule, NgFormsModule],
   providers: [StyleManagerService, ScriptManagerService, NgSmartAdminService],
   bootstrap: [AppComponent],
 })
