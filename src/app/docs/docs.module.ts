@@ -1,12 +1,11 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
 import { DocsRoutingModule } from './docs-routing.module';
+import { IntroductionComponent } from './introduction/introduction.component';
+import { SharedModule } from '../shared/shared.module';
 import { DocsComponent } from './docs.component';
-import { SidebarComponent } from '../common/components/sidebar/sidebar.component';
 
 @NgModule({
-  declarations: [DocsComponent, SidebarComponent],
-  imports: [CommonModule, DocsRoutingModule],
+  declarations: [DocsComponent, IntroductionComponent],
+  imports: [DocsRoutingModule, SharedModule],
 })
 export class DocsModule {}
