@@ -68,9 +68,9 @@ export class SidebarComponent {
     {
       title: 'Getting started',
       children: [
-        { title: 'Setup', path: '/getting-started/setup' },
-        { title: 'Main concepts', path: '/getting-started/main-concepts' },
-        { title: 'Main components', path: '/getting-started/main-components' },
+        { title: 'Setup', path: '/docs/setup' },
+        { title: 'Main concepts', path: '/docs/main-concepts' },
+        { title: 'Main components', path: '/docs/main-components' },
       ],
       collapsed: true,
     },

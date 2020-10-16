@@ -5,6 +5,7 @@ import { MenuHeaderComponent } from './components/menu-header/menu-header.compon
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { DocsContainerComponent } from './components/docs-container/docs-container.component';
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,16 @@ import { DocsContainerComponent } from './components/docs-container/docs-contain
     OverviewComponent,
     SidebarComponent,
     DocsContainerComponent,
+    HighlightModule,
   ],
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HighlightModule],
+  providers: [
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        fullLibraryLoader: () => import('highlight.js'),
+      },
+    },
+  ],
 })
 export class SharedModule {}
