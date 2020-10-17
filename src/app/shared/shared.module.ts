@@ -6,6 +6,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { OverviewComponent } from './components/overview/overview.component';
 import { DocsContainerComponent } from './components/docs-container/docs-container.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
+import { TabsComponent } from './components/tabs/tabs.component';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     OverviewComponent,
     SidebarComponent,
     DocsContainerComponent,
+    TabsComponent,
   ],
   exports: [
     CommonModule,
@@ -21,6 +23,7 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
     SidebarComponent,
     DocsContainerComponent,
     HighlightModule,
+    TabsComponent,
   ],
   imports: [CommonModule, RouterModule, HighlightModule],
   providers: [

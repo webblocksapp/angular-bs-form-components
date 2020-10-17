@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-overview',
-  template: `Example works!`,
+  template: ``,
 })
 export class OverviewComponent implements OnInit {
   constructor() {}
