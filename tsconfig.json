@@ -18,7 +18,7 @@
         "dist/ng-bs-form-components/ng-bs-form-components",
         "dist/ng-bs-form-components"
       ],
-      "@common": ["app/common/*"]
+      "@shared/*": ["src/app/shared/*"]
     }
   },
   "angularCompilerOptions": {

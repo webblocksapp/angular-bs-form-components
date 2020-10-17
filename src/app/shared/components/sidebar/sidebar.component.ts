@@ -66,13 +66,16 @@ export class SidebarComponent {
       path: '/docs',
     },
     {
-      title: 'Getting started',
-      children: [
-        { title: 'Setup', path: '/docs/setup' },
-        { title: 'Main concepts', path: '/docs/main-concepts' },
-        { title: 'Main components', path: '/docs/main-components' },
-      ],
-      collapsed: true,
+      title: 'Setup',
+      path: '/docs/setup',
+    },
+    {
+      title: 'Main components',
+      division: true,
+    },
+    {
+      title: 'Data Groups',
+      path: '/docs/data-groups',
     },
     {
       title: 'Bootstrap components',

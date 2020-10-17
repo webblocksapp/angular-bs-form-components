@@ -19,17 +19,23 @@ import {
           structures and convert them into UI data inputs easily.
         </p>
 
-        <p>
-          NG Forms makes a compilation of the most common used data input
-          components as for example <code>bootstrap-datepicker</code>,
-          <code>bootstrap-select</code>, <code>select2</code>,
-          <code>etc...</code>
-        </p>
-
-        <p>
-          All of these components are angularized and ready to use in an easy
-          way.
-        </p>
+        <h5 #marker class="mt-4">Advantages of using NG Forms</h5>
+        <ul>
+          <li>
+            It makes a compilation of the most common used data input components
+            on the web industry. All of these components are angularized and
+            ready to use in an easy way.
+          </li>
+          <li>
+            It provides an small framework powered with a modified version of
+            <code>typestack/class-validator</code> to validate complex data
+            models from UI data form input components easily.
+          </li>
+          <li>
+            You can use it's core functionalities when building your custom
+            components to manage data.
+          </li>
+        </ul>
 
         <h5 #marker class="mt-4">Getting started</h5>
 

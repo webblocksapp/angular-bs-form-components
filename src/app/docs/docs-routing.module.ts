@@ -11,6 +11,16 @@ const routes: Routes = [
     children: [
       { path: '', component: IntroductionComponent },
       { path: 'setup', component: SetupComponent },
+      {
+        path: 'data-groups',
+        loadChildren: () =>
+          import('./data-groups/index.module').then((m) => m.IndexModule),
+      },
+      {
+        path: 'example-template',
+        loadChildren: () =>
+          import('./example-template/index.module').then((m) => m.IndexModule),
+      },
     ],
   },
 ];
