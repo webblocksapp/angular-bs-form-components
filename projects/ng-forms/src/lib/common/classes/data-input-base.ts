@@ -1,14 +1,4 @@
-import {
-  Input,
-  Output,
-  EventEmitter,
-  OnInit,
-  OnChanges,
-  SimpleChanges,
-  HostBinding,
-  KeyValueDiffers,
-  KeyValueDiffer,
-} from '@angular/core';
+import { Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, HostBinding, KeyValueDiffers, KeyValueDiffer, Directive } from '@angular/core';
 
 import {
   DataInputBaseInterface,
@@ -22,6 +12,7 @@ import { InputType, InputSize } from '../types';
 import { capitalize } from '../utils';
 
 // tslint:disable-next-line: no-conflicting-lifecycle
+@Directive()
 export abstract class DataInputBase
   implements
     OnInit,

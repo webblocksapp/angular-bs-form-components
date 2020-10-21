@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DocsBase } from '@shared/classes/docs-base';
+import { DocsBase } from '@shared/classes';
 
 @Component({
   selector: 'app-api',

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { DocsBaseRouter } from '@shared/classes/docs-base-router';
+import { DocsBaseRouter } from '@shared/classes';
 
 @Component({
   selector: 'app-data-groups',
