@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { DocsBaseRouter } from '@shared/classes/docs-base-router';
 
 @Component({
   selector: 'app-data-groups',
   template: `
-    <app-tabs></app-tabs>
-    <router-outlet></router-outlet>
+    <app-docs-container [markers]="markers">
+      <h5 class="mb-4">Data Groups</h5>
+      <app-tabs></app-tabs>
+      <div class="pt-3">
+        <router-outlet (activate)="onActivate($event)"></router-outlet>
+      </div>
+    </app-docs-container>
   `,
 })
-export class IndexComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class IndexComponent extends DocsBaseRouter {}

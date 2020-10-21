@@ -1,10 +1,5 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  QueryList,
-  ViewChildren,
-} from '@angular/core';
+import { Component } from '@angular/core';
+import { DocsBase } from '@shared/classes/docs-base';
 
 @Component({
   selector: 'app-introduction',
@@ -65,10 +60,7 @@ import {
     </app-docs-container>
   `,
 })
-export class SetupComponent implements AfterViewInit {
-  @ViewChildren('marker') targets: QueryList<ElementRef>;
-
-  public markers: QueryList<ElementRef>;
+export class SetupComponent extends DocsBase {
   public tsconfigCode = `  ...
     "compilerOptions": {
       "outDir": "./out-tsc/app",
@@ -96,9 +88,4 @@ export class SetupComponent implements AfterViewInit {
     ]
   ...
   `;
-  ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.markers = this.targets;
-    });
-  }
 }

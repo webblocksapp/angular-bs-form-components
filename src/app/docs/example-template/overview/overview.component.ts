@@ -1,11 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { DocsBase } from '@shared/classes/docs-base';
 
 @Component({
   selector: 'app-overview',
   template: ``,
 })
-export class OverviewComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit(): void {}
-}
+export class OverviewComponent extends DocsBase {}
