@@ -9,7 +9,7 @@ declare var require: any;
 })
 export class ExamplesComponent extends DocsBase {
   ngAfterViewInit() {
-    const myText = require('!raw-loader!./example.ts').default;
-    console.log(myText);
+    //const myText = require('!raw-loader!./example.ts').default;
+    //console.log(myText);
   }
 }

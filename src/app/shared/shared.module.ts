@@ -7,6 +7,12 @@ import { OverviewComponent } from './components/overview/overview.component';
 import { DocsContainerComponent } from './components/docs-container/docs-container.component';
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { TabsComponent } from './components/tabs/tabs.component';
+import { CodeExampleComponent } from './components/code-example/code-example.component';
+import { HtmlComponent } from './components/code-example/html.component';
+import { CssComponent } from './components/code-example/css.component';
+import { TsComponent } from './components/code-example/ts.component';
+import { DtoComponent } from './components/code-example/dto.component';
+import { RunningCodeComponent } from './components/code-example/running-code.component';
 
 @NgModule({
   declarations: [
@@ -15,6 +21,12 @@ import { TabsComponent } from './components/tabs/tabs.component';
     SidebarComponent,
     DocsContainerComponent,
     TabsComponent,
+    CodeExampleComponent,
+    HtmlComponent,
+    CssComponent,
+    TsComponent,
+    DtoComponent,
+    RunningCodeComponent,
   ],
   exports: [
     CommonModule,
@@ -24,6 +36,12 @@ import { TabsComponent } from './components/tabs/tabs.component';
     DocsContainerComponent,
     HighlightModule,
     TabsComponent,
+    CodeExampleComponent,
+    HtmlComponent,
+    CssComponent,
+    TsComponent,
+    DtoComponent,
+    RunningCodeComponent,
   ],
   imports: [CommonModule, RouterModule, HighlightModule],
   providers: [
