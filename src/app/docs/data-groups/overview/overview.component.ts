@@ -10,11 +10,7 @@ import { DocsBase } from '@shared/classes';
       it binds the model data into each one.
     </p>
 
-    <app-code-example title="Data groups Overview">
-      <app-running-code>running code works!</app-running-code>
-      <app-html>html works!</app-html>
-      <app-css>css works!</app-css>
-    </app-code-example>
+    <demo-overview-1></demo-overview-1>
   `,
 })
 export class OverviewComponent extends DocsBase {}

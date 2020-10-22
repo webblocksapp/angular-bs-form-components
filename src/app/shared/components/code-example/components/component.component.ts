@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-ts',
+  selector: 'app-component',
   template: `<ng-content></ng-content>`,
 })
-export class TsComponent implements OnInit {
+export class ComponentComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

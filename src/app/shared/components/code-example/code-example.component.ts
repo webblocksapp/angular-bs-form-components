@@ -1,8 +1,8 @@
-import { Component, ContentChild, ElementRef, Input } from '@angular/core';
-import { CssComponent } from './css.component';
-import { DtoComponent } from './dto.component';
-import { HtmlComponent } from './html.component';
-import { TsComponent } from './ts.component';
+import { Component, ContentChild, Input } from '@angular/core';
+import { CssComponent } from './components/css.component';
+import { DtoComponent } from './components/dto.component';
+import { HtmlComponent } from './components/html.component';
+import { ComponentComponent } from './components/component.component';
 
 @Component({
   selector: 'app-code-example',
@@ -26,8 +26,9 @@ import { TsComponent } from './ts.component';
                 class="nav-link"
                 [ngClass]="{ active: template === 'html' }"
                 (click)="showTab('html')"
-                >HTML</a
               >
+                HTML
+              </a>
             </li>
             <li *ngIf="css" class="nav-item">
               <a
@@ -37,13 +38,14 @@ import { TsComponent } from './ts.component';
                 >CSS</a
               >
             </li>
-            <li *ngIf="ts" class="nav-item">
+            <li *ngIf="component" class="nav-item">
               <a
                 class="nav-link"
-                [ngClass]="{ active: template === 'ts' }"
-                (click)="showTab('ts')"
-                >TS</a
+                [ngClass]="{ active: template === 'component' }"
+                (click)="showTab('component')"
               >
+                Component
+              </a>
             </li>
             <li *ngIf="dto" class="nav-item">
               <a
@@ -51,7 +53,7 @@ import { TsComponent } from './ts.component';
                 [ngClass]="{ active: template === 'dto' }"
                 (click)="showTab('dto')"
               >
-                TS (DTO)
+                DTO
               </a>
             </li>
           </ul>
@@ -65,7 +67,10 @@ import { TsComponent } from './ts.component';
               *ngIf="template === 'css'"
               select="app-css"
             ></ng-content>
-            <ng-content *ngIf="template === 'ts'" select="app-ts"></ng-content>
+            <ng-content
+              *ngIf="template === 'component'"
+              select="app-component"
+            ></ng-content>
             <ng-content
               *ngIf="template === 'dto'"
               select="app-dto"
@@ -88,7 +93,7 @@ export class CodeExampleComponent {
   @Input() title: string;
   @ContentChild(HtmlComponent) html: HtmlComponent;
   @ContentChild(CssComponent) css: CssComponent;
-  @ContentChild(TsComponent) ts: TsComponent;
+  @ContentChild(ComponentComponent) component: ComponentComponent;
   @ContentChild(DtoComponent) dto: DtoComponent;
 
   public codeMode = false;
