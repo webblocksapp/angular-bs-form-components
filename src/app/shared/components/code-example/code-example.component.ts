@@ -8,13 +8,13 @@ import {
 import { CodeBlockComponent } from './components/code-block.component';
 
 @Component({
-  selector: 'app-code-example',
+  selector: 'code-example',
   template: `
     <div class="card">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <h5 *ngIf="title" class="card-title">{{ title }}</h5>
-          <div class="d-flex">
+          <h5 *ngIf="label" class="card-title">{{ label }}</h5>
+          <div *ngIf="tabs.length" class="d-flex">
             <i class="i-btn fas fa-code" (click)="toggleCodeMode()"></i>
           </div>
         </div>
@@ -70,16 +70,17 @@ import { CodeBlockComponent } from './components/code-block.component';
   ],
 })
 export class CodeExampleComponent implements AfterContentInit {
-  @Input() title: string;
+  @Input() label: string;
   @ContentChildren(CodeBlockComponent)
   codeBlocks: QueryList<CodeBlockComponent>;
 
   public codeMode = false;
-  public template = 'html';
+  public template: string;
   public tabs: Array<any> = [];
 
   ngAfterContentInit(): void {
     this.initTabs();
+    this.initTemplate();
   }
 
   initTabs(): void {
@@ -90,6 +91,14 @@ export class CodeExampleComponent implements AfterContentInit {
         this.tabs.push({ type: codeBlock.type, title: codeBlock.title });
       }
     });
+  }
+
+  initTemplate(): void {
+    const filteredTabs = this.tabs.filter((tab) => tab.type !== 'running-code');
+
+    if (filteredTabs.length) {
+      this.template = filteredTabs[0].type;
+    }
   }
 
   toggleCodeMode(): void {

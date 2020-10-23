@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { BaseModel } from '@webblocksapp/ng-forms';
+import { ExampleDto1 } from './dtos/example-dto-1.dto';
 
 @Component({
   selector: 'running-code',
-  template: `running code works!`,
+  templateUrl: './running-code.component.html',
 })
-export class RunningCodeComponent implements OnInit {
-  constructor() {}
-
-  ngOnInit() {}
+export class RunningCodeComponent {
+  public ExampleModel1 = new BaseModel(ExampleDto1);
 }

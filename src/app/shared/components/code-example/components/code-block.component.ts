@@ -13,6 +13,9 @@ import {
     <ng-template #ref>
       <div class="w-100">
         <ng-content></ng-content>
+        <pre *ngIf="code" class="d-flex mb-0">
+          <code class="w-100" [highlight]="code" [languages]="[language]"></code>
+        </pre>
       </div>
     </ng-template>
   `,
@@ -23,6 +26,8 @@ export class CodeBlockComponent implements OnInit, AfterViewInit {
 
   @Input() type: string;
   @Input() title: string;
+  @Input() code: string;
+  @Input() language: string;
 
   private defaultTitles = {
     html: 'HTML',

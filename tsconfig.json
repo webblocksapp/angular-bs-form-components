@@ -19,7 +19,8 @@
         "dist/ng-bs-form-components/ng-bs-form-components",
         "dist/ng-bs-form-components"
       ],
-      "@shared/*": ["src/app/shared/*"]
+      "@shared/*": ["src/app/shared/*"],
+      "@webblocksapp/ng-forms": ["projects/ng-forms/src/public-api"]
     }
   },
   "angularCompilerOptions": {

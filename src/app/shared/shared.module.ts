@@ -8,6 +8,7 @@ import { DocsContainerComponent } from './components/docs-container/docs-contain
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { CodeExampleModule } from './components/code-example/code-example.module';
+import { NgFormsModule } from 'projects/ng-forms/src/public-api';
 
 @NgModule({
   declarations: [
@@ -26,8 +27,15 @@ import { CodeExampleModule } from './components/code-example/code-example.module
     HighlightModule,
     CodeExampleModule,
     TabsComponent,
+    NgFormsModule,
   ],
-  imports: [CommonModule, RouterModule, HighlightModule, CodeExampleModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    HighlightModule,
+    CodeExampleModule,
+    NgFormsModule,
+  ],
   providers: [
     {
       provide: HIGHLIGHT_OPTIONS,
