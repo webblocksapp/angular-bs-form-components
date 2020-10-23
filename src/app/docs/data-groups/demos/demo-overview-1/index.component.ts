@@ -6,13 +6,8 @@ declare var require: any;
   selector: 'demo-overview-1',
   template: `
     <app-code-example title="Data groups Overview">
-      <app-running-code>running code works!</app-running-code>
-      <app-html>html works!</app-html>
-      <app-component>
-        <code>
-          <pre>{{ componentCode }}</pre>
-        </code>
-      </app-component>
+      <code-block type="running-code">Running code works!</code-block>
+      <code-block type="html">Html works!</code-block>
     </app-code-example>
   `,
 })

@@ -1,8 +1,11 @@
-import { Component, ContentChild, Input } from '@angular/core';
-import { CssComponent } from './components/css.component';
-import { DtoComponent } from './components/dto.component';
-import { HtmlComponent } from './components/html.component';
-import { ComponentComponent } from './components/component.component';
+import {
+  AfterContentInit,
+  Component,
+  ContentChildren,
+  Input,
+  QueryList,
+} from '@angular/core';
+import { CodeBlockComponent } from './components/code-block.component';
 
 @Component({
   selector: 'app-code-example',
@@ -17,65 +20,42 @@ import { ComponentComponent } from './components/component.component';
         </div>
 
         <div *ngIf="!codeMode">
-          <ng-content select="app-running-code"></ng-content>
+          <ng-content select="[running-code]"></ng-content>
         </div>
         <div *ngIf="codeMode">
           <ul class="nav nav-tabs">
-            <li *ngIf="html" class="nav-item">
-              <a
-                class="nav-link"
-                [ngClass]="{ active: template === 'html' }"
-                (click)="showTab('html')"
+            <ng-container *ngFor="let tab of tabs">
+              <li
+                *ngIf="tab.type && tab.type !== 'running-code'"
+                class="nav-item"
               >
-                HTML
-              </a>
-            </li>
-            <li *ngIf="css" class="nav-item">
-              <a
-                class="nav-link"
-                [ngClass]="{ active: template === 'css' }"
-                (click)="showTab('css')"
-                >CSS</a
-              >
-            </li>
-            <li *ngIf="component" class="nav-item">
-              <a
-                class="nav-link"
-                [ngClass]="{ active: template === 'component' }"
-                (click)="showTab('component')"
-              >
-                Component
-              </a>
-            </li>
-            <li *ngIf="dto" class="nav-item">
-              <a
-                class="nav-link"
-                [ngClass]="{ active: template === 'dto' }"
-                (click)="showTab('dto')"
-              >
-                DTO
-              </a>
-            </li>
+                <a
+                  class="nav-link"
+                  [ngClass]="{ active: template === tab.type }"
+                  (click)="showTab(tab.type)"
+                >
+                  {{ tab.title }}
+                </a>
+              </li>
+            </ng-container>
           </ul>
+        </div>
 
-          <div class="mt-4">
-            <ng-content
-              *ngIf="template === 'html'"
-              select="app-html"
-            ></ng-content>
-            <ng-content
-              *ngIf="template === 'css'"
-              select="app-css"
-            ></ng-content>
-            <ng-content
-              *ngIf="template === 'component'"
-              select="app-component"
-            ></ng-content>
-            <ng-content
-              *ngIf="template === 'dto'"
-              select="app-dto"
-            ></ng-content>
-          </div>
+        <div class="mt-3">
+          <ng-container *ngFor="let codeBlock of codeBlocks">
+            <ng-container
+              *ngIf="
+                codeBlock.type === template &&
+                template !== 'running-code' &&
+                codeMode === true
+              "
+              [ngTemplateOutlet]="codeBlock.templateRef"
+            ></ng-container>
+            <ng-container
+              *ngIf="codeBlock.type === 'running-code' && codeMode === false"
+              [ngTemplateOutlet]="codeBlock.templateRef"
+            ></ng-container>
+          </ng-container>
         </div>
       </div>
     </div>
@@ -89,15 +69,28 @@ import { ComponentComponent } from './components/component.component';
     `,
   ],
 })
-export class CodeExampleComponent {
+export class CodeExampleComponent implements AfterContentInit {
   @Input() title: string;
-  @ContentChild(HtmlComponent) html: HtmlComponent;
-  @ContentChild(CssComponent) css: CssComponent;
-  @ContentChild(ComponentComponent) component: ComponentComponent;
-  @ContentChild(DtoComponent) dto: DtoComponent;
+  @ContentChildren(CodeBlockComponent)
+  codeBlocks: QueryList<CodeBlockComponent>;
 
   public codeMode = false;
   public template = 'html';
+  public tabs: Array<any> = [];
+
+  ngAfterContentInit(): void {
+    this.initTabs();
+  }
+
+  initTabs(): void {
+    this.codeBlocks.forEach((codeBlock) => {
+      const tabExists = this.tabs.filter((tab) => tab.type === codeBlock.type);
+
+      if (tabExists.length === 0) {
+        this.tabs.push({ type: codeBlock.type, title: codeBlock.title });
+      }
+    });
+  }
 
   toggleCodeMode(): void {
     this.codeMode = !this.codeMode;
