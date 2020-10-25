@@ -1,1 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
+pre {
+  display: flex !important;
+  margin-bottom: 0px !important;
+}
+pre code {
+  width: 100% !important;
+}

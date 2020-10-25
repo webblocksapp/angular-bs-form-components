@@ -114,14 +114,13 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
           map.model
             .validate(groups)
             .then((validationResult: ValidationResult) => {
-              const { isValid, validatedData, errors } = validationResult;
+              const { isValid, errors } = validationResult;
               if (isValid) {
                 resolve(validationResult);
               } else {
                 const formattedErrors: Error[] = this.formatErrors(errors);
                 const formattedValidationResult: FormattedValidationResult = {
                   isValid,
-                  validatedData,
                   errors: formattedErrors,
                 };
 
@@ -203,6 +202,7 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
       if (isValid) {
         dataInputComponents.forEach((dataInputComponent) => {
           dataInputComponent.error = null;
+          dataInputComponent.component.error = dataInputComponent.error;
         });
       } else {
         dataInputComponents.forEach((dataInputComponent) => {
