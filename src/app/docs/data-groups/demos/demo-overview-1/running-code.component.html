@@ -12,9 +12,36 @@
       placeholder="Type text here"
       name="email"
     ></bs-input>
+    <bs-radios
+      #dataInput
+      label="Gender"
+      name="gender"
+      [options]="genders"
+    ></bs-radios>
+    <bs-select
+      #dataInput
+      label="Birth city"
+      placeholder="Select a city"
+      name="birthCity"
+      [options]="cities"
+    ></bs-select>
+    <bs-datepicker
+      #dataInput
+      label="Birth date"
+      placeholder="YYYY-MM-DD"
+      name="birthDate"
+    ></bs-datepicker>
+    <bs-checks
+      #dataInput
+      label="Favorite foods"
+      name="favoriteFoods"
+      [options]="favoriteFoods"
+    ></bs-checks>
     <button class="btn btn-primary">Send</button>
   </data-group>
 </data-groups>
+
+<!-- Validation alerts -->
 <div *ngIf="errors" class="mt-3 alert alert-danger">
   <p>Your form contains errors:</p>
   <pre>
