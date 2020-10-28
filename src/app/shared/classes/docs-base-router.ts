@@ -1,9 +1,9 @@
-import { ElementRef, QueryList } from '@angular/core';
-
 export class DocsBaseRouter {
-  public markers: QueryList<ElementRef>;
+  public markers: any = [];
 
   onActivate(event: any): void {
-    this.markers = event.markers;
+    setTimeout(() => {
+      this.markers = event.markers;
+    }, 100);
   }
 }

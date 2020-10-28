@@ -3,7 +3,7 @@ import { Component, ElementRef, Input } from '@angular/core';
 @Component({
   selector: 'app-overview',
   template: `
-    <div class="pl-3" *ngIf="markers !== undefined">
+    <div class="pl-3" *ngIf="markers.length">
       <ul class="navbar-nav">
         <li
           class="nav-item dropdown"

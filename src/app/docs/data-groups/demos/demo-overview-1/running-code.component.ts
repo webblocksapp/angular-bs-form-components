@@ -12,7 +12,7 @@ export class RunningCodeComponent {
   public validatedData: ExampleDto1 = null;
   public JSON = JSON;
 
-  public ExampleModel1 = new BaseModel(ExampleDto1);
+  public ExampleModel1: BaseModel = new BaseModel(ExampleDto1);
 
   public genders = [
     { value: 1, viewValue: 'Male' },

@@ -1,0 +1,60 @@
+<data-groups [model]="bookModels">
+  <div class="d-flex align-items-center mb-3">
+    <button
+      type="button"
+      [disabled]="this.numberOfBooks >= this.maxNumberOfBooks"
+      class="btn btn-secondary"
+      (click)="addBook()"
+    >
+      Add book
+    </button>
+    <span class="ml-2">
+      {{ numberOfBooks }} of <b>{{ maxNumberOfBooks }}</b></span
+    >
+  </div>
+  <data-group
+    class="card mb-3"
+    *ngFor="let n of Array(numberOfBooks); let i = index"
+  >
+    <div class="card-body">
+      <div class="card-title d-flex justify-content-between">
+        <span>
+          <b>Book {{ i + 1 }}</b>
+        </span>
+        <button
+          type="button"
+          *ngIf="numberOfBooks > 1"
+          class="btn btn-danger"
+          (click)="deleteBook(i)"
+        >
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <bs-input
+        #dataInput
+        label="Name"
+        name="name"
+        placeholder="Type text here"
+      ></bs-input>
+      <bs-input
+        #dataInput
+        label="Author"
+        name="author"
+        placeholder="Type text here"
+      ></bs-input>
+      <bs-input
+        #dataInput
+        label="Editorial"
+        name="editorial"
+        placeholder="Type text here"
+      ></bs-input>
+      <bs-datepicker
+        #dataInput
+        label="Print date"
+        name="printDate"
+        placeholder="YYYY-MM-DD"
+      ></bs-datepicker>
+    </div>
+  </data-group>
+  <button class="btn btn-primary">Send</button>
+</data-groups>

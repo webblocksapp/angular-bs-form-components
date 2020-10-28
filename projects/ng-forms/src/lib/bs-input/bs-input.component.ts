@@ -17,10 +17,9 @@ import { DataInputBase } from '../common/classes/data-input-base';
       <div *ngIf="startSlotHtml" class="input-group-prepend">
         <span class="input-group-text" [innerHTML]="startSlotHtml"></span>
       </div>
-
       <input
         [attr.name]="name"
-        [attr.value]="value"
+        [value]="value"
         [type]="type"
         [attr.placeholder]="placeholder"
         [attr.disabled]="disabled"

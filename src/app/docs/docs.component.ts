@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-docs',
@@ -15,8 +15,6 @@ import { Component, HostBinding, OnInit } from '@angular/core';
     `,
   ],
 })
-export class DocsComponent implements OnInit {
+export class DocsComponent {
   @HostBinding('class') class = 'row flex-grow-1';
-
-  ngOnInit(): void {}
 }

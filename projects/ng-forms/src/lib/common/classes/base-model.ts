@@ -13,7 +13,7 @@ export class BaseModel {
   }
 
   public setValue(key: string, value: any): void {
-    this.dtoObject[key] = value;
+    this.dtoObject[key] = value || null;
   }
 
   public getValue(key: string): any {

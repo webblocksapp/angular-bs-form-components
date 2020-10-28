@@ -10,10 +10,10 @@ import { CodeBlockComponent } from './components/code-block.component';
 @Component({
   selector: 'code-example',
   template: `
-    <div class="card">
+    <div class="card mb-5">
       <div class="card-body">
         <div class="d-flex justify-content-between">
-          <h5 *ngIf="label" class="card-title">{{ label }}</h5>
+          <h5 class="card-title">{{ label }}</h5>
           <div *ngIf="tabs.length" class="d-flex">
             <i class="i-btn fas fa-code" (click)="toggleCodeMode()"></i>
           </div>

@@ -1,4 +1,15 @@
-import { Input, Output, EventEmitter, OnInit, OnChanges, SimpleChanges, HostBinding, KeyValueDiffers, KeyValueDiffer, Directive } from '@angular/core';
+import {
+  Input,
+  Output,
+  EventEmitter,
+  OnInit,
+  OnChanges,
+  SimpleChanges,
+  HostBinding,
+  KeyValueDiffers,
+  KeyValueDiffer,
+  Directive,
+} from '@angular/core';
 
 import {
   DataInputBaseInterface,
@@ -61,7 +72,7 @@ export abstract class DataInputBase
 
   public inputSize: string;
   public error: string;
-  public value: any;
+  public value: any = null;
   private modelDiffer: KeyValueDiffer<string, any>;
 
   constructor(private differs: KeyValueDiffers) {}

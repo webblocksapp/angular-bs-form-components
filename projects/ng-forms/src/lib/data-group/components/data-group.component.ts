@@ -4,22 +4,26 @@ import {
   ContentChildren,
   QueryList,
   AfterContentInit,
-  Input,
+  HostBinding,
 } from '@angular/core';
 
 @Component({
   selector: 'data-group',
-  template: `
-    <div [class]="class">
-      <ng-content></ng-content>
-    </div>
-  `,
+  template: `<ng-content></ng-content>`,
+  styles: [
+    `
+      :host {
+        display: block;
+      }
+    `,
+  ],
 })
 export class DataGroupComponent implements OnInit, AfterContentInit {
-  @Input()
+  @HostBinding()
   class: string;
 
-  @ContentChildren('dataInput') dataInputs: QueryList<any>;
+  @ContentChildren('dataInput', { descendants: true })
+  dataInputs: QueryList<any>;
   public dataInputComponents: Array<any> = [];
 
   constructor() {}

@@ -1,7 +1,6 @@
 import {
   Component,
   OnInit,
-  ContentChild,
   ContentChildren,
   QueryList,
   Input,
@@ -48,8 +47,11 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   }
 
   ngAfterContentInit(): void {
-    this.initModelMap();
-    this.listenQueryListChanges();
+    setTimeout(() => {
+      this.initModelMap();
+      this.listenDataGroupsListChanges();
+      this.listenDataInputsListChanges();
+    });
   }
 
   initBaseModel(): void {
@@ -83,9 +85,8 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
     this.modelMap.forEach((map) => {
       map.dataInputComponents.forEach((dataInputComponent) => {
         const { name } = dataInputComponent.component;
-
         dataInputComponent.component.model = map.model;
-        dataInputComponent.component.value = map.model.getValue(name);
+        dataInputComponent.component.fillModel(map.model.getValue(name));
 
         if (!dataInputComponent.component.error)
           dataInputComponent.component.error = dataInputComponent.error;
@@ -93,7 +94,15 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
     });
   }
 
-  listenQueryListChanges(): void {
+  listenDataGroupsListChanges(): void {
+    this.dataGroupComponents.changes.subscribe(() => {
+      setTimeout(() => {
+        this.initModelMap();
+      });
+    });
+  }
+
+  listenDataInputsListChanges(): void {
     this.dataGroupComponents.forEach((dataGroupComponent) => {
       dataGroupComponent.dataInputs.changes.subscribe(() => {
         dataGroupComponent.loadDataInputComponents();

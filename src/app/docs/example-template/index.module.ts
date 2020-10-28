@@ -6,7 +6,7 @@ import { IndexRoutingModule } from './index-routing.module';
 import { OverviewComponent } from './overview/overview.component';
 import { ApiComponent } from './api/api.component';
 import { ExamplesComponent } from './examples/examples.component';
-import { DemoOverview1Module } from './demos/demo-overview-1/demo-overview-1.module';
+import { DemoOverviewXModule } from './demos/demo-overview-x/demo-overview-x.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +19,7 @@ import { DemoOverview1Module } from './demos/demo-overview-1/demo-overview-1.mod
     CommonModule,
     SharedModule,
     IndexRoutingModule,
-    DemoOverview1Module,
+    DemoOverviewXModule,
   ],
 })
 export class IndexModule {}

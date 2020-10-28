@@ -21,16 +21,17 @@ import { DocsBase } from '@shared/classes';
           </p>
 
           <ul class="mb-5">
-            <li><code>"@fortawesome/fontawesome-free": "^5.1.0-9",</code></li>
-            <li><code>"@webblocksapp/class-validator": "^0.12.2",</code></li>
-            <li><code>"bootstrap": "^4.5.2",</code></li>
+            <li><code>"@fortawesome/fontawesome-free": "^5.1.0-9"</code></li>
+            <li><code>"@webblocksapp/class-validator": "^0.12.2"</code></li>
+            <li><code>"@types/jquery": "^3.5.3"</code></li>
+            <li><code>"bootstrap": "^4.5.2"</code></li>
             <li><code>"bootstrap-datepicker": "^1.9.0"</code></li>
             <li><code>"bootstrap-select": "^1.13.18"</code></li>
-            <li><code>"generic-type-guard": "^3.2.0",</code></li>
-            <li><code>"jquery": "^3.5.1",</code></li>
-            <li><code>"select2": "^4.0.13",</code></li>
-            <li><code>"select2-bootstrap-theme": "0.1.0-beta.10",</code></li>
-            <li><code>"uuid": "^8.3.0",</code></li>
+            <li><code>"generic-type-guard": "^3.2.0"</code></li>
+            <li><code>"jquery": "^3.5.1"</code></li>
+            <li><code>"select2": "^4.0.13"</code></li>
+            <li><code>"select2-bootstrap-theme": "0.1.0-beta.10"</code></li>
+            <li><code>"uuid": "^8.3.0"</code></li>
           </ul>
 
           <li>
@@ -38,7 +39,14 @@ import { DocsBase } from '@shared/classes';
             <code>tsconfig.app.json</code> file:
           </li>
 
-          <pre><code class="mt-3" [highlight]='tsconfigCode'></code></pre>
+          <pre><code class="mt-3 mb-3" [highlight]='tsconfigAppCode'></code></pre>
+
+          <li>
+            Also configure <code>jQuery</code> globally on
+            <code>tsconfig.json</code> file:
+          </li>
+
+          <pre><code class="mt-3 mb-3" [highlight]='tsconfigCode'></code></pre>
 
           <li>Register inside <code>angular.json</code>:</li>
 
@@ -61,12 +69,23 @@ import { DocsBase } from '@shared/classes';
   `,
 })
 export class SetupComponent extends DocsBase {
-  public tsconfigCode = `  ...
+  public tsconfigAppCode = `  ...
     "compilerOptions": {
+      ...
       "outDir": "./out-tsc/app",
       "types": ["jquery"]
+      ...
     },
   ...`;
+
+  public tsconfigCode = `  ...
+    "compilerOptions": {
+      ...
+      "types": ["node", "jquery"],
+      ...
+    },
+  ...`;
+
   public angularJsonCode = `  ...
     "styles": [
       ...
