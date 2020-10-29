@@ -35,7 +35,7 @@ import { isNull } from '../common/utils';
         #select2ElementRef
         style="width: 100%"
         [attr.name]="name"
-        [attr.value]="value"
+        [value]="value"
         [attr.placeholder]="placeholder"
         [attr.multiple]="multiple"
         class="form-control select2"

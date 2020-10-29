@@ -29,7 +29,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
           class="custom-control-input"
           [ngClass]="{ 'is-invalid': error }"
           id="{{ id }}-{{ i }}-bs"
-          [attr.value]="option.value"
+          [value]="option.value"
           [attr.checked]="option.checked"
           [attr.disabled]="option.disabled"
           (click)="click($event)"

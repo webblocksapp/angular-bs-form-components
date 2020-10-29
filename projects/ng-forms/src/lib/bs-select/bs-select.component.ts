@@ -34,7 +34,7 @@ import { isNull } from '../common/utils';
         #selectElementRef
         style="width: 100%"
         [attr.name]="name"
-        [attr.value]="value"
+        [value]="value"
         [attr.title]="placeholder"
         [attr.multiple]="multiple"
         [attr.data-live-search]="liveSearch"

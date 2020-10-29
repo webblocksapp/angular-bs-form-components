@@ -1,8 +1,9 @@
-import { validate } from '@webblocksapp/class-validator';
+import { validate, ValidationError } from '@webblocksapp/class-validator';
 import { ValidatorOptions } from '@webblocksapp/class-validator';
 
 export class BaseModel {
   private dtoObject: any;
+  private errors: Array<ValidationError> = [];
 
   constructor(DtoClass: any) {
     this.setDto(DtoClass);
@@ -18,6 +19,14 @@ export class BaseModel {
 
   public getValue(key: string): any {
     return this.dtoObject[key];
+  }
+
+  public setErrors(errors: Array<ValidationError>): void {
+    this.errors = Object.assign(this.errors, errors);
+  }
+
+  public getErrors(): Array<ValidationError> {
+    return this.errors;
   }
 
   public fill(data: any): void {
@@ -46,8 +55,10 @@ export class BaseModel {
             validatedData: this.dtoObject,
             errors: null,
           });
-        if (errors.length > 0)
+        if (errors.length > 0) {
+          this.setErrors(errors);
           resolve({ isValid: false, validatedData: null, errors });
+        }
       });
     });
   }
@@ -67,7 +78,10 @@ export class BaseModel {
 
       validate(this.dtoObject, validatorOptions).then((errors) => {
         if (errors.length === 0) resolve(this.dtoObject[fieldName]);
-        if (errors.length > 0) reject(errors);
+        if (errors.length > 0) {
+          this.setErrors(errors);
+          reject(errors);
+        }
       });
     });
   }

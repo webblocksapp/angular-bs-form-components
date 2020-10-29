@@ -16,6 +16,7 @@ import {
   ValidationResult,
   FormattedValidationResult,
   ModelMap,
+  DataInputComponent,
 } from './types';
 import { capitalize, isNull } from '../common/utils';
 
@@ -75,7 +76,6 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
         this.modelMap[index].dataInputComponents[i] = {
           component: dataInputComponent,
           name: dataInputComponent.name,
-          error: null,
         };
       });
     });
@@ -85,11 +85,13 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
     this.modelMap.forEach((map) => {
       map.dataInputComponents.forEach((dataInputComponent) => {
         const { name } = dataInputComponent.component;
+        const errors = this.formatErrors(map.model.getErrors());
+
         dataInputComponent.component.model = map.model;
         dataInputComponent.component.fillModel(map.model.getValue(name));
+        dataInputComponent.component.refresh();
 
-        if (!dataInputComponent.component.error)
-          dataInputComponent.component.error = dataInputComponent.error;
+        this.setDataInputComponentError(dataInputComponent, errors);
       });
     });
   }
@@ -210,29 +212,25 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
 
       if (isValid) {
         dataInputComponents.forEach((dataInputComponent) => {
-          dataInputComponent.error = null;
-          dataInputComponent.component.error = dataInputComponent.error;
+          dataInputComponent.component.error = null;
         });
       } else {
         dataInputComponents.forEach((dataInputComponent) => {
-          const { name } = dataInputComponent;
-          const filteredError = errors.filter(
-            (error) => error.property === name,
-          );
-
-          if (filteredError.length) {
-            dataInputComponent.error = filteredError[0].message;
-          } else {
-            dataInputComponent.error = null;
-          }
-
-          dataInputComponent.component.error = capitalize(
-            dataInputComponent.error,
-          );
-
-          dataInputComponent.component.refresh();
+          this.setDataInputComponentError(dataInputComponent, errors);
         });
       }
     });
+  }
+
+  setDataInputComponentError(
+    dataInputComponent: DataInputComponent,
+    errors: any,
+  ): void {
+    const { name } = dataInputComponent;
+    const filteredError = errors.filter((error) => error.property === name);
+    const errorMessage = filteredError.length ? filteredError[0].message : null;
+
+    dataInputComponent.component.error = capitalize(errorMessage);
+    dataInputComponent.component.refresh();
   }
 }

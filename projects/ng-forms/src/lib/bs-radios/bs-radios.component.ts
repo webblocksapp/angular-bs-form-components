@@ -30,7 +30,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
           [ngClass]="{ 'is-invalid': error }"
           id="{{ id }}-{{ i }}-bs"
           name="{{ name }}-{{ id }}-bs[]"
-          [attr.value]="option.value"
+          [value]="option.value"
           [attr.checked]="option.checked"
           [attr.disabled]="option.disabled"
           (click)="click($event)"

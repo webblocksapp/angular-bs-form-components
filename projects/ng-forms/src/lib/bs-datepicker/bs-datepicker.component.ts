@@ -29,7 +29,6 @@ import { isNull } from '../common/utils';
       <div *ngIf="startSlotHtml" class="input-group-prepend">
         <span class="input-group-text" [innerHTML]="startSlotHtml"></span>
       </div>
-
       <input
         #inputElementRef
         [attr.name]="name"
@@ -348,5 +347,9 @@ export class BsDatepickerComponent
     }
 
     return this.datepicker.datepicker('getDates');
+  }
+
+  refresh(): void {
+    this.datepicker.datepicker('update', this.value);
   }
 }
