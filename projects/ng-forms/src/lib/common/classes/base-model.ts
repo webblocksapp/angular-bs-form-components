@@ -21,8 +21,16 @@ export class BaseModel {
     return this.dtoObject[key];
   }
 
-  public setErrors(errors: Array<ValidationError>): void {
+  private setErrors(errors: Array<ValidationError>): void {
     this.errors = Object.assign(this.errors, errors);
+  }
+
+  private cleanError(fieldName: string): void {
+    this.errors = this.errors.filter((error) => error.property !== fieldName);
+  }
+
+  private cleanErrors(): void {
+    this.errors = [];
   }
 
   public getErrors(): Array<ValidationError> {
@@ -49,12 +57,15 @@ export class BaseModel {
       );
 
       validate(this.dtoObject, validatorOptions).then((errors) => {
-        if (errors.length === 0)
+        if (errors.length === 0) {
+          this.cleanErrors();
           resolve({
             isValid: true,
             validatedData: this.dtoObject,
             errors: null,
           });
+        }
+
         if (errors.length > 0) {
           this.setErrors(errors);
           resolve({ isValid: false, validatedData: null, errors });
@@ -77,7 +88,11 @@ export class BaseModel {
       );
 
       validate(this.dtoObject, validatorOptions).then((errors) => {
-        if (errors.length === 0) resolve(this.dtoObject[fieldName]);
+        if (errors.length === 0) {
+          this.cleanError(fieldName);
+          resolve(this.dtoObject[fieldName]);
+        }
+
         if (errors.length > 0) {
           this.setErrors(errors);
           reject(errors);
