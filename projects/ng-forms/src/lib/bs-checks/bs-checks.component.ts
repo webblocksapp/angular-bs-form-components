@@ -115,21 +115,29 @@ export class BsChecksComponent extends DataInputBase implements DoCheck {
     });
   }
 
-  initCheckedOptions(): void {
+  initCheckedOptions(restart: boolean = false): void {
     setTimeout(() => {
       this.checkboxes.forEach((checkboxElementRef) => {
         const checkbox = checkboxElementRef.nativeElement;
         const values = this.model.getValue(this.name);
 
-        if (values !== undefined) {
+        if (values) {
           values.forEach((value) => {
             // tslint:disable-next-line: triple-equals
             if (checkbox.value == value) {
               checkbox.checked = true;
+            } else {
+              if (restart) {
+                checkbox.checked = false;
+              }
             }
           });
+        } else {
+          checkbox.checked = false;
         }
       });
+
+      restart = false;
     });
   }
 
@@ -138,5 +146,9 @@ export class BsChecksComponent extends DataInputBase implements DoCheck {
       const values = this.getCheckboxesValues();
       this.fillModel(values);
     }
+  }
+
+  refresh(): void {
+    this.initCheckedOptions(true);
   }
 }

@@ -13,7 +13,7 @@ declare var require: any;
         <p>
           If you will work with multiple models, you must set
           <code>multiple</code> to <code>true</code> on your
-          <code>data-groups</code>
+          <code>data-groups</code>.
         </p>
 
         <p>
