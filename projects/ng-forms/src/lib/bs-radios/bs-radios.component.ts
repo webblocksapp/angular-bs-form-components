@@ -117,21 +117,17 @@ export class BsRadiosComponent extends DataInputBase implements DoCheck {
     });
   }
 
-  initCheckedOption(restart: boolean = false): void {
+  initCheckedOption(): void {
     setTimeout(() => {
       this.radios.forEach((radioElementRef) => {
         const radio = radioElementRef.nativeElement;
         const value = this.model.getValue(this.name);
 
-        if (value !== undefined) {
-          // tslint:disable-next-line: triple-equals
-          if (radio.value == value) {
-            radio.checked = true;
-          } else {
-            if (restart) {
-              radio.checked = false;
-            }
-          }
+        // tslint:disable-next-line: triple-equals
+        if (radio.value == value) {
+          radio.checked = true;
+        } else {
+          radio.checked = false;
         }
       });
     });
@@ -145,6 +141,6 @@ export class BsRadiosComponent extends DataInputBase implements DoCheck {
   }
 
   refresh(): void {
-    this.initCheckedOption(true);
+    this.initCheckedOption();
   }
 }
