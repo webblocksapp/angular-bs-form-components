@@ -33,7 +33,7 @@ export class RunningCodeComponent {
     { value: 4, viewValue: 'Chinese rice' },
   ];
 
-  onSubmit(event) {
+  onSubmit(event): void {
     event.then((validationResult) => {
       const { isValid, validatedData, errors } = validationResult;
 

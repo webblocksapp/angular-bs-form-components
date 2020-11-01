@@ -33,6 +33,7 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   @Input() model: Array<BaseModel>;
   @Input() group: string;
   @Input() enctype: string;
+  @Input() multiple = false;
 
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
 
@@ -166,10 +167,58 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
             }
           }
 
+          validationResult = this.parseValidationResult(validationResult);
+
           resolve(validationResult);
         });
       }),
     );
+  }
+
+  parseValidationResult(validationResult): FormattedValidationResult {
+    if (this.multiple === true && !Array.isArray(validationResult)) {
+      validationResult = [validationResult];
+    }
+
+    if (Array.isArray(validationResult)) {
+      validationResult = this.groupMultipleValidationResult(validationResult);
+    }
+
+    return validationResult;
+  }
+
+  groupMultipleValidationResult(validationResult): FormattedValidationResult {
+    const groupedMultipleValidationResults: FormattedValidationResult = {
+      isValid: true,
+    };
+
+    validationResult.forEach((validationResultItem) => {
+      if (groupedMultipleValidationResults.isValid) {
+        groupedMultipleValidationResults.isValid = validationResultItem.isValid;
+      }
+
+      if (validationResultItem.validatedData !== undefined) {
+        if (groupedMultipleValidationResults.validatedData === undefined) {
+          groupedMultipleValidationResults.validatedData = [];
+        }
+
+        groupedMultipleValidationResults.validatedData.push(
+          validationResultItem.validatedData,
+        );
+      }
+
+      if (validationResultItem.errors !== undefined) {
+        if (groupedMultipleValidationResults.errors === undefined) {
+          groupedMultipleValidationResults.errors = [];
+        }
+
+        groupedMultipleValidationResults.errors.push(
+          validationResultItem.errors,
+        );
+      }
+    });
+
+    return groupedMultipleValidationResults;
   }
 
   generateFormData(validatedData): any {
