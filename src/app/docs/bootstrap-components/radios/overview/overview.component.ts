@@ -4,7 +4,10 @@ import { DocsBase } from '@shared/classes';
 @Component({
   selector: 'app-overview',
   template: `
-    <p>Example paragraph.</p>
+    <p>
+      Bootstrap radios improves the form a radio input is handled, inheriting
+      the bootstrap stylesheets.
+    </p>
 
     <demo-overview-1></demo-overview-1>
 

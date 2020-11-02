@@ -63,6 +63,10 @@ export interface DataInputBaseInterface {
    */
   isReactiveForm: boolean;
   /**
+   * Determines if the data input must be highlighted on valid.
+   */
+  highlightOnValid: boolean;
+  /**
    * Computes component size class.
    */
   getInputSize(): void;

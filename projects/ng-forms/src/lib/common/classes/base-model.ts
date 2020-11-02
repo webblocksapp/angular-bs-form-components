@@ -4,6 +4,7 @@ import { ValidatorOptions } from '@webblocksapp/class-validator';
 export class BaseModel {
   private dtoObject: any;
   private errors: Array<ValidationError> = [];
+  private map: Array<any> = [];
 
   constructor(DtoClass: any) {
     this.setDto(DtoClass);
@@ -23,6 +24,30 @@ export class BaseModel {
 
   private setErrors(errors: Array<ValidationError>): void {
     this.errors = Object.assign(this.errors, errors);
+    this.updateMapFromErrors();
+  }
+
+  public initMap(): void {
+    const keys = Object.keys(this.dtoObject);
+
+    keys.forEach((key) => {
+      const filteredMap = this.map.filter((item) => item.property === key);
+
+      if (filteredMap.length === 0) {
+        this.map.push({ property: key, touched: false });
+      }
+    });
+  }
+
+  private updateMapFromErrors(): void {
+    this.errors.forEach((error) => {
+      const property = error.property;
+      this.map.map((item) => {
+        if (item.property === property) {
+          item.touched = true;
+        }
+      });
+    });
   }
 
   private cleanError(fieldName: string): void {
@@ -35,6 +60,20 @@ export class BaseModel {
 
   public getErrors(): Array<ValidationError> {
     return this.errors;
+  }
+
+  public getMap(): Array<any> {
+    return this.map;
+  }
+
+  public getPropertyMap(property): any {
+    const filteredMap = this.map.filter((item) => item.property === property);
+
+    if (filteredMap.length > 0) {
+      return filteredMap[0];
+    }
+
+    return null;
   }
 
   public fill(data: any): void {

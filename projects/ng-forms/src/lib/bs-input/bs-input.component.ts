@@ -9,7 +9,10 @@ import { DataInputBase } from '../common/classes/data-input-base';
     }}</label>
     <div
       class="input-group {{ inputSize }}"
-      [ngClass]="{ 'is-invalid': error }"
+      [ngClass]="{
+        'is-invalid': error,
+        'is-valid': touched && highlightOnValid && !error
+      }"
     >
       <div *ngIf="startSlot" class="input-group-prepend">
         <span class="input-group-text">{{ startSlot }}</span>
@@ -24,7 +27,10 @@ import { DataInputBase } from '../common/classes/data-input-base';
         [attr.placeholder]="placeholder"
         [attr.disabled]="disabled"
         class="form-control"
-        [ngClass]="{ 'is-invalid': error }"
+        [ngClass]="{
+          'is-invalid': error,
+          'is-valid': touched && highlightOnValid && !error
+        }"
         id="{{ id }}-bs"
         (focusout)="focusout($event)"
         (blur)="blur($event)"

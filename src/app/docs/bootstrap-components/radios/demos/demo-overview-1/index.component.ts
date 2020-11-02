@@ -5,7 +5,7 @@ declare var require: any;
 @Component({
   selector: 'demo-overview-1',
   template: `
-    <code-example label="Data groups Overview">
+    <code-example label="Bootstrap radios overview">
       <code-block type="running-code">
         <running-code></running-code>
       </code-block>

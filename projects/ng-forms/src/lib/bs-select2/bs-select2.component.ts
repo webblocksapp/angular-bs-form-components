@@ -22,7 +22,10 @@ import { isNull } from '../common/utils';
     }}</label>
     <div
       class="input-group {{ inputSize }}"
-      [ngClass]="{ 'is-invalid': error }"
+      [ngClass]="{
+        'is-invalid': error,
+        'is-valid': touched && highlightOnValid && !error
+      }"
     >
       <div *ngIf="startSlot" class="input-group-prepend">
         <span class="input-group-text">{{ startSlot }}</span>
@@ -39,7 +42,10 @@ import { isNull } from '../common/utils';
         [attr.placeholder]="placeholder"
         [attr.multiple]="multiple"
         class="form-control select2"
-        [ngClass]="{ 'is-invalid': error }"
+        [ngClass]="{
+          'is-invalid': error,
+          'is-valid': touched && highlightOnValid && !error
+        }"
         id="{{ id }}-bs"
       >
         <option *ngIf="placeholder && multiple !== 'multiple'"></option>

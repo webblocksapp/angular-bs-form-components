@@ -1,11 +1,17 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { BaseModel } from '@webblocksapp/ng-forms';
+import { UserDto } from '../common/dtos/user.dto';
 
 @Component({
   selector: 'running-code',
-  template: `running code works!`,
+  templateUrl: './running-code.component.html',
 })
-export class RunningCodeComponent implements OnInit {
-  constructor() {}
+export class RunningCodeComponent {
+  public userModel = new BaseModel(UserDto);
 
-  ngOnInit() {}
+  public genders = [
+    { value: 1, viewValue: 'Male' },
+    { value: 2, viewValue: 'Female' },
+    { value: 3, viewValue: 'Other' },
+  ];
 }

@@ -34,6 +34,7 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   @Input() group: string;
   @Input() enctype: string;
   @Input() multiple = false;
+  @Input() highlightOnValid = false;
 
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
 
@@ -63,6 +64,7 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
   initModelMap(): void {
     this.generateModelMap();
     this.applyModelMap();
+    this.applyModelPropertiesMap();
   }
 
   generateModelMap(): void {
@@ -89,10 +91,24 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
         const errors = this.formatErrors(map.model.getErrors());
 
         dataInputComponent.component.model = map.model;
+        dataInputComponent.component.highlightOnValid = this.highlightOnValid;
         dataInputComponent.component.fillModel(map.model.getValue(name));
         dataInputComponent.component.refresh();
 
         this.setDataInputComponentError(dataInputComponent, errors);
+      });
+    });
+  }
+
+  applyModelPropertiesMap(): void {
+    this.modelMap.forEach((map) => {
+      map.model.initMap();
+
+      map.dataInputComponents.forEach((dataInputComponent) => {
+        const { name } = dataInputComponent.component;
+        const propertyMap = map.model.getPropertyMap(name);
+
+        dataInputComponent.component.touched = propertyMap.touched;
       });
     });
   }

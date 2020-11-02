@@ -18,6 +18,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
         [ngClass]="{
           'custom-control-inline': display === 'inline',
           'is-invalid': error,
+          'is-valid': touched && highlightOnValid && !error,
           'custom-radio-rounded': rounded,
           'custom-switch': switch
         }"
@@ -27,7 +28,10 @@ import { DataInputBase } from '../common/classes/data-input-base';
           #radio
           type="radio"
           class="custom-control-input"
-          [ngClass]="{ 'is-invalid': error }"
+          [ngClass]="{
+            'is-invalid': error,
+            'is-valid': touched && highlightOnValid && !error
+          }"
           id="{{ id }}-{{ i }}-bs"
           name="{{ name }}-{{ id }}-bs[]"
           [value]="option.value"

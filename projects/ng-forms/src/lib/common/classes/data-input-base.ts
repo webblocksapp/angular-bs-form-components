@@ -49,6 +49,8 @@ export abstract class DataInputBase
   @Input() endSlotHtml: string;
   @Input() model: BaseModel;
   @Input() isReactiveForm = true;
+  @Input() highlightOnValid = false;
+  @Input() touched = false;
 
   @Output() focusEvent: EventEmitter<any> = new EventEmitter();
   @Output() focusoutEvent: EventEmitter<any> = new EventEmitter();
@@ -338,6 +340,7 @@ export abstract class DataInputBase
         .validateField(this.name)
         .then(() => {
           this.error = '';
+          this.setTouched();
           this.bindEventsAfterValidateField();
         })
         .catch((error) => {
@@ -345,6 +348,12 @@ export abstract class DataInputBase
           this.bindEventsAfterValidateField();
         });
     }
+  }
+
+  setTouched() {
+    this.touched = true;
+    const map = this.model.getPropertyMap(this.name);
+    map.touched = true;
   }
 
   bindEventsAfterValidateField(): void {}

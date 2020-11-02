@@ -22,7 +22,10 @@ import { isNull } from '../common/utils';
     }}</label>
     <div
       class="input-group {{ inputSize }}"
-      [ngClass]="{ 'is-invalid': error }"
+      [ngClass]="{
+        'is-invalid': error,
+        'is-valid': touched && highlightOnValid && !error
+      }"
     >
       <div *ngIf="startSlot" class="input-group-prepend">
         <span class="input-group-text">{{ startSlot }}</span>
@@ -48,6 +51,7 @@ import { isNull } from '../common/utils';
         class="form-control selectpicker"
         [ngClass]="{
           'is-invalid': error,
+          'is-valid': touched && highlightOnValid && !error,
           disabled: disabled,
           'show-tick': showTick,
           dropup: direction === 'up'

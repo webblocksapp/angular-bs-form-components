@@ -16,7 +16,10 @@ import { DataInputBase } from '../common/classes/data-input-base';
     }}</label>
     <div
       class="input-group {{ inputSize }}"
-      [ngClass]="{ 'is-invalid': error }"
+      [ngClass]="{
+        'is-invalid': error,
+        'is-valid': touched && highlightOnValid && !error
+      }"
     >
       <div *ngIf="startSlot" class="input-group-prepend">
         <span class="input-group-text">{{ startSlot }}</span>
@@ -33,7 +36,10 @@ import { DataInputBase } from '../common/classes/data-input-base';
           [attr.disabled]="disabled"
           [attr.multiple]="multiple"
           class="custom-file-input"
-          [ngClass]="{ 'is-invalid': error }"
+          [ngClass]="{
+            'is-invalid': error,
+            'is-valid': touched && highlightOnValid && !error
+          }"
           id="{{ id }}-bs"
           (change)="change($event)"
           (focus)="focus($event)"
