@@ -9,7 +9,11 @@ declare var require: any;
       <code-block type="running-code">
         <running-code></running-code>
       </code-block>
-      <code-block type="component"></code-block>
+      <code-block
+        type="component"
+        [code]="componentCode"
+        language="typescript"
+      ></code-block>
     </code-example>
   `,
 })

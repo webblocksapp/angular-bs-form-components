@@ -17,9 +17,11 @@ const routes: Routes = [
           import('./data-groups/index.module').then((m) => m.IndexModule),
       },
       {
-        path: 'example-template',
+        path: 'bootstrap/radios',
         loadChildren: () =>
-          import('./example-template/index.module').then((m) => m.IndexModule),
+          import('./bootstrap-components/radios/index.module').then(
+            (m) => m.IndexModule,
+          ),
       },
     ],
   },

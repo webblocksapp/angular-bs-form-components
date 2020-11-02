@@ -99,7 +99,7 @@ export class SidebarComponent {
     },
     {
       title: 'Radios',
-      collapsed: true,
+      path: '/docs/bootstrap/radios',
     },
     {
       title: 'File',
