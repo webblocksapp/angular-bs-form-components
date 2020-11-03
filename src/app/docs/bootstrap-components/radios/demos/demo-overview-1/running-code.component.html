@@ -1,6 +1,31 @@
 <data-groups [model]="userModel" [highlightOnValid]="true">
   <data-group>
-    <bs-radios #dataInput [options]="genders" name="gender"></bs-radios>
+    <bs-input
+      #dataInput
+      label="Full name"
+      name="fullName"
+      placeholder="Type your name"
+    ></bs-input>
+    <bs-radios
+      #dataInput
+      [options]="genders"
+      [switch]="false"
+      label="Gender"
+      name="gender"
+    ></bs-radios>
   </data-group>
   <button class="btn btn-primary">Submit</button>
+</data-groups>
+
+<hr />
+
+<data-groups [model]="demo1OptionsModel">
+  <data-group>
+    <bs-radios
+      [options]="demoOptions"
+      [switch]="true"
+      label="Radio mode"
+      name="radioMode"
+    ></bs-radios>
+  </data-group>
 </data-groups>

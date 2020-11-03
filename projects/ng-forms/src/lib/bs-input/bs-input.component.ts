@@ -1,4 +1,4 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, DoCheck, HostBinding } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 
 @Component({
@@ -69,8 +69,16 @@ import { DataInputBase } from '../common/classes/data-input-base';
     `,
   ],
 })
-export class BsInputComponent extends DataInputBase {
+export class BsInputComponent extends DataInputBase implements DoCheck {
   @HostBinding('class') class = 'form-group';
+
+  ngDoCheck(): void {
+    this.watchModel();
+  }
+
+  bindWatchModelEvents(): void {
+    this.value = this.model.getValue(this.name);
+  }
 
   bindFocusoutEvents(event: any): any {
     this.validateField();
