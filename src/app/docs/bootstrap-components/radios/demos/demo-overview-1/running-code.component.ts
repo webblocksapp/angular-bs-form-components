@@ -11,6 +11,7 @@ export class RunningCodeComponent {
   public isSwitch = false;
   public userModel: BaseModel = new BaseModel(UserDto);
   public demo1OptionsModel: BaseModel = new BaseModel(Demo1OptionsDto);
+  public demo1Options: Demo1OptionsDto = this.demo1OptionsModel.getDto();
 
   public genders = [
     { value: 1, viewValue: 'Male' },
@@ -22,17 +23,4 @@ export class RunningCodeComponent {
     { value: 'radio', viewValue: 'Radio' },
     { value: 'switch', viewValue: 'Switch' },
   ];
-
-  toggleIsSwitch(event): void {
-    switch (event.target.value) {
-      case 'radio':
-        this.isSwitch = false;
-        break;
-      case 'switch':
-        this.isSwitch = true;
-        break;
-      default:
-        this.isSwitch = false;
-    }
-  }
 }

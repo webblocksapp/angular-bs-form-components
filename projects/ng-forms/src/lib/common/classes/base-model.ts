@@ -14,6 +14,10 @@ export class BaseModel {
     this.dtoObject = new DtoClass();
   }
 
+  public getDto(): any {
+    return this.dtoObject;
+  }
+
   public setValue(key: string, value: any): void {
     this.dtoObject[key] = value || null;
   }
