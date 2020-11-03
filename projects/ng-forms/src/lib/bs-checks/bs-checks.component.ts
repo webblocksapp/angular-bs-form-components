@@ -19,8 +19,8 @@ import { DataInputBase } from '../common/classes/data-input-base';
           'custom-control-inline': display === 'inline',
           'is-invalid': error,
           'is-valid': touched && highlightOnValid && !error,
-          'custom-checkbox-circle': circle,
-          'custom-switch': switch
+          'custom-checkbox-circle': look === 'circle',
+          'custom-switch': look === 'switch'
         }"
         *ngFor="let option of options; let i = index"
       >
@@ -69,8 +69,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
 export class BsChecksComponent extends DataInputBase implements DoCheck {
   @Input() options: Array<any>;
   @Input() display: string;
-  @Input() circle: boolean;
-  @Input() switch: boolean;
+  @Input() look = 'radio';
 
   @ViewChildren('checkbox') checkboxes: QueryList<ElementRef>;
 

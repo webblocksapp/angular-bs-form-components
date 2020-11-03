@@ -19,8 +19,8 @@ import { DataInputBase } from '../common/classes/data-input-base';
           'custom-control-inline': display === 'inline',
           'is-invalid': error,
           'is-valid': touched && highlightOnValid && !error,
-          'custom-radio-rounded': rounded,
-          'custom-switch': switch
+          'custom-radio-rounded': look === 'rounded',
+          'custom-switch': look === 'switch'
         }"
         *ngFor="let option of options; let i = index"
       >
@@ -70,8 +70,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
 export class BsRadiosComponent extends DataInputBase implements DoCheck {
   @Input() options: Array<any>;
   @Input() display: string;
-  @Input() rounded: boolean;
-  @Input() switch: boolean;
+  @Input() look = 'rounded';
 
   @ViewChildren('radio') radios: QueryList<ElementRef>;
 
