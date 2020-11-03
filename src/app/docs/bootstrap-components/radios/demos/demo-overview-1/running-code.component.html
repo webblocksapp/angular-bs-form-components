@@ -9,7 +9,7 @@
     <bs-radios
       #dataInput
       [options]="genders"
-      [switch]="false"
+      [switch]="isSwitch"
       label="Gender"
       name="gender"
     ></bs-radios>
@@ -22,9 +22,12 @@
 <data-groups [model]="demo1OptionsModel">
   <data-group>
     <bs-radios
+      #dataInput
+      display="inline"
       [options]="demoOptions"
       [switch]="true"
-      label="Radio mode"
+      (changeEvent)="toggleIsSwitch($event)"
+      label="Radio mode:"
       name="radioMode"
     ></bs-radios>
   </data-group>

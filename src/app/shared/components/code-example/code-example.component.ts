@@ -88,7 +88,7 @@ export class CodeExampleComponent implements AfterContentInit {
       const tabExists = this.tabs.filter((tab) => tab.type === codeBlock.type);
 
       if (tabExists.length === 0) {
-        this.tabs.push({ type: codeBlock.type, title: codeBlock.title });
+        this.tabs.push({ type: codeBlock.type, title: codeBlock.label });
       }
     });
   }

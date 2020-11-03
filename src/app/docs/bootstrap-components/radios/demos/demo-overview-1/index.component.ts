@@ -17,7 +17,13 @@ declare var require: any;
       ></code-block>
       <code-block
         type="dto"
-        [code]="dtoCode"
+        [code]="dtoCode1"
+        language="typescript"
+      ></code-block>
+      <code-block
+        label="Options"
+        type="options"
+        [code]="dtoCode2"
         language="typescript"
       ></code-block>
     </code-example>
@@ -27,11 +33,13 @@ export class IndexComponent implements OnInit {
   public htmlCode: string;
   public cssCode: string;
   public componentCode: string;
-  public dtoCode: string;
+  public dtoCode1: string;
+  public dtoCode2: string;
 
   ngOnInit() {
     this.htmlCode = require('!raw-loader!./running-code.component.html').default;
     this.componentCode = require('!raw-loader!./running-code.component.ts').default;
-    this.dtoCode = require('!raw-loader!../common/dtos/user.dto.ts').default;
+    this.dtoCode1 = require('!raw-loader!../common/dtos/user.dto.ts').default;
+    this.dtoCode2 = require('!raw-loader!./dtos/demo1-options.dto.ts').default;
   }
 }

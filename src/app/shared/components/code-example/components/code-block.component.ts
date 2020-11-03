@@ -25,7 +25,7 @@ export class CodeBlockComponent implements OnInit, AfterViewInit {
   ref: TemplateRef<any>;
 
   @Input() type: string;
-  @Input() title: string;
+  @Input() label: string;
   @Input() code: string;
   @Input() language: string;
 
@@ -41,8 +41,8 @@ export class CodeBlockComponent implements OnInit, AfterViewInit {
   public templateRef: TemplateRef<any>;
 
   ngOnInit(): void {
-    this.title =
-      this.title === undefined ? this.defaultTitles[this.type] : this.title;
+    this.label =
+      this.label === undefined ? this.defaultTitles[this.type] : this.label;
   }
 
   ngAfterViewInit(): void {
