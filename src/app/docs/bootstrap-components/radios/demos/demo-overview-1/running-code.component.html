@@ -1,4 +1,7 @@
-<data-groups [model]="userModel" [highlightOnValid]="true">
+<data-groups
+  [model]="userModel"
+  [highlightOnValid]="demoOptions.highlightOnValid === 'yes' ? true : false"
+>
   <data-group>
     <bs-input
       #dataInput
@@ -9,7 +12,8 @@
     <bs-radios
       #dataInput
       [options]="genders"
-      [look]="demo1Options.radioMode"
+      [look]="demoOptions.look"
+      [display]="demoOptions.display"
       label="Gender"
       name="gender"
     ></bs-radios>
@@ -19,15 +23,4 @@
 
 <hr />
 
-<data-groups [model]="demo1OptionsModel">
-  <data-group>
-    <bs-radios
-      #dataInput
-      display="inline"
-      [options]="demoOptions"
-      look="switch"
-      label="Radio mode:"
-      name="radioMode"
-    ></bs-radios>
-  </data-group>
-</data-groups>
+<demo-options [model]="demoOptionsModel"></demo-options>

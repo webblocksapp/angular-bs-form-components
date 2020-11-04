@@ -28,7 +28,6 @@ export class BaseModel {
 
   private setErrors(errors: Array<ValidationError>): void {
     this.errors = Object.assign(this.errors, errors);
-    this.updateMapFromErrors();
   }
 
   public initMap(): void {
@@ -43,15 +42,18 @@ export class BaseModel {
     });
   }
 
-  private updateMapFromErrors(): void {
-    this.errors.forEach((error) => {
-      const property = error.property;
+  private setTouched(property: string = null): void {
+    if (property) {
       this.map.map((item) => {
         if (item.property === property) {
           item.touched = true;
         }
       });
-    });
+    } else {
+      this.map.map((item) => {
+        item.touched = true;
+      });
+    }
   }
 
   private cleanError(fieldName: string): void {
@@ -113,6 +115,8 @@ export class BaseModel {
           this.setErrors(errors);
           resolve({ isValid: false, validatedData: null, errors });
         }
+
+        this.setTouched();
       });
     });
   }
@@ -140,6 +144,8 @@ export class BaseModel {
           this.setErrors(errors);
           reject(errors);
         }
+
+        this.setTouched(fieldName);
       });
     });
   }

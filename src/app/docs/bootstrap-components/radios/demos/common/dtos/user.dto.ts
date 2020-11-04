@@ -5,5 +5,5 @@ export class UserDto {
   fullName: string;
 
   @IsNotEmpty()
-  gender: string;
+  gender: number;
 }

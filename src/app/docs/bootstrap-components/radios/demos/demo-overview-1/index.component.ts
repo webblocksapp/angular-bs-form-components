@@ -9,10 +9,10 @@ declare var require: any;
       <code-block type="running-code">
         <running-code></running-code>
       </code-block>
-      <code-block type="html" [code]="htmlCode" language="html"></code-block>
+      <code-block type="html" [code]="htmlCode1" language="html"></code-block>
       <code-block
         type="component"
-        [code]="componentCode"
+        [code]="componentCode1"
         language="typescript"
       ></code-block>
       <code-block
@@ -21,7 +21,19 @@ declare var require: any;
         language="typescript"
       ></code-block>
       <code-block
-        label="Options"
+        label="Options HTML"
+        type="html-options"
+        [code]="htmlCode2"
+        language="html"
+      ></code-block>
+      <code-block
+        label="Options Component"
+        type="options-component"
+        [code]="componentCode2"
+        language="typescript"
+      ></code-block>
+      <code-block
+        label="Options DTO"
         type="options"
         [code]="dtoCode2"
         language="typescript"
@@ -30,16 +42,20 @@ declare var require: any;
   `,
 })
 export class IndexComponent implements OnInit {
-  public htmlCode: string;
+  public htmlCode1: string;
+  public htmlCode2: string;
   public cssCode: string;
-  public componentCode: string;
+  public componentCode1: string;
+  public componentCode2: string;
   public dtoCode1: string;
   public dtoCode2: string;
 
   ngOnInit() {
-    this.htmlCode = require('!raw-loader!./running-code.component.html').default;
-    this.componentCode = require('!raw-loader!./running-code.component.ts').default;
+    this.htmlCode1 = require('!raw-loader!./running-code.component.html').default;
+    this.htmlCode2 = require('!raw-loader!../common/components/demo-options/demo-options.component.html').default;
+    this.componentCode1 = require('!raw-loader!./running-code.component.ts').default;
+    this.componentCode2 = require('!raw-loader!../common/components/demo-options/demo-options.component.ts').default;
     this.dtoCode1 = require('!raw-loader!../common/dtos/user.dto.ts').default;
-    this.dtoCode2 = require('!raw-loader!./dtos/demo1-options.dto.ts').default;
+    this.dtoCode2 = require('!raw-loader!../common/dtos/demo-options.dto.ts').default;
   }
 }

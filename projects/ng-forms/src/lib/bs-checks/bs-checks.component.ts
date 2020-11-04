@@ -42,12 +42,14 @@ import { DataInputBase } from '../common/classes/data-input-base';
         <label class="custom-control-label" for="{{ id }}-{{ i }}-bs">
           {{ option.viewValue }}
         </label>
-        <ng-container *ngIf="i === options.length - 1 && display === undefined">
+        <ng-container *ngIf="i === options.length - 1 && display === 'default'">
           <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
         </ng-container>
       </div>
       <ng-container *ngIf="display === 'inline'">
-        <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
+        <div *ngIf="error" class="invalid-feedback invalid-feedback-inline">
+          {{ error }}
+        </div>
       </ng-container>
       <small *ngIf="help" class="form-text text-muted">
         {{ help }}
@@ -63,12 +65,16 @@ import { DataInputBase } from '../common/classes/data-input-base';
       :host .form-label {
         margin-bottom: 0.7rem;
       }
+
+      :host .invalid-feedback-inline {
+        margin-top: -8px;
+      }
     `,
   ],
 })
 export class BsChecksComponent extends DataInputBase implements DoCheck {
   @Input() options: Array<any>;
-  @Input() display: string;
+  @Input() display = 'default';
   @Input() look = 'radio';
 
   @ViewChildren('checkbox') checkboxes: QueryList<ElementRef>;

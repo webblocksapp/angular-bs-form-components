@@ -7,6 +7,8 @@ import {
   Output,
   EventEmitter,
   AfterContentInit,
+  SimpleChanges,
+  OnChanges,
 } from '@angular/core';
 import { DataGroupComponent } from './components/data-group.component';
 import { ValidationError } from '@webblocksapp/class-validator';
@@ -28,7 +30,8 @@ import { capitalize, isNull } from '../common/utils';
     </form>
   `,
 })
-export class DataGroupsComponent implements OnInit, AfterContentInit {
+export class DataGroupsComponent
+  implements OnInit, AfterContentInit, OnChanges {
   @Input() class: string;
   @Input() model: Array<BaseModel>;
   @Input() group: string;
@@ -55,6 +58,16 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
       this.listenDataGroupsListChanges();
       this.listenDataInputsListChanges();
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    for (const propName in changes) {
+      if (propName === 'highlightOnValid') {
+        if (Array.isArray(this.model)) {
+          this.initModelMap();
+        }
+      }
+    }
   }
 
   initBaseModel(): void {
@@ -278,10 +291,12 @@ export class DataGroupsComponent implements OnInit, AfterContentInit {
       if (isValid) {
         dataInputComponents.forEach((dataInputComponent) => {
           dataInputComponent.component.error = null;
+          dataInputComponent.component.touched = true;
         });
       } else {
         dataInputComponents.forEach((dataInputComponent) => {
           this.setDataInputComponentError(dataInputComponent, errors);
+          dataInputComponent.component.touched = true;
         });
       }
     });

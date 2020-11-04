@@ -1,0 +1,32 @@
+<h6>Radios options:</h6>
+<data-groups [model]="model">
+  <data-group class="d-flex">
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.look"
+      look="switch"
+      label="Look"
+      name="look"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.display"
+      look="switch"
+      label="Display"
+      name="display"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.highlightOnValid"
+      look="switch"
+      label="Highlight on valid"
+      name="highlightOnValid"
+    ></bs-radios>
+  </data-group>
+</data-groups>
