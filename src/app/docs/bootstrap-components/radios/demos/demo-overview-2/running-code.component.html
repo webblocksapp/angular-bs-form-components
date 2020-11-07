@@ -1,0 +1,57 @@
+<data-groups
+  [model]="userModels"
+  [highlightOnValid]="demoOptions.highlightOnValid === 'yes' ? true : false"
+>
+  <div class="d-flex align-items-center mb-3">
+    <button
+      type="button"
+      [disabled]="this.numberOfRecords >= this.maxNumberOfRecords"
+      class="btn btn-secondary"
+      (click)="addUser()"
+    >
+      Add user
+    </button>
+    <span class="ml-2">
+      {{ numberOfRecords }} of <b>{{ maxNumberOfRecords }}</b></span
+    >
+  </div>
+  <data-group
+    class="card mb-3"
+    *ngFor="let n of Array(numberOfRecords); let i = index"
+  >
+    <div class="card-body">
+      <div class="card-title d-flex justify-content-between">
+        <span>
+          <b>User {{ i + 1 }}</b>
+        </span>
+        <button
+          type="button"
+          *ngIf="numberOfRecords > 1"
+          class="btn btn-danger"
+          (click)="deleteUser(i)"
+        >
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <bs-input
+        #dataInput
+        label="Full name"
+        name="fullName"
+        placeholder="Type your name"
+      ></bs-input>
+      <bs-radios
+        #dataInput
+        [options]="genders"
+        [look]="demoOptions.look"
+        [display]="demoOptions.display"
+        label="Gender"
+        name="gender"
+      ></bs-radios>
+    </div>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>
+
+<hr />
+
+<demo-options [model]="demoOptionsModel"></demo-options>

@@ -3,9 +3,9 @@ import { Component, OnInit } from '@angular/core';
 declare var require: any;
 
 @Component({
-  selector: 'demo-overview-1',
+  selector: 'demo-overview-2',
   template: `
-    <code-example label="Bootstrap radios overview">
+    <code-example label="Multiple radios">
       <code-block type="running-code">
         <running-code></running-code>
       </code-block>
