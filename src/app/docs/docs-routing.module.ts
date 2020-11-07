@@ -17,6 +17,13 @@ const routes: Routes = [
           import('./data-groups/index.module').then((m) => m.IndexModule),
       },
       {
+        path: 'bootstrap/select',
+        loadChildren: () =>
+          import('./bootstrap-components/select/index.module').then(
+            (m) => m.IndexModule,
+          ),
+      },
+      {
         path: 'bootstrap/radios',
         loadChildren: () =>
           import('./bootstrap-components/radios/index.module').then(

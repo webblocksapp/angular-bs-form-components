@@ -59,7 +59,7 @@ import { isNull } from '../common/utils';
         id="{{ id }}-bs"
       >
         <ng-container *ngFor="let option of options">
-          <option *ngIf="placeholder && multiple === false" hidden></option>
+          <option *ngIf="multiple === false" hidden></option>
           <option
             *ngIf="option.group === undefined"
             [attr.disabled]="option.disabled"
@@ -142,6 +142,7 @@ export class BsSelectComponent
   @ViewChild('selectElementRef', { read: ElementRef })
   selectElementRef: ElementRef;
 
+  @Input() placeholder = ' ';
   @Input() options: Array<Option> | Array<OptionGroup>;
   @Input() configs: any = {};
   @Input() multiple: boolean;
@@ -272,7 +273,7 @@ export class BsSelectComponent
 
   bindEventsAfterValidateField(): void {
     if (this.onShown === false) {
-      this.addOrRemoveIsInvalidClass();
+      this.addOrRemoveValidationClasses();
     }
   }
 
@@ -280,7 +281,7 @@ export class BsSelectComponent
     this.select.parent().find('.dropdown-menu').addClass('js-auto-close');
   }
 
-  addOrRemoveIsInvalidClass(): void {
+  addOrRemoveValidationClasses(): void {
     const inputGroup = this.select.closest('.input-group');
     const selectButton = this.select.parent().find('button.form-control');
 
@@ -290,6 +291,16 @@ export class BsSelectComponent
     } else {
       inputGroup.removeClass('is-invalid');
       selectButton.removeClass('is-invalid');
+
+      if (this.highlightOnValid && this.touched) {
+        inputGroup.addClass('is-valid');
+        selectButton.addClass('is-valid');
+      }
+
+      if (!this.highlightOnValid) {
+        inputGroup.removeClass('is-valid');
+        selectButton.removeClass('is-valid');
+      }
     }
   }
 
@@ -306,6 +317,6 @@ export class BsSelectComponent
   }
 
   refresh(): void {
-    this.addOrRemoveIsInvalidClass();
+    this.addOrRemoveValidationClasses();
   }
 }

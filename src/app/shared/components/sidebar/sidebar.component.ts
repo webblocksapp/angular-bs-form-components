@@ -87,7 +87,7 @@ export class SidebarComponent {
     },
     {
       title: 'Select',
-      collapsed: true,
+      path: '/docs/bootstrap/select',
     },
     {
       title: 'Select2',
