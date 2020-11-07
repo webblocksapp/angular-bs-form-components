@@ -55,7 +55,7 @@ export class IndexComponent implements OnInit {
     this.htmlCode2 = require('!raw-loader!./demo-options/demo-options.component.html').default;
     this.componentCode1 = require('!raw-loader!./running-code.component.ts').default;
     this.componentCode2 = require('!raw-loader!./demo-options/demo-options.component.ts').default;
-    this.dtoCode1 = require('!raw-loader!../common/dtos/user.dto.ts').default;
+    this.dtoCode1 = require('!raw-loader!./user.dto.ts').default;
     this.dtoCode2 = require('!raw-loader!./demo-options/demo-options.dto.ts').default;
   }
 }

@@ -63,7 +63,10 @@ export class DataGroupsComponent
   ngOnChanges(changes: SimpleChanges) {
     for (const propName in changes) {
       if (propName === 'highlightOnValid') {
-        if (Array.isArray(this.model)) {
+        if (
+          Array.isArray(this.model) &&
+          this.dataGroupComponents !== undefined
+        ) {
           this.initModelMap();
         }
       }

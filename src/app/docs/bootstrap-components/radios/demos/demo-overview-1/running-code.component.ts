@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseModel } from '@webblocksapp/ng-forms';
-import { UserDto } from '../common/dtos/user.dto';
+import { UserDto } from './user.dto';
 import { DemoOptionsDto } from './demo-options/demo-options.dto';
 
 @Component({
