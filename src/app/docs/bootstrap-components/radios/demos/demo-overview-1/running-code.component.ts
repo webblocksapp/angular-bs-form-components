@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseModel } from '@webblocksapp/ng-forms';
-import { UserDto } from './user.dto';
+import { ExampleDto } from './example.dto';
 import { DemoOptionsDto } from './demo-options/demo-options.dto';
 
 @Component({
@@ -8,8 +8,7 @@ import { DemoOptionsDto } from './demo-options/demo-options.dto';
   templateUrl: './running-code.component.html',
 })
 export class RunningCodeComponent {
-  public isSwitch = false;
-  public userModel: BaseModel = new BaseModel(UserDto);
+  public userModel: BaseModel = new BaseModel(ExampleDto);
   public demoOptionsModel: BaseModel = new BaseModel(DemoOptionsDto);
   public demoOptions: DemoOptionsDto = this.demoOptionsModel.getDto();
 

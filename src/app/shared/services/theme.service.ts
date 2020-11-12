@@ -6,10 +6,10 @@ import { ScriptManagerService } from './script-manager.service';
 export class ThemeService {
   private defaultTheme = {
     styles: [
-      'assets/bootstrap/css/bootstrap.min.css',
       'assets/select2/css/select2.min.css',
       'assets/bootstrap-select/css/bootstrap-select.min.css',
       'assets/select2/css/select2-bootstrap.min.css',
+      'assets/bootstrap/css/bootstrap.min.css',
       'assets/bootstrap-datepicker/css/bootstrap-datepicker.min.css',
     ],
     scripts: [],
@@ -17,14 +17,14 @@ export class ThemeService {
 
   private smartAdminTheme = {
     styles: [
+      'assets/select2/css/select2.bundle.css',
+      'assets/bootstrap-select/css/bootstrap-select.min.css',
       'assets/smart-admin/css/fa-brands.css',
       'assets/smart-admin/css/fa-duotone.css',
       'assets/smart-admin/css/fa-regular.css',
       'assets/smart-admin/css/fa-solid.css',
       'assets/smart-admin/css/vendors.bundle.css',
       'assets/smart-admin/css/app.bundle.css',
-      'assets/select2/css/select2.bundle.css',
-      'assets/bootstrap-select/css/bootstrap-select.min.css',
       'assets/smart-admin/formplugins/bootstrap-datepicker/bootstrap-datepicker.css',
     ],
     scripts: [],

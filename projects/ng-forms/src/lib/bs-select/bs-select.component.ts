@@ -297,7 +297,7 @@ export class BsSelectComponent
         selectButton.addClass('is-valid');
       }
 
-      if (!this.highlightOnValid) {
+      if (!this.highlightOnValid || !this.touched) {
         inputGroup.removeClass('is-valid');
         selectButton.removeClass('is-valid');
       }

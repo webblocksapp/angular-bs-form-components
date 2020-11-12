@@ -1,0 +1,18 @@
+<data-groups
+  [model]="userModel"
+  [highlightOnValid]="demoOptions.highlightOnValid === 'yes' ? true : false"
+>
+  <data-group>
+    <bs-input
+      #dataInput
+      label="Full name"
+      name="fullName"
+      placeholder="Type your name"
+    ></bs-input>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>
+
+<hr />
+
+<demo-options [model]="demoOptionsModel"></demo-options>

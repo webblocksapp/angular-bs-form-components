@@ -1,9 +1,6 @@
 import { IsNotEmpty } from '@webblocksapp/class-validator';
 
-export class UserDto {
+export class ExampleDto {
   @IsNotEmpty()
   fullName: string;
-
-  @IsNotEmpty()
-  gender: number;
 }

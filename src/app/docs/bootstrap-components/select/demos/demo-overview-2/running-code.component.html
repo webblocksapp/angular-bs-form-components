@@ -9,7 +9,7 @@
       class="btn btn-secondary"
       (click)="addUser()"
     >
-      Add user
+      Add record
     </button>
     <span class="ml-2">
       {{ numberOfRecords }} of <b>{{ maxNumberOfRecords }}</b></span
@@ -22,7 +22,7 @@
     <div class="card-body">
       <div class="card-title d-flex justify-content-between">
         <span>
-          <b>User {{ i + 1 }}</b>
+          <b>Record {{ i + 1 }}</b>
         </span>
         <button
           type="button"
@@ -33,20 +33,13 @@
           <i class="fa fa-times"></i>
         </button>
       </div>
-      <bs-input
+      <bs-select
         #dataInput
-        label="Full name"
-        name="fullName"
-        placeholder="Type your name"
-      ></bs-input>
-      <bs-radios
-        #dataInput
+        placeholder="Select your gender"
         [options]="genders"
-        [look]="demoOptions.look"
-        [display]="demoOptions.display"
         label="Gender"
         name="gender"
-      ></bs-radios>
+      ></bs-select>
     </div>
   </data-group>
   <button class="btn btn-primary">Submit</button>

@@ -12,7 +12,8 @@
   border-top-right-radius: 4px !important;
 }
 
-.ng-select2 .select2-selection.custom-select {
+.ng-select2 .select2-selection.custom-select,
+.ng-select2 .select2-container--default .select2-selection.form-control {
   padding: 0px;
 }
 
@@ -21,9 +22,25 @@
 }
 
 .ng-select2
+  .select2-container--default
+  .select2-selection--single.is-valid
+  .select2-selection__clear {
+  margin-right: 20px;
+}
+
+.ng-select2 .select2-container--default .select2-selection--single.is-valid {
+  background-position: right calc(0.3675em + 1.25rem) center;
+}
+
+.ng-select2
   .select2-container--bootstrap
   .select2-selection.custom-select.is-invalid {
   border-color: #dc3545 !important;
+}
+
+.ng-select2 .select2-container--bootstrap .select2-selection--single.is-valid {
+  background-position: right calc(0.3675em + 1.05rem) center;
+  border-color: #28a745 !important;
 }
 
 .ng-select2

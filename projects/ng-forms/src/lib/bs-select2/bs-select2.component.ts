@@ -105,6 +105,7 @@ export class BsSelect2Component
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();
 
   private select2: any;
+  private validate = false;
 
   ngAfterViewInit(): void {
     this.initJQueryEl();
@@ -143,7 +144,13 @@ export class BsSelect2Component
     this.select2.on('change', (event) => {
       const value = this.select2.select2('val');
       this.fillModel(value);
-      this.validateField();
+
+      if (this.validate === true) {
+        this.validateField();
+      } else {
+        this.validate = true;
+      }
+
       this.change(event);
     });
 
@@ -171,7 +178,7 @@ export class BsSelect2Component
   }
 
   bindEventsAfterValidateField(): void {
-    this.addOrRemoveIsInvalidClass();
+    this.addOrRemoveValidationClasses();
   }
 
   buildSelect2Configs(): void {
@@ -201,7 +208,7 @@ export class BsSelect2Component
     }
   }
 
-  addOrRemoveIsInvalidClass(): void {
+  addOrRemoveValidationClasses(): void {
     setTimeout(() => {
       /**
        * For a custom bootstrap theme, make the border-color property important inside this
@@ -223,16 +230,24 @@ export class BsSelect2Component
       } else {
         select2Selection.removeClass('custom-select');
         select2Selection.removeClass('is-invalid');
+
+        if (this.highlightOnValid && this.touched) {
+          select2Selection.addClass('form-control');
+          select2Selection.addClass('is-valid');
+        }
+
+        if (!this.highlightOnValid || !this.touched) {
+          select2Selection.removeClass('form-control');
+          select2Selection.removeClass('is-valid');
+        }
       }
     });
   }
 
   initSelectedOptions(): void {
     const selectedOptions = this.model.getValue(this.name);
-
-    if (!isNull(selectedOptions)) {
-      this.select2.val(selectedOptions).trigger('change');
-    }
+    this.validate = false;
+    this.select2.val(selectedOptions).trigger('change');
   }
 
   disableSelect2WhenOptionsAreEmpty(): void {
@@ -255,6 +270,7 @@ export class BsSelect2Component
   }
 
   refresh(): void {
-    this.addOrRemoveIsInvalidClass();
+    this.addOrRemoveValidationClasses();
+    this.initSelectedOptions();
   }
 }

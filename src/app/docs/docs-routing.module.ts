@@ -17,9 +17,23 @@ const routes: Routes = [
           import('./data-groups/index.module').then((m) => m.IndexModule),
       },
       {
+        path: 'bootstrap/input',
+        loadChildren: () =>
+          import('./bootstrap-components/input/index.module').then(
+            (m) => m.IndexModule,
+          ),
+      },
+      {
         path: 'bootstrap/select',
         loadChildren: () =>
           import('./bootstrap-components/select/index.module').then(
+            (m) => m.IndexModule,
+          ),
+      },
+      {
+        path: 'bootstrap/select2',
+        loadChildren: () =>
+          import('./bootstrap-components/select2/index.module').then(
             (m) => m.IndexModule,
           ),
       },

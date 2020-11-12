@@ -83,7 +83,7 @@ export class SidebarComponent {
     },
     {
       title: 'Input',
-      collapsed: true,
+      path: '/docs/bootstrap/input',
     },
     {
       title: 'Select',
@@ -91,7 +91,7 @@ export class SidebarComponent {
     },
     {
       title: 'Select2',
-      collapsed: true,
+      path: '/docs/bootstrap/select2',
     },
     {
       title: 'Checks',

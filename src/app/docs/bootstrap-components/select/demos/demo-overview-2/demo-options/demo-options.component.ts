@@ -9,14 +9,6 @@ export class DemoOptionsComponent {
   @Input() model: BaseModel;
 
   public demoOptions = {
-    look: [
-      { value: 'radio', viewValue: 'Radio' },
-      { value: 'switch', viewValue: 'Switch' },
-    ],
-    display: [
-      { value: 'default', viewValue: 'Default' },
-      { value: 'inline', viewValue: 'Inline' },
-    ],
     highlightOnValid: [
       { value: 'yes', viewValue: 'Yes' },
       { value: 'no', viewValue: 'No' },

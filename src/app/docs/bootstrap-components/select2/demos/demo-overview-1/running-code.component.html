@@ -1,0 +1,20 @@
+<data-groups
+  [model]="userModel"
+  [highlightOnValid]="demoOptions.highlightOnValid === 'yes' ? true : false"
+>
+  <data-group>
+    <bs-select2
+      [theme]="theme"
+      #dataInput
+      placeholder="Select your gender"
+      [options]="genders"
+      label="Gender"
+      name="gender"
+    ></bs-select2>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>
+
+<hr />
+
+<demo-options [model]="demoOptionsModel"></demo-options>

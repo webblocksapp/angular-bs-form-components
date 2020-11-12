@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseModel } from '@webblocksapp/ng-forms';
-import { UserDto } from '../demo-overview-1/user.dto';
+import { ExampleDto } from './example.dto';
 import { DemoOptionsDto } from './demo-options/demo-options.dto';
 
 @Component({
@@ -9,8 +9,7 @@ import { DemoOptionsDto } from './demo-options/demo-options.dto';
 })
 export class RunningCodeComponent {
   public Array = Array;
-  public isSwitch = false;
-  public userModels: Array<BaseModel> = [new BaseModel(UserDto)];
+  public userModels: Array<BaseModel> = [new BaseModel(ExampleDto)];
   public numberOfRecords = 1;
   public maxNumberOfRecords = 3;
   public demoOptionsModel: BaseModel = new BaseModel(DemoOptionsDto);
@@ -24,7 +23,7 @@ export class RunningCodeComponent {
 
   addUser(): void {
     if (this.numberOfRecords < this.maxNumberOfRecords) {
-      const userModel = new BaseModel(UserDto);
+      const userModel = new BaseModel(ExampleDto);
 
       this.numberOfRecords++;
       this.userModels.push(userModel);
