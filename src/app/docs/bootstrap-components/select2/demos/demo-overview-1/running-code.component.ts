@@ -11,7 +11,7 @@ export class RunningCodeComponent {
   public theme =
     localStorage.getItem('theme') === 'default' ? 'bootstrap' : undefined;
 
-  public userModel: BaseModel = new BaseModel(ExampleDto);
+  public exampleModel: BaseModel = new BaseModel(ExampleDto);
   public demoOptionsModel: BaseModel = new BaseModel(DemoOptionsDto);
   public demoOptions: DemoOptionsDto = this.demoOptionsModel.getDto();
 

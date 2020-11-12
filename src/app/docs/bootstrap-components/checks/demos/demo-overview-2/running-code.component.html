@@ -33,12 +33,14 @@
           <i class="fa fa-times"></i>
         </button>
       </div>
-      <bs-input
+      <bs-checks
         #dataInput
-        label="Full name"
-        name="fullName"
-        placeholder="Type your name"
-      ></bs-input>
+        [options]="favoriteFoods"
+        [look]="demoOptions.look"
+        [display]="demoOptions.display"
+        label="Favorite foods"
+        name="favoriteFoods"
+      ></bs-checks>
     </div>
   </data-group>
   <button class="btn btn-primary">Submit</button>

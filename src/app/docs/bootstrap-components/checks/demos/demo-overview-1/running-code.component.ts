@@ -11,4 +11,11 @@ export class RunningCodeComponent {
   public exampleModel: BaseModel = new BaseModel(ExampleDto);
   public demoOptionsModel: BaseModel = new BaseModel(DemoOptionsDto);
   public demoOptions: DemoOptionsDto = this.demoOptionsModel.getDto();
+
+  public favoriteFoods = [
+    { value: 1, viewValue: 'Pizza' },
+    { value: 2, viewValue: 'Hamburger' },
+    { value: 3, viewValue: 'Ice cream' },
+    { value: 4, viewValue: 'Chinese rice' },
+  ];
 }

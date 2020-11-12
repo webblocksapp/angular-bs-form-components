@@ -9,25 +9,25 @@ import { DemoOptionsDto } from './demo-options/demo-options.dto';
 })
 export class RunningCodeComponent {
   public Array = Array;
-  public userModels: Array<BaseModel> = [new BaseModel(ExampleDto)];
+  public exampleModels: Array<BaseModel> = [new BaseModel(ExampleDto)];
   public numberOfRecords = 1;
   public maxNumberOfRecords = 3;
   public demoOptionsModel: BaseModel = new BaseModel(DemoOptionsDto);
   public demoOptions: DemoOptionsDto = this.demoOptionsModel.getDto();
 
-  addUser(): void {
+  addRecord(): void {
     if (this.numberOfRecords < this.maxNumberOfRecords) {
-      const userModel = new BaseModel(ExampleDto);
+      const exampleModel = new BaseModel(ExampleDto);
 
       this.numberOfRecords++;
-      this.userModels.push(userModel);
+      this.exampleModels.push(exampleModel);
     }
   }
 
-  deleteUser(index: number): void {
+  deleteRecord(index: number): void {
     if (this.numberOfRecords >= 2) {
-      this.userModels = this.userModels.filter(
-        (bookModel) => this.userModels.indexOf(bookModel) !== index,
+      this.exampleModels = this.exampleModels.filter(
+        (bookModel) => this.exampleModels.indexOf(bookModel) !== index,
       );
 
       this.numberOfRecords--;

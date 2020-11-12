@@ -38,6 +38,13 @@ const routes: Routes = [
           ),
       },
       {
+        path: 'bootstrap/checks',
+        loadChildren: () =>
+          import('./bootstrap-components/checks/index.module').then(
+            (m) => m.IndexModule,
+          ),
+      },
+      {
         path: 'bootstrap/radios',
         loadChildren: () =>
           import('./bootstrap-components/radios/index.module').then(

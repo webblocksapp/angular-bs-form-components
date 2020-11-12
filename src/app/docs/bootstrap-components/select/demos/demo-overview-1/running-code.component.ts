@@ -8,7 +8,7 @@ import { DemoOptionsDto } from './demo-options/demo-options.dto';
   templateUrl: './running-code.component.html',
 })
 export class RunningCodeComponent {
-  public userModel: BaseModel = new BaseModel(ExampleDto);
+  public exampleModel: BaseModel = new BaseModel(ExampleDto);
   public demoOptionsModel: BaseModel = new BaseModel(DemoOptionsDto);
   public demoOptions: DemoOptionsDto = this.demoOptionsModel.getDto();
 

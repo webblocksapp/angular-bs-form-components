@@ -15,10 +15,11 @@ export class RunningCodeComponent {
   public demoOptionsModel: BaseModel = new BaseModel(DemoOptionsDto);
   public demoOptions: DemoOptionsDto = this.demoOptionsModel.getDto();
 
-  public genders = [
-    { value: 1, viewValue: 'Male' },
-    { value: 2, viewValue: 'Female' },
-    { value: 3, viewValue: 'Other' },
+  public favoriteFoods = [
+    { value: 1, viewValue: 'Pizza' },
+    { value: 2, viewValue: 'Hamburger' },
+    { value: 3, viewValue: 'Ice cream' },
+    { value: 4, viewValue: 'Chinese rice' },
   ];
 
   addRecord(): void {

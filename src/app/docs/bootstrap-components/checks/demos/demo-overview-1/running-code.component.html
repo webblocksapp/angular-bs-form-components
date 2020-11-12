@@ -3,13 +3,14 @@
   [highlightOnValid]="demoOptions.highlightOnValid === 'yes' ? true : false"
 >
   <data-group>
-    <bs-select
+    <bs-checks
       #dataInput
-      placeholder="Select your gender"
-      [options]="genders"
-      label="Gender"
-      name="gender"
-    ></bs-select>
+      [options]="favoriteFoods"
+      [look]="demoOptions.look"
+      [display]="demoOptions.display"
+      label="Favorite foods"
+      name="favoriteFoods"
+    ></bs-checks>
   </data-group>
   <button class="btn btn-primary">Submit</button>
 </data-groups>

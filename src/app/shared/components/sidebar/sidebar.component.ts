@@ -95,7 +95,7 @@ export class SidebarComponent {
     },
     {
       title: 'Checks',
-      collapsed: true,
+      path: '/docs/bootstrap/checks',
     },
     {
       title: 'Radios',
