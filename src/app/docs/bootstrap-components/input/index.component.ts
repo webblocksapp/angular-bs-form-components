@@ -14,5 +14,8 @@ import { DocsBaseRouter } from '@shared/classes';
   `,
 })
 export class IndexComponent extends DocsBaseRouter {
-  public routes = [{ title: 'Overview', path: 'overview' }];
+  public routes = [
+    { title: 'Overview', path: 'overview' },
+    { title: 'Api', path: 'api' },
+  ];
 }

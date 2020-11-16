@@ -9,6 +9,7 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { CodeExampleModule } from './components/code-example/code-example.module';
 import { NgFormsModule } from 'projects/ng-forms/src/public-api';
+import { ApiTableModule } from './components/api-table/api-table.module';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { NgFormsModule } from 'projects/ng-forms/src/public-api';
     CodeExampleModule,
     TabsComponent,
     NgFormsModule,
+    ApiTableModule,
   ],
   imports: [
     CommonModule,
@@ -35,6 +37,7 @@ import { NgFormsModule } from 'projects/ng-forms/src/public-api';
     HighlightModule,
     CodeExampleModule,
     NgFormsModule,
+    ApiTableModule,
   ],
   providers: [
     {
