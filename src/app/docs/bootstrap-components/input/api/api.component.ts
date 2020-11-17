@@ -82,6 +82,105 @@ import { DocsBase } from '@shared/classes';
     </api-table>
 
     <h5 marker>Events</h5>
+
+    <api-table>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() focusEvent: EventEmitter<FocusEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() focusoutEvent: EventEmitter<FocusEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() blurEvent: EventEmitter<FocusEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() changeEvent: EventEmitter<Event>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() inputEvent: EventEmitter<Event>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() keydownEvent: EventEmitter<KeyboardEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() keypressEvent: EventEmitter<KeyboardEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() keyupEvent: EventEmitter<KeyboardEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() clickEvent: EventEmitter<MouseEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() dblclickEvent: EventEmitter<MouseEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() mousedownEvent: EventEmitter<MouseEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() mouseoutEvent: EventEmitter<MouseEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() mouseoverEvent: EventEmitter<MouseEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() mouseupEvent: EventEmitter<MouseEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() mousewheelEvent: EventEmitter<MouseEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+      <api-table-row>
+        <api-table-cell
+          [innerText]="'@Output() wheelEvent: EventEmitter<MouseEvent>'"
+        ></api-table-cell>
+        <api-table-cell>Test.</api-table-cell>
+      </api-table-row>
+    </api-table>
   `,
 })
 export class ApiComponent extends DocsBase {}

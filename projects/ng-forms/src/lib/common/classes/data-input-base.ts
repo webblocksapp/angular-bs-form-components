@@ -49,25 +49,25 @@ export abstract class DataInputBase
   @Input() endSlot: string;
   @Input() endSlotHtml: string;
 
-  @Output() focusEvent: EventEmitter<any> = new EventEmitter();
-  @Output() focusoutEvent: EventEmitter<any> = new EventEmitter();
-  @Output() blurEvent: EventEmitter<any> = new EventEmitter();
-  @Output() changeEvent: EventEmitter<any> = new EventEmitter();
-  @Output() inputEvent: EventEmitter<any> = new EventEmitter();
+  @Output() focusEvent: EventEmitter<FocusEvent> = new EventEmitter();
+  @Output() focusoutEvent: EventEmitter<FocusEvent> = new EventEmitter();
+  @Output() blurEvent: EventEmitter<FocusEvent> = new EventEmitter();
+  @Output() changeEvent: EventEmitter<Event> = new EventEmitter();
+  @Output() inputEvent: EventEmitter<Event> = new EventEmitter();
 
-  @Output() keydownEvent: EventEmitter<any> = new EventEmitter();
-  @Output() keypressEvent: EventEmitter<any> = new EventEmitter();
-  @Output() keyupEvent: EventEmitter<any> = new EventEmitter();
+  @Output() keydownEvent: EventEmitter<KeyboardEvent> = new EventEmitter();
+  @Output() keypressEvent: EventEmitter<KeyboardEvent> = new EventEmitter();
+  @Output() keyupEvent: EventEmitter<KeyboardEvent> = new EventEmitter();
 
-  @Output() clickEvent: EventEmitter<any> = new EventEmitter();
-  @Output() dblclickEvent: EventEmitter<any> = new EventEmitter();
-  @Output() mousedownEvent: EventEmitter<any> = new EventEmitter();
-  @Output() mousemoveEvent: EventEmitter<any> = new EventEmitter();
-  @Output() mouseoutEvent: EventEmitter<any> = new EventEmitter();
-  @Output() mouseoverEvent: EventEmitter<any> = new EventEmitter();
-  @Output() mouseupEvent: EventEmitter<any> = new EventEmitter();
-  @Output() mousewheelEvent: EventEmitter<any> = new EventEmitter();
-  @Output() wheelEvent: EventEmitter<any> = new EventEmitter();
+  @Output() clickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+  @Output() dblclickEvent: EventEmitter<MouseEvent> = new EventEmitter();
+  @Output() mousedownEvent: EventEmitter<MouseEvent> = new EventEmitter();
+  @Output() mousemoveEvent: EventEmitter<MouseEvent> = new EventEmitter();
+  @Output() mouseoutEvent: EventEmitter<MouseEvent> = new EventEmitter();
+  @Output() mouseoverEvent: EventEmitter<MouseEvent> = new EventEmitter();
+  @Output() mouseupEvent: EventEmitter<MouseEvent> = new EventEmitter();
+  @Output() mousewheelEvent: EventEmitter<MouseEvent> = new EventEmitter();
+  @Output() wheelEvent: EventEmitter<MouseEvent> = new EventEmitter();
 
   public inputSize: string;
   public error: string;

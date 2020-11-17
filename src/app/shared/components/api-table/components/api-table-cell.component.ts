@@ -11,6 +11,7 @@ import {
   template: `
     <ng-template #ref>
       <td [ngClass]="{ 'console-font': consoleFont }" [width]="width">
+        {{ innerText !== undefined ? innerText : '' }}
         <ng-content></ng-content>
       </td>
     </ng-template>
@@ -24,7 +25,7 @@ import {
       .console-font {
         font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
           'Courier New', monospace;
-        font-size: 14px;
+        font-size: 12px;
       }
     `,
   ],
@@ -35,6 +36,7 @@ export class ApiTableCellComponent implements AfterViewInit {
 
   @Input() consoleFont = false;
   @Input() width = '1%';
+  @Input() innerText: string;
 
   public templateRef: TemplateRef<any>;
 
