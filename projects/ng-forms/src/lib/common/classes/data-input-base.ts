@@ -24,6 +24,7 @@ import { capitalize } from '../utils';
 
 // tslint:disable-next-line: no-conflicting-lifecycle
 @Directive()
+// tslint:disable-next-line: directive-class-suffix
 export abstract class DataInputBase
   implements
     OnInit,
@@ -47,10 +48,6 @@ export abstract class DataInputBase
   @Input() startSlotHtml: string;
   @Input() endSlot: string;
   @Input() endSlotHtml: string;
-  @Input() model: BaseModel;
-  @Input() isReactiveForm = true;
-  @Input() highlightOnValid = false;
-  @Input() touched = false;
 
   @Output() focusEvent: EventEmitter<any> = new EventEmitter();
   @Output() focusoutEvent: EventEmitter<any> = new EventEmitter();
@@ -75,6 +72,10 @@ export abstract class DataInputBase
   public inputSize: string;
   public error: string;
   public value: any = null;
+  public model: BaseModel;
+  public isReactiveForm = true;
+  public highlightOnValid = false;
+  public touched = false;
   private modelDiffer: KeyValueDiffer<string, any>;
 
   constructor(private differs: KeyValueDiffers) {}

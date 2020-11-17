@@ -5,7 +5,7 @@ import { DocsBase } from '@shared/classes';
   selector: 'app-introduction',
   template: `
     <app-docs-container [markers]="markers">
-      <h3 #marker>Setup</h3>
+      <h3 marker>Setup</h3>
 
       <div class="pt-3">
         <ol>
@@ -14,7 +14,7 @@ import { DocsBase } from '@shared/classes';
             <code>npm i @webblocksapp/ng-forms</code>
           </li>
 
-          <h5 #marker class="mt-3"><b>Dependencies</b></h5>
+          <h5 marker class="mt-3"><b>Dependencies</b></h5>
           <p>
             Once installed <b>NG Forms</b> into your project, the following
             dependencies will be added automatically:
@@ -53,7 +53,7 @@ import { DocsBase } from '@shared/classes';
           <pre><code class="mt-3" [highlight]='angularJsonCode'></code></pre>
         </ol>
 
-        <h5 #marker class="mt-4">About jQuery</h5>
+        <h5 marker class="mt-4">About jQuery</h5>
 
         <p>
           Most of Bootstrap components from NG Forms use Bootstrap 4.5 and

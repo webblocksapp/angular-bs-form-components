@@ -11,7 +11,7 @@ import { DocsBase } from '@shared/classes';
 
     <demo-overview-1></demo-overview-1>
 
-    <h5 #marker>Working with multiple checks</h5>
+    <h5 marker>Working with multiple checks</h5>
     <p>
       With <code>data-groups</code> component you can easily fill and validate
       multiple checks.

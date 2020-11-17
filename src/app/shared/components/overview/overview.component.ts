@@ -1,4 +1,5 @@
-import { Component, ElementRef, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MarkerDirective } from '@shared/directives/marker.directive';
 
 @Component({
   selector: 'app-overview',
@@ -8,9 +9,9 @@ import { Component, ElementRef, Input } from '@angular/core';
         <li
           class="nav-item dropdown"
           *ngFor="let marker of markers"
-          (click)="scrollToMarker(marker.nativeElement)"
+          (click)="scrollToMarker(marker.elementRef.nativeElement)"
         >
-          {{ marker.nativeElement.innerText }}
+          {{ marker.elementRef.nativeElement.innerText }}
         </li>
       </ul>
     </div>
@@ -38,7 +39,7 @@ import { Component, ElementRef, Input } from '@angular/core';
   ],
 })
 export class OverviewComponent {
-  @Input() markers: Array<ElementRef>;
+  @Input() markers: Array<MarkerDirective>;
 
   scrollToMarker(element): void {
     const offsetTop = element.offsetTop;

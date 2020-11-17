@@ -8,7 +8,7 @@ import { DocsBase } from '@shared/classes';
 
     <demo-overview-1></demo-overview-1>
 
-    <h5 #marker>Example marker</h5>
+    <h5 marker>Example marker</h5>
     <p>Example paragraph.</p>
 
     <!-- demo-overview-2 -->

@@ -5,7 +5,7 @@ import { DocsBase } from '@shared/classes';
   selector: 'app-introduction',
   template: `
     <app-docs-container [markers]="markers">
-      <h3 #marker>Introduction to NG Forms</h3>
+      <h3 marker>Introduction to NG Forms</h3>
 
       <div class="pt-3">
         <p>
@@ -14,7 +14,7 @@ import { DocsBase } from '@shared/classes';
           structures and convert them into UI data inputs easily.
         </p>
 
-        <h5 #marker class="mt-4">Advantages of using NG Forms</h5>
+        <h5 marker class="mt-4">Advantages of using NG Forms</h5>
         <ul>
           <li>
             It makes a compilation of the most common used data input components
@@ -32,7 +32,7 @@ import { DocsBase } from '@shared/classes';
           </li>
         </ul>
 
-        <h5 #marker class="mt-4">Getting started</h5>
+        <h5 marker class="mt-4">Getting started</h5>
 
         <ul>
           <li>

@@ -12,7 +12,7 @@ import { DocsBase } from '@shared/classes';
 
     <demo-overview-1></demo-overview-1>
 
-    <h5 #marker>Working with multiple data models</h5>
+    <h5 marker>Working with multiple data models</h5>
     <p>
       With <code>data-groups</code> component you can easily fill and validate
       multiple data models. For example you are building a software for a

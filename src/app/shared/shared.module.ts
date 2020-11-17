@@ -10,6 +10,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
 import { CodeExampleModule } from './components/code-example/code-example.module';
 import { NgFormsModule } from 'projects/ng-forms/src/public-api';
 import { ApiTableModule } from './components/api-table/api-table.module';
+import { MarkerDirective } from './directives/marker.directive';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { ApiTableModule } from './components/api-table/api-table.module';
     SidebarComponent,
     DocsContainerComponent,
     TabsComponent,
+    MarkerDirective,
   ],
   exports: [
     CommonModule,
@@ -30,6 +32,7 @@ import { ApiTableModule } from './components/api-table/api-table.module';
     TabsComponent,
     NgFormsModule,
     ApiTableModule,
+    MarkerDirective,
   ],
   imports: [
     CommonModule,
