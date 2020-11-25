@@ -1,5 +1,5 @@
-import { Component, ContentChildren, QueryList } from '@angular/core';
-import { ApiTableRowComponent } from './components/api-table-row.component';
+import { Component, Input } from '@angular/core';
+import ApiTableData from './api-table-data.type';
 
 @Component({
   selector: 'api-table',
@@ -12,20 +12,31 @@ import { ApiTableRowComponent } from './components/api-table-row.component';
         </tr>
       </thead>
       <tbody>
-        <ng-container
-          *ngFor="let apiTableRowComponent of apiTableRowComponents"
-        >
-          <tr>
-            <ng-container
-              [ngTemplateOutlet]="apiTableRowComponent.templateRef"
-            ></ng-container>
-          </tr>
-        </ng-container>
+        <tr *ngFor="let item of data">
+          <td class="console-font" [innerHtml]="item.name"></td>
+          <td [innerHtml]="item.description"></td>
+        </tr>
       </tbody>
     </table>
   `,
+  styles: [
+    `
+      td {
+        vertical-align: middle;
+      }
+
+      td:nth-child(1) {
+        width: 410px;
+      }
+
+      .console-font {
+        font-family: SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+          'Courier New', monospace;
+        font-size: 12px;
+      }
+    `,
+  ],
 })
 export class ApiTableComponent {
-  @ContentChildren(ApiTableRowComponent)
-  apiTableRowComponents: QueryList<ApiTableRowComponent>;
+  @Input() data: ApiTableData[];
 }

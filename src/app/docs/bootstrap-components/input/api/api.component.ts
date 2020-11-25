@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DocsBase } from '@shared/classes';
+import ApiTableData from '@shared/components/api-table/api-table-data.type';
 
 @Component({
   selector: 'app-api',
@@ -14,173 +15,118 @@ import { DocsBase } from '@shared/classes';
 
     <h5 marker>Properties</h5>
 
-    <api-table>
-      <api-table-row>
-        <api-table-cell>@Input() id: string</api-table-cell>
-        <api-table-cell>Form input unique id.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell>@Input() label: string</api-table-cell>
-        <api-table-cell>Form input label.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell>@Input() name: string</api-table-cell>
-        <api-table-cell>Form input name.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          >@Input() type: InputType<br />
-          ('text' | 'password' | 'email')
-        </api-table-cell>
-        <api-table-cell> Form input type. </api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell>
-          @Input() size: InputSize<br />
-          ('default' | 'large' | 'small')
-        </api-table-cell>
-        <api-table-cell>
-          By default <code>default</code>. Form input size.
-        </api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell>@Input() placeholder: string</api-table-cell>
-        <api-table-cell>Form input placeholder.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell>@Input() disabled: string</api-table-cell>
-        <api-table-cell>Disabled input attribute.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell>@Input() help: string</api-table-cell>
-        <api-table-cell>Form input hint text.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell>@Input() startSlot: string</api-table-cell>
-        <api-table-cell>
-          Appends a text slot at the beginning of the input.
-        </api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell>@Input() startSlotHtml: string</api-table-cell>
-        <api-table-cell>
-          Appends an slot with rendered html at the beginning of the input.
-        </api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell>@Input() endSlot: string</api-table-cell>
-        <api-table-cell>
-          Appends a text slot at the end of the input.
-        </api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell>@Input() endSlotHtml: string</api-table-cell>
-        <api-table-cell>
-          Appends an slot with rendered html at the end of the input.
-        </api-table-cell>
-      </api-table-row>
-    </api-table>
+    <api-table [data]="data1"></api-table>
 
     <h5 marker>Events</h5>
 
-    <api-table>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() focusEvent: EventEmitter<FocusEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() focusoutEvent: EventEmitter<FocusEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() blurEvent: EventEmitter<FocusEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() changeEvent: EventEmitter<Event>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() inputEvent: EventEmitter<Event>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() keydownEvent: EventEmitter<KeyboardEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() keypressEvent: EventEmitter<KeyboardEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() keyupEvent: EventEmitter<KeyboardEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() clickEvent: EventEmitter<MouseEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() dblclickEvent: EventEmitter<MouseEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() mousedownEvent: EventEmitter<MouseEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() mouseoutEvent: EventEmitter<MouseEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() mouseoverEvent: EventEmitter<MouseEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() mouseupEvent: EventEmitter<MouseEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() mousewheelEvent: EventEmitter<MouseEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-      <api-table-row>
-        <api-table-cell
-          [innerText]="'@Output() wheelEvent: EventEmitter<MouseEvent>'"
-        ></api-table-cell>
-        <api-table-cell>Test.</api-table-cell>
-      </api-table-row>
-    </api-table>
+    <api-table [data]="data2"></api-table>
   `,
 })
-export class ApiComponent extends DocsBase {}
+export class ApiComponent extends DocsBase {
+  public data1: ApiTableData[] = [
+    { name: '@Input() id: string', description: 'Form input unique id.' },
+    { name: '@Input() label: string', description: 'Form input label.' },
+    { name: '@Input() name: string', description: 'Form input name.' },
+    {
+      // tslint:disable-next-line: quotemark
+      name: "@Input() type: InputType<br /> ('text' | 'password' | 'email')",
+      description: ' Form input type.',
+    },
+    {
+      // tslint:disable-next-line: quotemark
+      name: "@Input() size: InputSize<br />('default' | 'large' | 'small')",
+      description: 'By default <code>default</code>. Form input size.',
+    },
+    {
+      name: '@Input() placeholder: string',
+      description: 'Form input placeholder.',
+    },
+    {
+      name: '@Input() disabled: string',
+      description: 'Disabled input attribute.',
+    },
+    { name: '@Input() help: string', description: 'Form input hint text.' },
+    {
+      name: '@Input() startSlot: string',
+      description: 'Appends a text slot at the beginning of the input.',
+    },
+    {
+      name: '@Input() startSlotHtml: string',
+      description:
+        'Appends an slot with rendered html at the beginning of the input.',
+    },
+    {
+      name: '@Input() endSlot: string',
+      description: 'Appends a text slot at the end of the input.',
+    },
+    {
+      name: '@Input() endSlotHtml: string',
+      description:
+        'Appends an slot with rendered html at the end of the input.',
+    },
+  ];
+
+  public data2: ApiTableData[] = [
+    {
+      name: '@Output() focusEvent: EventEmitter<FocusEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() focusoutEvent: EventEmitter<FocusEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() blurEvent: EventEmitter<FocusEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() changeEvent: EventEmitter<Event>',
+      description: 'Test.',
+    },
+    { name: '@Output() inputEvent: EventEmitter<Event>', description: 'Test.' },
+    {
+      name: '@Output() keydownEvent: EventEmitter<KeyboardEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() keypressEvent: EventEmitter<KeyboardEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() keyupEvent: EventEmitter<KeyboardEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() clickEvent: EventEmitter<MouseEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() dblclickEvent: EventEmitter<MouseEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() mousedownEvent: EventEmitter<MouseEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() mouseoutEvent: EventEmitter<MouseEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() mouseoverEvent: EventEmitter<MouseEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() mouseupEvent: EventEmitter<MouseEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() mousewheelEvent: EventEmitter<MouseEvent>',
+      description: 'Test.',
+    },
+    {
+      name: '@Output() wheelEvent: EventEmitter<MouseEvent>',
+      description: 'Test.',
+    },
+  ];
+}
