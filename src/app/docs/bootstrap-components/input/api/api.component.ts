@@ -15,15 +15,15 @@ import ApiTableData from '@shared/components/api-table/api-table-data.type';
 
     <h5 marker>Properties</h5>
 
-    <api-table [data]="data1"></api-table>
+    <api-table [data]="properties"></api-table>
 
     <h5 marker>Events</h5>
 
-    <api-table [data]="data2"></api-table>
+    <api-table [data]="events"></api-table>
   `,
 })
 export class ApiComponent extends DocsBase {
-  public data1: ApiTableData[] = [
+  public properties: ApiTableData[] = [
     { name: '@Input() id: string', description: 'Form input unique id.' },
     { name: '@Input() label: string', description: 'Form input label.' },
     { name: '@Input() name: string', description: 'Form input name.' },
@@ -66,67 +66,70 @@ export class ApiComponent extends DocsBase {
     },
   ];
 
-  public data2: ApiTableData[] = [
+  public events: ApiTableData[] = [
     {
       name: '@Output() focusEvent: EventEmitter<FocusEvent>',
-      description: 'Test.',
+      description: 'Focus event emitter.',
     },
     {
       name: '@Output() focusoutEvent: EventEmitter<FocusEvent>',
-      description: 'Test.',
+      description: 'Focusout event emitter.',
     },
     {
       name: '@Output() blurEvent: EventEmitter<FocusEvent>',
-      description: 'Test.',
+      description: 'Blur event emitter.',
     },
     {
       name: '@Output() changeEvent: EventEmitter<Event>',
-      description: 'Test.',
+      description: 'Change event emitter.',
     },
-    { name: '@Output() inputEvent: EventEmitter<Event>', description: 'Test.' },
+    {
+      name: '@Output() inputEvent: EventEmitter<Event>',
+      description: 'Input event emitter.',
+    },
     {
       name: '@Output() keydownEvent: EventEmitter<KeyboardEvent>',
-      description: 'Test.',
+      description: 'Keydown event emitter.',
     },
     {
       name: '@Output() keypressEvent: EventEmitter<KeyboardEvent>',
-      description: 'Test.',
+      description: 'Keypress event emitter.',
     },
     {
       name: '@Output() keyupEvent: EventEmitter<KeyboardEvent>',
-      description: 'Test.',
+      description: 'Keyup event emitter.',
     },
     {
       name: '@Output() clickEvent: EventEmitter<MouseEvent>',
-      description: 'Test.',
+      description: 'Click event emitter.',
     },
     {
       name: '@Output() dblclickEvent: EventEmitter<MouseEvent>',
-      description: 'Test.',
+      description: 'DblClick event emitter.',
     },
     {
       name: '@Output() mousedownEvent: EventEmitter<MouseEvent>',
-      description: 'Test.',
+      description: 'Mousedown event emitter.',
     },
     {
       name: '@Output() mouseoutEvent: EventEmitter<MouseEvent>',
-      description: 'Test.',
+      description: 'Mouseout event emitter.',
     },
     {
       name: '@Output() mouseoverEvent: EventEmitter<MouseEvent>',
-      description: 'Test.',
+      description: 'Mouseover event emitter.',
     },
     {
       name: '@Output() mouseupEvent: EventEmitter<MouseEvent>',
-      description: 'Test.',
+      description: 'Mouseup event emitter.',
     },
     {
       name: '@Output() mousewheelEvent: EventEmitter<MouseEvent>',
-      description: 'Test.',
+      description: 'Mousewheel event emitter.',
     },
     {
       name: '@Output() wheelEvent: EventEmitter<MouseEvent>',
-      description: 'Test.',
+      description: 'Wheel event emitter.',
     },
   ];
 }

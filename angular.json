@@ -164,5 +164,8 @@
       }
     }
   },
-  "defaultProject": "angular-bs-form-components"
+  "defaultProject": "angular-bs-form-components",
+  "cli": {
+    "analytics": "3cda2ece-e974-4c83-86ea-e3a127d3f526"
+  }
 }
