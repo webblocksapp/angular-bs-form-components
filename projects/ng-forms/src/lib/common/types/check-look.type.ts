@@ -1,1 +1,1 @@
-export type CheckLookType = 'check' | 'circle' | 'switch';
+export type CheckLook = 'check' | 'circle' | 'switch';

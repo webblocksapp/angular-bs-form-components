@@ -1,1 +1,1 @@
-export type CheckDisplayType = 'default' | 'inline';
+export type CheckDisplay = 'default' | 'inline';

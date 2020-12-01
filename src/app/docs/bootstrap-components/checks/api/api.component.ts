@@ -37,11 +37,11 @@ export class ApiComponent extends DocsBase {
       description: 'Defines list of checkboxes to check.',
     },
     {
-      name: `@Input() display: CheckDisplayType<br> 'default' | 'inline'`,
+      name: `@Input() display: CheckDisplay<br> 'default' | 'inline'`,
       description: 'Sets checkboxes positioning.',
     },
     {
-      name: `@Input() look: CheckLookType<br> 'check' | 'circle' | 'switch'`,
+      name: `@Input() look: CheckLook<br> 'check' | 'circle' | 'switch'`,
       description: 'Sets checkboxes style.',
     },
   ];

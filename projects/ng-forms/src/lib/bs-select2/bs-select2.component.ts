@@ -11,7 +11,7 @@ import {
   DoCheck,
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
-import { Option, OptionGroup } from '../common/types';
+import { SelectOption, SelectOptionGroup } from '../common/types';
 import { isNull } from '../common/utils';
 
 @Component({
@@ -95,7 +95,7 @@ export class BsSelect2Component
   select2ElementRef: ElementRef;
 
   @Input() theme: string;
-  @Input() options: Array<Option> | Array<OptionGroup>;
+  @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
   @Input() configs: any = {};
   @Input() multiple: string;
   @Input() noResults: string;

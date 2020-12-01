@@ -59,7 +59,8 @@ export class ApiComponent extends DocsBase {
         'Appends an slot with rendered html at the end of the select.',
     },
     {
-      name: '@Input() options: Array&lt;Option&gt; | Array&lt;OptionGroup&gt;',
+      name:
+        '@Input() options: Array&lt;SelectOption&gt; | Array&lt;SelectOptionGroup&gt;',
       description: 'The array of selectable options.',
     },
     {

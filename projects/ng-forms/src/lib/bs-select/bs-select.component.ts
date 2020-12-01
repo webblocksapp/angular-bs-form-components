@@ -11,7 +11,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
-import { Option, OptionGroup } from '../common/types';
+import { SelectOption, SelectOptionGroup } from '../common/types';
 import { isNull } from '../common/utils';
 
 @Component({
@@ -143,7 +143,7 @@ export class BsSelectComponent
   selectElementRef: ElementRef;
 
   @Input() placeholder = ' ';
-  @Input() options: Array<Option> | Array<OptionGroup>;
+  @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
   @Input() configs: { [key: string]: string } = {};
   @Input() multiple: boolean;
   @Input() liveSearch: boolean;
