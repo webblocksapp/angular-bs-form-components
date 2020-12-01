@@ -164,6 +164,22 @@ export class BsSelectComponent
 
   private select: any;
   private onShown = false;
+  private watchedProperties = [
+    'configs',
+    'multiple',
+    'liveSearch',
+    'maxOptions',
+    'maxOptionsText',
+    'selectedTextFormat',
+    'countSelectedText',
+    'showTick',
+    'iconBase',
+    'actionsBox',
+    'deselectAllText',
+    'selectAllText',
+    'dataHeader',
+    'direction',
+  ];
 
   ngAfterViewInit(): void {
     this.initJQueryEl();
@@ -184,6 +200,7 @@ export class BsSelectComponent
       this.refreshSelect();
       this.disableSelectWhenOptionsAreEmpty();
     }
+    if (this.watchedProperties.indexOf(propName) > -1) this.refreshSelect();
   }
 
   initJQueryEl(): void {
