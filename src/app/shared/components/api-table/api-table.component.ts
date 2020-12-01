@@ -22,7 +22,7 @@ import ApiTableData from './api-table-data.type';
   styles: [
     `
       td {
-        vertical-align: middle;
+        vertical-align: top;
       }
 
       td:nth-child(1) {

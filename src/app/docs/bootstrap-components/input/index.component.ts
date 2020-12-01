@@ -6,16 +6,11 @@ import { DocsBaseRouter } from '@shared/classes';
   template: `
     <app-docs-container [markers]="markers">
       <h5 class="mb-4">Bootstrap Input</h5>
-      <app-tabs [routes]="routes"></app-tabs>
+      <app-tabs></app-tabs>
       <div class="pt-3">
         <router-outlet (activate)="onActivate($event)"></router-outlet>
       </div>
     </app-docs-container>
   `,
 })
-export class IndexComponent extends DocsBaseRouter {
-  public routes = [
-    { title: 'Overview', path: 'overview' },
-    { title: 'Api', path: 'api' },
-  ];
-}
+export class IndexComponent extends DocsBaseRouter {}

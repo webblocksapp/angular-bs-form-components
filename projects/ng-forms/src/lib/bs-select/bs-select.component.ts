@@ -144,7 +144,7 @@ export class BsSelectComponent
 
   @Input() placeholder = ' ';
   @Input() options: Array<Option> | Array<OptionGroup>;
-  @Input() configs: any = {};
+  @Input() configs: { [key: string]: string } = {};
   @Input() multiple: boolean;
   @Input() liveSearch: boolean;
   @Input() maxOptions: number;
@@ -159,8 +159,8 @@ export class BsSelectComponent
   @Input() dataHeader: string;
   @Input() direction: string;
 
-  @Output() shownEvent: EventEmitter<any> = new EventEmitter();
-  @Output() hiddenEvent: EventEmitter<any> = new EventEmitter();
+  @Output() shownEvent: EventEmitter<Event> = new EventEmitter();
+  @Output() hiddenEvent: EventEmitter<Event> = new EventEmitter();
 
   private select: any;
   private onShown = false;
