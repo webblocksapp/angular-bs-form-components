@@ -28,8 +28,7 @@ export class ApiComponent extends DocsBase {
     { name: '@Input() label: string', description: 'Select label.' },
     { name: '@Input() name: string', description: 'Select name.' },
     {
-      // tslint:disable-next-line: quotemark
-      name: "@Input() size: InputSize<br />('default' | 'large' | 'small')",
+      name: `@Input() size: InputSize<br />'default' | 'large' | 'small'`,
       description: 'By default <code>default</code>. Select size.',
     },
     {
@@ -60,7 +59,7 @@ export class ApiComponent extends DocsBase {
         'Appends an slot with rendered html at the end of the select.',
     },
     {
-      name: '@Input() options: Array<Option> | Array<OptionGroup>',
+      name: '@Input() options: Array&lt;Option&gt; | Array&lt;OptionGroup&gt;',
       description: 'The array of selectable options.',
     },
     {
@@ -142,11 +141,11 @@ export class ApiComponent extends DocsBase {
 
   public events: ApiTableData[] = [
     {
-      name: '@Output() shownEvent: EventEmitter<Event>',
+      name: '@Output() shownEvent: EventEmitter&lt;Event&gt;',
       description: 'Emits event when bootstrap select is shown.',
     },
     {
-      name: '@Output() hiddenEvent: EventEmitter<Event>',
+      name: '@Output() hiddenEvent: EventEmitter&lt;Event&gt;',
       description: 'Emits event when bootstrap select is hidden.',
     },
   ];

@@ -5,14 +5,12 @@ import { DocsBaseRouter } from '@shared/classes';
   selector: 'app-data-groups',
   template: `
     <app-docs-container [markers]="markers">
-      <h5 class="mb-4">Bootstrap Radios</h5>
-      <app-tabs [routes]="routes"></app-tabs>
+      <h5 class="mb-4">Bootstrap Checks</h5>
+      <app-tabs></app-tabs>
       <div class="pt-3">
         <router-outlet (activate)="onActivate($event)"></router-outlet>
       </div>
     </app-docs-container>
   `,
 })
-export class IndexComponent extends DocsBaseRouter {
-  public routes = [{ title: 'Overview', path: 'overview' }];
-}
+export class IndexComponent extends DocsBaseRouter {}

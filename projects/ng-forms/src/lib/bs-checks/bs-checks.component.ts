@@ -7,6 +7,7 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
+import { CheckDisplayType, CheckLookType } from '../common/types';
 
 @Component({
   selector: 'bs-checks',
@@ -74,8 +75,8 @@ import { DataInputBase } from '../common/classes/data-input-base';
 })
 export class BsChecksComponent extends DataInputBase implements DoCheck {
   @Input() options: Array<any>;
-  @Input() display = 'default';
-  @Input() look = 'radio';
+  @Input() display: CheckDisplayType = 'default';
+  @Input() look: CheckLookType = 'check';
 
   @ViewChildren('checkbox') checkboxes: QueryList<ElementRef>;
 
