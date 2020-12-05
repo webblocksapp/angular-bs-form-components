@@ -64,90 +64,37 @@ export class ApiComponent extends DocsBase {
       description: 'The array of selectable options.',
     },
     {
+      name: '@Input() theme: string',
+      description: `By default is undefined. Set it to <code>bootstrap</code> if your project uses Bootstrap. 
+      If your are using a Bootstrap template and it supports the Select2 component, keep it undefined to avoid conflicting styles.`,
+    },
+    {
       name: '@Input() configs: { [key: string]: string }',
-      description: `
-        Give access to the <a href="https://developer.snapappointments.com/bootstrap-select/options/" target="blank">
-        native API options of Bootstrap Select jQuery component</a>.`,
+      description: `Give access to the <a href="https://select2.org/configuration/options-api" target="blank">
+      native API options of Select2 jQuery component</a>.`,
     },
     {
-      name: '@Input() multiple: boolean',
-      description: 'Enables multiple select.',
+      name: `@Input() multiple: string<br> 'multiple'`,
+      description: `Enables multi-select.`,
     },
     {
-      name: '@Input() liveSearch: boolean',
-      description: 'Enables live search input on select.',
-    },
-    {
-      name: '@Input() maxOptions: number',
-      description: 'The max number of options to be selected.',
-    },
-    {
-      name: '@Input() maxOptionsText: string',
-      description: `To customize the max options text. E.g. <i>'You can select max {n} colors'</i>. <b>Note:</b> use <code>{n}</code> variable
-      to dynamically count selected options.`,
-    },
-    {
-      name: `@Input() selectedTextFormat: string<br>
-      'values' | 'static' | 'count' |<br>
-      'count > x' (where x is an integer)`,
-      description: `Specify how the selection is displayed:
-      <ul>
-        <li><code>values</code>: A comma delimited list of selected values (default)</li>
-        <li><code>count</code>: If one item is selected, then the option value is shown. If more than one is selected then the number of selected items is displayed, e.g. 2 of 6 selected</li>
-        <li><code>count > x</code>: Where x is the number of items selected when the display format changes from values to count</li>
-        <li><code>static</code>: Always show the select title (placeholder), regardless of selection</li>
-      </ul>
-      `,
-    },
-    {
-      name: '@Input() countSelectedText: string',
-      description: `
-        Sets the format for the text displayed when selectedTextFormat is count or <code>count > #</code>.<br>
-        <code>{0}</code> is the selected amount. <code>{1}</code> is total available for selection (If maxOptions is enabled and multiple). E.g. <i>{0} of {1} colors selected.</i>
-      `,
-    },
-    {
-      name: '@Input() showTick: boolean',
-      description: 'Shows a tick when an item is selected.',
-    },
-    {
-      name: '@Input() iconBase: string',
-      description:
-        'Set the base to use a different icon font. By default is set fontAwesome.',
-    },
-    {
-      name: '@Input() actionsBox: boolean',
-      description:
-        'When set to <code>true</code>, adds two buttons to the top of the dropdown menu (<b>Select All</b> & <b>Deselect All</b>).',
-    },
-    {
-      name: '@Input() deselectAllText: string',
-      description:
-        'The text on the button that deselects all options when <code>actionsBox</code> is enabled.',
-    },
-    {
-      name: '@Input() selectAllText: string',
-      description:
-        'The text on the button that selects all options when <code>actionsBox</code> is enabled.',
-    },
-    {
-      name: '@Input() dataHeader: string',
-      description: 'Adds a header text on select. E.g. <i>Select a color</i>.',
-    },
-    {
-      name: `@Input() direction: string<br>'up' | 'down'`,
-      description: 'Positions the select above or below the input.',
+      name: `@Input() noResults: string`,
+      description: `No results message text.`,
     },
   ];
 
   public events: ApiTableData[] = [
     {
-      name: '@Output() shownEvent: EventEmitter&lt;Event&gt;',
-      description: 'Emits event when bootstrap select is shown.',
+      name: '@Output() selectEvent: EventEmitter&lt;any&gt;',
+      description: 'Emits event when a select2 item is selected.',
     },
     {
-      name: '@Output() hiddenEvent: EventEmitter&lt;Event&gt;',
-      description: 'Emits event when bootstrap select is hidden.',
+      name: '@Output() clearEvent: EventEmitter&lt;any&gt;',
+      description: 'Emits event when select2 is cleared.',
+    },
+    {
+      name: '@Output() closeEvent: EventEmitter&lt;any&gt;',
+      description: 'Emits event when select2 is closed.',
     },
   ];
 }

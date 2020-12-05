@@ -51,6 +51,13 @@ const routes: Routes = [
             (m) => m.IndexModule,
           ),
       },
+      {
+        path: 'bootstrap/datepicker',
+        loadChildren: () =>
+          import('./bootstrap-components/datepicker/index.module').then(
+            (m) => m.IndexModule,
+          ),
+      },
     ],
   },
 ];

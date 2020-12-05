@@ -96,7 +96,7 @@ export class BsSelect2Component
 
   @Input() theme: string;
   @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
-  @Input() configs: any = {};
+  @Input() configs: { [key: string]: string } = {};
   @Input() multiple: string;
   @Input() noResults: string;
 
@@ -106,6 +106,7 @@ export class BsSelect2Component
 
   private select2: any;
   private validate = false;
+  private watchedProperties = ['theme', 'configs', 'multiple', 'noResults'];
 
   ngAfterViewInit(): void {
     this.initJQueryEl();
@@ -126,6 +127,7 @@ export class BsSelect2Component
       this.disableSelect2WhenOptionsAreEmpty();
       this.refreshSelect2();
     }
+    if (this.watchedProperties.indexOf(propName) > -1) this.refreshSelect2();
   }
 
   initJQueryEl(): void {

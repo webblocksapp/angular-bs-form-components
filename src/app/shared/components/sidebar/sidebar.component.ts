@@ -107,7 +107,7 @@ export class SidebarComponent {
     },
     {
       title: 'Datepicker',
-      collapsed: true,
+      path: '/docs/bootstrap/datepicker',
     },
   ];
 
