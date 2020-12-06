@@ -12,6 +12,7 @@ import {
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 import { isNull } from '../common/utils';
+import clone from '../common/utils/clone';
 
 @Component({
   selector: 'bs-datepicker',
@@ -89,37 +90,37 @@ export class BsDatepickerComponent
   @ViewChild('inputElementRef', { read: ElementRef })
   inputElementRef: ElementRef;
 
-  @Input() configs: any = {};
-  @Input() autoclose = true;
-  @Input() calendarWeeks = false;
-  @Input() clearBtn = false;
+  @Input() configs: { [key: string]: string } = {};
+  @Input() autoclose: boolean = true;
+  @Input() calendarWeeks: boolean = false;
+  @Input() clearBtn: boolean = false;
   @Input() datesDisabled: Array<string> | string;
   @Input() daysOfWeekDisabled: Array<string> | string;
   @Input() daysOfWeekHighlighted: Array<string> | string;
-  @Input() defaultViewDate = 'day';
-  @Input() disableTouchKeyboard = false;
-  @Input() enableOnReadonly = true;
+  @Input() defaultViewDate: string = 'day';
+  @Input() disableTouchKeyboard: boolean = false;
+  @Input() enableOnReadonly: boolean = true;
   @Input() endDate: string;
-  @Input() forceParse = true;
-  @Input() format = 'yyyy-mm-dd';
-  @Input() immediateUpdates = false;
-  @Input() keyboardNavigation = true;
-  @Input() maxViewMode = 'centuries';
-  @Input() minViewMode = 'days';
-  @Input() multidate = false;
-  @Input() multidateSeparator: ', ';
-  @Input() orientation: 'auto';
-  @Input() showOnFocus = true;
+  @Input() forceParse: boolean = true;
+  @Input() format: string = 'yyyy-mm-dd';
+  @Input() immediateUpdates: boolean = false;
+  @Input() keyboardNavigation: boolean = true;
+  @Input() maxViewMode: string = 'centuries';
+  @Input() minViewMode: string = 'days';
+  @Input() multidate: boolean = false;
+  @Input() multidateSeparator: string = ', ';
+  @Input() orientation: string = 'auto';
+  @Input() showOnFocus: boolean = true;
   @Input() startDate: string;
-  @Input() startView = 'days';
-  @Input() showWeekDays = true;
+  @Input() startView: string = 'days';
+  @Input() showWeekDays: boolean = true;
   @Input() title: string;
-  @Input() todayBtn = false;
-  @Input() todayHighlight = false;
-  @Input() weekStart = 0;
-  @Input() zIndexOffset = 10;
-  @Input() utc = false;
-  @Input() autocomplete = false;
+  @Input() todayBtn: boolean = false;
+  @Input() todayHighlight: boolean = false;
+  @Input() weekStart: number = 0;
+  @Input() zIndexOffset: number = 10;
+  @Input() utc: boolean = false;
+  @Input() autocomplete: boolean = false;
 
   @Output() showEvent: EventEmitter<any> = new EventEmitter();
   @Output() hideEvent: EventEmitter<any> = new EventEmitter();
@@ -131,6 +132,40 @@ export class BsDatepickerComponent
   @Output() changeCenturyEvent: EventEmitter<any> = new EventEmitter();
 
   private datepicker: any;
+  private datepickerConfigs: any = {};
+  private watchedProperties = [
+    'configs',
+    'autoclose',
+    'calendarWeeks',
+    'clearBtn',
+    'datesDisabled',
+    'daysOfWeekDisabled',
+    'daysOfWeekHighlighted',
+    'defaultViewDate',
+    'disableTouchKeyboard',
+    'enableOnReadonly',
+    'endDate',
+    'forceParse',
+    'format',
+    'immediateUpdates',
+    'keyboardNavigation',
+    'maxViewMode',
+    'minViewMode',
+    'multidate',
+    'multidateSeparator',
+    'orientation',
+    'showOnFocus',
+    'startDate',
+    'startView',
+    'showWeekDays',
+    'title',
+    'todayBtn',
+    'todayHighlight',
+    'weekStart',
+    'zIndexOffset',
+    'utc',
+    'autocomplete',
+  ];
 
   setConfigsOnInit(): void {
     this.hostId = this.id + '-host';
@@ -156,38 +191,9 @@ export class BsDatepickerComponent
 
   detectPropertiesChanges(propName: string): void {
     if (this.datepicker !== undefined) {
-      if (propName === 'startDate') this.setStartDate();
-      if (propName === 'endDate') this.setEndDate();
-      if (propName === 'datesDisabled') this.setDatesDisabled();
-      if (propName === 'daysOfWeekDisabled') this.setDaysOfWeekDisabled();
-      if (propName === 'daysOfWeekHighlighted') this.setDaysOfWeekHighlighted();
+      if (this.watchedProperties.indexOf(propName) > -1)
+        this.refreshDatepicker();
     }
-  }
-
-  setStartDate(): void {
-    this.datepicker.datepicker('setStartDate', this.startDate);
-  }
-
-  setEndDate(): void {
-    this.datepicker.datepicker('setEndDate', this.endDate);
-  }
-
-  setDatesDisabled(): void {
-    this.datepicker.datepicker('setDatesDisabled', this.datesDisabled);
-  }
-
-  setDaysOfWeekDisabled(): void {
-    this.datepicker.datepicker(
-      'setDaysOfWeekDisabled',
-      this.daysOfWeekDisabled,
-    );
-  }
-
-  setDaysOfWeekHighlighted(): void {
-    this.datepicker.datepicker(
-      'setDaysOfWeekHighlighted',
-      this.daysOfWeekHighlighted,
-    );
   }
 
   ngDoCheck(): void {
@@ -208,7 +214,7 @@ export class BsDatepickerComponent
 
   initDatepicker(): void {
     this.buildDatepickerConfigs();
-    this.datepicker.datepicker(this.configs);
+    this.datepicker.datepicker(this.datepickerConfigs);
     this.bindEventsToDatepicker();
   }
 
@@ -245,11 +251,19 @@ export class BsDatepickerComponent
       zIndexOffset: this.zIndexOffset,
     };
 
+    this.datepickerConfigs = Object.assign(
+      this.datepickerConfigs,
+      defaultConfigs,
+    );
     this.setDatepickerConfigsOverrides();
-    this.configs = Object.assign(defaultConfigs, this.configs);
   }
 
-  setDatepickerConfigsOverrides(): void {}
+  setDatepickerConfigsOverrides(): void {
+    this.datepickerConfigs = Object.assign(
+      this.datepickerConfigs,
+      this.configs,
+    );
+  }
 
   bindEventsToDatepicker(): void {
     this.datepicker.on('show', (event) => {
@@ -353,6 +367,11 @@ export class BsDatepickerComponent
     }
 
     return this.datepicker.datepicker('getDates');
+  }
+
+  refreshDatepicker(): void {
+    this.datepicker.datepicker('destroy');
+    this.initDatepicker();
   }
 
   refresh(): void {

@@ -58,6 +58,130 @@ export class ApiComponent extends DocsBase {
       description:
         'Appends an slot with rendered html at the end of the datepicker.',
     },
+    {
+      name: '@Input() configs: { [key: string]: string }',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() autoclose: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() calendarWeeks: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() clearBtn: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() datesDisabled: Array<string> | string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() daysOfWeekDisabled: Array<string> | string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() daysOfWeekHighlighted: Array<string> | string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() defaultViewDate: string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() disableTouchKeyboard: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() enableOnReadonly: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() endDate: string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() forceParse: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() format: string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() immediateUpdates: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() keyboardNavigation: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() maxViewMode: string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() minViewMode: string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() multidate: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() multidateSeparator: string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() orientation: string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() showOnFocus: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() startDate: string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() startView: string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() showWeekDays: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() title: string',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() todayBtn: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() todayHighlight: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() weekStart: number',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() zIndexOffset: number',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() utc: boolean',
+      description: 'Test.',
+    },
+    {
+      name: '@Input() autocomplete: boolean',
+      description: 'Test.',
+    },
   ];
 
   public events: ApiTableData[] = [

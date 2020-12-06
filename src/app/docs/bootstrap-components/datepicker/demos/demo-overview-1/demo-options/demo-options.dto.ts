@@ -1,3 +1,4 @@
 export class DemoOptionsDto {
-  highlightOnValid = 'yes';
+  highlightOnValid: string = 'yes';
+  clearBtn: string = 'no';
 }
