@@ -144,7 +144,7 @@ export class BsSelectComponent
 
   @Input() placeholder = ' ';
   @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
-  @Input() configs: { [key: string]: string } = {};
+  @Input() configs: { [key: string]: any } = {};
   @Input() multiple: boolean;
   @Input() liveSearch: boolean;
   @Input() maxOptions: number;
@@ -163,8 +163,9 @@ export class BsSelectComponent
   @Output() hiddenEvent: EventEmitter<Event> = new EventEmitter();
 
   private select: any;
-  private onShown = false;
-  private watchedProperties = [
+  private onShown: boolean = false;
+  private selectConfigs: any = {};
+  private watchedProperties: Array<string> = [
     'configs',
     'multiple',
     'liveSearch',
@@ -209,7 +210,7 @@ export class BsSelectComponent
 
   initSelect(): void {
     this.buildSelectConfigs();
-    this.select.selectpicker(this.configs);
+    this.select.selectpicker(this.selectConfigs);
     this.enableOrDisableSelect();
     this.addAutoCloseClass();
     this.bindEventsToSelect();
@@ -222,8 +223,8 @@ export class BsSelectComponent
       iconBase: 'fontAwesome',
     };
 
+    this.selectConfigs = Object.assign(this.selectConfigs, defaultConfigs);
     this.setSelectConfigsOverrides();
-    this.configs = Object.assign(defaultConfigs, this.configs);
   }
 
   setSelectConfigsOverrides(): void {
@@ -242,6 +243,8 @@ export class BsSelectComponent
         deselectAllText: this.deselectAllText,
       });
     }
+
+    this.selectConfigs = Object.assign(this.selectConfigs, this.configs);
   }
 
   disableSelectWhenOptionsAreEmpty(): void {

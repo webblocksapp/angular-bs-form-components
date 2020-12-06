@@ -96,7 +96,7 @@ export class BsSelect2Component
 
   @Input() theme: string;
   @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
-  @Input() configs: { [key: string]: string } = {};
+  @Input() configs: { [key: string]: any } = {};
   @Input() multiple: string;
   @Input() noResults: string;
 
@@ -106,6 +106,7 @@ export class BsSelect2Component
 
   private select2: any;
   private validate = false;
+  private select2Configs: any = {};
   private watchedProperties = ['theme', 'configs', 'multiple', 'noResults'];
 
   ngAfterViewInit(): void {
@@ -136,7 +137,7 @@ export class BsSelect2Component
 
   initSelect2(): void {
     this.buildSelect2Configs();
-    this.select2.select2(this.configs);
+    this.select2.select2(this.select2Configs);
     this.bindEventsToSelect2();
     this.enableOrDisableSelect2();
     this.disableSelect2WhenOptionsAreEmpty();
@@ -195,8 +196,8 @@ export class BsSelect2Component
       },
     };
 
+    this.select2Configs = Object.assign(defaultConfigs, this.configs);
     this.setSelect2ConfigsOverrides();
-    this.configs = Object.assign(defaultConfigs, this.configs);
   }
 
   setSelect2ConfigsOverrides(): void {
@@ -206,8 +207,12 @@ export class BsSelect2Component
      * - allowClear is not used in multiple select
      */
     if (this.multiple === 'multiple') {
-      this.configs = Object.assign(this.configs, { allowClear: false });
+      this.select2Configs = Object.assign(this.select2Configs, {
+        allowClear: false,
+      });
     }
+
+    this.select2Configs = Object.assign(this.select2Configs, this.configs);
   }
 
   addOrRemoveValidationClasses(): void {

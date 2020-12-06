@@ -64,7 +64,7 @@ export class ApiComponent extends DocsBase {
       description: 'The array of selectable options.',
     },
     {
-      name: '@Input() configs: { [key: string]: string }',
+      name: '@Input() configs: { [key: string]: any }',
       description: `
         Give access to the <a href="https://developer.snapappointments.com/bootstrap-select/options/" target="blank">
         native API options of Bootstrap Select jQuery component</a>.`,

@@ -69,7 +69,7 @@ export class ApiComponent extends DocsBase {
       If your are using a Bootstrap template and it supports the Select2 component, keep it undefined to avoid conflicting styles.`,
     },
     {
-      name: '@Input() configs: { [key: string]: string }',
+      name: '@Input() configs: { [key: string]: any }',
       description: `Give access to the <a href="https://select2.org/configuration/options-api" target="blank">
       native API options of Select2 jQuery component</a>.`,
     },
