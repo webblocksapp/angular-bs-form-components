@@ -107,7 +107,7 @@ export class BsDatepickerComponent
   @Input() keyboardNavigation: boolean = true;
   @Input() maxViewMode: string = 'centuries';
   @Input() minViewMode: string = 'days';
-  @Input() multidate: boolean = false;
+  @Input() multidate: boolean | number = false;
   @Input() multidateSeparator: string = ', ';
   @Input() orientation: string = 'auto';
   @Input() showOnFocus: boolean = true;
