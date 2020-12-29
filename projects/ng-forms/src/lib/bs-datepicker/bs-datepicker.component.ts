@@ -39,6 +39,7 @@ import clone from '../common/utils/clone';
         [attr.value]="value"
         [attr.placeholder]="placeholder"
         [attr.disabled]="disabled"
+        [attr.readonly]="readonly"
         class="form-control"
         [ngClass]="{
           'is-invalid': error,
@@ -372,6 +373,7 @@ export class BsDatepickerComponent
   refreshDatepicker(): void {
     this.datepicker.datepicker('destroy');
     this.initDatepicker();
+    this.datepicker.datepicker('update', this.value);
   }
 
   refresh(): void {

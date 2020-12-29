@@ -43,6 +43,7 @@ export abstract class DataInputBase
   @Input() size: InputSize = 'default';
   @Input() placeholder: string;
   @Input() disabled: boolean;
+  @Input() readonly: boolean;
   @Input() help: string;
   @Input() startSlot: string;
   @Input() startSlotHtml: string;
@@ -106,6 +107,7 @@ export abstract class DataInputBase
   alwaysDetectPropertiesChanges(propName: string): void {
     if (propName === 'size') this.getInputSize();
     if (propName === 'disabled') this.computeDisabledProperty();
+    if (propName === 'readonly') this.computeReadonlyProperty();
   }
 
   detectPropertiesChanges(propName: string): void {}
@@ -141,6 +143,20 @@ export abstract class DataInputBase
         break;
       default:
         this.disabled = undefined;
+        break;
+    }
+  }
+
+  computeReadonlyProperty(): void {
+    switch (this.readonly) {
+      case true:
+        this.readonly = true;
+        break;
+      case false:
+        this.readonly = undefined;
+        break;
+      default:
+        this.readonly = undefined;
         break;
     }
   }

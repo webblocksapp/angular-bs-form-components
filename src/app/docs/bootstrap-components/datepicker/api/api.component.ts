@@ -36,8 +36,12 @@ export class ApiComponent extends DocsBase {
       description: 'Datepicker placeholder.',
     },
     {
-      name: '@Input() disabled: string',
+      name: '@Input() disabled: boolean',
       description: 'Disabled datepicker attribute.',
+    },
+    {
+      name: '@Input() readonly: boolean',
+      description: 'Readonly datepicker attribute.',
     },
     { name: '@Input() help: string', description: 'Datepicker hint text.' },
     {
@@ -260,8 +264,38 @@ export class ApiComponent extends DocsBase {
 
   public events: ApiTableData[] = [
     {
-      name: '@Output() focusoutEvent: EventEmitter&lt;FocusEvent&gt;',
-      description: 'Focusout event emitter.',
+      name: '@Output() showEvent: EventEmitter&lt;FocusEvent&gt;',
+      description: 'Fired when the date picker is displayed.',
+    },
+    {
+      name: '@Output() hideEvent: EventEmitter&lt;FocusEvent&gt;',
+      description: 'Fired when the date picker is hidden.',
+    },
+    {
+      name: '@Output() clearDateEvent: EventEmitter&lt;FocusEvent&gt;',
+      description:
+        'Fired when the date is cleared, normally when the “clear” button (enabled with the clearBtn option) is pressed.',
+    },
+    {
+      name: '@Output() changeDateEvent: EventEmitter&lt;FocusEvent&gt;',
+      description: 'Fired when the date is changed.',
+    },
+    {
+      name: '@Output() changeMonthEvent: EventEmitter&lt;FocusEvent&gt;',
+      description: 'Fired when the view month is changed from year view.',
+    },
+    {
+      name: '@Output() changeYearEvent: EventEmitter&lt;FocusEvent&gt;',
+      description: 'Fired when the view year is changed from decade view.',
+    },
+    {
+      name: '@Output() changeDecadeEvent: EventEmitter&lt;FocusEvent&gt;',
+      description: 'Fired when the view decade is changed from century view.',
+    },
+    {
+      name: '@Output() changeCenturyEvent: EventEmitter&lt;FocusEvent&gt;',
+      description:
+        'Fired when the view century is changed from millennium view.',
     },
   ];
 }

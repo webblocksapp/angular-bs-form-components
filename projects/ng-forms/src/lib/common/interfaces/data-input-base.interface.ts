@@ -23,6 +23,10 @@ export interface DataInputBaseInterface {
    */
   disabled: boolean;
   /**
+   * Reado only input attribute.
+   */
+  readonly: boolean;
+  /**
    * Form input hint text.
    */
   help: string;
@@ -74,6 +78,10 @@ export interface DataInputBaseInterface {
    * Computes disabled state
    */
   computeDisabledProperty(): void;
+  /**
+   * Computes readonly state
+   */
+  computeReadonlyProperty(): void;
   /**
    * Parent component method to set default component configs.
    * Do not override this method on a child component

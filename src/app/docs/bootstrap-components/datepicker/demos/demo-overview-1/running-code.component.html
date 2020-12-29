@@ -9,6 +9,18 @@
       name="birthDate"
       placeholder="YYYY-MM-DD"
       [clearBtn]="demoOptions.clearBtn === 'yes' ? true : false"
+      [size]="demoOptions.size"
+      [autoclose]="demoOptions.autoclose === 'yes' ? true : false"
+      [calendarWeeks]="demoOptions.calendarWeeks === 'yes' ? true : false"
+      [daysOfWeekDisabled]="demoOptions.daysOfWeekDisabled"
+      [daysOfWeekHighlighted]="demoOptions.daysOfWeekHighlighted"
+      [enableOnReadonly]="demoOptions.enableOnReadonly === 'yes' ? true : false"
+      [readonly]="demoOptions.readonly === 'yes' ? true : false"
+      [disabled]="demoOptions.disabled === 'yes' ? true : false"
+      [endDate]="demoOptions.endDate"
+      [format]="demoOptions.format"
+      [immediateUpdates]="demoOptions.immediateUpdates === 'yes' ? true : false"
+      [maxViewMode]="demoOptions.maxViewMode"
     ></bs-datepicker>
   </data-group>
   <button class="btn btn-primary">Submit</button>

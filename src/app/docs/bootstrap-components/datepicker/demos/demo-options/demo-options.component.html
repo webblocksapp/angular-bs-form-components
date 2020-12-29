@@ -1,0 +1,128 @@
+<h6>Input options:</h6>
+<data-groups [model]="model">
+  <data-group class="d-flex flex-wrap">
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.highlightOnValid"
+      look="switch"
+      label="Highlight on valid"
+      name="highlightOnValid"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.clearBtn"
+      look="switch"
+      label="Show clear button"
+      name="clearBtn"
+    ></bs-radios>
+    <bs-radios
+      class="col-6"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.size"
+      look="switch"
+      label="Size"
+      name="size"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.autoclose"
+      look="switch"
+      label="Autoclose"
+      name="autoclose"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.calendarWeeks"
+      look="switch"
+      label="Calendar weeks"
+      name="calendarWeeks"
+    ></bs-radios>
+    <bs-checks
+      class="col-6"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.daysOfWeekDisabled"
+      look="switch"
+      label="Days of week disabled"
+      name="daysOfWeekDisabled"
+    ></bs-checks>
+    <bs-checks
+      class="col-6"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.daysOfWeekHighlighted"
+      look="switch"
+      label="Days of week highlighted"
+      name="daysOfWeekHighlighted"
+    ></bs-checks>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.enableOnReadonly"
+      look="switch"
+      label="Enable on read only"
+      name="enableOnReadonly"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.readonly"
+      look="switch"
+      label="Read only"
+      name="readonly"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.disabled"
+      look="switch"
+      label="Disabled"
+      name="disabled"
+    ></bs-radios>
+    <bs-datepicker
+      class="col-3"
+      #dataInput
+      label="End date"
+      name="endDate"
+    ></bs-datepicker>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.format"
+      look="switch"
+      label="Date format"
+      name="format"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.immediateUpdates"
+      look="switch"
+      label="Immediate updates"
+      name="immediateUpdates"
+    ></bs-radios>
+    <bs-radios
+      class="col-6"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.maxViewMode"
+      look="switch"
+      label="Max view mode"
+      name="maxViewMode"
+    ></bs-radios>
+  </data-group>
+</data-groups>
