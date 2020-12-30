@@ -7,7 +7,7 @@
       #dataInput
       label="Birth date"
       name="birthDate"
-      placeholder="YYYY-MM-DD"
+      [placeholder]="demoOptions.placeholder"
       [clearBtn]="demoOptions.clearBtn === 'yes' ? true : false"
       [size]="demoOptions.size"
       [autoclose]="demoOptions.autoclose === 'yes' ? true : false"
@@ -21,6 +21,14 @@
       [format]="demoOptions.format"
       [immediateUpdates]="demoOptions.immediateUpdates === 'yes' ? true : false"
       [maxViewMode]="demoOptions.maxViewMode"
+      [minViewMode]="demoOptions.minViewMode"
+      [orientation]="demoOptions.orientation"
+      [showOnFocus]="demoOptions.showOnFocus === 'yes' ? true : false"
+      [startDate]="demoOptions.startDate"
+      [showWeekDays]="demoOptions.showWeekDays === 'yes' ? true : false"
+      [todayBtn]="demoOptions.todayBtn === 'yes' ? true : false"
+      [todayHighlight]="demoOptions.todayHighlight === 'yes' ? true : false"
+      [weekStart]="demoOptions.weekStart"
     ></bs-datepicker>
   </data-group>
   <button class="btn btn-primary">Submit</button>

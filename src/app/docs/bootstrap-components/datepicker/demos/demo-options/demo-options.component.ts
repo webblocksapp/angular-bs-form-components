@@ -75,5 +75,49 @@ export class DemoOptionsComponent {
       { value: 'years', viewValue: 'Years' },
       { value: 'centuries', viewValue: 'Centuries' },
     ],
+    minViewMode: [
+      { value: 'days', viewValue: 'Days' },
+      { value: 'months', viewValue: 'Months' },
+      { value: 'years', viewValue: 'Years' },
+      { value: 'centuries', viewValue: 'Centuries' },
+    ],
+    orientation: [
+      { value: 'auto', viewValue: 'Auto' },
+      { value: 'left', viewValue: 'Left' },
+      { value: 'right', viewValue: 'Right' },
+      { value: 'top', viewValue: 'Top' },
+      { value: 'top right', viewValue: 'Top right' },
+      { value: 'bottom', viewValue: 'Bottom' },
+      { value: 'bottom right', viewValue: 'Bottom right' },
+    ],
+    showOnFocus: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
+    showWeekDays: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
+    todayBtn: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
+    todayHighlight: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
+    weekStart: [
+      { value: 0, viewValue: 'Sunday' },
+      { value: 1, viewValue: 'Monday' },
+      { value: 2, viewValue: 'Tuesday' },
+      { value: 3, viewValue: 'Wednesday' },
+      { value: 4, viewValue: 'Thursday' },
+      { value: 5, viewValue: 'Friday' },
+      { value: 6, viewValue: 'Saturday' },
+    ],
   };
+
+  setDatepickerPlaceholder($event): void {
+    this.model.setValue('placeholder', $event.target.value.toUpperCase());
+  }
 }

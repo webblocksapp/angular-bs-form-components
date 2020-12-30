@@ -1,7 +1,4 @@
-<data-groups
-  [model]="exampleModels"
-  [highlightOnValid]="demoOptions.highlightOnValid === 'yes' ? true : false"
->
+<data-groups [model]="exampleModels">
   <div class="d-flex align-items-center mb-3">
     <button
       type="button"
@@ -38,13 +35,8 @@
         label="Birth date"
         name="birthDate"
         placeholder="YYYY-MM-DD"
-        [clearBtn]="demoOptions.clearBtn === 'yes' ? true : false"
       ></bs-datepicker>
     </div>
   </data-group>
   <button class="btn btn-primary">Submit</button>
 </data-groups>
-
-<hr />
-
-<demo-options [model]="demoOptionsModel"></demo-options>

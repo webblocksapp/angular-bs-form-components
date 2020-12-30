@@ -1,4 +1,4 @@
-<h6>Input options:</h6>
+<h6>Datepicker options:</h6>
 <data-groups [model]="model">
   <data-group class="d-flex flex-wrap">
     <bs-radios
@@ -20,13 +20,22 @@
       name="clearBtn"
     ></bs-radios>
     <bs-radios
-      class="col-6"
+      class="col-3"
       #dataInput
       display="inline"
-      [options]="demoOptions.size"
+      [options]="demoOptions.todayBtn"
       look="switch"
-      label="Size"
-      name="size"
+      label="Show today button"
+      name="todayBtn"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.immediateUpdates"
+      look="switch"
+      label="Immediate updates"
+      name="immediateUpdates"
     ></bs-radios>
     <bs-radios
       class="col-3"
@@ -46,24 +55,24 @@
       label="Calendar weeks"
       name="calendarWeeks"
     ></bs-radios>
-    <bs-checks
-      class="col-6"
+    <bs-radios
+      class="col-3"
       #dataInput
       display="inline"
-      [options]="demoOptions.daysOfWeekDisabled"
+      [options]="demoOptions.showWeekDays"
       look="switch"
-      label="Days of week disabled"
-      name="daysOfWeekDisabled"
-    ></bs-checks>
-    <bs-checks
-      class="col-6"
+      label="Show week days"
+      name="showWeekDays"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
       #dataInput
       display="inline"
-      [options]="demoOptions.daysOfWeekHighlighted"
+      [options]="demoOptions.disabled"
       look="switch"
-      label="Days of week highlighted"
-      name="daysOfWeekHighlighted"
-    ></bs-checks>
+      label="Disabled"
+      name="disabled"
+    ></bs-radios>
     <bs-radios
       class="col-3"
       #dataInput
@@ -86,35 +95,80 @@
       class="col-3"
       #dataInput
       display="inline"
-      [options]="demoOptions.disabled"
+      [options]="demoOptions.showOnFocus"
       look="switch"
-      label="Disabled"
-      name="disabled"
+      label="Show on focus"
+      name="showOnFocus"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.todayHighlight"
+      look="switch"
+      label="Today highlight"
+      name="todayHighlight"
     ></bs-radios>
     <bs-datepicker
       class="col-3"
       #dataInput
       label="End date"
       name="endDate"
+      placeholder="YYYY-MM-DD"
+    ></bs-datepicker>
+    <bs-datepicker
+      class="col-3"
+      #dataInput
+      label="Start date"
+      name="startDate"
+      placeholder="YYYY-MM-DD"
     ></bs-datepicker>
     <bs-radios
-      class="col-3"
+      class="col-6"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.size"
+      look="switch"
+      label="Size"
+      name="size"
+    ></bs-radios>
+    <bs-radios
+      class="col-6"
       #dataInput
       display="inline"
       [options]="demoOptions.format"
+      (changeEvent)="setDatepickerPlaceholder($event)"
       look="switch"
       label="Date format"
       name="format"
     ></bs-radios>
     <bs-radios
-      class="col-3"
+      class="col-6"
       #dataInput
       display="inline"
-      [options]="demoOptions.immediateUpdates"
+      [options]="demoOptions.weekStart"
       look="switch"
-      label="Immediate updates"
-      name="immediateUpdates"
+      label="Week start"
+      name="weekStart"
     ></bs-radios>
+    <bs-checks
+      class="col-6"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.daysOfWeekDisabled"
+      look="switch"
+      label="Days of week disabled"
+      name="daysOfWeekDisabled"
+    ></bs-checks>
+    <bs-checks
+      class="col-6"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.daysOfWeekHighlighted"
+      look="switch"
+      label="Days of week highlighted"
+      name="daysOfWeekHighlighted"
+    ></bs-checks>
     <bs-radios
       class="col-6"
       #dataInput
@@ -123,6 +177,24 @@
       look="switch"
       label="Max view mode"
       name="maxViewMode"
+    ></bs-radios>
+    <bs-radios
+      class="col-6"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.minViewMode"
+      look="switch"
+      label="Min view mode"
+      name="minViewMode"
+    ></bs-radios>
+    <bs-radios
+      class="col-6"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.orientation"
+      look="switch"
+      label="Orientation"
+      name="orientation"
     ></bs-radios>
   </data-group>
 </data-groups>
