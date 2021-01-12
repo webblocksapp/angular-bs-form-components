@@ -1,4 +1,6 @@
 export class DemoOptionsDto {
   highlightOnValid = 'yes';
-  liveSearch = 'yes';
+  liveSearch = 'no';
+  showTick = 'no';
+  header = 'no';
 }

@@ -8,6 +8,8 @@
       placeholder="Select your gender"
       [options]="genders"
       [liveSearch]="demoOptions.liveSearch === 'yes' ? true : false"
+      [showTick]="demoOptions.showTick === 'yes' ? true : false"
+      [header]="demoOptions.header === 'yes' ? 'Select your gender' : ''"
       label="Gender"
       name="gender"
     ></bs-select>

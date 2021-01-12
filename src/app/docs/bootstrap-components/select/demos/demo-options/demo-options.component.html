@@ -19,5 +19,23 @@
       label="Live search"
       name="liveSearch"
     ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.showTick"
+      look="switch"
+      label="Show tick"
+      name="showTick"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.header"
+      look="switch"
+      label="Show header"
+      name="header"
+    ></bs-radios>
   </data-group>
 </data-groups>
