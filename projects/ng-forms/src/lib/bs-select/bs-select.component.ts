@@ -42,7 +42,7 @@ import { isNull } from '../common/utils';
         [ngClass]="{
           disabled: disabled,
           'show-tick': showTick,
-          dropup: dropupAuto
+          dropup: !dropupAuto
         }"
         id="{{ id }}-bs"
       >
@@ -245,9 +245,12 @@ export class BsSelectComponent
   }
 
   enableOrDisableSelect(): void {
-    if (this.select !== undefined && this.disabled !== undefined) {
-      this.select.prop('disabled', this.disabled);
-      this.refreshSelect();
+    if (this.select !== undefined) {
+      setTimeout(() => {
+        if (this.disabled === undefined) this.disabled = false;
+        this.select.prop('disabled', this.disabled);
+        this.refreshSelect();
+      });
     }
   }
 

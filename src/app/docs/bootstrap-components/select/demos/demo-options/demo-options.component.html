@@ -1,6 +1,6 @@
 <h6>Select options:</h6>
 <data-groups [model]="model">
-  <data-group class="d-flex">
+  <data-group class="d-flex flex-wrap">
     <bs-radios
       class="col-3"
       #dataInput
@@ -36,6 +36,24 @@
       look="switch"
       label="Show header"
       name="header"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.dropupAuto"
+      look="switch"
+      label="Drop up auto"
+      name="dropupAuto"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.disabled"
+      look="switch"
+      label="Disabled"
+      name="disabled"
     ></bs-radios>
   </data-group>
 </data-groups>

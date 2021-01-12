@@ -3,4 +3,6 @@ export class DemoOptionsDto {
   liveSearch = 'no';
   showTick = 'no';
   header = 'no';
+  dropupAuto = 'yes';
+  disabled = 'no';
 }

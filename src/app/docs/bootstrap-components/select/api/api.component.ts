@@ -131,11 +131,11 @@ export class ApiComponent extends DocsBase {
         'The text on the button that selects all options when <code>actionsBox</code> is enabled.',
     },
     {
-      name: '@Input() dataHeader: string',
+      name: '@Input() header: string',
       description: 'Adds a header text on select. E.g. <i>Select a color</i>.',
     },
     {
-      name: `@Input() direction: string<br>'up' | 'down'`,
+      name: `@Input() dropupAuto: string<br>'up' | 'down'`,
       description: 'Positions the select above or below the input.',
     },
   ];
