@@ -20,24 +20,6 @@ declare var require: any;
         [code]="dtoCode1"
         language="typescript"
       ></code-block>
-      <code-block
-        label="Options HTML"
-        type="html-options"
-        [code]="htmlCode2"
-        language="html"
-      ></code-block>
-      <code-block
-        label="Options Component"
-        type="options-component"
-        [code]="componentCode2"
-        language="typescript"
-      ></code-block>
-      <code-block
-        label="Options DTO"
-        type="options"
-        [code]="dtoCode2"
-        language="typescript"
-      ></code-block>
     </code-example>
   `,
 })
@@ -52,10 +34,7 @@ export class IndexComponent implements OnInit {
 
   ngOnInit() {
     this.htmlCode1 = require('!raw-loader!./running-code.component.html').default;
-    this.htmlCode2 = require('!raw-loader!./demo-options/demo-options.component.html').default;
     this.componentCode1 = require('!raw-loader!./running-code.component.ts').default;
-    this.componentCode2 = require('!raw-loader!./demo-options/demo-options.component.ts').default;
     this.dtoCode1 = require('!raw-loader!./example.dto.ts').default;
-    this.dtoCode2 = require('!raw-loader!./demo-options/demo-options.dto.ts').default;
   }
 }

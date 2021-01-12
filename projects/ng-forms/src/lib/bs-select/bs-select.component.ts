@@ -38,23 +38,11 @@ import { isNull } from '../common/utils';
         style="width: 100%"
         [attr.name]="name"
         [value]="value"
-        [attr.title]="placeholder"
-        [attr.multiple]="multiple"
-        [attr.data-live-search]="liveSearch"
-        [attr.data-max-options]="maxOptions"
-        [attr.data-max-options-text]="maxOptionsText"
-        [attr.data-selected-text-format]="selectedTextFormat"
-        [attr.data-count-selected-text]="countSelectedText"
-        [attr.data-actions-box]="actionsBox"
-        [attr.data-header]="dataHeader"
-        [attr.data-dropup-auto]="direction === 'up' ? false : true"
         class="form-control selectpicker"
         [ngClass]="{
-          'is-invalid': error,
-          'is-valid': touched && highlightOnValid && !error,
           disabled: disabled,
           'show-tick': showTick,
-          dropup: direction === 'up'
+          dropup: dropupAuto
         }"
         id="{{ id }}-bs"
       >
@@ -142,22 +130,24 @@ export class BsSelectComponent
   @ViewChild('selectElementRef', { read: ElementRef })
   selectElementRef: ElementRef;
 
-  @Input() placeholder = ' ';
   @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
   @Input() configs: { [key: string]: any } = {};
-  @Input() multiple: boolean;
+  @Input() style: string = '';
+  @Input() styleBase: string = 'form-control';
+  @Input() placeholder = ' ';
+  @Input() iconBase: string = 'fontAwesome';
+  @Input() selectAllText: string;
+  @Input() deselectAllText: string;
   @Input() liveSearch: boolean;
+  @Input() multiple: boolean;
   @Input() maxOptions: number;
   @Input() maxOptionsText: string;
   @Input() selectedTextFormat: string;
-  @Input() countSelectedText: string;
   @Input() showTick: boolean;
-  @Input() iconBase: string;
+  @Input() countSelectedText: string;
   @Input() actionsBox: boolean;
-  @Input() deselectAllText: string;
-  @Input() selectAllText: string;
-  @Input() dataHeader: string;
-  @Input() direction: string;
+  @Input() header: string;
+  @Input() dropupAuto: string;
 
   @Output() shownEvent: EventEmitter<Event> = new EventEmitter();
   @Output() hiddenEvent: EventEmitter<Event> = new EventEmitter();
@@ -167,19 +157,22 @@ export class BsSelectComponent
   private selectConfigs: any = {};
   private watchedProperties: Array<string> = [
     'configs',
-    'multiple',
+    'style',
+    'styleBase',
+    'placeholder',
+    'iconBase',
+    'selectAllText',
+    'deselectAllText',
     'liveSearch',
+    'multiple',
     'maxOptions',
     'maxOptionsText',
     'selectedTextFormat',
-    'countSelectedText',
     'showTick',
-    'iconBase',
+    'countSelectedText',
     'actionsBox',
-    'deselectAllText',
-    'selectAllText',
-    'dataHeader',
-    'direction',
+    'header',
+    'dropupAuto',
   ];
 
   ngAfterViewInit(): void {
@@ -201,7 +194,7 @@ export class BsSelectComponent
       this.refreshSelect();
       this.disableSelectWhenOptionsAreEmpty();
     }
-    if (this.watchedProperties.indexOf(propName) > -1) this.refreshSelect();
+    if (this.watchedProperties.indexOf(propName) > -1) this.rebuildSelect();
   }
 
   initJQueryEl(): void {
@@ -218,9 +211,22 @@ export class BsSelectComponent
 
   buildSelectConfigs(): void {
     const defaultConfigs = {
-      style: '',
-      styleBase: 'form-control',
-      iconBase: 'fontAwesome',
+      style: this.style,
+      styleBase: this.styleBase,
+      title: this.placeholder,
+      iconBase: this.iconBase,
+      selectAllText: this.selectAllText,
+      deselectAllText: this.deselectAllText,
+      liveSearch: this.liveSearch,
+      multiple: this.multiple,
+      maxOptions: this.maxOptions,
+      maxOptionsText: this.maxOptionsText,
+      selectedTextFormat: this.selectedTextFormat,
+      showTick: this.showTick,
+      countSelectedText: this.countSelectedText,
+      actionsBox: this.actionsBox,
+      header: this.header,
+      dropupAuto: this.dropupAuto,
     };
 
     this.selectConfigs = Object.assign(this.selectConfigs, defaultConfigs);
@@ -228,22 +234,6 @@ export class BsSelectComponent
   }
 
   setSelectConfigsOverrides(): void {
-    if (this.iconBase !== 'undefined') {
-      this.configs = Object.assign(this.configs, { iconBase: this.iconBase });
-    }
-
-    if (this.selectAllText !== 'undefined') {
-      this.configs = Object.assign(this.configs, {
-        selectAllText: this.selectAllText,
-      });
-    }
-
-    if (this.deselectAllText !== 'undefined') {
-      this.configs = Object.assign(this.configs, {
-        deselectAllText: this.deselectAllText,
-      });
-    }
-
     this.selectConfigs = Object.assign(this.selectConfigs, this.configs);
   }
 
@@ -332,6 +322,17 @@ export class BsSelectComponent
     if (this.select !== undefined) {
       setTimeout(() => {
         this.select.selectpicker('refresh');
+      });
+    }
+  }
+
+  rebuildSelect(): void {
+    if (this.select !== undefined) {
+      setTimeout(() => {
+        this.select.selectpicker('destroy');
+        this.initSelect();
+        this.addOrRemoveValidationClasses();
+        this.initSelectedOptions();
       });
     }
   }

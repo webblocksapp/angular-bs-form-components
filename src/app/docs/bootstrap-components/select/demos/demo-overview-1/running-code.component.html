@@ -7,6 +7,7 @@
       #dataInput
       placeholder="Select your gender"
       [options]="genders"
+      [liveSearch]="demoOptions.liveSearch === 'yes' ? true : false"
       label="Gender"
       name="gender"
     ></bs-select>

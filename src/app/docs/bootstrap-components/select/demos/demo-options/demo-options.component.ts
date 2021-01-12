@@ -13,5 +13,9 @@ export class DemoOptionsComponent {
       { value: 'yes', viewValue: 'Yes' },
       { value: 'no', viewValue: 'No' },
     ],
+    liveSearch: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
   };
 }
