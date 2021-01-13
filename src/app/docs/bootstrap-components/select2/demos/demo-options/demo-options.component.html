@@ -1,6 +1,6 @@
 <h6>Select2 options:</h6>
 <data-groups [model]="model">
-  <data-group class="d-flex">
+  <data-group class="d-flex flex-wrap">
     <bs-radios
       class="col-3"
       #dataInput
@@ -9,6 +9,51 @@
       look="switch"
       label="Highlight on valid"
       name="highlightOnValid"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.allowClear"
+      look="switch"
+      label="Allow clear"
+      name="allowClear"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.closeOnSelect"
+      look="switch"
+      label="Close on select"
+      name="closeOnSelect"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.debug"
+      look="switch"
+      label="Enable debug"
+      name="debug"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.dir"
+      look="switch"
+      label="Direction"
+      name="dir"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.disabled"
+      look="switch"
+      label="Disabled"
+      name="disabled"
     ></bs-radios>
   </data-group>
 </data-groups>

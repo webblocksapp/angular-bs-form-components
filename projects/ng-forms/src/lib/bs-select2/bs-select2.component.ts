@@ -39,8 +39,6 @@ import { isNull } from '../common/utils';
         style="width: 100%"
         [attr.name]="name"
         [value]="value"
-        [attr.placeholder]="placeholder"
-        [attr.multiple]="multiple"
         class="form-control select2"
         [ngClass]="{
           'is-invalid': error,
@@ -48,7 +46,7 @@ import { isNull } from '../common/utils';
         }"
         id="{{ id }}-bs"
       >
-        <option *ngIf="placeholder && multiple !== 'multiple'"></option>
+        <option *ngIf="placeholder && !multiple"></option>
         <ng-container *ngFor="let option of options">
           <option
             *ngIf="option.group === undefined"
@@ -97,8 +95,26 @@ export class BsSelect2Component
   @Input() theme: string;
   @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
   @Input() configs: { [key: string]: any } = {};
-  @Input() multiple: string;
   @Input() noResults: string;
+  @Input() allowClear: boolean = true;
+  @Input() closeOnSelect: boolean = true;
+  @Input() data: Array<any>;
+  @Input() debug: boolean = false;
+  @Input() dir: string = 'ltr';
+  @Input() dropdownAutoWidth: boolean = false;
+  @Input() dropdownCssClass: string;
+  @Input() language: string = 'en';
+  @Input() maximumInputLength: number = 0;
+  @Input() maximumSelectionLength: number = 0;
+  @Input() minimumInputLength: number = 0;
+  @Input() minimumResultsForSearch: number = 0;
+  @Input() multiple: boolean = false;
+  @Input() placeholder: string;
+  @Input() selectionCssClass: string;
+  @Input() selectOnClose: boolean = false;
+  @Input() tags: boolean = false;
+  @Input() width: string = 'resolve';
+  @Input() scrollAfterSelect: boolean = false;
 
   @Output() selectEvent: EventEmitter<any> = new EventEmitter();
   @Output() clearEvent: EventEmitter<any> = new EventEmitter();
@@ -107,7 +123,32 @@ export class BsSelect2Component
   private select2: any;
   private validate = false;
   private select2Configs: any = {};
-  private watchedProperties = ['theme', 'configs', 'multiple', 'noResults'];
+  private watchedProperties = [
+    'theme',
+    'options',
+    'configs',
+    'configs',
+    'noResults',
+    'allowClear',
+    'closeOnSelect',
+    'data',
+    'debug',
+    'dir',
+    'dropdownAutoWidth',
+    'dropdownCssClass',
+    'language',
+    'maximumInputLength',
+    'maximumSelectionLength',
+    'minimumInputLength',
+    'minimumResultsForSearch',
+    'multiple',
+    'placeholder',
+    'selectionCssClass',
+    'selectOnClose',
+    'tags',
+    'width',
+    'scrollAfterSelect',
+  ];
 
   ngAfterViewInit(): void {
     this.initJQueryEl();
@@ -124,10 +165,6 @@ export class BsSelect2Component
 
   detectPropertiesChanges(propName: string): void {
     if (propName === 'disabled') this.enableOrDisableSelect2();
-    if (propName === 'options') {
-      this.disableSelect2WhenOptionsAreEmpty();
-      this.refreshSelect2();
-    }
     if (this.watchedProperties.indexOf(propName) > -1) this.refreshSelect2();
   }
 
@@ -187,13 +224,25 @@ export class BsSelect2Component
   buildSelect2Configs(): void {
     const defaultConfigs = {
       theme: this.theme,
+      allowClear: this.allowClear,
+      closeOnSelect: this.closeOnSelect,
+      data: this.data,
+      debug: this.debug,
+      dir: this.dir,
+      dropdownAutoWidth: this.dropdownAutoWidth,
+      dropdownCssClass: this.dropdownCssClass,
+      language: this.language,
+      maximumInputLength: this.maximumInputLength,
+      maximumSelectionLength: this.maximumSelectionLength,
+      minimumInputLength: this.minimumInputLength,
+      minimumResultsForSearch: this.minimumResultsForSearch,
+      multiple: this.multiple,
       placeholder: this.placeholder,
-      allowClear: true,
-      language: {
-        noResults: () => {
-          return this.noResults || 'No results found';
-        },
-      },
+      selectionCssClass: this.selectionCssClass,
+      selectOnClose: this.selectOnClose,
+      tags: this.tags,
+      width: this.width,
+      scrollAfterSelect: this.scrollAfterSelect,
     };
 
     this.select2Configs = Object.assign(defaultConfigs, this.configs);
@@ -206,7 +255,7 @@ export class BsSelect2Component
      *
      * - allowClear is not used in multiple select
      */
-    if (this.multiple === 'multiple') {
+    if (this.multiple) {
       this.select2Configs = Object.assign(this.select2Configs, {
         allowClear: false,
       });
@@ -264,14 +313,21 @@ export class BsSelect2Component
   }
 
   enableOrDisableSelect2(): void {
-    if (this.select2 !== undefined && this.disabled !== undefined)
-      this.select2.select2('enable', [!this.disabled]);
+    setTimeout(() => {
+      if (this.select2 !== undefined) {
+        if (this.disabled === undefined) this.disabled = false;
+        this.select2.select2('enable', [!this.disabled]);
+      }
+    });
   }
 
   refreshSelect2(): void {
     if (this.select2 !== undefined) {
       setTimeout(() => {
-        this.select2.select2(this.configs);
+        this.disableSelect2WhenOptionsAreEmpty();
+        this.addOrRemoveValidationClasses();
+        this.buildSelect2Configs();
+        this.select2.select2(this.select2Configs);
       });
     }
   }

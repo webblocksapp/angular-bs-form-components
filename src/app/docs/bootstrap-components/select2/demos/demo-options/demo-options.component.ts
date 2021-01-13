@@ -13,5 +13,25 @@ export class DemoOptionsComponent {
       { value: 'yes', viewValue: 'Yes' },
       { value: 'no', viewValue: 'No' },
     ],
+    allowClear: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
+    closeOnSelect: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
+    debug: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
+    dir: [
+      { value: 'ltr', viewValue: 'Left to right' },
+      { value: 'rtl', viewValue: 'Right to left' },
+    ],
+    disabled: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
   };
 }

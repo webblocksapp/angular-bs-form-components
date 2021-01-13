@@ -8,6 +8,11 @@
       #dataInput
       placeholder="Select your gender"
       [options]="genders"
+      [allowClear]="demoOptions.allowClear === 'yes' ? true : false"
+      [closeOnSelect]="demoOptions.closeOnSelect === 'yes' ? true : false"
+      [debug]="demoOptions.debug === 'yes' ? true : false"
+      [dir]="demoOptions.dir"
+      [disabled]="demoOptions.disabled === 'yes' ? true : false"
       label="Gender"
       name="gender"
     ></bs-select2>
