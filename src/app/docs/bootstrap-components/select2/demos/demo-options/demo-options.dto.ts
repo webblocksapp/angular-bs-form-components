@@ -5,4 +5,8 @@ export class DemoOptionsDto {
   debug: string = 'no';
   dir: string = 'ltr';
   disabled: string = 'no';
+  maximumInputLength: string = '0';
+  minimumInputLength: string = '0';
+  minimumResultsForSearch: string = '0';
+  placeholder: string = 'Select your gender';
 }

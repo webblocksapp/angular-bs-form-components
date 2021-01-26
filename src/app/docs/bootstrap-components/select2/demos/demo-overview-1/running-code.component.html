@@ -6,13 +6,16 @@
     <bs-select2
       [theme]="theme"
       #dataInput
-      placeholder="Select your gender"
       [options]="genders"
       [allowClear]="demoOptions.allowClear === 'yes' ? true : false"
       [closeOnSelect]="demoOptions.closeOnSelect === 'yes' ? true : false"
       [debug]="demoOptions.debug === 'yes' ? true : false"
       [dir]="demoOptions.dir"
       [disabled]="demoOptions.disabled === 'yes' ? true : false"
+      [maximumInputLength]="demoOptions.maximumInputLength"
+      [minimumInputLength]="demoOptions.minimumInputLength"
+      [minimumResultsForSearch]="demoOptions.minimumResultsForSearch"
+      [placeholder]="demoOptions.placeholder"
       label="Gender"
       name="gender"
     ></bs-select2>
