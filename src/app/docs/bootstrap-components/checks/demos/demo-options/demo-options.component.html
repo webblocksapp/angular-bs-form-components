@@ -1,6 +1,6 @@
 <h6>Checks options:</h6>
 <data-groups [model]="model">
-  <data-group class="d-flex">
+  <data-group class="d-flex flex-wrap">
     <bs-radios
       class="col-4"
       #dataInput
@@ -27,6 +27,15 @@
       look="switch"
       label="Highlight on valid"
       name="highlightOnValid"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.disabled"
+      look="switch"
+      label="Disabled"
+      name="disabled"
     ></bs-radios>
   </data-group>
 </data-groups>
