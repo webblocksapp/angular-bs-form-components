@@ -33,5 +33,9 @@ export class DemoOptionsComponent {
       { value: 'yes', viewValue: 'Yes' },
       { value: 'no', viewValue: 'No' },
     ],
+    selectOnClose: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
   };
 }

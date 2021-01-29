@@ -9,4 +9,5 @@ export class DemoOptionsDto {
   minimumInputLength: string = '0';
   minimumResultsForSearch: string = '0';
   placeholder: string = 'Select your gender';
+  selectOnClose: string = 'no';
 }
