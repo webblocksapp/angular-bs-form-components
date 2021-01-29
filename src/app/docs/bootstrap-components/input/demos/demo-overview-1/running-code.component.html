@@ -7,7 +7,8 @@
       #dataInput
       label="Full name"
       name="fullName"
-      placeholder="Type your name"
+      [placeholder]="demoOptions.placeholder"
+      [disabled]="demoOptions.disabled === 'yes' ? true : false"
     ></bs-input>
   </data-group>
   <button class="btn btn-primary">Submit</button>
