@@ -53,7 +53,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
         <span class="input-group-text">{{ endSlot }}</span>
       </div>
       <div *ngIf="endSlotHtml" class="input-group-append">
-        <span class="input-group-text">{{ endSlotHtml }}</span>
+        <span class="input-group-text" [innerHTML]="endSlotHtml"></span>
       </div>
     </div>
     <small *ngIf="help" class="form-text text-muted">

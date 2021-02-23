@@ -373,11 +373,12 @@ if (localStorage.getItem('theme') === 'smartAdmin') {
             '-right-btn" class="d-flex align-items-center justify-content-center width-4 btn mt-1 mb-1 mr-1 ml-2 p-0 fs-xxl text-primary"><i class="fal fa-angle-right"></i></a>',
         );
 
-        var getListWidth = $.map($el.children('li:not(.nav-title)'), function (
-            val,
-          ) {
-            return $(val).outerWidth(true);
-          }),
+        var getListWidth = $.map(
+            $el.children('li:not(.nav-title)'),
+            function (val) {
+              return $(val).outerWidth(true);
+            },
+          ),
           /* define variables */
           wrapperWidth,
           currentMarginLeft,
@@ -389,11 +390,12 @@ if (localStorage.getItem('theme') === 'smartAdmin') {
             wrapperWidth = $(
               '#' + options.wrapperId,
             ).outerWidth(); /* incase its changed we get it again */
-            contentWidth = $.map($el.children('li:not(.nav-title)'), function (
-              val,
-            ) {
-              return $(val).outerWidth(true);
-            }).reduce(function (a, b) {
+            contentWidth = $.map(
+              $el.children('li:not(.nav-title)'),
+              function (val) {
+                return $(val).outerWidth(true);
+              },
+            ).reduce(function (a, b) {
               return a + b;
             }, 0);
             currentMarginLeft = parseFloat($el.css('margin-left'));

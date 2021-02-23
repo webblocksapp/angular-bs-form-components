@@ -1,0 +1,25 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <bs-input
+      size="small"
+      startSlot="Small size"
+      #dataInput
+      placeholder="First name"
+      name="firstName"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      startSlot="Default size"
+      placeholder="Second name"
+      name="secondName"
+    ></bs-input>
+    <bs-input
+      size="large"
+      startSlot="Large size"
+      #dataInput
+      placeholder="Last name"
+      name="lastName"
+    ></bs-input>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>

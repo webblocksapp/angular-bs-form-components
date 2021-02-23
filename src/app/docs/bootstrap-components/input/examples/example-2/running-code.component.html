@@ -1,0 +1,13 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <bs-input
+      #dataInput
+      label="Password"
+      name="password"
+      type="password"
+      endSlotHtml="<i class='fa fa-key'></i>"
+      help="Password must contain at least 1 letter, 1 number and 1 special character. Also a min length of 6 characters and a max length of 12 characters."
+    ></bs-input>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>
