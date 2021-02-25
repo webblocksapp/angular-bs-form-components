@@ -1,4 +1,4 @@
-import { Component, DoCheck, HostBinding } from '@angular/core';
+import { Component, DoCheck, HostBinding, Input } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 
 @Component({
@@ -21,6 +21,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
         <span class="input-group-text" [innerHTML]="startSlotHtml"></span>
       </div>
       <input
+        [attr.autocomplete]="autocomplete ? 'on' : 'off'"
         [attr.name]="name"
         [value]="value"
         [type]="type"
@@ -33,7 +34,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
         }"
         id="{{ id }}-bs"
         (focusout)="focusout($event)"
-        (blur)="blur($event)"
+        (focus)="focus($event)"
         (change)="change($event)"
         (input)="input($event)"
         (keyup)="keyup($event)"
@@ -71,6 +72,7 @@ import { DataInputBase } from '../common/classes/data-input-base';
 })
 export class BsInputComponent extends DataInputBase implements DoCheck {
   @HostBinding('class') class = 'form-group';
+  @Input() autocomplete: boolean = true;
 
   ngDoCheck(): void {
     this.watchModel();
