@@ -9,6 +9,7 @@ import {
   KeyValueDiffers,
   KeyValueDiffer,
   Directive,
+  NgZone,
 } from '@angular/core';
 
 import {
@@ -79,7 +80,7 @@ export abstract class DataInputBase
   public touched = false;
   private modelDiffer: KeyValueDiffer<string, any>;
 
-  constructor(private differs: KeyValueDiffers) {}
+  constructor(private differs: KeyValueDiffers, public ngZone: NgZone) {}
 
   ngOnInit() {
     this.alwaysSetConfigsOnInit();

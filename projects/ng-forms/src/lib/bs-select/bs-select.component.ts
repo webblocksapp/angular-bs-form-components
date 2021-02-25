@@ -100,7 +100,9 @@ import { isNull } from '../common/utils';
     <small *ngIf="help" class="form-text text-muted">
       {{ help }}
     </small>
-    <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
+    <div *ngIf="onFirstHidden" class="invalid-feedback">
+      {{ error }}
+    </div>
   `,
   encapsulation: ViewEncapsulation.None,
   styles: [
@@ -119,6 +121,22 @@ import { isNull } from '../common/utils';
 
       .ng-select .dropdown-toggle:focus {
         outline: 0 !important;
+      }
+
+      .ng-select .input-group-sm > .dropdown > button,
+      .ng-select .input-group-lg > .dropdown > button {
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        font-size: inherit;
+        line-height: initial;
+        height: inherit;
+      }
+
+      .ng-select .input-group-sm > .dropdown > button > .filter-option,
+      .ng-select .input-group-lg > .dropdown > button > .filter-option {
+        display: flex;
+        align-items: center;
       }
     `,
   ],
@@ -151,6 +169,8 @@ export class BsSelectComponent
 
   @Output() shownEvent: EventEmitter<Event> = new EventEmitter();
   @Output() hiddenEvent: EventEmitter<Event> = new EventEmitter();
+
+  public onFirstHidden: boolean = false;
 
   private select: any;
   private onShown: boolean = false;
@@ -271,6 +291,12 @@ export class BsSelectComponent
       }
 
       this.shownEvent.emit(event);
+    });
+
+    this.select.parent().on('hidden.bs.dropdown', () => {
+      this.ngZone.run(() => {
+        this.onFirstHidden = true;
+      });
     });
 
     this.select.parent().on('hidden.bs.select', (event) => {
