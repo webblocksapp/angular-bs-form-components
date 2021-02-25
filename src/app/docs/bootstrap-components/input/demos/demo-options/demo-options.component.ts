@@ -17,5 +17,9 @@ export class DemoOptionsComponent {
       { value: 'yes', viewValue: 'Yes' },
       { value: 'no', viewValue: 'No' },
     ],
+    autocomplete: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
   };
 }

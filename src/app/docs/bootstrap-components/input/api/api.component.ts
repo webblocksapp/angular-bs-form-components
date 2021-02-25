@@ -28,6 +28,10 @@ export class ApiComponent extends DocsBase {
     { name: '@Input() label: string', description: 'Form input label.' },
     { name: '@Input() name: string', description: 'Form input name.' },
     {
+      name: '@Input() autocomplete: boolean',
+      description: 'Enables or disables input autocomplete.',
+    },
+    {
       name: `@Input() type: InputType<br /> 'text' | 'password' | 'email'`,
       description: ' Form input type.',
     },
