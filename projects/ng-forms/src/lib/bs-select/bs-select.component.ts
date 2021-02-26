@@ -36,8 +36,8 @@ import { isNull } from '../common/utils';
       <select
         #selectElementRef
         style="width: 100%"
+        [attr.multiple]="multiple"
         [attr.name]="name"
-        [value]="value"
         class="form-control selectpicker"
         [ngClass]="{
           disabled: disabled,

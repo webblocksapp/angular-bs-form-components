@@ -1,0 +1,18 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <bs-select
+      #dataInput
+      placeholder="Select at least 1 city"
+      [multiple]="true"
+      [liveSearch]="exampleOptions.liveSearch === 'yes' ? true : false"
+      [options]="items"
+      label="Cities"
+      name="cities"
+    ></bs-select>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>
+
+<hr />
+
+<example-options [model]="exampleOptionsModel"></example-options>
