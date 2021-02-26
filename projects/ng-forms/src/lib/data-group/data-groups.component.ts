@@ -153,6 +153,7 @@ export class DataGroupsComponent
     const groups = this.group !== undefined ? { groups: [this.group] } : {};
 
     this.modelMap.forEach((map) => {
+      map.model.setSubmitted(true);
       promises.push(
         new Promise((resolve) => {
           map.model

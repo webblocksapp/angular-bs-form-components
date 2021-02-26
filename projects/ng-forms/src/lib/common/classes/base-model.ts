@@ -5,6 +5,7 @@ export class BaseModel {
   private dtoObject: any;
   private errors: Array<ValidationError> = [];
   private map: Array<any> = [];
+  private submitted: boolean = false;
 
   constructor(DtoClass: any) {
     this.setDto(DtoClass);
@@ -24,6 +25,14 @@ export class BaseModel {
 
   public getValue(key: string): any {
     return this.dtoObject[key];
+  }
+
+  public setSubmitted(flag: boolean): void {
+    this.submitted = flag;
+  }
+
+  public getSubmitted(): boolean {
+    return this.submitted;
   }
 
   private setErrors(errors: Array<ValidationError>): void {

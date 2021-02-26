@@ -6,6 +6,9 @@ import { DocsBase } from '@shared/classes';
   template: `
     <h5 marker>Selects with different sizes</h5>
     <example-1></example-1>
+
+    <h5 marker>Select with option groups</h5>
+    <example-2></example-2>
   `,
 })
 export class ExamplesComponent extends DocsBase {}
