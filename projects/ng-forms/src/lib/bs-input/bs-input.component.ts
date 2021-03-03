@@ -72,7 +72,6 @@ import { DataInputBase } from '../common/classes/data-input-base';
 })
 export class BsInputComponent extends DataInputBase implements DoCheck {
   @HostBinding('class') class = 'form-group';
-  @Input() autocomplete: boolean = true;
 
   ngDoCheck(): void {
     this.watchModel();

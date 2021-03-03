@@ -1,5 +1,5 @@
-<h6>Select options:</h6>
-<data-groups [model]="model">
+<h6>Example options:</h6>
+<data-groups [autocomplete]="false" [model]="model">
   <data-group class="d-flex flex-wrap">
     <bs-radios
       class="col-3"
@@ -10,5 +10,71 @@
       label="Live search"
       name="liveSearch"
     ></bs-radios>
+    <bs-radios
+      class="col-5"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.selectedTextFormat"
+      look="switch"
+      label="Selected text format"
+      name="selectedTextFormat"
+    ></bs-radios>
+    <bs-radios
+      class="col-4"
+      #dataInput
+      display="inline"
+      [options]="demoOptions.actionsBox"
+      look="switch"
+      label="Actions box"
+      name="actionsBox"
+    ></bs-radios>
+    <bs-input
+      class="col-3"
+      #dataInput
+      display="inline"
+      label="Max options"
+      name="maxOptions"
+      help="Keep empty for selecting unlimited options."
+    ></bs-input>
+    <bs-input
+      class="col-3"
+      #dataInput
+      display="inline"
+      label="Max options text"
+      name="maxOptionsText"
+      help="Keep empty to show default max options text."
+    ></bs-input>
+    <bs-input
+      class="col-3"
+      #dataInput
+      display="inline"
+      label="Count selected text"
+      name="countSelectedText"
+      help="Keep empty to show default count selected text."
+    ></bs-input>
+    <bs-input
+      class="col-3"
+      #dataInput
+      display="inline"
+      label="Select all text"
+      name="selectAllText"
+      help="Keep empty to show default select all text."
+    ></bs-input>
+    <bs-input
+      class="col-3"
+      #dataInput
+      display="inline"
+      label="Deselect all text"
+      name="deselectAllText"
+      help="Keep empty to show default deselect all text."
+    ></bs-input>
+    <bs-input
+      class="col-3"
+      #dataInput
+      display="inline"
+      label="Header"
+      name="header"
+      help="Keep empty to hide header."
+    ></bs-input>
   </data-group>
 </data-groups>

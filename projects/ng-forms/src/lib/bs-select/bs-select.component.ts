@@ -214,7 +214,36 @@ export class BsSelectComponent
       this.refreshSelect();
       this.disableSelectWhenOptionsAreEmpty();
     }
-    if (this.watchedProperties.indexOf(propName) > -1) this.rebuildSelect();
+    if (propName === 'maxOptions') {
+      this.refreshSelectedOptions();
+    }
+
+    if (propName === 'maxOptionsText') {
+      if (isNull(this.maxOptionsText)) this.maxOptionsText = undefined;
+    }
+
+    if (propName === 'countSelectedText') {
+      if (isNull(this.countSelectedText)) this.countSelectedText = undefined;
+    }
+
+    if (propName === 'deselectAllText') {
+      if (isNull(this.deselectAllText)) this.deselectAllText = undefined;
+    }
+
+    if (propName === 'selectAllText') {
+      if (isNull(this.selectAllText)) this.selectAllText = undefined;
+    }
+
+    if (propName === 'header') {
+      if (isNull(this.header)) this.header = undefined;
+    }
+
+    if (this.watchedProperties.indexOf(propName) > -1) {
+      this.rebuildSelect();
+
+      // Code events that must be placed after rebuildSelect
+      if (!isNull(this.maxOptions)) this.hideSelectAllButton();
+    }
   }
 
   initJQueryEl(): void {
@@ -338,8 +367,33 @@ export class BsSelectComponent
     }
   }
 
+  refreshSelectedOptions(): void {
+    if (this.model !== undefined) {
+      const selectedOptions = [];
+      const currentSelectedOptions = this.model.getValue(this.name) || [];
+      currentSelectedOptions.forEach((value) => {
+        if (selectedOptions.length < this.maxOptions) {
+          selectedOptions.push(value);
+        }
+      });
+
+      this.fillModel(selectedOptions);
+    }
+  }
+
   initSelectedOptions(): void {
     this.select.selectpicker('val', this.model.getValue(this.name));
+  }
+
+  hideSelectAllButton(): void {
+    if (this.select !== undefined) {
+      setTimeout(() => {
+        this.select
+          .parent()
+          .find('.bs-actionsbox > .btn-group > .bs-select-all')
+          .remove();
+      });
+    }
   }
 
   refreshSelect(): void {

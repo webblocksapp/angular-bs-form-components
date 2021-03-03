@@ -36,8 +36,9 @@ export class DataGroupsComponent
   @Input() model: Array<BaseModel>;
   @Input() group: string;
   @Input() enctype: string;
-  @Input() multiple = false;
-  @Input() highlightOnValid = false;
+  @Input() multiple: boolean = false;
+  @Input() highlightOnValid: boolean = false;
+  @Input() autocomplete: boolean = false;
 
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
 
@@ -108,6 +109,9 @@ export class DataGroupsComponent
 
         dataInputComponent.component.model = map.model;
         dataInputComponent.component.highlightOnValid = this.highlightOnValid;
+        if (dataInputComponent.component.autocomplete === undefined) {
+          dataInputComponent.component.autocomplete = this.autocomplete;
+        }
         dataInputComponent.component.fillModel(map.model.getValue(name));
         dataInputComponent.component.refresh();
 

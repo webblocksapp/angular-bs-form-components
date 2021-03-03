@@ -50,6 +50,7 @@ export abstract class DataInputBase
   @Input() startSlotHtml: string;
   @Input() endSlot: string;
   @Input() endSlotHtml: string;
+  @Input() autocomplete: boolean;
 
   @Output() focusEvent: EventEmitter<FocusEvent> = new EventEmitter();
   @Output() focusoutEvent: EventEmitter<FocusEvent> = new EventEmitter();

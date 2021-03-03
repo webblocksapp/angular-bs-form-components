@@ -13,5 +13,15 @@ export class ExampleOptionsComponent {
       { value: 'yes', viewValue: 'Yes' },
       { value: 'no', viewValue: 'No' },
     ],
+    selectedTextFormat: [
+      { value: 'values', viewValue: 'values' },
+      { value: 'count', viewValue: 'count' },
+      { value: 'count > 2', viewValue: 'count > 2' },
+      { value: 'static', viewValue: 'static' },
+    ],
+    actionsBox: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
   };
 }

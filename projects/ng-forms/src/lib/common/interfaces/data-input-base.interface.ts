@@ -71,6 +71,10 @@ export interface DataInputBaseInterface {
    */
   highlightOnValid: boolean;
   /**
+   * Enables or disables field autocomplete.
+   */
+  autocomplete: boolean;
+  /**
    * Computes component size class.
    */
   getInputSize(): void;
