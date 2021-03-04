@@ -3,6 +3,9 @@ import { DocsBase } from '@shared/classes';
 
 @Component({
   selector: 'app-examples',
-  template: ``,
+  template: `
+    <h5 #marker>Select2 with different sizes</h5>
+    <example-1></example-1>
+  `,
 })
 export class ExamplesComponent extends DocsBase {}

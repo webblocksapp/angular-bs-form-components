@@ -1,0 +1,28 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <bs-select2
+      #dataInput
+      placeholder="Select your gender"
+      [options]="genders"
+      size="small"
+      startSlot="Gender"
+      name="gender"
+    ></bs-select2>
+    <bs-select2
+      #dataInput
+      placeholder="Select a city"
+      [options]="cities"
+      startSlot="Cities"
+      name="city"
+    ></bs-select2>
+    <bs-select2
+      #dataInput
+      placeholder="Select a fruit"
+      [options]="fruits"
+      size="large"
+      startSlot="Fruits"
+      name="fruit"
+    ></bs-select2>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>

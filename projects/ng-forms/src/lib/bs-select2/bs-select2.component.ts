@@ -41,6 +41,8 @@ import { isNull } from '../common/utils';
         [value]="value"
         class="form-control select2"
         [ngClass]="{
+          'has-prepend': startSlot || startSlotHtml,
+          'has-append': endSlot || endSlotHtml,
           'is-invalid': error,
           'is-valid': touched && highlightOnValid && !error
         }"
@@ -74,7 +76,7 @@ import { isNull } from '../common/utils';
         <span class="input-group-text">{{ endSlot }}</span>
       </div>
       <div *ngIf="endSlotHtml" class="input-group-append">
-        <span class="input-group-text">{{ endSlotHtml }}</span>
+        <span class="input-group-text" [innerHTML]="endSlotHtml"></span>
       </div>
     </div>
     <small *ngIf="help" class="form-text text-muted">
@@ -324,6 +326,7 @@ export class BsSelect2Component
   refreshSelect2(): void {
     if (this.select2 !== undefined) {
       setTimeout(() => {
+        this.addFormControlClass();
         this.disableSelect2WhenOptionsAreEmpty();
         this.addOrRemoveValidationClasses();
         this.buildSelect2Configs();
@@ -332,7 +335,13 @@ export class BsSelect2Component
     }
   }
 
+  addFormControlClass(): void {
+    const select2Container = $(this.select2.data('select2').$container);
+    select2Container.addClass('form-control');
+  }
+
   refresh(): void {
+    this.addFormControlClass();
     this.addOrRemoveValidationClasses();
     this.initSelectedOptions();
   }
