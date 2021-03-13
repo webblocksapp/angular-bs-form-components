@@ -9,6 +9,10 @@ export class DemoOptionsComponent {
   @Input() model: BaseModel;
 
   public demoOptions = {
+    liveSearch: [
+      { value: 'yes', viewValue: 'Yes' },
+      { value: 'no', viewValue: 'No' },
+    ],
     highlightOnValid: [
       { value: 'yes', viewValue: 'Yes' },
       { value: 'no', viewValue: 'No' },

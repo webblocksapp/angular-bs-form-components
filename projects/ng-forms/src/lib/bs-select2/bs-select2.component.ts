@@ -38,7 +38,6 @@ import { isNull } from '../common/utils';
         #select2ElementRef
         style="width: 100%"
         [attr.name]="name"
-        [value]="value"
         class="form-control select2"
         [ngClass]="{
           'has-prepend': startSlot || startSlotHtml,
@@ -95,6 +94,7 @@ export class BsSelect2Component
   select2ElementRef: ElementRef;
 
   @Input() theme: string;
+  @Input() liveSearch: boolean;
   @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
   @Input() configs: { [key: string]: any } = {};
   @Input() noResults: string;
@@ -127,6 +127,7 @@ export class BsSelect2Component
   private select2Configs: any = {};
   private watchedProperties = [
     'theme',
+    'liveSearch',
     'options',
     'configs',
     'configs',
@@ -237,7 +238,7 @@ export class BsSelect2Component
       maximumInputLength: this.maximumInputLength,
       maximumSelectionLength: this.maximumSelectionLength,
       minimumInputLength: this.minimumInputLength,
-      minimumResultsForSearch: this.minimumResultsForSearch,
+      minimumResultsForSearch: this.getMinimumResultsForSearch(),
       multiple: this.multiple,
       placeholder: this.placeholder,
       selectionCssClass: this.selectionCssClass,
@@ -249,6 +250,18 @@ export class BsSelect2Component
 
     this.select2Configs = Object.assign(defaultConfigs, this.configs);
     this.setSelect2ConfigsOverrides();
+  }
+
+  getMinimumResultsForSearch() {
+    if (this.liveSearch === false) {
+      return -1;
+    }
+
+    if (this.liveSearch === true) {
+      return 0;
+    }
+
+    return this.minimumResultsForSearch;
   }
 
   setSelect2ConfigsOverrides(): void {
@@ -327,6 +340,7 @@ export class BsSelect2Component
     if (this.select2 !== undefined) {
       setTimeout(() => {
         this.addFormControlClass();
+        this.addFormControlClassDelayed();
         this.disableSelect2WhenOptionsAreEmpty();
         this.addOrRemoveValidationClasses();
         this.buildSelect2Configs();
@@ -338,6 +352,13 @@ export class BsSelect2Component
   addFormControlClass(): void {
     const select2Container = $(this.select2.data('select2').$container);
     select2Container.addClass('form-control');
+  }
+
+  addFormControlClassDelayed(): void {
+    setTimeout(() => {
+      const select2Container = $(this.select2.data('select2').$container);
+      select2Container.addClass('form-control');
+    });
   }
 
   refresh(): void {

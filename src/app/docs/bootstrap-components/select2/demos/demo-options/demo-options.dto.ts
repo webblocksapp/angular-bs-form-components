@@ -1,4 +1,5 @@
 export class DemoOptionsDto {
+  liveSearch: string = 'yes';
   highlightOnValid: string = 'yes';
   allowClear: string = 'yes';
   closeOnSelect: string = 'yes';

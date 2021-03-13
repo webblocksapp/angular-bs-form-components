@@ -5,6 +5,15 @@
       class="col-3"
       #dataInput
       display="inline"
+      [options]="demoOptions.liveSearch"
+      look="switch"
+      label="Live search"
+      name="liveSearch"
+    ></bs-radios>
+    <bs-radios
+      class="col-3"
+      #dataInput
+      display="inline"
       [options]="demoOptions.highlightOnValid"
       look="switch"
       label="Highlight on valid"
