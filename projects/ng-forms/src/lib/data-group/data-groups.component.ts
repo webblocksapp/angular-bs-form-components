@@ -10,6 +10,7 @@ import {
   SimpleChanges,
   OnChanges,
   HostBinding,
+  OnDestroy,
 } from '@angular/core';
 import { DataGroupComponent } from './components/data-group.component';
 import { ValidationError } from '@webblocksapp/class-validator';
@@ -22,6 +23,7 @@ import {
   DataInputComponent,
 } from './types';
 import { capitalize, isNull } from '../common/utils';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'data-groups',
@@ -39,7 +41,7 @@ import { capitalize, isNull } from '../common/utils';
   ],
 })
 export class DataGroupsComponent
-  implements OnInit, AfterContentInit, OnChanges {
+  implements OnInit, AfterContentInit, OnChanges, OnDestroy {
   @HostBinding('class') class = 'd-block';
 
   @Input() model: Array<BaseModel>;
@@ -55,6 +57,7 @@ export class DataGroupsComponent
   dataGroupComponents: QueryList<DataGroupComponent>;
 
   private modelMap: Array<ModelMap>;
+  private subscriptions: Array<BehaviorSubject<any>> = [];
 
   ngOnInit(): void {
     this.initBaseModel();
@@ -63,7 +66,6 @@ export class DataGroupsComponent
   ngAfterContentInit(): void {
     setTimeout(() => {
       this.initModelMap();
-      this.listenModelResetTimes();
       this.listenDataGroupsListChanges();
       this.listenDataInputsListChanges();
     });
@@ -82,14 +84,26 @@ export class DataGroupsComponent
     }
   }
 
+  private addSubscription(subscription: BehaviorSubject<any>) {
+    this.subscriptions.push(subscription);
+  }
+
+  private unsubscribeAll(): void {
+    this.subscriptions.forEach((subscription) => {
+      subscription.unsubscribe();
+    });
+
+    this.subscriptions = [];
+  }
+
   private initBaseModel(): void {
     if (!Array.isArray(this.model)) this.model = [this.model];
   }
 
   private initModelMap(): void {
     this.generateModelMap();
-    this.applyModelMap();
-    this.applyModelPropertiesMap();
+    this.applyToAllModelMap();
+    this.applyToAllModelPropertiesMap();
   }
 
   private generateModelMap(): void {
@@ -109,48 +123,58 @@ export class DataGroupsComponent
     });
   }
 
-  private applyModelMap(): void {
+  private applyToAllModelMap(): void {
     this.modelMap.forEach((map) => {
-      map.dataInputComponents.forEach((dataInputComponent) => {
-        const { name } = dataInputComponent.component;
-        const errors = this.formatErrors(map.model.getErrors());
-
-        dataInputComponent.component.model = map.model;
-        dataInputComponent.component.highlightOnValid = this.highlightOnValid;
-        if (dataInputComponent.component.autocomplete === undefined) {
-          dataInputComponent.component.autocomplete = this.autocomplete;
-        }
-        dataInputComponent.component.fillModel(map.model.getValue(name));
-        dataInputComponent.component.refresh();
-
-        this.setDataInputComponentError(dataInputComponent, errors);
-      });
+      this.applyModelMap(map);
+      this.subscribeToModelReset(map);
     });
   }
 
-  private applyModelPropertiesMap(): void {
-    this.modelMap.forEach((map) => {
-      map.model.initMap();
+  private applyModelMap(map: ModelMap): void {
+    map.dataInputComponents.forEach((dataInputComponent) => {
+      const { name } = dataInputComponent.component;
+      const errors = this.formatErrors(map.model.getErrors());
 
-      map.dataInputComponents.forEach((dataInputComponent) => {
-        const { name } = dataInputComponent.component;
-        const propertyMap = map.model.getPropertyMap(name);
+      dataInputComponent.component.model = map.model;
+      dataInputComponent.component.highlightOnValid = this.highlightOnValid;
+      if (dataInputComponent.component.autocomplete === undefined) {
+        dataInputComponent.component.autocomplete = this.autocomplete;
+      }
+      dataInputComponent.component.fillModel(map.model.getValue(name));
+      dataInputComponent.component.refresh();
 
-        dataInputComponent.component.touched = propertyMap.touched;
-      });
+      this.setDataInputComponentError(dataInputComponent, errors);
     });
   }
 
-  private listenModelResetTimes(): void {
-    if (this.model[0] !== undefined) {
-      this.model[0].getResetTimes().subscribe(() => {
-        this.initModelMap();
-      });
-    }
+  private subscribeToModelReset(map: ModelMap): void {
+    const subscription = map.model.getResetTimes();
+    this.addSubscription(subscription);
+    subscription.subscribe(() => {
+      this.applyModelMap(map);
+      this.applyModelPropertiesMap(map);
+    });
+  }
+
+  private applyToAllModelPropertiesMap(): void {
+    this.modelMap.forEach((map) => {
+      this.applyModelPropertiesMap(map);
+    });
+  }
+
+  private applyModelPropertiesMap(map: ModelMap): void {
+    map.model.initMap();
+    map.dataInputComponents.forEach((dataInputComponent) => {
+      const { name } = dataInputComponent.component;
+      const propertyMap = map.model.getPropertyMap(name);
+
+      dataInputComponent.component.touched = propertyMap.touched;
+    });
   }
 
   private listenDataGroupsListChanges(): void {
     this.dataGroupComponents.changes.subscribe(() => {
+      this.unsubscribeAll();
       setTimeout(() => {
         this.initModelMap();
       });
@@ -160,6 +184,7 @@ export class DataGroupsComponent
   private listenDataInputsListChanges(): void {
     this.dataGroupComponents.forEach((dataGroupComponent) => {
       dataGroupComponent.dataInputs.changes.subscribe(() => {
+        this.unsubscribeAll();
         dataGroupComponent.loadDataInputComponents();
         setTimeout(() => {
           this.initModelMap();
@@ -338,5 +363,9 @@ export class DataGroupsComponent
 
     dataInputComponent.component.error = capitalize(errorMessage);
     dataInputComponent.component.refresh();
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribeAll();
   }
 }
