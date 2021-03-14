@@ -1,11 +1,13 @@
 import { validate, ValidationError } from '@webblocksapp/class-validator';
 import { ValidatorOptions } from '@webblocksapp/class-validator';
+import { BehaviorSubject } from 'rxjs';
 
 export class BaseModel {
   private dtoObject: any;
   private errors: Array<ValidationError> = [];
   private map: Array<any> = [];
   private submitted: boolean = false;
+  private resetTimes: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
   constructor(DtoClass: any) {
     this.setDto(DtoClass);
@@ -13,6 +15,22 @@ export class BaseModel {
 
   private setDto(DtoClass: any): void {
     this.dtoObject = new DtoClass();
+  }
+
+  private incrementResetTimes(): void {
+    const currentValue = this.resetTimes.getValue();
+    this.resetTimes.next(currentValue + 1);
+  }
+
+  private resetDto(): void {
+    const keys = Object.keys(this.dtoObject);
+    keys.forEach((key) => {
+      this.dtoObject[key] = null;
+    });
+  }
+
+  public getResetTimes(): BehaviorSubject<number> {
+    return this.resetTimes;
   }
 
   public getDto(): any {
@@ -51,16 +69,21 @@ export class BaseModel {
     });
   }
 
-  private setTouched(property: string = null): void {
+  private resetMap(): void {
+    this.map = [];
+    this.initMap();
+  }
+
+  private setTouched(property: string = null, touched: boolean = true): void {
     if (property) {
       this.map.map((item) => {
         if (item.property === property) {
-          item.touched = true;
+          item.touched = touched;
         }
       });
     } else {
       this.map.map((item) => {
-        item.touched = true;
+        item.touched = touched;
       });
     }
   }
@@ -157,5 +180,13 @@ export class BaseModel {
         this.setTouched(fieldName);
       });
     });
+  }
+
+  public reset(): void {
+    this.cleanErrors();
+    this.setSubmitted(false);
+    this.resetDto();
+    this.resetMap();
+    this.incrementResetTimes();
   }
 }

@@ -6,7 +6,12 @@ import { DocsBaseRouter } from '@shared/classes';
   template: `
     <app-docs-container [markers]="markers">
       <h5 class="mb-4">Bootstrap Checks</h5>
-      <app-tabs></app-tabs>
+      <app-tabs
+        [routes]="[
+          { title: 'Overview', path: 'overview' },
+          { title: 'Api', path: 'api' }
+        ]"
+      ></app-tabs>
       <div class="pt-3">
         <router-outlet (activate)="onActivate($event)"></router-outlet>
       </div>

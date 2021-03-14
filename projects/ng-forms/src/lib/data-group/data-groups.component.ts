@@ -9,6 +9,7 @@ import {
   AfterContentInit,
   SimpleChanges,
   OnChanges,
+  HostBinding,
 } from '@angular/core';
 import { DataGroupComponent } from './components/data-group.component';
 import { ValidationError } from '@webblocksapp/class-validator';
@@ -29,10 +30,18 @@ import { capitalize, isNull } from '../common/utils';
       <ng-content></ng-content>
     </form>
   `,
+  styles: [
+    `
+      form {
+        position: relative;
+      }
+    `,
+  ],
 })
 export class DataGroupsComponent
   implements OnInit, AfterContentInit, OnChanges {
-  @Input() class: string;
+  @HostBinding('class') class = 'd-block';
+
   @Input() model: Array<BaseModel>;
   @Input() group: string;
   @Input() enctype: string;
@@ -47,8 +56,6 @@ export class DataGroupsComponent
 
   private modelMap: Array<ModelMap>;
 
-  constructor() {}
-
   ngOnInit(): void {
     this.initBaseModel();
   }
@@ -56,6 +63,7 @@ export class DataGroupsComponent
   ngAfterContentInit(): void {
     setTimeout(() => {
       this.initModelMap();
+      this.listenModelResetTimes();
       this.listenDataGroupsListChanges();
       this.listenDataInputsListChanges();
     });
@@ -74,17 +82,17 @@ export class DataGroupsComponent
     }
   }
 
-  initBaseModel(): void {
+  private initBaseModel(): void {
     if (!Array.isArray(this.model)) this.model = [this.model];
   }
 
-  initModelMap(): void {
+  private initModelMap(): void {
     this.generateModelMap();
     this.applyModelMap();
     this.applyModelPropertiesMap();
   }
 
-  generateModelMap(): void {
+  private generateModelMap(): void {
     this.modelMap = [];
     this.model.forEach((model, index) => {
       this.modelMap.push({ model, dataInputComponents: [] });
@@ -101,7 +109,7 @@ export class DataGroupsComponent
     });
   }
 
-  applyModelMap(): void {
+  private applyModelMap(): void {
     this.modelMap.forEach((map) => {
       map.dataInputComponents.forEach((dataInputComponent) => {
         const { name } = dataInputComponent.component;
@@ -120,7 +128,7 @@ export class DataGroupsComponent
     });
   }
 
-  applyModelPropertiesMap(): void {
+  private applyModelPropertiesMap(): void {
     this.modelMap.forEach((map) => {
       map.model.initMap();
 
@@ -133,7 +141,15 @@ export class DataGroupsComponent
     });
   }
 
-  listenDataGroupsListChanges(): void {
+  private listenModelResetTimes(): void {
+    if (this.model[0] !== undefined) {
+      this.model[0].getResetTimes().subscribe(() => {
+        this.initModelMap();
+      });
+    }
+  }
+
+  private listenDataGroupsListChanges(): void {
     this.dataGroupComponents.changes.subscribe(() => {
       setTimeout(() => {
         this.initModelMap();
@@ -141,7 +157,7 @@ export class DataGroupsComponent
     });
   }
 
-  listenDataInputsListChanges(): void {
+  private listenDataInputsListChanges(): void {
     this.dataGroupComponents.forEach((dataGroupComponent) => {
       dataGroupComponent.dataInputs.changes.subscribe(() => {
         dataGroupComponent.loadDataInputComponents();
@@ -152,7 +168,7 @@ export class DataGroupsComponent
     });
   }
 
-  submitData(): void {
+  public submitData(): void {
     const promises = [];
     const groups = this.group !== undefined ? { groups: [this.group] } : {};
 
@@ -212,7 +228,7 @@ export class DataGroupsComponent
     );
   }
 
-  parseValidationResult(validationResult): FormattedValidationResult {
+  private parseValidationResult(validationResult): FormattedValidationResult {
     if (this.multiple === true && !Array.isArray(validationResult)) {
       validationResult = [validationResult];
     }
@@ -224,7 +240,9 @@ export class DataGroupsComponent
     return validationResult;
   }
 
-  groupMultipleValidationResult(validationResult): FormattedValidationResult {
+  private groupMultipleValidationResult(
+    validationResult,
+  ): FormattedValidationResult {
     const groupedMultipleValidationResults: FormattedValidationResult = {
       isValid: true,
     };
@@ -258,7 +276,7 @@ export class DataGroupsComponent
     return groupedMultipleValidationResults;
   }
 
-  generateFormData(validatedData): any {
+  private generateFormData(validatedData): any {
     const formData = new FormData();
 
     if (!isNull(validatedData)) {
@@ -272,7 +290,7 @@ export class DataGroupsComponent
     return formData;
   }
 
-  formatErrors(errors: ValidationError[]): any {
+  private formatErrors(errors: ValidationError[]): any {
     const formattedErrors = [];
 
     errors.forEach((error, index) => {
@@ -287,7 +305,7 @@ export class DataGroupsComponent
     return formattedErrors;
   }
 
-  manageErrors(validationResults: FormattedValidationResult[]): void {
+  private manageErrors(validationResults: FormattedValidationResult[]): void {
     validationResults = !Array.isArray(validationResults)
       ? [validationResults]
       : validationResults;
@@ -310,7 +328,7 @@ export class DataGroupsComponent
     });
   }
 
-  setDataInputComponentError(
+  private setDataInputComponentError(
     dataInputComponent: DataInputComponent,
     errors: any,
   ): void {
