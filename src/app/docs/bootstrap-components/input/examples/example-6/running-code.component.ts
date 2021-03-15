@@ -68,4 +68,8 @@ export class RunningCodeComponent implements OnInit {
       this.numberOfRecords--;
     }
   }
+
+  clear(index: number): void {
+    this.userModels.find(index).reset();
+  }
 }

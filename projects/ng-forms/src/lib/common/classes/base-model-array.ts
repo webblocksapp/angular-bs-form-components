@@ -29,6 +29,10 @@ export class BaseModelArray {
     return this.array;
   }
 
+  public find(index: number): BaseModel {
+    return this.array[index];
+  }
+
   public add(data: any = null): void {
     const model = new BaseModel(this.dtoClass);
     if (data) {
