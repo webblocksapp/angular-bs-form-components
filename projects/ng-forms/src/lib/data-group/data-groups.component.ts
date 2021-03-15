@@ -24,6 +24,7 @@ import {
 } from './types';
 import { capitalize, isNull } from '../common/utils';
 import { BehaviorSubject } from 'rxjs';
+import { BaseModelArray } from '../common/classes/base-model-array';
 
 @Component({
   selector: 'data-groups',
@@ -44,7 +45,7 @@ export class DataGroupsComponent
   implements OnInit, AfterContentInit, OnChanges, OnDestroy {
   @HostBinding('class') class = 'd-block';
 
-  @Input() model: Array<BaseModel>;
+  @Input() model: any;
   @Input() group: string;
   @Input() enctype: string;
   @Input() multiple: boolean = false;
@@ -56,8 +57,10 @@ export class DataGroupsComponent
   @ContentChildren(DataGroupComponent)
   dataGroupComponents: QueryList<DataGroupComponent>;
 
+  private _model: Array<BaseModel>;
   private modelMap: Array<ModelMap>;
-  private subscriptions: Array<BehaviorSubject<any>> = [];
+  private modelResetSubscriptions$: Array<BehaviorSubject<any>> = [];
+  private firstMount: boolean = false;
 
   ngOnInit(): void {
     this.initBaseModel();
@@ -73,6 +76,11 @@ export class DataGroupsComponent
 
   ngOnChanges(changes: SimpleChanges) {
     for (const propName in changes) {
+      if (propName === 'model' && this.firstMount === true) {
+        this.initBaseModel();
+        this.initModelMap();
+      }
+
       if (propName === 'highlightOnValid') {
         if (
           Array.isArray(this.model) &&
@@ -84,20 +92,57 @@ export class DataGroupsComponent
     }
   }
 
-  private addSubscription(subscription: BehaviorSubject<any>) {
-    this.subscriptions.push(subscription);
+  private addModelResetSubscription(subscription: BehaviorSubject<any>) {
+    this.modelResetSubscriptions$.push(subscription);
   }
 
-  private unsubscribeAll(): void {
-    this.subscriptions.forEach((subscription) => {
+  private unsubscribeAllModelResetSubscriptions(): void {
+    this.modelResetSubscriptions$.forEach((subscription, i) => {
       subscription.unsubscribe();
     });
 
-    this.subscriptions = [];
+    this.modelResetSubscriptions$ = [];
   }
 
   private initBaseModel(): void {
-    if (!Array.isArray(this.model)) this.model = [this.model];
+    if (Array.isArray(this.model)) {
+      this._model = this.model;
+    }
+
+    if (this.model instanceof BaseModelArray) {
+      this._model = this.model.get();
+      this.subscribeToBaseModelArrayChanges();
+    }
+
+    if (this.model instanceof BaseModel) {
+      this._model = [this.model];
+    }
+
+    this.firstMount = true;
+  }
+
+  private subscribeToBaseModelArrayChanges(): void {
+    const subscription = this.model.getChange();
+    subscription.subscribe(() => {
+      if (this.firstMount === true) {
+        this.modelResetSubscriptions$ = [];
+        this.refreshBaseModelArray();
+      }
+    });
+  }
+
+  private refreshBaseModelArray(): void {
+    this._model = this.model.get();
+    setTimeout(() => {
+      this.initModelMap();
+    });
+  }
+
+  private unsubscribeToBaseModelArrayChanges(): void {
+    if (this.model.getChange === 'function') {
+      const subscription = this.model.getChange();
+      subscription.unsubscribe();
+    }
   }
 
   private initModelMap(): void {
@@ -108,7 +153,7 @@ export class DataGroupsComponent
 
   private generateModelMap(): void {
     this.modelMap = [];
-    this.model.forEach((model, index) => {
+    this._model.forEach((model, index) => {
       this.modelMap.push({ model, dataInputComponents: [] });
 
       const dataGroupComponent = this.dataGroupComponents.toArray()[index];
@@ -149,7 +194,7 @@ export class DataGroupsComponent
 
   private subscribeToModelReset(map: ModelMap): void {
     const subscription = map.model.getResetTimes();
-    this.addSubscription(subscription);
+    this.addModelResetSubscription(subscription);
     subscription.subscribe(() => {
       this.applyModelMap(map);
       this.applyModelPropertiesMap(map);
@@ -173,24 +218,26 @@ export class DataGroupsComponent
   }
 
   private listenDataGroupsListChanges(): void {
-    this.dataGroupComponents.changes.subscribe(() => {
-      this.unsubscribeAll();
-      setTimeout(() => {
-        this.initModelMap();
-      });
-    });
-  }
-
-  private listenDataInputsListChanges(): void {
-    this.dataGroupComponents.forEach((dataGroupComponent) => {
-      dataGroupComponent.dataInputs.changes.subscribe(() => {
-        this.unsubscribeAll();
-        dataGroupComponent.loadDataInputComponents();
+    if (Array.isArray(this.model)) {
+      this.dataGroupComponents.changes.subscribe(() => {
         setTimeout(() => {
           this.initModelMap();
         });
       });
-    });
+    }
+  }
+
+  private listenDataInputsListChanges(): void {
+    if (Array.isArray(this.model)) {
+      this.dataGroupComponents.forEach((dataGroupComponent) => {
+        dataGroupComponent.dataInputs.changes.subscribe(() => {
+          dataGroupComponent.loadDataInputComponents();
+          setTimeout(() => {
+            this.initModelMap();
+          });
+        });
+      });
+    }
   }
 
   public submitData(): void {
@@ -363,6 +410,11 @@ export class DataGroupsComponent
 
     dataInputComponent.component.error = capitalize(errorMessage);
     dataInputComponent.component.refresh();
+  }
+
+  private unsubscribeAll() {
+    this.unsubscribeAllModelResetSubscriptions();
+    this.unsubscribeToBaseModelArrayChanges();
   }
 
   ngOnDestroy(): void {

@@ -116,7 +116,6 @@ export class BaseModel {
 
   public fill(data: any): void {
     const objectKeys = Object.keys(data);
-
     objectKeys.forEach((key) => {
       const value = data[key];
       this.setValue(key, value);

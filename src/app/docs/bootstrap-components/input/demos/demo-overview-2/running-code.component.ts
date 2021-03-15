@@ -24,7 +24,7 @@ export class RunningCodeComponent {
   deleteRecord(index: number): void {
     if (this.numberOfRecords >= 2) {
       this.exampleModels = this.exampleModels.filter(
-        (bookModel) => this.exampleModels.indexOf(bookModel) !== index,
+        (exampleModel) => this.exampleModels.indexOf(exampleModel) !== index,
       );
 
       this.numberOfRecords--;

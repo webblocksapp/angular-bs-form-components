@@ -18,6 +18,9 @@ import { DocsBase } from '@shared/classes';
 
     <h5 marker>Simulating api request</h5>
     <example-5></example-5>
+
+    <h5 marker>Simulating api request on multiple records</h5>
+    <example-6></example-6>
   `,
 })
 export class ExamplesComponent extends DocsBase {}
