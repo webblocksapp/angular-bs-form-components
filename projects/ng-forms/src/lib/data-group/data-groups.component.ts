@@ -23,7 +23,6 @@ import {
   DataInputComponent,
 } from './types';
 import { capitalize, isNull } from '../common/utils';
-import { BehaviorSubject } from 'rxjs';
 import { BaseModelArray } from '../common/classes/base-model-array';
 
 @Component({

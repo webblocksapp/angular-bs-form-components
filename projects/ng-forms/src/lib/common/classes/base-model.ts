@@ -137,6 +137,18 @@ export class BaseModel {
     });
   }
 
+  public isFilled(): boolean {
+    const dto = this.getDto();
+    const objectKeys = Object.keys(dto);
+    for (let key of objectKeys) {
+      if (isNull(dto[key])) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   public validate(validatorOptions?: ValidatorOptions): Promise<any> {
     return new Promise((resolve) => {
       validatorOptions = Object.assign(

@@ -25,6 +25,20 @@ export class BaseModelArray {
     this.emitChange();
   }
 
+  public isFilled(index: number = undefined): boolean {
+    if (index === undefined) {
+      for (let model of this.array) {
+        if (model.isFilled() === false) {
+          return false;
+        }
+      }
+
+      return true;
+    } else {
+      return this.array[index].isFilled();
+    }
+  }
+
   public get(): Array<BaseModel> {
     return this.array;
   }
