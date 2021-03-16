@@ -86,7 +86,7 @@ export class BsInputComponent extends DataInputBase implements DoCheck {
     return event;
   }
 
-  bindKeyupEvents(event: any): any {
+  bindInputEvents(event: any): any {
     const value = event.target.value;
 
     this.fillModel(value);
