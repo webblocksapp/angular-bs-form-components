@@ -1,11 +1,15 @@
 import { validate, ValidationError } from '@webblocksapp/class-validator';
 import { ValidatorOptions } from '@webblocksapp/class-validator';
 import { BehaviorSubject } from 'rxjs';
+import { isNull } from '../utils';
 
 export class BaseModel {
   private dtoObject: any;
   private errors: Array<ValidationError> = [];
-  private map: Array<any> = [];
+  private map: Array<{
+    property: string;
+    touched: boolean;
+  }> = [];
   private submitted: boolean = false;
   private resetTimes: BehaviorSubject<number> = new BehaviorSubject<number>(0);
 
@@ -54,7 +58,25 @@ export class BaseModel {
   }
 
   private setErrors(errors: Array<ValidationError>): void {
-    this.errors = Object.assign(this.errors, errors);
+    errors.forEach((_error) => {
+      const hasError = this.errors.filter(
+        (error) => error.property === _error.property,
+      )[0];
+
+      if (isNull(hasError)) {
+        this.errors.push(_error);
+      }
+    });
+
+    this.errors = this.errors.map((error) => {
+      for (let _error of errors) {
+        if (error.property === _error.property) {
+          return _error;
+        }
+      }
+
+      return error;
+    });
   }
 
   public initMap(): void {
