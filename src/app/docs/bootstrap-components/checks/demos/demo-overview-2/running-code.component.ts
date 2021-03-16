@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseModel } from '@webblocksapp/ng-forms';
+import { BaseModelArray } from '@webblocksapp/ng-forms';
 import { ExampleDto } from './example.dto';
 
 @Component({
@@ -8,7 +8,7 @@ import { ExampleDto } from './example.dto';
 })
 export class RunningCodeComponent {
   public Array = Array;
-  public exampleModels: Array<BaseModel> = [new BaseModel(ExampleDto)];
+  public exampleModels: BaseModelArray = new BaseModelArray(ExampleDto);
   public numberOfRecords = 1;
   public maxNumberOfRecords = 3;
 
@@ -21,19 +21,14 @@ export class RunningCodeComponent {
 
   addRecord(): void {
     if (this.numberOfRecords < this.maxNumberOfRecords) {
-      const exampleModel = new BaseModel(ExampleDto);
-
+      this.exampleModels.add();
       this.numberOfRecords++;
-      this.exampleModels.push(exampleModel);
     }
   }
 
   deleteRecord(index: number): void {
     if (this.numberOfRecords >= 2) {
-      this.exampleModels = this.exampleModels.filter(
-        (bookModel) => this.exampleModels.indexOf(bookModel) !== index,
-      );
-
+      this.exampleModels.delete(index);
       this.numberOfRecords--;
     }
   }

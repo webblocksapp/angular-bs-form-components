@@ -111,7 +111,7 @@ export class DataGroupsComponent
 
     if (this.model instanceof BaseModelArray) {
       this._model = this.model.get();
-      this.subscribeToBaseModelArrayChanges();
+      this.subscribeToModelChanges();
     }
 
     if (this.model instanceof BaseModel) {
@@ -121,7 +121,7 @@ export class DataGroupsComponent
     this.firstMount = true;
   }
 
-  private subscribeToBaseModelArrayChanges(): void {
+  private subscribeToModelChanges(): void {
     const subscription = this.model.getChange();
     subscription.subscribe(() => {
       if (this.firstMount === true) {
@@ -138,7 +138,7 @@ export class DataGroupsComponent
     });
   }
 
-  private unsubscribeToBaseModelArrayChanges(): void {
+  private unsubscribeToModelChanges(): void {
     if (this.model.getChange === 'function') {
       const subscription = this.model.getChange();
       subscription.unsubscribe();
@@ -414,7 +414,7 @@ export class DataGroupsComponent
 
   private unsubscribeAll() {
     this.unsubscribeAllModelResetSubscriptions();
-    this.unsubscribeToBaseModelArrayChanges();
+    this.unsubscribeToModelChanges();
   }
 
   ngOnDestroy(): void {
