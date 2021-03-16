@@ -1,3 +1,4 @@
+import { ValidatorOptions } from '@webblocksapp/class-validator';
 import { BehaviorSubject } from 'rxjs';
 import { BaseModel } from './base-model';
 
@@ -86,5 +87,31 @@ export class BaseModelArray {
 
   public getChange(): BehaviorSubject<Boolean> {
     return this.change;
+  }
+
+  public validate(
+    validatorOptions?: ValidatorOptions,
+    index?: number,
+  ): Promise<any> {
+    if (index === undefined) {
+      const promises = [];
+      this.array.forEach((model) => {
+        promises.push(
+          new Promise((resolve) => {
+            resolve(model.validate(validatorOptions));
+          }),
+        );
+      });
+
+      return new Promise((resolve) => {
+        resolve(Promise.all(promises));
+        this.emitChange();
+      });
+    } else {
+      return new Promise((resolve) => {
+        resolve(this.array[index].validate(validatorOptions));
+        this.emitChange();
+      });
+    }
   }
 }

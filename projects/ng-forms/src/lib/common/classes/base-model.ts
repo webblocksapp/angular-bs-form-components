@@ -175,6 +175,7 @@ export class BaseModel {
         }
 
         this.setTouched();
+        this.emitChange();
       });
     });
   }
@@ -204,6 +205,7 @@ export class BaseModel {
         }
 
         this.setTouched(fieldName);
+        this.emitChange();
       });
     });
   }
