@@ -70,6 +70,6 @@ export class RunningCodeComponent implements OnInit {
   }
 
   clear(index: number): void {
-    this.userModels.find(index).reset();
+    this.userModels.reset(index);
   }
 }

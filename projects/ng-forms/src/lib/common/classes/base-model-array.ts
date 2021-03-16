@@ -53,6 +53,18 @@ export class BaseModelArray {
     return this.array.length;
   }
 
+  public reset(index: number = undefined): void {
+    if (index === undefined) {
+      this.array.forEach((model) => {
+        model.reset();
+      });
+    } else {
+      this.array[index].reset();
+    }
+
+    this.emitChange();
+  }
+
   public emitChange(): void {
     const currentValue = this.change.getValue();
     this.change.next(!currentValue);

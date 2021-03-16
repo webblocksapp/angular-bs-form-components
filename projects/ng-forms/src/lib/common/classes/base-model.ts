@@ -11,7 +11,9 @@ export class BaseModel {
     touched: boolean;
   }> = [];
   private submitted: boolean = false;
-  private resetTimes: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  private change: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
+    false,
+  );
 
   constructor(DtoClass: any) {
     this.setDto(DtoClass);
@@ -21,20 +23,11 @@ export class BaseModel {
     this.dtoObject = new DtoClass();
   }
 
-  private incrementResetTimes(): void {
-    const currentValue = this.resetTimes.getValue();
-    this.resetTimes.next(currentValue + 1);
-  }
-
   private resetDto(): void {
     const keys = Object.keys(this.dtoObject);
     keys.forEach((key) => {
       this.dtoObject[key] = null;
     });
-  }
-
-  public getResetTimes(): BehaviorSubject<number> {
-    return this.resetTimes;
   }
 
   public getDto(): any {
@@ -203,11 +196,20 @@ export class BaseModel {
     });
   }
 
+  public emitChange(): void {
+    const currentValue = this.change.getValue();
+    this.change.next(!currentValue);
+  }
+
+  public getChange(): BehaviorSubject<Boolean> {
+    return this.change;
+  }
+
   public reset(): void {
     this.cleanErrors();
     this.setSubmitted(false);
     this.resetDto();
     this.resetMap();
-    this.incrementResetTimes();
+    this.emitChange();
   }
 }

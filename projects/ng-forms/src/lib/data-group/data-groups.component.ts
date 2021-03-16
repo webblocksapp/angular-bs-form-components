@@ -59,7 +59,6 @@ export class DataGroupsComponent
 
   private _model: Array<BaseModel>;
   private modelMap: Array<ModelMap>;
-  private modelResetSubscriptions$: Array<BehaviorSubject<any>> = [];
   private firstMount: boolean = false;
 
   ngOnInit(): void {
@@ -92,63 +91,42 @@ export class DataGroupsComponent
     }
   }
 
-  private addModelResetSubscription(subscription: BehaviorSubject<any>) {
-    this.modelResetSubscriptions$.push(subscription);
-  }
-
-  private unsubscribeAllModelResetSubscriptions(): void {
-    this.modelResetSubscriptions$.forEach((subscription, i) => {
-      subscription.unsubscribe();
-    });
-
-    this.modelResetSubscriptions$ = [];
-  }
-
   private initBaseModel(): void {
-    if (Array.isArray(this.model)) {
-      this._model = this.model;
-    }
-
     if (this.model instanceof BaseModelArray) {
       this._model = this.model.get();
-      this.subscribeToModelChanges();
     }
 
     if (this.model instanceof BaseModel) {
       this._model = [this.model];
     }
 
-    this.firstMount = true;
+    if (this.firstMount === false) {
+      this.subscribeToModelChanges();
+      this.firstMount = true;
+    }
   }
 
   private subscribeToModelChanges(): void {
     const subscription = this.model.getChange();
     subscription.subscribe(() => {
       if (this.firstMount === true) {
-        this.modelResetSubscriptions$ = [];
-        this.refreshBaseModelArray();
+        setTimeout(() => {
+          this.initBaseModel();
+          this.initModelMap();
+        });
       }
     });
   }
 
-  private refreshBaseModelArray(): void {
-    this._model = this.model.get();
-    setTimeout(() => {
-      this.initModelMap();
-    });
-  }
-
   private unsubscribeToModelChanges(): void {
-    if (this.model.getChange === 'function') {
-      const subscription = this.model.getChange();
-      subscription.unsubscribe();
-    }
+    const subscription = this.model.getChange();
+    subscription.unsubscribe();
   }
 
   private initModelMap(): void {
     this.generateModelMap();
-    this.applyToAllModelMap();
-    this.applyToAllModelPropertiesMap();
+    this.applyModelMap();
+    this.applyModelPropertiesMap();
   }
 
   private generateModelMap(): void {
@@ -168,76 +146,54 @@ export class DataGroupsComponent
     });
   }
 
-  private applyToAllModelMap(): void {
+  private applyModelMap(): void {
     this.modelMap.forEach((map) => {
-      this.applyModelMap(map);
-      this.subscribeToModelReset(map);
+      map.dataInputComponents.forEach((dataInputComponent) => {
+        const { name } = dataInputComponent.component;
+        const errors = this.formatErrors(map.model.getErrors());
+
+        dataInputComponent.component.model = map.model;
+        dataInputComponent.component.highlightOnValid = this.highlightOnValid;
+        if (dataInputComponent.component.autocomplete === undefined) {
+          dataInputComponent.component.autocomplete = this.autocomplete;
+        }
+        dataInputComponent.component.fillModel(map.model.getValue(name));
+        dataInputComponent.component.refresh();
+
+        this.setDataInputComponentError(dataInputComponent, errors);
+      });
     });
   }
 
-  private applyModelMap(map: ModelMap): void {
-    map.dataInputComponents.forEach((dataInputComponent) => {
-      const { name } = dataInputComponent.component;
-      const errors = this.formatErrors(map.model.getErrors());
-
-      dataInputComponent.component.model = map.model;
-      dataInputComponent.component.highlightOnValid = this.highlightOnValid;
-      if (dataInputComponent.component.autocomplete === undefined) {
-        dataInputComponent.component.autocomplete = this.autocomplete;
-      }
-      dataInputComponent.component.fillModel(map.model.getValue(name));
-      dataInputComponent.component.refresh();
-
-      this.setDataInputComponentError(dataInputComponent, errors);
-    });
-  }
-
-  private subscribeToModelReset(map: ModelMap): void {
-    const subscription = map.model.getResetTimes();
-    this.addModelResetSubscription(subscription);
-    subscription.subscribe(() => {
-      this.applyModelMap(map);
-      this.applyModelPropertiesMap(map);
-    });
-  }
-
-  private applyToAllModelPropertiesMap(): void {
+  private applyModelPropertiesMap(): void {
     this.modelMap.forEach((map) => {
-      this.applyModelPropertiesMap(map);
-    });
-  }
+      map.model.initMap();
+      map.dataInputComponents.forEach((dataInputComponent) => {
+        const { name } = dataInputComponent.component;
+        const propertyMap = map.model.getPropertyMap(name);
 
-  private applyModelPropertiesMap(map: ModelMap): void {
-    map.model.initMap();
-    map.dataInputComponents.forEach((dataInputComponent) => {
-      const { name } = dataInputComponent.component;
-      const propertyMap = map.model.getPropertyMap(name);
-
-      dataInputComponent.component.touched = propertyMap.touched;
+        dataInputComponent.component.touched = propertyMap.touched;
+      });
     });
   }
 
   private listenDataGroupsListChanges(): void {
-    if (Array.isArray(this.model)) {
-      this.dataGroupComponents.changes.subscribe(() => {
+    this.dataGroupComponents.changes.subscribe(() => {
+      setTimeout(() => {
+        this.initModelMap();
+      });
+    });
+  }
+
+  private listenDataInputsListChanges(): void {
+    this.dataGroupComponents.forEach((dataGroupComponent) => {
+      dataGroupComponent.dataInputs.changes.subscribe(() => {
+        dataGroupComponent.loadDataInputComponents();
         setTimeout(() => {
           this.initModelMap();
         });
       });
-    }
-  }
-
-  private listenDataInputsListChanges(): void {
-    if (Array.isArray(this.model)) {
-      this.dataGroupComponents.forEach((dataGroupComponent) => {
-        dataGroupComponent.dataInputs.changes.subscribe(() => {
-          dataGroupComponent.loadDataInputComponents();
-          setTimeout(() => {
-            this.initModelMap();
-          });
-        });
-      });
-    }
+    });
   }
 
   public submitData(): void {
@@ -413,7 +369,6 @@ export class DataGroupsComponent
   }
 
   private unsubscribeAll() {
-    this.unsubscribeAllModelResetSubscriptions();
     this.unsubscribeToModelChanges();
   }
 
