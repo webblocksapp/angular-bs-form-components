@@ -1,0 +1,57 @@
+<data-groups [model]="userModel" [highlightOnValid]="true">
+  <data-group class="card mb-3">
+    <div class="card-body">
+      <div class="card-title d-flex justify-content-between">Host</div>
+      <bs-input
+        [autocomplete]="false"
+        label="First name"
+        #dataInput
+        placeholder="First name"
+        name="firstName"
+      ></bs-input>
+      <bs-input
+        [autocomplete]="false"
+        label="Second name"
+        #dataInput
+        placeholder="Second name"
+        name="secondName"
+      ></bs-input>
+      <bs-input
+        [autocomplete]="false"
+        label="Last name"
+        #dataInput
+        placeholder="Last name"
+        name="lastName"
+      ></bs-input>
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title d-flex justify-content-between">Guest</div>
+          <bs-input
+            [autocomplete]="false"
+            label="First name"
+            #dataInput
+            placeholder="First name"
+            name="firstName"
+          ></bs-input>
+          <bs-input
+            [autocomplete]="false"
+            label="Second name"
+            #dataInput
+            placeholder="Second name"
+            name="secondName"
+          ></bs-input>
+          <bs-input
+            [autocomplete]="false"
+            label="Last name"
+            #dataInput
+            placeholder="Last name"
+            name="lastName"
+          ></bs-input>
+        </div>
+      </div>
+    </div>
+  </data-group>
+  <div class="d-flex flex-wrap">
+    <button class="btn btn-primary">Submit</button>
+  </div>
+</data-groups>
