@@ -13,6 +13,7 @@ import {
 import { DataInputBase } from '../common/classes/data-input-base';
 import { SelectOption, SelectOptionGroup } from '../common/types';
 import { isNull } from '../common/utils';
+import parseValue from '../common/utils/parse-value';
 
 @Component({
   selector: 'bs-select',
@@ -305,7 +306,7 @@ export class BsSelectComponent
 
   bindEventsToSelect(): void {
     this.select.on('change', this.select, (event) => {
-      const value = this.select.val();
+      const value = parseValue(this.select.val());
       this.onShown = false;
       this.fillModel(value);
       this.validateField();
@@ -314,11 +315,6 @@ export class BsSelectComponent
 
     this.select.parent().on('shown.bs.dropdown', (event) => {
       this.onShown = true;
-
-      if (isNull(this.model.getValue(this.name))) {
-        this.validateField();
-      }
-
       this.shownEvent.emit(event);
     });
 
@@ -330,13 +326,13 @@ export class BsSelectComponent
       }
 
       this.hiddenEvent.emit(event);
-      this.setOnValidated();
     });
   }
 
   bindEventsAfterValidateField(): void {
     if (this.onShown === false) {
       this.addOrRemoveValidationClasses();
+      this.setOnValidated();
     }
   }
 

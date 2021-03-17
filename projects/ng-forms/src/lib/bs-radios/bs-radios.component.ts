@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 import { RadioDisplay, RadioLook } from '../common/types';
+import parseValue from '../common/utils/parse-value';
 
 @Component({
   selector: 'bs-radios',
@@ -102,7 +103,7 @@ export class BsRadiosComponent extends DataInputBase implements DoCheck {
     return event;
   }
 
-  getRadiosValue(): Array<any> {
+  getRadiosValue(): any {
     let value;
 
     this.radios.forEach((radioElementRef) => {
@@ -145,7 +146,7 @@ export class BsRadiosComponent extends DataInputBase implements DoCheck {
 
   refreshRadios(): void {
     if (this.radios !== undefined) {
-      const value = this.getRadiosValue();
+      const value = parseValue(this.getRadiosValue());
       this.fillModel(value);
     }
   }

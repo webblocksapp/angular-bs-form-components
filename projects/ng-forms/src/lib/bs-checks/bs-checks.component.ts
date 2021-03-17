@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 import { CheckDisplay, CheckLook } from '../common/types';
+import parseValue from '../common/utils/parse-value';
 
 @Component({
   selector: 'bs-checks',
@@ -145,7 +146,9 @@ export class BsChecksComponent extends DataInputBase implements DoCheck {
 
   refreshCheckboxes(): void {
     if (this.checkboxes !== undefined) {
-      const values = this.getCheckboxesValues();
+      const values = this.getCheckboxesValues().map((value) =>
+        parseValue(value),
+      );
       this.fillModel(values);
     }
   }

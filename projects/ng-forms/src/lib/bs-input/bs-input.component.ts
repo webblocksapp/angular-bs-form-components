@@ -1,5 +1,6 @@
 import { Component, DoCheck, HostBinding, Input } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
+import parseValue from '../common/utils/parse-value';
 
 @Component({
   selector: 'bs-input',
@@ -87,7 +88,7 @@ export class BsInputComponent extends DataInputBase implements DoCheck {
   }
 
   bindInputEvents(event: any): any {
-    const value = event.target.value;
+    const value = parseValue(event.target.value);
 
     this.fillModel(value);
     return event;

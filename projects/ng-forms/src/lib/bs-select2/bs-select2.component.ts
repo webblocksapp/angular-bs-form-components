@@ -13,6 +13,7 @@ import {
 import { DataInputBase } from '../common/classes/data-input-base';
 import { SelectOption, SelectOptionGroup } from '../common/types';
 import { isNull } from '../common/utils';
+import parseValue from '../common/utils/parse-value';
 
 @Component({
   selector: 'bs-select2',
@@ -185,7 +186,7 @@ export class BsSelect2Component
 
   bindEventsToSelect2(): void {
     this.select2.on('change', (event) => {
-      const value = this.select2.select2('val');
+      const value = parseValue(this.select2.select2('val'));
       this.fillModel(value);
 
       if (this.validate === true) {
