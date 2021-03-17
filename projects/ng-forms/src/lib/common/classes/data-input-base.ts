@@ -51,6 +51,7 @@ export abstract class DataInputBase
   @Input() endSlot: string;
   @Input() endSlotHtml: string;
   @Input() autocomplete: boolean;
+  @Input() value: any = null;
 
   @Output() focusEvent: EventEmitter<FocusEvent> = new EventEmitter();
   @Output() focusoutEvent: EventEmitter<FocusEvent> = new EventEmitter();
@@ -74,7 +75,6 @@ export abstract class DataInputBase
 
   public inputSize: string;
   public error: string;
-  public value: any = null;
   public model: BaseModel;
   public isReactiveForm = true;
   public highlightOnValid = false;

@@ -44,6 +44,15 @@ export class BaseModelArray {
     return this.array;
   }
 
+  public getDtos(): Array<any> {
+    const dtos = [];
+    this.array.forEach((model) => {
+      dtos.push(model.getDto());
+    });
+
+    return dtos;
+  }
+
   public find(index: number): BaseModel {
     return this.array[index];
   }
@@ -104,7 +113,15 @@ export class BaseModelArray {
       });
 
       return new Promise((resolve) => {
-        resolve(Promise.all(promises));
+        Promise.all(promises).then((validationResult) => {
+          const isValid = validationResult.filter(
+            (result) => result.isValid === false,
+          ).length
+            ? false
+            : true;
+          const _validationResult = { results: validationResult, isValid };
+          resolve(_validationResult);
+        });
         this.emitChange();
       });
     } else {

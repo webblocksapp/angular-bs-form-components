@@ -37,13 +37,20 @@ import { BaseModelArray } from '../common/classes/base-model-array';
       form {
         position: relative;
       }
+
+      .d-table-row-group {
+        display: table-row-group;
+      }
     `,
   ],
 })
 export class DataGroupsComponent
   implements OnInit, AfterContentInit, OnChanges, OnDestroy {
-  @HostBinding('class') class = 'd-block';
+  @HostBinding('class')
+  @Input()
+  class = 'd-block';
 
+  @Input() noForm: boolean = false;
   @Input() model: any;
   @Input() group: string;
   @Input() enctype: string;
@@ -53,7 +60,7 @@ export class DataGroupsComponent
 
   @Output() submitEvent: EventEmitter<any> = new EventEmitter();
 
-  @ContentChildren(DataGroupComponent)
+  @ContentChildren(DataGroupComponent, { descendants: true })
   dataGroupComponents: QueryList<DataGroupComponent>;
 
   private _model: Array<BaseModel>;
