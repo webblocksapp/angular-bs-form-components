@@ -10,6 +10,7 @@ import {
   KeyValueDiffer,
   Directive,
   NgZone,
+  OnDestroy,
 } from '@angular/core';
 
 import {
@@ -21,7 +22,9 @@ import {
 import * as uuid from 'uuid';
 import { BaseModel } from '../classes/base-model';
 import { InputType, InputSize } from '../types';
-import { capitalize } from '../utils';
+import { capitalize, isNull } from '../utils';
+import { ValidationError } from '@webblocksapp/class-validator';
+import { Subscription } from 'rxjs';
 
 // tslint:disable-next-line: no-conflicting-lifecycle
 @Directive()
@@ -30,6 +33,7 @@ export abstract class DataInputBase
   implements
     OnInit,
     OnChanges,
+    OnDestroy,
     DataInputBaseInterface,
     FormEventsInterface,
     KeyboardEventsInterface,
@@ -52,6 +56,8 @@ export abstract class DataInputBase
   @Input() endSlotHtml: string;
   @Input() autocomplete: boolean;
   @Input() value: any = null;
+  @Input() model: BaseModel;
+  @Input() highlightOnValid = false;
 
   @Output() focusEvent: EventEmitter<FocusEvent> = new EventEmitter();
   @Output() focusoutEvent: EventEmitter<FocusEvent> = new EventEmitter();
@@ -75,11 +81,11 @@ export abstract class DataInputBase
 
   public inputSize: string;
   public error: string;
-  public model: BaseModel;
   public isReactiveForm = true;
-  public highlightOnValid = false;
   public touched = false;
   private modelDiffer: KeyValueDiffer<string, any>;
+  private modelMounted: boolean = false;
+  private changes$: Subscription;
 
   constructor(private differs: KeyValueDiffers, public ngZone: NgZone) {}
 
@@ -363,7 +369,7 @@ export abstract class DataInputBase
           this.bindEventsAfterValidateField();
         })
         .catch((error) => {
-          this.setError(error);
+          this.setError(error[0]);
           this.bindEventsAfterValidateField();
         });
     }
@@ -372,15 +378,23 @@ export abstract class DataInputBase
   setTouched() {
     this.touched = true;
     const map = this.model.getPropertyMap(this.name);
-    map.touched = true;
+
+    if (map) {
+      map.touched = true;
+    }
   }
 
   bindEventsAfterValidateField(): void {}
 
-  setError(error: any): void {
-    const { constraints } = error[0];
-    this.error = (Object.values(constraints)[0] as string) || '';
-    this.error = capitalize(this.error);
+  setError(error: ValidationError): void {
+    if (!isNull(error)) {
+      const { constraints } = error;
+      this.error = (Object.values(constraints)[0] as string) || '';
+      this.error = capitalize(this.error);
+      this.setTouched();
+    } else {
+      this.error = '';
+    }
   }
 
   refresh(): void {}
@@ -402,8 +416,29 @@ export abstract class DataInputBase
       if (changes) {
         this.bindWatchModelEvents();
       }
+
+      if (this.modelMounted === false) {
+        this.subscribeToModelChanges();
+      }
+
+      this.modelMounted = true;
     }
   }
 
   bindWatchModelEvents(): void {}
+
+  private subscribeToModelChanges(): void {
+    const subject = this.model.getChange();
+    this.changes$ = subject.subscribe(() => {
+      this.setError(this.model.getError(this.name));
+    });
+  }
+
+  private unSubscribeToModelChanges(): void {
+    this.changes$.unsubscribe();
+  }
+
+  ngOnDestroy(): void {
+    this.unSubscribeToModelChanges();
+  }
 }

@@ -115,6 +115,10 @@ export class BaseModel {
     return this.errors;
   }
 
+  public getError(fieldName: string): ValidationError {
+    return this.errors.find((error) => error.property === fieldName) || null;
+  }
+
   public getMap(): Array<any> {
     return this.map;
   }

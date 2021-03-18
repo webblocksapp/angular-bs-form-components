@@ -1,4 +1,4 @@
-import { Component, DoCheck, HostBinding, Input } from '@angular/core';
+import { Component, DoCheck, HostBinding } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 import parseValue from '../common/utils/parse-value';
 
@@ -24,7 +24,7 @@ import parseValue from '../common/utils/parse-value';
       <input
         [attr.autocomplete]="autocomplete ? 'on' : 'off'"
         [attr.name]="name"
-        [value]="value"
+        [value]="value || null"
         [type]="type"
         [attr.placeholder]="placeholder"
         [attr.disabled]="disabled"

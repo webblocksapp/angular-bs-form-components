@@ -12,7 +12,6 @@ import {
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 import { isNull } from '../common/utils';
-import clone from '../common/utils/clone';
 
 @Component({
   selector: 'bs-datepicker',
@@ -329,7 +328,7 @@ export class BsDatepickerComponent
   setValue(): void {
     const value = this.model.getValue(this.name);
 
-    if (value !== undefined) {
+    if (!isNull(value)) {
       if (this.multidate === true) {
         this.setDates(value);
       }
@@ -373,10 +372,10 @@ export class BsDatepickerComponent
   refreshDatepicker(): void {
     this.datepicker.datepicker('destroy');
     this.initDatepicker();
-    this.datepicker.datepicker('update', this.value);
+    this.datepicker.datepicker('update', this.model.getValue(this.name));
   }
 
   refresh(): void {
-    this.datepicker.datepicker('update', this.value);
+    this.datepicker.datepicker('update', this.model.getValue(this.name));
   }
 }
