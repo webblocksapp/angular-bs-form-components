@@ -119,7 +119,23 @@ export class BaseModelArray {
           ).length
             ? false
             : true;
-          const _validationResult = { results: validationResult, isValid };
+
+          let errors = [];
+          let validatedData = null;
+
+          if (!isValid) {
+            validationResult.forEach((result) => {
+              errors.push(result.errors);
+            });
+          } else {
+            validatedData = [];
+            errors = null;
+            validationResult.forEach((result) => {
+              validatedData.push(result.validatedData);
+            });
+          }
+
+          const _validationResult = { isValid, validatedData, errors };
           resolve(_validationResult);
         });
         this.emitChange();
