@@ -8,6 +8,7 @@ export class BaseModelArray {
   private change: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
     false,
   );
+  public isValid: boolean = false;
 
   constructor(DtoClass: any) {
     this.dtoClass = DtoClass;
@@ -137,6 +138,7 @@ export class BaseModelArray {
 
           const _validationResult = { isValid, validatedData, errors };
           resolve(_validationResult);
+          this.isValid = isValid;
         });
         this.emitChange();
       });

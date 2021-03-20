@@ -14,6 +14,7 @@ export class BaseModel {
   private change: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
     false,
   );
+  public isValid: boolean = false;
 
   constructor(DtoClass: any) {
     this.setDto(DtoClass);
@@ -171,11 +172,13 @@ export class BaseModel {
             validatedData: this.dtoObject,
             errors: null,
           });
+          this.isValid = true;
         }
 
         if (errors.length > 0) {
           this.setErrors(errors);
           resolve({ isValid: false, validatedData: null, errors });
+          this.isValid = false;
         }
 
         this.setTouched();
