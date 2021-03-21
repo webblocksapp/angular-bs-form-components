@@ -378,7 +378,9 @@ export class BsSelectComponent
   }
 
   initSelectedOptions(): void {
-    this.select.selectpicker('val', this.model.getValue(this.name));
+    setTimeout(() => {
+      this.select.selectpicker('val', this.model.getValue(this.name));
+    });
   }
 
   hideSelectAllButton(): void {

@@ -317,9 +317,11 @@ export class BsSelect2Component
   }
 
   initSelectedOptions(): void {
-    const selectedOptions = this.model.getValue(this.name);
-    this.validate = false;
-    this.select2.val(selectedOptions).trigger('change');
+    setTimeout(() => {
+      const selectedOptions = this.model.getValue(this.name);
+      this.validate = false;
+      this.select2.val(selectedOptions).trigger('change');
+    });
   }
 
   disableSelect2WhenOptionsAreEmpty(): void {
