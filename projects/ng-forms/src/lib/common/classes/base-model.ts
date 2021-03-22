@@ -6,10 +6,6 @@ import { isNull } from '../utils';
 export class BaseModel {
   private dtoObject: any;
   private errors: Array<ValidationError> = [];
-  private map: Array<{
-    property: string;
-    touched: boolean;
-  }> = [];
   private submitted: boolean = false;
   private change: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
     false,
@@ -73,37 +69,6 @@ export class BaseModel {
     });
   }
 
-  public initMap(): void {
-    const keys = Object.keys(this.dtoObject);
-
-    keys.forEach((key) => {
-      const filteredMap = this.map.filter((item) => item.property === key);
-
-      if (filteredMap.length === 0) {
-        this.map.push({ property: key, touched: false });
-      }
-    });
-  }
-
-  private resetMap(): void {
-    this.map = [];
-    this.initMap();
-  }
-
-  private setTouched(property: string = null, touched: boolean = true): void {
-    if (property) {
-      this.map.map((item) => {
-        if (item.property === property) {
-          item.touched = touched;
-        }
-      });
-    } else {
-      this.map.map((item) => {
-        item.touched = touched;
-      });
-    }
-  }
-
   private cleanError(fieldName: string): void {
     this.errors = this.errors.filter((error) => error.property !== fieldName);
   }
@@ -118,20 +83,6 @@ export class BaseModel {
 
   public getError(fieldName: string): ValidationError {
     return this.errors.find((error) => error.property === fieldName) || null;
-  }
-
-  public getMap(): Array<any> {
-    return this.map;
-  }
-
-  public getPropertyMap(property): any {
-    const filteredMap = this.map.filter((item) => item.property === property);
-
-    if (filteredMap.length > 0) {
-      return filteredMap[0];
-    }
-
-    return null;
   }
 
   public fill(data: any): void {
@@ -181,7 +132,6 @@ export class BaseModel {
           this.isValid = false;
         }
 
-        this.setTouched();
         this.emitChange();
       });
     });
@@ -211,7 +161,6 @@ export class BaseModel {
           reject(errors);
         }
 
-        this.setTouched(fieldName);
         this.emitChange();
       });
     });
@@ -230,7 +179,6 @@ export class BaseModel {
     this.cleanErrors();
     this.setSubmitted(false);
     this.resetDto();
-    this.resetMap();
     this.emitChange();
   }
 }

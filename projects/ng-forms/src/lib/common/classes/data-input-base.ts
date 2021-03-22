@@ -377,11 +377,6 @@ export abstract class DataInputBase
 
   setTouched() {
     this.touched = true;
-    const map = this.model.getPropertyMap(this.name);
-
-    if (map) {
-      map.touched = true;
-    }
   }
 
   bindEventsAfterValidateField(): void {}
