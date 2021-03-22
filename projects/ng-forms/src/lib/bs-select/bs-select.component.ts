@@ -5,7 +5,6 @@ import {
   ViewChild,
   ViewEncapsulation,
   Input,
-  AfterViewInit,
   DoCheck,
   Output,
   EventEmitter,
@@ -142,9 +141,7 @@ import parseValue from '../common/utils/parse-value';
     `,
   ],
 })
-export class BsSelectComponent
-  extends DataInputBase
-  implements AfterViewInit, DoCheck {
+export class BsSelectComponent extends DataInputBase implements DoCheck {
   @HostBinding('class') class = 'ng-select form-group';
   @ViewChild('selectElementRef', { read: ElementRef })
   selectElementRef: ElementRef;
@@ -196,7 +193,7 @@ export class BsSelectComponent
     'dropupAuto',
   ];
 
-  ngAfterViewInit(): void {
+  setConfigsAfterViewInit(): void {
     this.initJQueryEl();
     this.initSelect();
   }

@@ -1,7 +1,9 @@
 import { validate, ValidationError } from '@webblocksapp/class-validator';
 import { ValidatorOptions } from '@webblocksapp/class-validator';
 import { BehaviorSubject } from 'rxjs';
+import { BaseModelArgs, Nested } from '../types/base-model-args.type';
 import { isNull } from '../utils';
+import { set, get } from 'lodash';
 
 export class BaseModel {
   private dtoObject: any;
@@ -11,13 +13,38 @@ export class BaseModel {
     false,
   );
   public isValid: boolean = false;
+  public nested: Nested[];
 
-  constructor(DtoClass: any) {
+  constructor(DtoClass: any, args?: BaseModelArgs) {
     this.setDto(DtoClass);
+    this.setBaseModelArgs(args);
+    this.initNested();
   }
 
   private setDto(DtoClass: any): void {
     this.dtoObject = new DtoClass();
+  }
+
+  public setBaseModelArgs(args: BaseModelArgs) {
+    this.nested = args?.nested;
+  }
+
+  private initNested(): void {
+    this.nested?.forEach((item) => {
+      set(this.dtoObject, item.path, new item.dtoClass());
+    });
+  }
+
+  public getDto(): any {
+    return this.dtoObject;
+  }
+
+  public setValue(path: string, value: any): void {
+    set(this.dtoObject, path, value || null);
+  }
+
+  public getValue(path: string): any {
+    return get(this.dtoObject, path);
   }
 
   private resetDto(): void {
@@ -27,16 +54,24 @@ export class BaseModel {
     });
   }
 
-  public getDto(): any {
-    return this.dtoObject;
+  public fill(data: any): void {
+    const objectKeys = Object.keys(data);
+    objectKeys.forEach((key) => {
+      const value = data[key];
+      this.setValue(key, value);
+    });
   }
 
-  public setValue(key: string, value: any): void {
-    this.dtoObject[key] = value || null;
-  }
+  public isFilled(): boolean {
+    const dto = this.getDto();
+    const objectKeys = Object.keys(dto);
+    for (let key of objectKeys) {
+      if (isNull(dto[key])) {
+        return false;
+      }
+    }
 
-  public getValue(key: string): any {
-    return this.dtoObject[key];
+    return true;
   }
 
   public setSubmitted(flag: boolean): void {
@@ -81,28 +116,21 @@ export class BaseModel {
     return this.errors;
   }
 
-  public getError(fieldName: string): ValidationError {
-    return this.errors.find((error) => error.property === fieldName) || null;
-  }
+  public getError(
+    fieldName: string,
+    errors: ValidationError[] = this.errors,
+  ): ValidationError {
+    if (fieldName.match(/\./) && !isNull(errors)) {
+      let fieldNameArray = fieldName.split('.');
+      let [parentFieldName, childFieldName] = fieldNameArray;
+      let foundError = errors.find(
+        (error) => error.property === parentFieldName,
+      );
 
-  public fill(data: any): void {
-    const objectKeys = Object.keys(data);
-    objectKeys.forEach((key) => {
-      const value = data[key];
-      this.setValue(key, value);
-    });
-  }
-
-  public isFilled(): boolean {
-    const dto = this.getDto();
-    const objectKeys = Object.keys(dto);
-    for (let key of objectKeys) {
-      if (isNull(dto[key])) {
-        return false;
-      }
+      return this.getError(childFieldName, foundError.children);
     }
 
-    return true;
+    return errors.find((error) => error.property === fieldName) || null;
   }
 
   public validate(validatorOptions?: ValidatorOptions): Promise<any> {

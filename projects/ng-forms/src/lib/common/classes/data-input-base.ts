@@ -11,6 +11,7 @@ import {
   Directive,
   NgZone,
   OnDestroy,
+  AfterViewInit,
 } from '@angular/core';
 
 import {
@@ -32,6 +33,7 @@ import { Subscription } from 'rxjs';
 export abstract class DataInputBase
   implements
     OnInit,
+    AfterViewInit,
     OnChanges,
     OnDestroy,
     DataInputBaseInterface,
@@ -101,6 +103,11 @@ export abstract class DataInputBase
     }
   }
 
+  ngAfterViewInit(): void {
+    this.alwaysSetConfigsAfterViewInit();
+    this.setConfigsAfterViewInit();
+  }
+
   // ----------------------------------------------------------------
   // ------- Component configs on init and changes detection  -------
   // ------------------ for computed attributes ---------------------
@@ -111,6 +118,10 @@ export abstract class DataInputBase
   }
 
   setConfigsOnInit(): void {}
+
+  alwaysSetConfigsAfterViewInit(): void {}
+
+  setConfigsAfterViewInit(): void {}
 
   alwaysDetectPropertiesChanges(propName: string): void {
     if (propName === 'size') this.getInputSize();

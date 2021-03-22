@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { BaseModel } from '@webblocksapp/ng-forms';
+import { GuestDto } from './guest.dto';
 import { HostDto } from './host.dto';
 
 @Component({
@@ -7,5 +8,7 @@ import { HostDto } from './host.dto';
   templateUrl: './running-code.component.html',
 })
 export class RunningCodeComponent {
-  public userModel: BaseModel = new BaseModel(HostDto);
+  public userModel: BaseModel = new BaseModel(HostDto, {
+    nested: [{ path: 'guest', dtoClass: GuestDto }],
+  });
 }

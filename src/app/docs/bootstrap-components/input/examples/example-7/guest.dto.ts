@@ -2,11 +2,8 @@ import { IsNotEmpty } from '@webblocksapp/class-validator';
 
 export class GuestDto {
   @IsNotEmpty()
-  firstName: string;
+  name: string;
 
   @IsNotEmpty()
-  secondName: string;
-
-  @IsNotEmpty()
-  lastName: string;
+  age: number;
 }

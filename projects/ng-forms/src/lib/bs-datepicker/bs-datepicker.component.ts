@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   HostBinding,
@@ -81,9 +80,7 @@ import { isNull } from '../common/utils';
     `,
   ],
 })
-export class BsDatepickerComponent
-  extends DataInputBase
-  implements AfterViewInit, DoCheck {
+export class BsDatepickerComponent extends DataInputBase implements DoCheck {
   @HostBinding('class') class = 'ng-datepicker form-group';
   @HostBinding('id') hostId: string;
 
@@ -171,7 +168,7 @@ export class BsDatepickerComponent
     this.hostId = this.id + '-host';
   }
 
-  ngAfterViewInit(): void {
+  setConfigsAfterViewInit(): void {
     this.initJQueryEl();
     this.initDatepicker();
   }

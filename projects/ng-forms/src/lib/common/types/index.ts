@@ -5,3 +5,4 @@ export * from './check-display.type';
 export * from './check-look.type';
 export * from './radio-display.type';
 export * from './radio-look.type';
+export * from './base-model-args.type';

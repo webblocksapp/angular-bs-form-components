@@ -1,7 +1,6 @@
 import {
   Component,
   HostBinding,
-  AfterViewInit,
   ViewChild,
   ElementRef,
   Input,
@@ -87,9 +86,7 @@ import parseValue from '../common/utils/parse-value';
   styleUrls: ['./bs-select2.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class BsSelect2Component
-  extends DataInputBase
-  implements AfterViewInit, DoCheck {
+export class BsSelect2Component extends DataInputBase implements DoCheck {
   @HostBinding('class') class = 'ng-select2 form-group';
   @ViewChild('select2ElementRef', { read: ElementRef })
   select2ElementRef: ElementRef;
@@ -154,7 +151,7 @@ export class BsSelect2Component
     'scrollAfterSelect',
   ];
 
-  ngAfterViewInit(): void {
+  setConfigsAfterViewInit(): void {
     this.initJQueryEl();
     this.initSelect2();
   }
