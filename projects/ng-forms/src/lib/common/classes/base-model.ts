@@ -14,6 +14,7 @@ export class BaseModel {
   );
   public isValid: boolean = false;
   public nested: Nested[];
+  private validatingNestedFields: String[] = [];
 
   constructor(DtoClass: any, args?: BaseModelArgs) {
     this.setDto(DtoClass);
@@ -104,8 +105,42 @@ export class BaseModel {
     });
   }
 
-  private cleanError(fieldName: string): void {
-    this.errors = this.errors.filter((error) => error.property !== fieldName);
+  private cleanError(
+    fieldName: string,
+    errors: ValidationError[] = this.errors,
+    path: string = '',
+  ): void {
+    if (fieldName.match(/\./) && !isNull(errors)) {
+      let fieldNameArray = fieldName.split('.');
+      let [parentFieldName, childFieldName] = fieldNameArray;
+
+      let foundError = errors.find(
+        (error) => error.property === parentFieldName,
+      );
+
+      let foundErrorIndex = errors.findIndex(
+        (error) => error.property === parentFieldName,
+      );
+
+      if (foundError !== undefined && foundError.children !== undefined) {
+        if (!path) {
+          this.errors = errors.filter((error) => error.property !== fieldName);
+        }
+
+        path = `${path}[${foundErrorIndex}].children`;
+        return this.cleanError(childFieldName, foundError.children, path);
+      }
+    }
+
+    if (path) {
+      set(
+        this.errors,
+        path,
+        errors.filter((error) => error.property !== fieldName),
+      );
+    } else {
+      this.errors = errors.filter((error) => error.property !== fieldName);
+    }
   }
 
   private cleanErrors(): void {
@@ -123,11 +158,22 @@ export class BaseModel {
     if (fieldName.match(/\./) && !isNull(errors)) {
       let fieldNameArray = fieldName.split('.');
       let [parentFieldName, childFieldName] = fieldNameArray;
-      let foundError = errors.find(
+      let foundError: any = errors.find(
         (error) => error.property === parentFieldName,
       );
 
-      return this.getError(childFieldName, foundError.children);
+      if (
+        foundError !== undefined &&
+        foundError.children !== undefined &&
+        this.validatingNestedFields.indexOf(fieldName) === -1
+      ) {
+        return this.getError(childFieldName, foundError.children);
+      } else {
+        this.validatingNestedFields = this.validatingNestedFields.filter(
+          (item) => item !== fieldName,
+        );
+        return errors.find((error) => error.property === fieldName);
+      }
     }
 
     return errors.find((error) => error.property === fieldName) || null;
@@ -184,7 +230,13 @@ export class BaseModel {
           resolve(this.dtoObject[fieldName]);
         }
 
-        if (errors.length > 0) {
+        if (errors.length === 1) {
+          if (fieldName.match(/\./)) {
+            if (this.validatingNestedFields.indexOf(fieldName) === -1) {
+              this.validatingNestedFields.push(fieldName);
+            }
+            errors[0].property = fieldName;
+          }
           this.setErrors(errors);
           reject(errors);
         }

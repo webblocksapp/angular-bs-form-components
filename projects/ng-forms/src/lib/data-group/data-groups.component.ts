@@ -109,6 +109,7 @@ export class DataGroupsComponent
 
       this.dataInputComponents.forEach((dataInputComponent) => {
         dataInputComponent.model = model;
+        dataInputComponent.usingDatagroup = true;
         dataInputComponent.setError(model.getError(dataInputComponent.name));
         dataInputComponent.refresh();
       });

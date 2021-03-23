@@ -83,8 +83,9 @@ export abstract class DataInputBase
 
   public inputSize: string;
   public error: string;
-  public isReactiveForm = true;
-  public touched = false;
+  public isReactiveForm: boolean = true;
+  public touched: boolean = false;
+  public usingDatagroup: boolean = false;
   private modelDiffer: KeyValueDiffer<string, any>;
   private modelMounted: boolean = false;
   private changes$: Subscription;
@@ -423,7 +424,7 @@ export abstract class DataInputBase
         this.bindWatchModelEvents();
       }
 
-      if (this.modelMounted === false) {
+      if (this.modelMounted === false && this.usingDatagroup === false) {
         this.subscribeToModelChanges();
       }
 
@@ -441,7 +442,9 @@ export abstract class DataInputBase
   }
 
   private unSubscribeToModelChanges(): void {
-    this.changes$.unsubscribe();
+    if (this.changes$ !== undefined) {
+      this.changes$.unsubscribe();
+    }
   }
 
   ngOnDestroy(): void {
