@@ -2,8 +2,7 @@ import { validate, ValidationError } from '@webblocksapp/class-validator';
 import { ValidatorOptions } from '@webblocksapp/class-validator';
 import { BehaviorSubject } from 'rxjs';
 import { BaseModelArgs, Nested } from '../types/base-model-args.type';
-import { isNull } from '../utils';
-import { set, get } from 'lodash';
+import { set, get, isEmpty } from 'lodash';
 
 export class BaseModel {
   private dtoObject: any;
@@ -67,7 +66,7 @@ export class BaseModel {
     const dto = this.getDto();
     const objectKeys = Object.keys(dto);
     for (let key of objectKeys) {
-      if (isNull(dto[key])) {
+      if (isEmpty(dto[key])) {
         return false;
       }
     }
@@ -89,7 +88,7 @@ export class BaseModel {
         (error) => error.property === _error.property,
       )[0];
 
-      if (isNull(hasError)) {
+      if (isEmpty(hasError)) {
         this.errors.push(_error);
       }
     });
@@ -110,9 +109,10 @@ export class BaseModel {
     errors: ValidationError[] = this.errors,
     path: string = '',
   ): void {
-    if (fieldName.match(/\./) && !isNull(errors)) {
+    if (fieldName.match(/\./) && !isEmpty(errors)) {
       let fieldNameArray = fieldName.split('.');
-      let [parentFieldName, childFieldName] = fieldNameArray;
+      let parentFieldName = fieldNameArray.shift();
+      let childFieldName = fieldNameArray.join('.');
 
       let foundError = errors.find(
         (error) => error.property === parentFieldName,
@@ -123,10 +123,6 @@ export class BaseModel {
       );
 
       if (foundError !== undefined && foundError.children !== undefined) {
-        if (!path) {
-          this.errors = errors.filter((error) => error.property !== fieldName);
-        }
-
         path = `${path}[${foundErrorIndex}].children`;
         return this.cleanError(childFieldName, foundError.children, path);
       }
@@ -136,10 +132,14 @@ export class BaseModel {
       set(
         this.errors,
         path,
-        errors.filter((error) => error.property !== fieldName),
+        errors.filter((error) => {
+          return error.property !== fieldName;
+        }),
       );
     } else {
-      this.errors = errors.filter((error) => error.property !== fieldName);
+      this.errors = errors.filter((error) => {
+        return error.property !== fieldName && isEmpty(error.children);
+      });
     }
   }
 
@@ -155,16 +155,17 @@ export class BaseModel {
     fieldName: string,
     errors: ValidationError[] = this.errors,
   ): ValidationError {
-    if (fieldName.match(/\./) && !isNull(errors)) {
+    if (fieldName.match(/\./) && !isEmpty(errors)) {
       let fieldNameArray = fieldName.split('.');
-      let [parentFieldName, childFieldName] = fieldNameArray;
+      let parentFieldName = fieldNameArray.shift();
+      let childFieldName = fieldNameArray.join('.');
       let foundError: any = errors.find(
         (error) => error.property === parentFieldName,
       );
 
       if (
         foundError !== undefined &&
-        foundError.children !== undefined &&
+        !isEmpty(foundError.children) &&
         this.validatingNestedFields.indexOf(fieldName) === -1
       ) {
         return this.getError(childFieldName, foundError.children);

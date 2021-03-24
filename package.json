@@ -22,7 +22,7 @@
     "@fortawesome/fontawesome-free": "^5.1.0-9",
     "@types/jquery": "^3.5.3",
     "@types/lodash": "^4.14.168",
-    "@webblocksapp/class-validator": "0.13.1",
+    "@webblocksapp/class-validator": "^0.13.1",
     "bootstrap": "^4.5.2",
     "bootstrap-datepicker": "^1.9.0",
     "bootstrap-select": "^1.13.18",

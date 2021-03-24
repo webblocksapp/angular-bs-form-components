@@ -40,6 +40,27 @@
             placeholder="Age"
             name="guest.age"
           ></bs-input>
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title d-flex justify-content-between">
+                Detail
+              </div>
+              <bs-input
+                [autocomplete]="false"
+                label="Address"
+                #dataInput
+                placeholder="Address"
+                name="guest.detail.address"
+              ></bs-input>
+              <bs-input
+                [autocomplete]="false"
+                label="Phone Number"
+                #dataInput
+                placeholder="Phone Number"
+                name="guest.detail.phoneNumber"
+              ></bs-input>
+            </div>
+          </div>
         </div>
       </div>
     </div>

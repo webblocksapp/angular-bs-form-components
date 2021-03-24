@@ -1,4 +1,5 @@
 import { IsNotEmpty, ValidateNested } from '@webblocksapp/class-validator';
+import { GuestDto } from './guest.dto';
 
 export class HostDto {
   @IsNotEmpty()
@@ -11,5 +12,5 @@ export class HostDto {
   lastName: string;
 
   @ValidateNested()
-  guest: HostDto;
+  guest: GuestDto;
 }

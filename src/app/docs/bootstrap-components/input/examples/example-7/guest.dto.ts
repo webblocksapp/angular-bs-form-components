@@ -1,4 +1,5 @@
-import { IsNotEmpty } from '@webblocksapp/class-validator';
+import { IsNotEmpty, ValidateNested } from '@webblocksapp/class-validator';
+import { DetailDto } from './detail.dto';
 
 export class GuestDto {
   @IsNotEmpty()
@@ -6,4 +7,7 @@ export class GuestDto {
 
   @IsNotEmpty()
   age: number;
+
+  @ValidateNested()
+  detail: DetailDto;
 }

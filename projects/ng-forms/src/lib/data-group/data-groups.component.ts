@@ -13,7 +13,7 @@ import {
 import { DataGroupComponent } from './components/data-group.component';
 import { BaseModel } from '../common/classes/base-model';
 import { ValidationResult } from './types';
-import { isNull } from '../common/utils';
+import { isEmpty } from 'lodash';
 import { BaseModelArray } from '../common/classes/base-model-array';
 import { Subscription } from 'rxjs';
 import { DataInputBase } from '../common/classes/data-input-base';
@@ -110,7 +110,12 @@ export class DataGroupsComponent
       this.dataInputComponents.forEach((dataInputComponent) => {
         dataInputComponent.model = model;
         dataInputComponent.usingDatagroup = true;
-        dataInputComponent.setError(model.getError(dataInputComponent.name));
+
+        const error = model.getError(dataInputComponent.name);
+        if (!isEmpty(error)) {
+          dataInputComponent.setError(error);
+        }
+
         dataInputComponent.refresh();
       });
     });
@@ -158,7 +163,7 @@ export class DataGroupsComponent
   private generateFormData(validatedData): any {
     const formData = new FormData();
 
-    if (!isNull(validatedData)) {
+    if (!isEmpty(validatedData)) {
       const keys = Object.keys(validatedData);
 
       keys.forEach((key) => {
