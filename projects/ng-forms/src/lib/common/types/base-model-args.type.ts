@@ -1,6 +1,7 @@
 type Nested = {
   path: string;
   dtoClass: any;
+  multiple?: boolean;
 };
 
 type BaseModelArgs = {

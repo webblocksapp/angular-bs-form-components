@@ -1,8 +1,4 @@
-<data-groups
-  [model]="userModel"
-  [highlightOnValid]="true"
-  (submitEvent)="onSubmit($event)"
->
+<data-groups [model]="userModel" [highlightOnValid]="true">
   <data-group class="card mb-3">
     <div class="card-body">
       <div class="card-title d-flex justify-content-between">Host</div>
@@ -44,7 +40,23 @@
             placeholder="Age"
             name="guest.age"
           ></bs-input>
-          <div class="card">
+          <div class="d-flex align-items-center mb-3">
+            <button
+              type="button"
+              [disabled]="this.numberOfDetails >= this.maxNumberOfDetails"
+              class="btn btn-secondary"
+              (click)="addDetail()"
+            >
+              Add detail
+            </button>
+            <span class="ml-2">
+              {{ numberOfDetails }} of <b>{{ maxNumberOfDetails }}</b></span
+            >
+          </div>
+          <div
+            *ngFor="let n of Array(numberOfDetails); let i = index"
+            class="card mb-3"
+          >
             <div class="card-body">
               <div class="card-title d-flex justify-content-between">
                 Detail
@@ -54,14 +66,14 @@
                 label="Address"
                 #dataInput
                 placeholder="Address"
-                name="guest.detail.address"
+                name="guest.detail[{{ i }}].address"
               ></bs-input>
               <bs-input
                 [autocomplete]="false"
                 label="Phone Number"
                 #dataInput
                 placeholder="Phone Number"
-                name="guest.detail.phoneNumber"
+                name="guest.detail[{{ i }}].phoneNumber"
               ></bs-input>
             </div>
           </div>
@@ -73,8 +85,3 @@
     <button class="btn btn-primary">Submit</button>
   </div>
 </data-groups>
-<div class="mt-3" *ngIf="validationResult">
-  <pre>
-    <code [highlight]='JSON.stringify(validationResult, null, 2)'></code>
-  </pre>
-</div>

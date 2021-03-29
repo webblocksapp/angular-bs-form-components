@@ -3,6 +3,7 @@ import { ValidatorOptions } from '@webblocksapp/class-validator';
 import { BehaviorSubject } from 'rxjs';
 import { BaseModelArgs, Nested } from '../types/base-model-args.type';
 import { set, get, isEmpty } from 'lodash';
+import { removeArrayIndex, getLastArrayIndex } from '../utils';
 
 export class BaseModel {
   private dtoObject: any;
@@ -31,7 +32,11 @@ export class BaseModel {
 
   private initNested(): void {
     this.nested?.forEach((item) => {
-      set(this.dtoObject, item.path, new item.dtoClass());
+      if (item?.multiple === true) {
+        set(this.dtoObject, item.path, [new item.dtoClass()]);
+      } else {
+        set(this.dtoObject, item.path, new item.dtoClass());
+      }
     });
   }
 
@@ -104,15 +109,24 @@ export class BaseModel {
     });
   }
 
+  private parseFieldName(fieldName: string): string {
+    return removeArrayIndex(fieldName);
+  }
+
   private cleanError(
     fieldName: string,
     errors: ValidationError[] = this.errors,
     path: string = '',
+    index: string = '',
   ): void {
+    if (isEmpty(index)) {
+      index = getLastArrayIndex(fieldName);
+    }
+
     if (fieldName.match(/\./) && !isEmpty(errors)) {
       let fieldNameArray = fieldName.split('.');
-      let parentFieldName = fieldNameArray.shift();
-      let childFieldName = fieldNameArray.join('.');
+      let parentFieldName = this.parseFieldName(fieldNameArray.shift());
+      let childFieldName = this.parseFieldName(fieldNameArray.join('.'));
 
       let foundError = errors.find(
         (error) => error.property === parentFieldName,
@@ -124,18 +138,33 @@ export class BaseModel {
 
       if (foundError !== undefined && foundError.children !== undefined) {
         path = `${path}[${foundErrorIndex}].children`;
-        return this.cleanError(childFieldName, foundError.children, path);
+        return this.cleanError(
+          childFieldName,
+          foundError.children,
+          path,
+          index,
+        );
       }
     }
 
     if (path) {
-      set(
-        this.errors,
-        path,
-        errors.filter((error) => {
-          return error.property !== fieldName;
-        }),
-      );
+      if (!isEmpty(index)) {
+        set(
+          this.errors,
+          path,
+          errors.filter((error) => {
+            return error.property !== index;
+          }),
+        );
+      } else {
+        set(
+          this.errors,
+          path,
+          errors.filter((error) => {
+            return error.property !== fieldName;
+          }),
+        );
+      }
     } else {
       this.errors = errors.filter((error) => {
         return error.property !== fieldName && isEmpty(error.children);
@@ -154,11 +183,16 @@ export class BaseModel {
   public getError(
     fieldName: string,
     errors: ValidationError[] = this.errors,
+    index?: string,
   ): ValidationError {
+    if (isEmpty(index)) {
+      index = getLastArrayIndex(fieldName);
+    }
+
     if (fieldName.match(/\./) && !isEmpty(errors)) {
       let fieldNameArray = fieldName.split('.');
-      let parentFieldName = fieldNameArray.shift();
-      let childFieldName = fieldNameArray.join('.');
+      let parentFieldName = this.parseFieldName(fieldNameArray.shift());
+      let childFieldName = this.parseFieldName(fieldNameArray.join('.'));
       let foundError: any = errors.find(
         (error) => error.property === parentFieldName,
       );
@@ -168,13 +202,20 @@ export class BaseModel {
         !isEmpty(foundError.children) &&
         this.validatingNestedFields.indexOf(fieldName) === -1
       ) {
-        return this.getError(childFieldName, foundError.children);
+        return this.getError(childFieldName, foundError.children, index);
       } else {
         this.validatingNestedFields = this.validatingNestedFields.filter(
           (item) => item !== fieldName,
         );
+
         return errors.find((error) => error.property === fieldName);
       }
+    }
+
+    if (!isEmpty(index)) {
+      const childErrors = errors.find((error) => error.property === index)
+        ?.children;
+      return childErrors?.find((error) => error.property === fieldName) || null;
     }
 
     return errors.find((error) => error.property === fieldName) || null;
@@ -228,7 +269,7 @@ export class BaseModel {
       validate(this.dtoObject, validatorOptions).then((errors) => {
         if (errors.length === 0) {
           this.cleanError(fieldName);
-          resolve(this.dtoObject[fieldName]);
+          resolve(get(this.dtoObject, fieldName));
         }
 
         if (errors.length === 1) {
@@ -254,6 +295,31 @@ export class BaseModel {
 
   public getChange(): BehaviorSubject<Boolean> {
     return this.change;
+  }
+
+  public add(path: string, data: any = null): void {
+    const foundNested = this.nested.find((item) => item.path === path);
+
+    if (!isEmpty(foundNested)) {
+      const nestedObject = get(this.dtoObject, path);
+
+      if (Array.isArray(nestedObject)) {
+        let model = new foundNested.dtoClass();
+
+        if (data) {
+          model = { ...model, ...data };
+        }
+
+        nestedObject.push(model);
+        set(this.dtoObject, path, nestedObject);
+
+        this.emitChange();
+      } else {
+        console.error(`The nested dto in path ${path} is not an array.`);
+      }
+    } else {
+      console.error(`The nested path ${path} doesn't exist.`);
+    }
   }
 
   public reset(): void {

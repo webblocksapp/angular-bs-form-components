@@ -9,5 +9,5 @@ export class GuestDto {
   age: number;
 
   @ValidateNested()
-  detail: DetailDto;
+  detail: DetailDto[];
 }

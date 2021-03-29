@@ -105,6 +105,7 @@ export class DataGroupsComponent
   private inputModels(): void {
     this._model.forEach((model, index) => {
       const dataGroupComponent = this.dataGroupComponents.toArray()[index];
+      dataGroupComponent.loadDataInputComponents();
       this.dataInputComponents = dataGroupComponent.getDataInputComponents();
 
       this.dataInputComponents.forEach((dataInputComponent) => {
