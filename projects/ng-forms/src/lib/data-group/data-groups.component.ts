@@ -109,14 +109,10 @@ export class DataGroupsComponent
       this.dataInputComponents = dataGroupComponent.getDataInputComponents();
 
       this.dataInputComponents.forEach((dataInputComponent) => {
+        const error = model.getError(dataInputComponent.name);
         dataInputComponent.model = model;
         dataInputComponent.usingDatagroup = true;
-
-        const error = model.getError(dataInputComponent.name);
-        if (!isEmpty(error)) {
-          dataInputComponent.setError(error);
-        }
-
+        dataInputComponent.setError(error);
         dataInputComponent.refresh();
       });
     });

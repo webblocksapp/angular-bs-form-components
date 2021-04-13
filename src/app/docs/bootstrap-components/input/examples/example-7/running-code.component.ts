@@ -16,11 +16,16 @@ export class RunningCodeComponent {
       { path: 'guest.detail', dtoClass: DetailDto, multiple: true },
     ],
   });
-  public maxNumberOfDetails = 2;
+  public maxNumberOfDetails = 3;
   public numberOfDetails = 1;
 
   addDetail(): void {
     this.userModel.add('guest.detail');
     this.numberOfDetails++;
+  }
+
+  deleteDetail(index: number): void {
+    this.userModel.delete(`guest.detail`, index);
+    this.numberOfDetails--;
   }
 }

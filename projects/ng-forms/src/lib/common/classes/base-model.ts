@@ -299,27 +299,89 @@ export class BaseModel {
 
   public add(path: string, data: any = null): void {
     const foundNested = this.nested.find((item) => item.path === path);
+    const nestedObject = get(this.dtoObject, path);
 
-    if (!isEmpty(foundNested)) {
-      const nestedObject = get(this.dtoObject, path);
+    if (isEmpty(foundNested)) {
+      console.error(`The nested path ${path} doesn't exist.`);
+      return;
+    }
 
-      if (Array.isArray(nestedObject)) {
-        let model = new foundNested.dtoClass();
+    if (!Array.isArray(nestedObject)) {
+      console.error(`The nested dto in path ${path} is not an array.`);
+      return;
+    }
 
-        if (data) {
-          model = { ...model, ...data };
+    let model = new foundNested.dtoClass();
+
+    if (data) {
+      model = { ...model, ...data };
+    }
+
+    nestedObject.push(model);
+    set(this.dtoObject, path, nestedObject);
+
+    this.emitChange();
+  }
+
+  public delete(path: string, index: number) {
+    const foundNested = this.nested.find((item) => item.path === path);
+    let nestedObject = get(this.dtoObject, path);
+
+    if (isEmpty(foundNested)) {
+      console.error(`The nested path ${path} doesn't exist.`);
+      return;
+    }
+
+    if (!Array.isArray(nestedObject)) {
+      console.error(`The nested dto in path ${path} is not an array.`);
+      return;
+    }
+
+    nestedObject = nestedObject.filter(
+      (item) => nestedObject.indexOf(item) !== index,
+    );
+    set(this.dtoObject, path, nestedObject);
+    this.remapErrors(path, index);
+
+    this.emitChange();
+  }
+
+  private remapErrors(path: string, index: number) {
+    this.errors = this.errors
+      .map((error) => {
+        const lastIndex = +getLastArrayIndex(error.property);
+        const fieldName = error.property.split('.').pop();
+
+        if (lastIndex >= index) {
+          const nextError = get(
+            this.errors,
+            `${path}[${index + 1}].${fieldName}`,
+          );
+
+          if (!isEmpty(nextError)) {
+            return nextError;
+          }
         }
 
-        nestedObject.push(model);
-        set(this.dtoObject, path, nestedObject);
+        return error;
+      })
+      .filter((error) => {
+        return !error.property.match(`${path}.[${index}]`);
+      })
+      .map((error) => {
+        const lastIndex = +getLastArrayIndex(error.property);
 
-        this.emitChange();
-      } else {
-        console.error(`The nested dto in path ${path} is not an array.`);
-      }
-    } else {
-      console.error(`The nested path ${path} doesn't exist.`);
-    }
+        if (lastIndex >= index) {
+          const n = error.property.lastIndexOf(`[${lastIndex}]`);
+          error.property =
+            error.property.slice(0, n) +
+            error.property
+              .slice(n)
+              .replace(`[${lastIndex}]`, `[${lastIndex - 1}]`);
+        }
+
+        return error;
+      });
   }
 
   public reset(): void {
