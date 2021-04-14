@@ -2,6 +2,7 @@ import { ValidatorOptions } from '@webblocksapp/class-validator';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BaseModel } from './base-model';
 import { Subscription } from 'rxjs';
+import { BaseModelArgs } from '../types';
 
 export class BaseModelArray {
   private dtoClass: any;
@@ -14,10 +15,14 @@ export class BaseModelArray {
   );
   public isValid: boolean = false;
   private errorsChanges$: Subscription[] = [];
+  private changes$: Subscription[] = [];
+  private args: BaseModelArgs;
 
-  constructor(DtoClass: any) {
+  constructor(DtoClass: any, args?: BaseModelArgs) {
+    this.args = args;
     this.dtoClass = DtoClass;
-    this.array = [new BaseModel(this.dtoClass)];
+    this.array = [new BaseModel(this.dtoClass, this.args)];
+    this.subscribeToAllChanges();
     this.subscribeToAllErrorsChanges();
   }
 
@@ -30,6 +35,7 @@ export class BaseModelArray {
     });
 
     this.array = array;
+    this.subscribeToAllChanges();
     this.subscribeToAllErrorsChanges();
     this.emitChange();
   }
@@ -66,27 +72,33 @@ export class BaseModelArray {
   }
 
   public add(data: any = null): void {
-    const model = new BaseModel(this.dtoClass);
+    const model = new BaseModel(this.dtoClass, this.args);
     if (data) {
       model.fill(data);
     }
     this.array.push(model);
     model.setIndex(this.array.length - 1);
-    this.addErrorSubscription(model);
+    this.addChangeSubscription(model);
+    this.addErrorsChangesSubscription(model);
     this.emitChange();
   }
 
   public delete(index: number): void {
     this.array = this.array
       .filter((item) => {
-        this.deleteErrorSubscription(item);
-        return this.array.indexOf(item) !== index;
+        if (this.array.indexOf(item) !== index) {
+          return true;
+        }
+
+        this.deleteChangeSubscription(index);
+        this.deleteErrorsChangesSubscription(index);
       })
       .map((item, index) => {
         item.setIndex(index);
         return item;
       });
 
+    this.emitErrorsChange();
     this.emitChange();
   }
 
@@ -104,15 +116,6 @@ export class BaseModelArray {
     }
 
     this.emitChange();
-  }
-
-  public emitChange(): void {
-    const currentValue = this.change.getValue();
-    this.change.next(!currentValue);
-  }
-
-  public getChange(): BehaviorSubject<Boolean> {
-    return this.change;
   }
 
   public validate(
@@ -166,6 +169,53 @@ export class BaseModelArray {
     }
   }
 
+  /**
+   * Models changes subscription methods
+   */
+  public emitChange(): void {
+    const currentValue = this.change.getValue();
+    this.change.next(!currentValue);
+  }
+
+  public getChange(): BehaviorSubject<Boolean> {
+    return this.change;
+  }
+
+  private subscribeToAllChanges(): void {
+    this.unSubscribeToAllChanges();
+    this.array.forEach((item) => {
+      this.addChangeSubscription(item);
+    });
+  }
+
+  private generateChangeSubscription(model: BaseModel): Subscription {
+    const subject = model.getChange();
+    return subject.subscribe(() => {
+      const currentValue = this.change.getValue();
+      this.change.next(!currentValue);
+    });
+  }
+
+  private addChangeSubscription(model: BaseModel): void {
+    const subscription = this.generateChangeSubscription(model);
+    this.changes$.push(subscription);
+  }
+
+  private deleteChangeSubscription(index): void {
+    this.changes$[index].unsubscribe();
+    this.changes$ = this.changes$.filter((item, i) => i !== index);
+  }
+
+  private unSubscribeToAllChanges(): void {
+    this.changes$.forEach((modelChanges$) => {
+      modelChanges$.unsubscribe();
+    });
+    this.changes$ = [];
+  }
+
+  /**
+   * Model errors changes subscription methods
+   */
   public emitErrorsChange(): void {
     const currentValue = this.errorsChange.getValue();
     this.errorsChange.next(!currentValue);
@@ -178,11 +228,11 @@ export class BaseModelArray {
   private subscribeToAllErrorsChanges(): void {
     this.unSubscribeToAllErrorsChanges();
     this.array.forEach((item) => {
-      this.addErrorSubscription(item);
+      this.addErrorsChangesSubscription(item);
     });
   }
 
-  private generateErrorSubscription(model: BaseModel): Subscription {
+  private generateErrorsChangesSubscription(model: BaseModel): Subscription {
     const subject = model.getErrorsChange();
     return subject.subscribe(() => {
       const currentValue = this.errorsChange.getValue();
@@ -190,12 +240,12 @@ export class BaseModelArray {
     });
   }
 
-  private addErrorSubscription(model: BaseModel): void {
-    const subscription = this.generateErrorSubscription(model);
+  private addErrorsChangesSubscription(model: BaseModel): void {
+    const subscription = this.generateErrorsChangesSubscription(model);
     this.errorsChanges$.push(subscription);
   }
 
-  private deleteErrorSubscription(index): void {
+  private deleteErrorsChangesSubscription(index): void {
     this.errorsChanges$[index].unsubscribe();
     this.errorsChanges$ = this.errorsChanges$.filter((item, i) => i !== index);
   }

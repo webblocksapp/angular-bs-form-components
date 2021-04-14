@@ -1,7 +1,33 @@
-<data-groups [model]="userModel" [highlightOnValid]="true">
-  <data-group class="card mb-3">
+<data-groups [model]="userModels" [highlightOnValid]="true">
+  <div class="d-flex align-items-center mb-3">
+    <button
+      type="button"
+      [disabled]="numberOfUsers >= maxNumberOfUsers"
+      class="btn btn-secondary"
+      (click)="addUser()"
+    >
+      Add host
+    </button>
+    <span class="ml-2">
+      {{ numberOfUsers }} of <b>{{ maxNumberOfUsers }}</b></span
+    >
+  </div>
+  <data-group
+    class="card mb-3"
+    *ngFor="let n of Array(numberOfUsers); let i = index"
+  >
     <div class="card-body">
-      <div class="card-title d-flex justify-content-between">Host</div>
+      <div class="card-title d-flex justify-content-between">
+        <span>Host {{ i + 1 }}</span>
+        <button
+          type="button"
+          *ngIf="numberOfUsers > 1"
+          class="btn btn-danger"
+          (click)="deleteUser(i)"
+        >
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
       <bs-input
         [autocomplete]="false"
         label="First name"
@@ -43,18 +69,18 @@
           <div class="d-flex align-items-center mb-3">
             <button
               type="button"
-              [disabled]="this.numberOfDetails >= this.maxNumberOfDetails"
+              [disabled]="numberOfDetails[i] >= maxNumberOfDetails"
               class="btn btn-secondary"
-              (click)="addDetail()"
+              (click)="addDetail(i)"
             >
               Add detail
             </button>
             <span class="ml-2">
-              {{ numberOfDetails }} of <b>{{ maxNumberOfDetails }}</b></span
+              {{ numberOfDetails[i] }} of <b>{{ maxNumberOfDetails }}</b></span
             >
           </div>
           <div
-            *ngFor="let n of Array(numberOfDetails); let i = index"
+            *ngFor="let n of Array(numberOfDetails[i]); let j = index"
             class="card mb-3"
           >
             <div class="card-body">
@@ -62,9 +88,9 @@
                 <span>Detail</span>
                 <button
                   type="button"
-                  *ngIf="numberOfDetails > 1"
+                  *ngIf="numberOfDetails[i] > 1"
                   class="btn btn-danger"
-                  (click)="deleteDetail(i)"
+                  (click)="deleteDetail(i, j)"
                 >
                   <i class="fa fa-times"></i>
                 </button>
@@ -74,14 +100,14 @@
                 label="Address"
                 #dataInput
                 placeholder="Address"
-                name="guest.detail[{{ i }}].address"
+                name="guest.detail[{{ j }}].address"
               ></bs-input>
               <bs-input
                 [autocomplete]="false"
                 label="Phone Number"
                 #dataInput
                 placeholder="Phone Number"
-                name="guest.detail[{{ i }}].phoneNumber"
+                name="guest.detail[{{ j }}].phoneNumber"
               ></bs-input>
             </div>
           </div>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseModel } from '@webblocksapp/ng-forms';
+import { BaseModelArray } from '@webblocksapp/ng-forms';
 import { DetailDto } from './detail.dto';
 import { GuestDto } from './guest.dto';
 import { HostDto } from './host.dto';
@@ -10,22 +10,48 @@ import { HostDto } from './host.dto';
 })
 export class RunningCodeComponent {
   public Array = Array;
-  public userModel: BaseModel = new BaseModel(HostDto, {
+  public userModels: BaseModelArray = new BaseModelArray(HostDto, {
     nested: [
       { path: 'guest', dtoClass: GuestDto },
       { path: 'guest.detail', dtoClass: DetailDto, multiple: true },
     ],
   });
-  public maxNumberOfDetails = 3;
-  public numberOfDetails = 1;
+  public maxNumberOfUsers: number = 3;
+  public numberOfUsers: number = 1;
+  public maxNumberOfDetails: number = 3;
+  public numberOfDetails: number[] = [1];
 
-  addDetail(): void {
-    this.userModel.add('guest.detail');
-    this.numberOfDetails++;
+  addUser(): void {
+    this.userModels.add();
+    this.numberOfUsers++;
+    this.handleNumberOfDetails('add');
   }
 
-  deleteDetail(index: number): void {
-    this.userModel.delete(`guest.detail`, index);
-    this.numberOfDetails--;
+  deleteUser(index: number): void {
+    this.userModels.delete(index);
+    this.numberOfUsers--;
+    this.handleNumberOfDetails('delete', index);
+  }
+
+  addDetail(parentIndex: number): void {
+    this.userModels.find(parentIndex).add('guest.detail');
+    this.numberOfDetails[parentIndex]++;
+  }
+
+  deleteDetail(parentIndex: number, index: number): void {
+    this.userModels.find(parentIndex).delete(`guest.detail`, index);
+    this.numberOfDetails[parentIndex]--;
+  }
+
+  handleNumberOfDetails(action: string, parentIndex?: number) {
+    if (action === 'add') {
+      this.numberOfDetails.push(1);
+    }
+
+    if (action === 'delete') {
+      this.numberOfDetails = this.numberOfDetails.filter(
+        (item, index) => index !== parentIndex,
+      );
+    }
   }
 }
