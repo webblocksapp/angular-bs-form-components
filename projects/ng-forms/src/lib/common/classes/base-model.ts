@@ -12,9 +12,13 @@ export class BaseModel {
   private change: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
     false,
   );
+  private errorsChange: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
+    false,
+  );
   public isValid: boolean = false;
   public nested: Nested[];
   private validatingNestedFields: String[] = [];
+  private index: number = 0;
 
   constructor(DtoClass: any, args?: BaseModelArgs) {
     this.setDto(DtoClass);
@@ -24,6 +28,14 @@ export class BaseModel {
 
   private setDto(DtoClass: any): void {
     this.dtoObject = new DtoClass();
+  }
+
+  public setIndex(index: number) {
+    this.index = index;
+  }
+
+  public getIndex(): number {
+    return this.index;
   }
 
   public setBaseModelArgs(args: BaseModelArgs) {
@@ -297,6 +309,15 @@ export class BaseModel {
     return this.change;
   }
 
+  public emitErrorsChange(): void {
+    const currentValue = this.errorsChange.getValue();
+    this.errorsChange.next(!currentValue);
+  }
+
+  public getErrorsChange(): BehaviorSubject<Boolean> {
+    return this.errorsChange;
+  }
+
   public add(path: string, data: any = null): void {
     const foundNested = this.nested.find((item) => item.path === path);
     const nestedObject = get(this.dtoObject, path);
@@ -382,6 +403,49 @@ export class BaseModel {
 
         return error;
       });
+
+    this.remapErrorsRecursive(path, index);
+    this.emitErrorsChange();
+  }
+
+  private remapErrorsRecursive(
+    fieldPath: string,
+    index: number,
+    path: string = '',
+    errors: ValidationError[] = null,
+  ) {
+    let fieldPathArray = fieldPath.split('.');
+    let parentFieldName = fieldPathArray.shift();
+    let childFieldName = fieldPathArray.join('.');
+
+    if (errors === null) {
+      errors = this.errors;
+    }
+
+    let foundErrors = errors;
+    errors = errors.find((error, i) => {
+      if (error.property === parentFieldName) {
+        path = path + `[${i}].children`;
+        return true;
+      }
+    })?.children;
+
+    if (isEmpty(errors)) {
+      foundErrors = foundErrors
+        .filter((error) => +error.property !== index)
+        .map((error) => {
+          if (+error.property > index) {
+            error.property = String(+error.property - 1);
+          }
+
+          return error;
+        });
+
+      set(this.errors, path, foundErrors);
+      return;
+    }
+
+    return this.remapErrorsRecursive(childFieldName, index, path, errors);
   }
 
   public reset(): void {

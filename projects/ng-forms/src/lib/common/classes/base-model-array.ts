@@ -1,6 +1,7 @@
 import { ValidatorOptions } from '@webblocksapp/class-validator';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { BaseModel } from './base-model';
+import { Subscription } from 'rxjs';
 
 export class BaseModelArray {
   private dtoClass: any;
@@ -8,11 +9,16 @@ export class BaseModelArray {
   private change: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
     false,
   );
+  private errorsChange: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
+    false,
+  );
   public isValid: boolean = false;
+  private errorsChanges$: Subscription[] = [];
 
   constructor(DtoClass: any) {
     this.dtoClass = DtoClass;
     this.array = [new BaseModel(this.dtoClass)];
+    this.subscribeToAllErrorsChanges();
   }
 
   public fill(data: Array<any>): void {
@@ -24,6 +30,7 @@ export class BaseModelArray {
     });
 
     this.array = array;
+    this.subscribeToAllErrorsChanges();
     this.emitChange();
   }
 
@@ -64,13 +71,22 @@ export class BaseModelArray {
       model.fill(data);
     }
     this.array.push(model);
+    model.setIndex(this.array.length - 1);
+    this.addErrorSubscription(model);
     this.emitChange();
   }
 
   public delete(index: number): void {
-    this.array = this.array.filter(
-      (item) => this.array.indexOf(item) !== index,
-    );
+    this.array = this.array
+      .filter((item) => {
+        this.deleteErrorSubscription(item);
+        return this.array.indexOf(item) !== index;
+      })
+      .map((item, index) => {
+        item.setIndex(index);
+        return item;
+      });
+
     this.emitChange();
   }
 
@@ -148,5 +164,46 @@ export class BaseModelArray {
         this.emitChange();
       });
     }
+  }
+
+  public emitErrorsChange(): void {
+    const currentValue = this.errorsChange.getValue();
+    this.errorsChange.next(!currentValue);
+  }
+
+  public getErrorsChange(): BehaviorSubject<Boolean> {
+    return this.errorsChange;
+  }
+
+  private subscribeToAllErrorsChanges(): void {
+    this.unSubscribeToAllErrorsChanges();
+    this.array.forEach((item) => {
+      this.addErrorSubscription(item);
+    });
+  }
+
+  private generateErrorSubscription(model: BaseModel): Subscription {
+    const subject = model.getErrorsChange();
+    return subject.subscribe(() => {
+      const currentValue = this.errorsChange.getValue();
+      this.errorsChange.next(!currentValue);
+    });
+  }
+
+  private addErrorSubscription(model: BaseModel): void {
+    const subscription = this.generateErrorSubscription(model);
+    this.errorsChanges$.push(subscription);
+  }
+
+  private deleteErrorSubscription(index): void {
+    this.errorsChanges$[index].unsubscribe();
+    this.errorsChanges$ = this.errorsChanges$.filter((item, i) => i !== index);
+  }
+
+  private unSubscribeToAllErrorsChanges(): void {
+    this.errorsChanges$.forEach((modelErrorsChanges$) => {
+      modelErrorsChanges$.unsubscribe();
+    });
+    this.errorsChanges$ = [];
   }
 }

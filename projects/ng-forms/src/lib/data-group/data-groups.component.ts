@@ -59,6 +59,8 @@ export class DataGroupsComponent
   private _model: Array<BaseModel>;
   private firstMount: boolean = false;
   private changes$: Subscription;
+  private errorsChanges$: Subscription;
+  private allowNullErrors: boolean = false;
   private dataInputComponents: Array<DataInputBase>;
 
   ngOnInit(): void {
@@ -82,6 +84,7 @@ export class DataGroupsComponent
 
     if (this.firstMount === false) {
       this.subscribeToModelChanges();
+      this.subscribeToModelErrorsChanges();
       this.firstMount = true;
     }
   }
@@ -98,8 +101,19 @@ export class DataGroupsComponent
     });
   }
 
+  private subscribeToModelErrorsChanges(): void {
+    const subject = this.model.getErrorsChange();
+    this.errorsChanges$ = subject.subscribe(() => {
+      this.allowNullErrors = true;
+    });
+  }
+
   private unsubscribeToModelChanges(): void {
     this.changes$.unsubscribe();
+  }
+
+  private unsubscribeToModelErrorsChanges(): void {
+    this.errorsChanges$.unsubscribe();
   }
 
   private inputModels(): void {
@@ -109,13 +123,29 @@ export class DataGroupsComponent
       this.dataInputComponents = dataGroupComponent.getDataInputComponents();
 
       this.dataInputComponents.forEach((dataInputComponent) => {
-        const error = model.getError(dataInputComponent.name);
         dataInputComponent.model = model;
         dataInputComponent.usingDatagroup = true;
-        dataInputComponent.setError(error);
+        this.setErrorToComponent(model, dataInputComponent, index);
         dataInputComponent.refresh();
       });
     });
+
+    this.allowNullErrors = false;
+  }
+
+  private setErrorToComponent(
+    model: BaseModel,
+    dataInputComponent: DataInputBase,
+    index: number,
+  ) {
+    const error = model.getError(dataInputComponent.name);
+    if (!isEmpty(error) && !this.allowNullErrors) {
+      dataInputComponent.setError(error);
+    }
+
+    if (this.allowNullErrors && index === model.getIndex()) {
+      dataInputComponent.setError(error);
+    }
   }
 
   private setModelsSubmitted(): void {
@@ -173,6 +203,7 @@ export class DataGroupsComponent
 
   private unsubscribeAll() {
     this.unsubscribeToModelChanges();
+    this.unsubscribeToModelErrorsChanges();
   }
 
   ngOnDestroy(): void {
