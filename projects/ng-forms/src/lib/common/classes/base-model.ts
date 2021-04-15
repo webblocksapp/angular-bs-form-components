@@ -16,7 +16,7 @@ export class BaseModel {
     false,
   );
   public isValid: boolean = false;
-  public nested: Nested[];
+  public nested: Nested[] = [];
   private validatingNestedFields: String[] = [];
   private index: number = 0;
 
@@ -74,9 +74,48 @@ export class BaseModel {
   public fill(data: any): void {
     const objectKeys = Object.keys(data);
     objectKeys.forEach((key) => {
-      const value = data[key];
+      const value = this.generateValue(data, key);
       this.setValue(key, value);
     });
+  }
+
+  private generateValue(data: any, key: string, path: string = '') {
+    if (!path) {
+      path = key;
+    } else {
+      path = `${path}.${key}`;
+    }
+
+    const foundNested = this.nested.find((item) => item.path === path);
+
+    if (isEmpty(foundNested)) {
+      return data[key];
+    }
+
+    if (foundNested?.multiple === true) {
+      let nestedArray = [];
+      data[key].forEach((item) => {
+        let nestedDto = new foundNested.dtoClass();
+        const objectKeys = Object.keys(item);
+        objectKeys.forEach((childKey) => {
+          const value = this.generateValue(item, childKey, path);
+          nestedDto[childKey] = value;
+        });
+        nestedArray.push(nestedDto);
+      });
+
+      data[key] = nestedArray;
+    } else {
+      let nestedDto = new foundNested.dtoClass();
+      const objectKeys = Object.keys(data[key]);
+      objectKeys.forEach((childKey) => {
+        const value = this.generateValue(data[key], childKey, path);
+        nestedDto[childKey] = value;
+      });
+      data[key] = nestedDto;
+    }
+
+    return data[key];
   }
 
   public isFilled(): boolean {

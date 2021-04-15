@@ -29,7 +29,7 @@ export class BaseModelArray {
   public fill(data: Array<any>): void {
     const array = [];
     data.forEach((item: any) => {
-      const model = new BaseModel(this.dtoClass);
+      const model = new BaseModel(this.dtoClass, this.args);
       model.fill(item);
       array.push(model);
     });
