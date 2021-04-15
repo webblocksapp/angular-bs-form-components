@@ -161,7 +161,7 @@ export class DataGroupsComponent
         this.model
           .validate(groups)
           .then((validationResult: ValidationResult) => {
-            const { isValid, validatedData, errors } = validationResult;
+            const { isValid, validatedData } = validationResult;
 
             if (isValid) {
               if (this.enctype === 'multipart/form-data') {

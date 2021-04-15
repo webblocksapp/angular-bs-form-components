@@ -23,6 +23,17 @@ import { DocsBase } from '@shared/classes';
     </p>
 
     <demo-overview-2></demo-overview-2>
+
+    <h5 marker>Validating nested objects</h5>
+    <p>
+      With NG Forms you can easily make complex validations on nested objects,
+      using the <code>BaseModelArray</code> class, configuring on the
+      constructor the model attributes that contains a nested object. The same
+      approach can be done with the <code>BaseModel</code> class if you are not
+      going to manipulate an array of models.
+    </p>
+
+    <demo-overview-3></demo-overview-3>
   `,
 })
 export class OverviewComponent extends DocsBase {}

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 declare var require: any;
 
 @Component({
-  selector: 'example-7',
+  selector: 'demo-overview-3',
   template: `
     <code-example>
       <code-block type="running-code">
@@ -27,6 +27,12 @@ declare var require: any;
         [code]="dtoCode2"
         language="typescript"
       ></code-block>
+      <code-block
+        label="Detail DTO"
+        type="dto-3"
+        [code]="dtoCode3"
+        language="typescript"
+      ></code-block>
     </code-example>
   `,
 })
@@ -36,11 +42,13 @@ export class IndexComponent implements OnInit {
   public componentCode: string;
   public dtoCode1: string;
   public dtoCode2: string;
+  public dtoCode3: string;
 
   ngOnInit() {
     this.htmlCode = require('!raw-loader!./running-code.component.html').default;
     this.componentCode = require('!raw-loader!./running-code.component.ts').default;
-    this.dtoCode1 = require('!raw-loader!./host.dto.ts').default;
-    this.dtoCode2 = require('!raw-loader!./guest.dto.ts').default;
+    this.dtoCode1 = require('!raw-loader!./dtos/host.dto.ts').default;
+    this.dtoCode2 = require('!raw-loader!./dtos/guest.dto.ts').default;
+    this.dtoCode3 = require('!raw-loader!./dtos/detail.dto.ts').default;
   }
 }

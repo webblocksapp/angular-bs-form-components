@@ -8,4 +8,4 @@ import { RunningCodeComponent } from './running-code.component';
   imports: [SharedModule],
   exports: [IndexComponent],
 })
-export class Example7Module {}
+export class DemoOverview3Module {}

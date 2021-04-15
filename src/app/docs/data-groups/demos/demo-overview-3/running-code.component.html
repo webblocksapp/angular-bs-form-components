@@ -1,4 +1,8 @@
-<data-groups [model]="userModels" [highlightOnValid]="true">
+<data-groups
+  [model]="userModels"
+  [highlightOnValid]="true"
+  [autocomplete]="false"
+>
   <div
     *ngIf="loading"
     style="z-index: 2"
@@ -38,43 +42,70 @@
         </button>
       </div>
       <bs-input
-        [autocomplete]="false"
         label="First name"
         #dataInput
         placeholder="First name"
-        name="firstName"
+        name="fullName"
       ></bs-input>
-      <bs-input
-        [autocomplete]="false"
-        label="Second name"
+      <bs-select
+        [options]="cities"
+        label="City of residence"
         #dataInput
-        placeholder="Second name"
-        name="secondName"
-      ></bs-input>
-      <bs-input
-        [autocomplete]="false"
-        label="Last name"
+        placeholder="Select a city"
+        name="cityOfResidence"
+      ></bs-select>
+      <bs-datepicker
+        label="Birth Date"
         #dataInput
-        placeholder="Last name"
-        name="lastName"
-      ></bs-input>
+        placeholder="Select a date"
+        name="birthDate"
+      ></bs-datepicker>
+      <bs-radios
+        [options]="genders"
+        label="Gender"
+        #dataInput
+        name="gender"
+      ></bs-radios>
+      <bs-checks
+        [options]="favoriteFoods"
+        label="Favorite Foods"
+        #dataInput
+        name="favoriteFoods"
+      ></bs-checks>
       <div class="card">
         <div class="card-body">
           <div class="card-title d-flex justify-content-between">Guest</div>
           <bs-input
-            [autocomplete]="false"
-            label="Name"
+            label="First name"
             #dataInput
-            placeholder="Name"
-            name="guest.name"
+            placeholder="First name"
+            name="guest.fullName"
           ></bs-input>
-          <bs-input
-            [autocomplete]="false"
-            label="Age"
+          <bs-select
+            [options]="cities"
+            label="City of residence"
             #dataInput
-            placeholder="Age"
-            name="guest.age"
-          ></bs-input>
+            placeholder="Select a city"
+            name="guest.cityOfResidence"
+          ></bs-select>
+          <bs-datepicker
+            label="Birth Date"
+            #dataInput
+            placeholder="Select a date"
+            name="guest.birthDate"
+          ></bs-datepicker>
+          <bs-radios
+            [options]="genders"
+            label="Gender"
+            #dataInput
+            name="guest.gender"
+          ></bs-radios>
+          <bs-checks
+            [options]="favoriteFoods"
+            label="Favorite Foods"
+            #dataInput
+            name="guest.favoriteFoods"
+          ></bs-checks>
           <div class="d-flex align-items-center mb-3">
             <button
               type="button"
@@ -106,18 +137,36 @@
               </div>
               <bs-input
                 [autocomplete]="false"
-                label="Address"
+                label="Document number"
                 #dataInput
-                placeholder="Address"
-                name="guest.detail[{{ j }}].address"
+                placeholder="Document number"
+                name="guest.detail[{{ j }}].documentNumber"
               ></bs-input>
-              <bs-input
-                [autocomplete]="false"
-                label="Phone Number"
+              <bs-select
+                [options]="cities"
+                label="City"
                 #dataInput
-                placeholder="Phone Number"
-                name="guest.detail[{{ j }}].phoneNumber"
-              ></bs-input>
+                placeholder="Select a city"
+                name="guest.detail[{{ j }}].city"
+              ></bs-select>
+              <bs-datepicker
+                label="Expedition Date"
+                #dataInput
+                placeholder="Select a date"
+                name="guest.detail[{{ j }}].expeditionDate"
+              ></bs-datepicker>
+              <bs-radios
+                [options]="documentTypes"
+                label="Document type"
+                #dataInput
+                name="guest.detail[{{ j }}].documentType"
+              ></bs-radios>
+              <bs-checks
+                [options]="expectations"
+                label="Expectations"
+                #dataInput
+                name="guest.detail[{{ j }}].expectations"
+              ></bs-checks>
             </div>
           </div>
         </div>

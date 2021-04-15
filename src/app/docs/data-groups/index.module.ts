@@ -8,6 +8,7 @@ import { ApiComponent } from './api/api.component';
 import { ExamplesComponent } from './examples/examples.component';
 import { DemoOverview1Module } from './demos/demo-overview-1/demo-overview-1.module';
 import { DemoOverview2Module } from './demos/demo-overview-2/demo-overview-2.module';
+import { DemoOverview3Module } from './demos/demo-overview-3/demo-overview-3.module';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { DemoOverview2Module } from './demos/demo-overview-2/demo-overview-2.mod
     IndexRoutingModule,
     DemoOverview1Module,
     DemoOverview2Module,
+    DemoOverview3Module,
   ],
 })
 export class IndexModule {}

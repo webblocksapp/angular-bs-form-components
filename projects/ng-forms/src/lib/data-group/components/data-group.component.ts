@@ -30,6 +30,7 @@ export class DataGroupComponent implements OnInit, AfterContentInit {
   }
 
   loadDataInputComponents(): void {
+    this.dataInputComponents = [];
     this.dataInputs.forEach((dataInput) => {
       this.dataInputComponents.push(dataInput);
     });
