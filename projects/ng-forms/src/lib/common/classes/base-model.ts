@@ -86,7 +86,7 @@ export class BaseModel {
       path = `${path}.${key}`;
     }
 
-    const foundNested = this.nested.find((item) => item.path === path);
+    const foundNested = this.nested?.find((item) => item.path === path);
 
     if (isEmpty(foundNested)) {
       return data[key];
@@ -112,6 +112,7 @@ export class BaseModel {
         const value = this.generateValue(data[key], childKey, path);
         nestedDto[childKey] = value;
       });
+
       data[key] = nestedDto;
     }
 

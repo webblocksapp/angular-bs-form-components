@@ -58,7 +58,7 @@ export class RunningCodeComponent {
 
   async simulateGetHostsRequest(): Promise<void> {
     this.loading = true;
-    await new Promise((resolve) => setTimeout(resolve, 100));
+    await new Promise((resolve) => setTimeout(resolve, 3000));
     const hosts: HostDto[] = [
       {
         firstName: 'Keanu',
