@@ -9,6 +9,7 @@ import { ExamplesComponent } from './examples/examples.component';
 import { DemoOverview1Module } from './demos/demo-overview-1/demo-overview-1.module';
 import { DemoOverview2Module } from './demos/demo-overview-2/demo-overview-2.module';
 import { DemoOverview3Module } from './demos/demo-overview-3/demo-overview-3.module';
+import { DemoOverview4Module } from './demos/demo-overview-4/demo-overview-4.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { DemoOverview3Module } from './demos/demo-overview-3/demo-overview-3.mod
     DemoOverview1Module,
     DemoOverview2Module,
     DemoOverview3Module,
+    DemoOverview4Module,
   ],
 })
 export class IndexModule {}

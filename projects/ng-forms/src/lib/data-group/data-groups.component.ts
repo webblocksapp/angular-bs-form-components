@@ -45,7 +45,7 @@ export class DataGroupsComponent
 
   @Input() noForm: boolean = false;
   @Input() model: any;
-  @Input() group: string;
+  @Input() groups: string[];
   @Input() enctype: string;
   @Input() multiple: boolean = false;
   @Input() highlightOnValid: boolean = false;
@@ -155,7 +155,7 @@ export class DataGroupsComponent
   }
 
   public submitData(): void {
-    const groups = this.group !== undefined ? { groups: [this.group] } : {};
+    const groups = this.groups !== undefined ? { groups: this.groups } : {};
     this.submitEvent.emit(
       new Promise((resolve) => {
         this.model

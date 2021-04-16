@@ -1,0 +1,76 @@
+<data-groups
+  [groups]="groups"
+  [model]="personModel"
+  (submitEvent)="onSubmit($event)"
+>
+  <data-group>
+    <bs-input
+      #dataInput
+      label="Full name"
+      placeholder="Type name here"
+      name="fullName"
+    ></bs-input>
+    <bs-input
+      #dataInput
+      label="Email"
+      placeholder="Type email here"
+      name="email"
+    ></bs-input>
+    <bs-radios
+      #dataInput
+      label="Are you married?"
+      name="isMarried"
+      [options]="isMarriedOptions"
+      (changeEvent)="setGroup()"
+    ></bs-radios>
+    <ng-container *ngIf="personModel.getValue('isMarried') === 'yes'">
+      <div class="card">
+        <div class="card-body">
+          <div class="card-title mb-3">Spouse details</div>
+          <bs-input
+            #dataInput
+            label="Full name"
+            placeholder="Type name here"
+            name="spouse.fullName"
+          ></bs-input>
+          <bs-input
+            #dataInput
+            label="Email"
+            placeholder="Type email here"
+            name="spouse.email"
+          ></bs-input>
+        </div>
+      </div>
+    </ng-container>
+    <bs-radios
+      #dataInput
+      label="Are you adult?"
+      name="isAdult"
+      [options]="isAdultOptions"
+      (changeEvent)="setGroup()"
+    ></bs-radios>
+    <ng-container *ngIf="personModel.getValue('isAdult') === 'yes'">
+      <bs-input
+        #dataInput
+        label="Phone number"
+        placeholder="Type your number"
+        name="phoneNumber"
+      ></bs-input>
+    </ng-container>
+    <button class="btn btn-primary">Send</button>
+  </data-group>
+</data-groups>
+
+<!-- Validation alerts -->
+<div *ngIf="errors" class="mt-3 alert alert-danger">
+  <p>Your form contains errors:</p>
+  <pre>
+    <code [highlight]='JSON.stringify(errors, null, 2)'></code>
+  </pre>
+</div>
+<div *ngIf="validatedData" class="mt-3 alert alert-success">
+  <p>Your data is ready to be sent to your backend</p>
+  <pre>
+    <code [highlight]='JSON.stringify(validatedData, null, 2)'></code>
+  </pre>
+</div>
