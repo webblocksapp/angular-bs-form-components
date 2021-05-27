@@ -9,6 +9,7 @@ import {
   AfterContentInit,
   HostBinding,
   OnDestroy,
+  SimpleChanges,
 } from '@angular/core';
 import { DataGroupComponent } from './components/data-group.component';
 import { BaseModel } from '../common/classes/base-model';
@@ -38,7 +39,8 @@ import { DataInputBase } from '../common/classes/data-input-base';
   ],
 })
 export class DataGroupsComponent
-  implements OnInit, AfterContentInit, OnDestroy {
+  implements OnInit, AfterContentInit, OnDestroy
+{
   @HostBinding('class')
   @Input()
   class = 'd-block';
@@ -71,6 +73,16 @@ export class DataGroupsComponent
     setTimeout(() => {
       this.inputModels();
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    for (const propName in changes) {
+      if (this._model !== undefined) {
+        if (propName === 'highlightOnValid') {
+          this.inputModels();
+        }
+      }
+    }
   }
 
   private initBaseModel(): void {
@@ -125,6 +137,7 @@ export class DataGroupsComponent
       this.dataInputComponents.forEach((dataInputComponent) => {
         dataInputComponent.model = model;
         dataInputComponent.usingDatagroup = true;
+        dataInputComponent.highlightOnValid = this.highlightOnValid;
         this.setErrorToComponent(model, dataInputComponent, index);
         dataInputComponent.refresh();
       });
@@ -166,9 +179,8 @@ export class DataGroupsComponent
             if (isValid) {
               if (this.enctype === 'multipart/form-data') {
                 if (!Array.isArray(validationResult)) {
-                  validationResult.validatedData = this.generateFormData(
-                    validatedData,
-                  );
+                  validationResult.validatedData =
+                    this.generateFormData(validatedData);
                 } else {
                   validationResult.validatedData.map((item) =>
                     this.generateFormData(item),
