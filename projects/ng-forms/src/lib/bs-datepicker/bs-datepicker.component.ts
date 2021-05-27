@@ -45,6 +45,7 @@ import { isNull } from '../common/utils';
         }"
         id="{{ id }}-bs"
         (focusout)="focusout($event)"
+        (focus)="focus($event)"
       />
 
       <div *ngIf="endSlot" class="input-group-append">
@@ -130,6 +131,7 @@ export class BsDatepickerComponent extends DataInputBase implements DoCheck {
 
   private datepicker: any;
   private datepickerConfigs: any = {};
+  private focused: boolean = false;
   private watchedProperties = [
     'configs',
     'autoclose',
@@ -178,11 +180,22 @@ export class BsDatepickerComponent extends DataInputBase implements DoCheck {
     this.fillModel(value);
 
     setTimeout(() => {
-      if (!isNull(value)) {
+      if (
+        value !== null &&
+        value !== '' &&
+        value !== undefined &&
+        this.focused
+      ) {
         this.validateField();
+        this.focused = false;
       }
     }, 100);
 
+    return event;
+  }
+
+  bindFocusEvents(event: any): any {
+    this.focused = true;
     return event;
   }
 
@@ -270,7 +283,7 @@ export class BsDatepickerComponent extends DataInputBase implements DoCheck {
     this.datepicker.on('hide', (event) => {
       const value = this.getValue();
 
-      if (isNull(value)) {
+      if (isNull(value) && !this.focused) {
         this.validateField();
       }
 
