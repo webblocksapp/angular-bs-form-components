@@ -381,7 +381,7 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
 
   initSelectedOptions(): void {
     setTimeout(() => {
-      this.select.selectpicker('val', this.model.getValue(this.name));
+      this.select.selectpicker('val', this.model.getValue(this.name) || '');
     });
   }
 
