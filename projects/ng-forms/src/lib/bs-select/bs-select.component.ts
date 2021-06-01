@@ -303,7 +303,12 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
 
   bindEventsToSelect(): void {
     this.select.on('change', this.select, (event) => {
-      const value = parseValue(this.select.val());
+      let value = parseValue(this.select.val());
+
+      if (this.multiple && !Array.isArray(value) && value) {
+        value = [value];
+      }
+
       this.onShown = false;
       this.fillModel(value);
       this.validateField();
