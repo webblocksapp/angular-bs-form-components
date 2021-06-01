@@ -28,8 +28,9 @@ export class BaseModelArray {
 
   public fill(data: Array<any>): void {
     const array = [];
-    data.forEach((item: any) => {
+    data.forEach((item: any, index) => {
       const model = new BaseModel(this.dtoClass, this.args);
+      model.setIndex(index);
       model.fill(item);
       array.push(model);
     });
@@ -115,6 +116,7 @@ export class BaseModelArray {
       this.array[index].reset();
     }
 
+    this.emitErrorsChange();
     this.emitChange();
   }
 
