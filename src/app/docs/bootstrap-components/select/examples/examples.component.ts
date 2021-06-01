@@ -12,6 +12,12 @@ import { DocsBase } from '@shared/classes';
 
     <h5 marker>Multiple selection</h5>
     <example-3></example-3>
+
+    <h5 marker>Common events</h5>
+    <example-4></example-4>
+
+    <h5 marker>Simulating api request</h5>
+    <example-5></example-5>
   `,
 })
 export class ExamplesComponent extends DocsBase {}
