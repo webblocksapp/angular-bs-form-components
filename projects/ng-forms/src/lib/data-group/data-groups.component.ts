@@ -136,6 +136,7 @@ export class DataGroupsComponent
 
       this.dataInputComponents.forEach((dataInputComponent) => {
         dataInputComponent.model = model;
+        dataInputComponent.touched = model.getSubmitted() ? true : false;
         dataInputComponent.usingDatagroup = true;
         dataInputComponent.highlightOnValid = this.highlightOnValid;
         this.setErrorToComponent(model, dataInputComponent, index);
@@ -159,12 +160,6 @@ export class DataGroupsComponent
     if (this.allowNullErrors && index === model.getIndex()) {
       dataInputComponent.setError(error);
     }
-  }
-
-  private setModelsSubmitted(): void {
-    this._model.forEach((model) => {
-      model.setSubmitted(true);
-    });
   }
 
   public submitData(): void {
@@ -192,8 +187,6 @@ export class DataGroupsComponent
             } else {
               resolve(validationResult);
             }
-
-            this.setModelsSubmitted();
           });
       }),
     );

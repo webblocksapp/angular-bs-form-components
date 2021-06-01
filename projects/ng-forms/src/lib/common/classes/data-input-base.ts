@@ -39,7 +39,8 @@ export abstract class DataInputBase
     DataInputBaseInterface,
     FormEventsInterface,
     KeyboardEventsInterface,
-    MouseEventsInterface {
+    MouseEventsInterface
+{
   @Input()
   @HostBinding('id')
   id: string;
@@ -437,6 +438,7 @@ export abstract class DataInputBase
   private subscribeToModelChanges(): void {
     const subject = this.model.getChange();
     this.changes$ = subject.subscribe(() => {
+      this.touched = this.model.getSubmitted() ? true : false;
       this.setError(this.model.getError(this.name));
     });
   }

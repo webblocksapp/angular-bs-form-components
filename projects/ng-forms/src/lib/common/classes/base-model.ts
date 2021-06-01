@@ -265,8 +265,9 @@ export class BaseModel {
     }
 
     if (!isEmpty(index)) {
-      const childErrors = errors.find((error) => error.property === index)
-        ?.children;
+      const childErrors = errors.find(
+        (error) => error.property === index,
+      )?.children;
       return childErrors?.find((error) => error.property === fieldName) || null;
     }
 
@@ -300,6 +301,7 @@ export class BaseModel {
           this.isValid = false;
         }
 
+        this.setSubmitted(true);
         this.emitChange();
       });
     });
