@@ -135,8 +135,13 @@ export class DataGroupsComponent
       this.dataInputComponents = dataGroupComponent.getDataInputComponents();
 
       this.dataInputComponents.forEach((dataInputComponent) => {
+        const value = model.getValue(dataInputComponent.name);
         dataInputComponent.model = model;
-        dataInputComponent.touched = model.getSubmitted() ? true : false;
+        dataInputComponent.touched = model.getSubmitted()
+          ? true
+          : isEmpty(value)
+          ? false
+          : dataInputComponent.touched;
         dataInputComponent.usingDatagroup = true;
         dataInputComponent.highlightOnValid = this.highlightOnValid;
         this.setErrorToComponent(model, dataInputComponent, index);
