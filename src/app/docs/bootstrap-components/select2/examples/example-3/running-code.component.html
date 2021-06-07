@@ -4,11 +4,14 @@
       #dataInput
       placeholder="Select some cities"
       [options]="items"
-      [multiple]="true"
-      [closeOnSelect]="false"
       label="Items"
       name="cities"
+      (clearEvent)="onClearEvent($event)"
+      (selectEvent)="onSelectEvent($event)"
+      (closeEvent)="onCloseEvent($event)"
     ></bs-select2>
   </data-group>
   <button class="btn btn-primary">Submit</button>
 </data-groups>
+
+<p class="mt-3" [innerHtml]="eventHTML"></p>

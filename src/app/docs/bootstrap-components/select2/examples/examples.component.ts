@@ -9,6 +9,9 @@ import { DocsBase } from '@shared/classes';
 
     <h5 marker>Multiple selection</h5>
     <example-2></example-2>
+
+    <h5 marker>Common events</h5>
+    <example-3></example-3>
   `,
 })
 export class ExamplesComponent extends DocsBase {}
