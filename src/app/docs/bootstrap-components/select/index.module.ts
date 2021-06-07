@@ -13,6 +13,7 @@ import { Example2Module } from './examples/example-2/example-2.module';
 import { Example3Module } from './examples/example-3/example-3.module';
 import { Example4Module } from './examples/example-4/example-4.module';
 import { Example5Module } from './examples/example-5/example-5.module';
+import { Example6Module } from './examples/example-6/example-6.module';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { Example5Module } from './examples/example-5/example-5.module';
     Example3Module,
     Example4Module,
     Example5Module,
+    Example6Module,
   ],
 })
 export class IndexModule {}
