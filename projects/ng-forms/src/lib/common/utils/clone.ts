@@ -3,3 +3,4 @@ const clone = (object) => {
 };
 
 export default clone;
+export { clone };

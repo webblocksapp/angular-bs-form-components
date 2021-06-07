@@ -1,0 +1,13 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <bs-select
+      #dataInput
+      placeholder="Select a gender"
+      [options]="genders"
+      [map]="['id', 'name']"
+      label="Gender"
+      name="gender"
+    ></bs-select>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>

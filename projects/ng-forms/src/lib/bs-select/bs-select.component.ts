@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 import { SelectOption, SelectOptionGroup } from '../common/types';
-import { isNull } from '../common/utils';
+import { isNull, mapSelectOptions, clone } from '../common/utils';
 import parseValue from '../common/utils/parse-value';
 
 @Component({
@@ -146,7 +146,8 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
   @ViewChild('selectElementRef', { read: ElementRef })
   selectElementRef: ElementRef;
 
-  @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
+  @Input() options: Array<SelectOption> | Array<SelectOptionGroup> | any;
+  @Input() map: Array<string>;
   @Input() configs: { [key: string]: any } = {};
   @Input() style: string = '';
   @Input() styleBase: string = 'form-control';
@@ -171,6 +172,7 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
   public onValidated: boolean = false;
 
   private select: any;
+  private _options: Array<SelectOption> | Array<SelectOptionGroup>;
   private onShown: boolean = false;
   private selectConfigs: any = {};
   private watchedProperties: Array<string> = [
@@ -208,6 +210,8 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
 
   detectPropertiesChanges(propName: string): void {
     if (propName === 'disabled') this.enableOrDisableSelect();
+    if (propName === 'map') this.mapOptions();
+
     if (propName === 'options') {
       this.refreshSelect();
       this.disableSelectWhenOptionsAreEmpty();
@@ -278,6 +282,11 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
 
     this.selectConfigs = Object.assign(this.selectConfigs, defaultConfigs);
     this.setSelectConfigsOverrides();
+  }
+
+  mapOptions(): void {
+    this._options = clone(this.options);
+    this.options = mapSelectOptions(this._options, this.map);
   }
 
   setSelectConfigsOverrides(): void {

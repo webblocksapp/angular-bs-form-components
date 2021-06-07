@@ -4,3 +4,5 @@ export * from './clone';
 export * from './parse-value';
 export * from './remove-array-index';
 export * from './get-last-array-index';
+export * from './map-select-options';
+export * from './clone';
