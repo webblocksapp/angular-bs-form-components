@@ -18,14 +18,14 @@ export class RunningCodeComponent {
   ];
 
   onSelectEvent(event) {
-    this.eventHTML = `<b>selectEvent</b> emitted with value ${event.text}`;
+    this.eventHTML = `<b>selectEvent</b> emitted with value ${event?.text}`;
   }
 
   onClearEvent(event) {
-    this.eventHTML = `<b>clearEvent</b> emitted with value ${event.text}`;
+    this.eventHTML = `<b>clearEvent</b> emitted with value ${event?.text}`;
   }
 
   onCloseEvent(event) {
-    this.eventHTML = `<b>closeEvent</b> emitted with value ${event.text}`;
+    this.eventHTML = `<b>closeEvent</b> emitted with value ${event?.text}`;
   }
 }

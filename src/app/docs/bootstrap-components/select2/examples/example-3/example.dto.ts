@@ -1,7 +1,6 @@
-import { ArrayMinSize, IsArray } from '@webblocksapp/class-validator';
+import { IsNotEmpty } from '@webblocksapp/class-validator';
 
 export class ExampleDto {
-  @ArrayMinSize(1)
-  @IsArray()
-  cities: number[];
+  @IsNotEmpty()
+  city: number;
 }
