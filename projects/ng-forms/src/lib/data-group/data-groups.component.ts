@@ -18,6 +18,7 @@ import { isEmpty } from 'lodash';
 import { BaseModelArray } from '../common/classes/base-model-array';
 import { Subscription } from 'rxjs';
 import { DataInputBase } from '../common/classes/data-input-base';
+import { isNull } from '../common/utils';
 
 @Component({
   selector: 'data-groups',
@@ -137,11 +138,10 @@ export class DataGroupsComponent
       this.dataInputComponents.forEach((dataInputComponent) => {
         const value = model.getValue(dataInputComponent.name);
         dataInputComponent.model = model;
-        dataInputComponent.touched = model.getSubmitted()
-          ? true
-          : isEmpty(value)
-          ? false
-          : dataInputComponent.touched;
+
+        if (model.getSubmitted()) dataInputComponent.touched = true;
+        if (isNull(value)) dataInputComponent.touched = false;
+
         dataInputComponent.usingDatagroup = true;
         dataInputComponent.highlightOnValid = this.highlightOnValid;
         this.setErrorToComponent(model, dataInputComponent, index);

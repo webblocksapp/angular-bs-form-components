@@ -121,7 +121,6 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();
 
   private select2: any;
-  private validate = false;
   private select2Configs: any = {};
   private watchedProperties = [
     'theme',
@@ -183,15 +182,13 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
 
   bindEventsToSelect2(): void {
     this.select2.on('change', (event) => {
-      const value = parseValue(this.select2.select2('val'));
-      this.fillModel(value);
+      let value = parseValue(this.select2.select2('val'));
 
-      if (this.validate === true) {
-        this.validateField();
-      } else {
-        this.validate = true;
+      if (this.multiple && !Array.isArray(value) && value) {
+        value = [value];
       }
 
+      this.fillModel(value);
       this.change(event);
     });
 
@@ -206,15 +203,8 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
     });
 
     this.select2.on('select2:close', (event) => {
-      /**
-       * Equivalent to a validate on focusout
-       */
-      setTimeout(() => {
-        if (isNull(this.model.getValue(this.name))) {
-          this.validateField();
-          this.closeEvent.emit(event.params.data);
-        }
-      });
+      this.validateField();
+      this.closeEvent.emit(event.params.data);
     });
   }
 
@@ -288,7 +278,6 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
        *   border-color: #your-color !important;
        * }
        */
-
       const select2Selection = $(this.select2.data('select2').$container).find(
         '.select2-selection',
       );
@@ -315,8 +304,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
 
   initSelectedOptions(): void {
     setTimeout(() => {
-      const selectedOptions = this.model.getValue(this.name);
-      this.validate = false;
+      const selectedOptions = this.model.getValue(this.name) || null;
       this.select2.val(selectedOptions).trigger('change');
     });
   }

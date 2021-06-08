@@ -320,7 +320,6 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
 
       this.onShown = false;
       this.fillModel(value);
-      this.validateField();
       this.change(event);
     });
 
@@ -332,10 +331,7 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
     this.select.parent().on('hidden.bs.select', (event) => {
       this.onShown = false;
 
-      if (isNull(this.model.getValue(this.name))) {
-        this.validateField();
-      }
-
+      this.validateField();
       this.hiddenEvent.emit(event);
     });
   }

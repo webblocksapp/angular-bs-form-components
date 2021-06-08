@@ -377,7 +377,7 @@ export abstract class DataInputBase
       this.model
         .validateField(this.name)
         .then(() => {
-          this.error = '';
+          this.setError();
           this.setTouched();
           this.bindEventsAfterValidateField();
         })
@@ -394,7 +394,7 @@ export abstract class DataInputBase
 
   bindEventsAfterValidateField(): void {}
 
-  setError(error: ValidationError): void {
+  setError(error: ValidationError = null): void {
     if (!isNull(error)) {
       const { constraints } = error;
       this.error = (Object.values(constraints)[0] as string) || '';
