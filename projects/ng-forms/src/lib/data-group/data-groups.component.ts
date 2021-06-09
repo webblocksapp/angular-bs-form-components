@@ -139,8 +139,17 @@ export class DataGroupsComponent
         const value = model.getValue(dataInputComponent.name);
         dataInputComponent.model = model;
 
-        if (model.getSubmitted()) dataInputComponent.touched = true;
-        if (isNull(value)) dataInputComponent.touched = false;
+        if (model.getSubmitted()) {
+          dataInputComponent.touched = true;
+        }
+        if (
+          model.getSubmitted() === false &&
+          (isNull(value) ||
+            model.getIsTouched(dataInputComponent.name) === false)
+        ) {
+          dataInputComponent.touched = false;
+          console.log(model.getSubmitted());
+        }
 
         dataInputComponent.usingDatagroup = true;
         dataInputComponent.highlightOnValid = this.highlightOnValid;

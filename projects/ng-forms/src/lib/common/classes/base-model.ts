@@ -1,7 +1,7 @@
 import { validate, ValidationError } from '@webblocksapp/class-validator';
 import { ValidatorOptions } from '@webblocksapp/class-validator';
 import { BehaviorSubject } from 'rxjs';
-import { BaseModelArgs, Nested } from '../types/base-model-args.type';
+import { BaseModelArgs, Nested, FieldMap } from '../types/base-model-args.type';
 import { set, get, isEmpty } from 'lodash';
 import { removeArrayIndex, getLastArrayIndex } from '../utils';
 
@@ -19,6 +19,7 @@ export class BaseModel {
   public nested: Nested[] = [];
   private validatingNestedFields: String[] = [];
   private index: number = 0;
+  private map: Array<FieldMap> = [];
 
   constructor(DtoClass: any, args?: BaseModelArgs) {
     this.setDto(DtoClass);
@@ -50,6 +51,26 @@ export class BaseModel {
         set(this.dtoObject, item.path, new item.dtoClass());
       }
     });
+  }
+
+  private updateMap(fieldMap: FieldMap): void {
+    const foundItem = this.map.find((item) => item.name === fieldMap.name);
+
+    if (foundItem === undefined) {
+      this.map.push(fieldMap);
+    } else {
+      this.map = this.map.map((item) => {
+        if (item.name === fieldMap.name) {
+          return { ...item, ...fieldMap };
+        }
+        return item;
+      });
+    }
+  }
+
+  public getIsTouched(key: string) {
+    const foundItem = this.map.find((item) => item.name === key);
+    return foundItem?.touched || false;
   }
 
   public getDto(): any {
@@ -228,6 +249,10 @@ export class BaseModel {
     this.errors = [];
   }
 
+  private cleanMap(): void {
+    this.map = [];
+  }
+
   public getErrors(): Array<ValidationError> {
     return this.errors;
   }
@@ -337,6 +362,7 @@ export class BaseModel {
           reject(errors);
         }
 
+        this.updateMap({ name: fieldName, touched: true });
         this.emitChange();
       });
     });
@@ -492,6 +518,7 @@ export class BaseModel {
 
   public reset(): void {
     this.cleanErrors();
+    this.cleanMap();
     this.setSubmitted(false);
     this.resetDto();
     this.emitErrorsChange();

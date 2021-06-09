@@ -8,4 +8,9 @@ type BaseModelArgs = {
   nested: Nested[];
 };
 
-export { BaseModelArgs, Nested };
+type FieldMap = {
+  name: string;
+  touched: boolean;
+};
+
+export { BaseModelArgs, Nested, FieldMap };
