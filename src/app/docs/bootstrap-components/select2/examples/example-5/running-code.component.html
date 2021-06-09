@@ -1,0 +1,79 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <div
+    *ngIf="loading"
+    style="z-index: 2"
+    class="
+      d-flex
+      justify-content-center
+      align-items-center
+      position-absolute
+      w-100
+      h-100
+    "
+  >
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <div class="d-flex align-items-center mb-3">
+    <button
+      type="button"
+      [disabled]="this.numberOfRecords >= this.maxNumberOfRecords"
+      class="btn btn-secondary"
+      (click)="addRecord()"
+    >
+      Add record
+    </button>
+    <span class="ml-2">
+      {{ numberOfRecords }} of <b>{{ maxNumberOfRecords }}</b></span
+    >
+  </div>
+  <data-group
+    class="card mb-3"
+    *ngFor="let n of Array(numberOfRecords); let i = index"
+  >
+    <div class="card-body">
+      <div class="card-title d-flex justify-content-between">
+        <span>
+          <b>Record {{ i + 1 }}</b>
+        </span>
+        <button
+          type="button"
+          *ngIf="numberOfRecords > 1"
+          class="btn btn-danger"
+          (click)="deleteRecord(i)"
+        >
+          <i class="fa fa-times"></i>
+        </button>
+      </div>
+      <bs-select2
+        #dataInput
+        placeholder="Select at least one city"
+        [options]="cities"
+        label="Cities"
+        name="cities"
+        [multiple]="true"
+      ></bs-select2>
+      <bs-select2
+        #dataInput
+        placeholder="Select a gender"
+        [options]="genders"
+        label="Gender"
+        name="gender"
+      ></bs-select2>
+      <button type="button" (click)="clear(i)" class="btn btn-secondary">
+        Clear
+      </button>
+    </div>
+  </data-group>
+  <div class="d-flex flex-wrap">
+    <button class="btn btn-primary">Submit</button>
+    <button
+      type="button"
+      (click)="simulateApiRequest()"
+      class="ml-3 btn btn-primary"
+    >
+      Simulate api request
+    </button>
+  </div>
+</data-groups>
