@@ -9,7 +9,6 @@ import { ExampleDto } from './example.dto';
 })
 export class RunningCodeComponent {
   public exampleModel: BaseModel = new BaseModel(ExampleDto);
-  public eventHTML: string;
 
   public cities: SelectOption[] = [
     { value: 1, viewValue: 'City of México' },
