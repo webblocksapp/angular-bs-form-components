@@ -1,6 +1,6 @@
-import { IsNotEmpty } from '@webblocksapp/class-validator';
+import { ArrayMinSize } from '@webblocksapp/class-validator';
 
 export class ExampleDto {
-  @IsNotEmpty()
-  gender: number;
+  @ArrayMinSize(1)
+  favoriteFoods: Array<number>;
 }
