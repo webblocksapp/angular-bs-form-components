@@ -148,7 +148,6 @@ export class DataGroupsComponent
             model.getIsTouched(dataInputComponent.name) === false)
         ) {
           dataInputComponent.touched = false;
-          console.log(model.getSubmitted());
         }
 
         dataInputComponent.usingDatagroup = true;

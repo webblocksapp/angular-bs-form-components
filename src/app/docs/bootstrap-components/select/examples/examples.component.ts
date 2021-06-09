@@ -23,7 +23,6 @@ import { DocsBase } from '@shared/classes';
     <example-6></example-6>
 
     <h5 marker>Map select options</h5>
-
     <p>
       If you want to preserve the original data structure for select options,
       you can use the <code>map</code> property which receives an array of three

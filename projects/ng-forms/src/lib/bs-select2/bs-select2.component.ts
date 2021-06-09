@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
 import { SelectOption, SelectOptionGroup } from '../common/types';
-import { isNull } from '../common/utils';
+import { isNull, mapSelectOptions, clone } from '../common/utils';
 import parseValue from '../common/utils/parse-value';
 
 @Component({
@@ -94,6 +94,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
   @Input() theme: string;
   @Input() liveSearch: boolean;
   @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
+  @Input() map: Array<string>;
   @Input() configs: { [key: string]: any } = {};
   @Input() noResults: string;
   @Input() allowClear: boolean = true;
@@ -121,6 +122,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();
 
   private select2: any;
+  private _options: Array<SelectOption> | Array<SelectOptionGroup>;
   private select2Configs: any = {};
   private watchedProperties = [
     'theme',
@@ -164,6 +166,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
   }
 
   detectPropertiesChanges(propName: string): void {
+    if (propName === 'map') this.mapOptions();
     if (propName === 'disabled') this.enableOrDisableSelect2();
     if (this.watchedProperties.indexOf(propName) > -1) this.refreshSelect2();
   }
@@ -178,6 +181,11 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
     this.bindEventsToSelect2();
     this.enableOrDisableSelect2();
     this.disableSelect2WhenOptionsAreEmpty();
+  }
+
+  mapOptions(): void {
+    this._options = clone(this.options);
+    this.options = mapSelectOptions(this._options, this.map);
   }
 
   bindEventsToSelect2(): void {
