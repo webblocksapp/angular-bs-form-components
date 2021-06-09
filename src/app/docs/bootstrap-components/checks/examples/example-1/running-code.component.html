@@ -1,0 +1,16 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <bs-checks
+      [autocomplete]="false"
+      label="Favorite foods"
+      #dataInput
+      [options]="favoriteFoods"
+      name="favoriteFoods"
+      (clickEvent)="onClickEvent($event)"
+      (changeEvent)="onChangeEvent($event)"
+    ></bs-checks>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>
+
+<p class="mt-3" [innerHtml]="eventHTML"></p>
