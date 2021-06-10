@@ -7,8 +7,8 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
-import { CheckDisplay, CheckLook } from '../common/types';
-import parseValue from '../common/utils/parse-value';
+import { CheckDisplay, CheckLook, SelectOption } from '../common/types';
+import { parseValue, mapSelectOptions, clone } from '../common/utils';
 
 @Component({
   selector: 'bs-checks',
@@ -37,7 +37,7 @@ import parseValue from '../common/utils/parse-value';
           id="{{ id }}-{{ i }}-bs"
           [value]="option.value"
           [attr.checked]="option.checked"
-          [attr.disabled]="option.disabled"
+          [attr.disabled]="option.disabled || undefined"
           (click)="click($event)"
           (change)="change($event)"
         />
@@ -75,11 +75,14 @@ import parseValue from '../common/utils/parse-value';
   ],
 })
 export class BsChecksComponent extends DataInputBase implements DoCheck {
-  @Input() options: Array<any>;
+  @Input() options: Array<SelectOption>;
+  @Input() map: Array<string>;
   @Input() display: CheckDisplay = 'default';
   @Input() look: CheckLook = 'check';
 
   @ViewChildren('checkbox') checkboxes: QueryList<ElementRef>;
+
+  private _options: Array<SelectOption>;
 
   ngDoCheck(): void {
     this.watchModel();
@@ -91,9 +94,15 @@ export class BsChecksComponent extends DataInputBase implements DoCheck {
 
   detectPropertiesChanges(propName: string): void {
     if (propName === 'disabled') this.enableOrDisableCheckboxes();
+    if (propName === 'map') this.mapOptions();
     if (propName === 'options') {
       this.refreshCheckboxes();
     }
+  }
+
+  mapOptions(): void {
+    this._options = clone(this.options);
+    this.options = mapSelectOptions(this._options, this.map);
   }
 
   bindClickEvents(event: any): any {

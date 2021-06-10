@@ -12,7 +12,7 @@ const mapSelectOptions = (
     obj.value = item[value];
     obj.viewValue = item[viewValue];
 
-    if (disabled !== undefined) obj.disabled = item[disabled];
+    if (disabled !== undefined) obj.disabled = !item[disabled];
     mappedOptions.push(obj);
   });
 

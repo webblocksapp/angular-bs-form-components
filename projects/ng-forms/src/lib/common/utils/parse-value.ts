@@ -11,3 +11,4 @@ const parseValue = (value: any) => {
 };
 
 export default parseValue;
+export { parseValue };
