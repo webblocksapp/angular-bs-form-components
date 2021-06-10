@@ -6,6 +6,9 @@ import { DocsBase } from '@shared/classes';
   template: `
     <h5 marker>Common events</h5>
     <example-1></example-1>
+
+    <h5 marker>Simulating api request</h5>
+    <example-2></example-2>
   `,
 })
 export class ExamplesComponent extends DocsBase {}
