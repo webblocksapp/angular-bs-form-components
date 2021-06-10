@@ -1,0 +1,12 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <bs-radios
+      label="Favorite foods"
+      #dataInput
+      [options]="favoriteFoods"
+      [map]="['id', 'name', 'status']"
+      name="favoriteFood"
+    ></bs-radios>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>

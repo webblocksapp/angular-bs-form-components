@@ -1,0 +1,15 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <bs-radios
+      label="Favorite food"
+      #dataInput
+      [options]="favoriteFoods"
+      name="favoriteFood"
+      (clickEvent)="onClickEvent($event)"
+      (changeEvent)="onChangeEvent($event)"
+    ></bs-radios>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>
+
+<p class="mt-3" [innerHtml]="eventHTML"></p>

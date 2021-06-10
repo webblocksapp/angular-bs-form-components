@@ -1,0 +1,36 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <div
+    *ngIf="loading"
+    style="z-index: 2"
+    class="
+      d-flex
+      justify-content-center
+      align-items-center
+      position-absolute
+      w-100
+      h-100
+    "
+  >
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  <data-group>
+    <bs-radios
+      label="Favorite food"
+      #dataInput
+      [options]="favoriteFoods"
+      name="favoriteFood"
+    ></bs-radios>
+  </data-group>
+  <div class="d-flex flex-wrap">
+    <button class="btn btn-primary">Submit</button>
+    <button
+      type="button"
+      (click)="simulateApiRequest()"
+      class="ml-3 btn btn-primary"
+    >
+      Simulate api request
+    </button>
+  </div>
+</data-groups>

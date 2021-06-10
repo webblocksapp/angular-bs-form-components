@@ -7,8 +7,8 @@ import {
   ViewChildren,
 } from '@angular/core';
 import { DataInputBase } from '../common/classes/data-input-base';
-import { RadioDisplay, RadioLook } from '../common/types';
-import parseValue from '../common/utils/parse-value';
+import { RadioDisplay, RadioLook, SelectOption } from '../common/types';
+import { parseValue, clone, mapSelectOptions } from '../common/utils';
 
 @Component({
   selector: 'bs-radios',
@@ -38,7 +38,7 @@ import parseValue from '../common/utils/parse-value';
           name="{{ name }}-{{ id }}-bs[]"
           [value]="option.value"
           [attr.checked]="option.checked"
-          [attr.disabled]="option.disabled"
+          [attr.disabled]="option.disabled || undefined"
           (click)="click($event)"
           (change)="change($event)"
         />
@@ -77,10 +77,13 @@ import parseValue from '../common/utils/parse-value';
 })
 export class BsRadiosComponent extends DataInputBase implements DoCheck {
   @Input() options: Array<any>;
+  @Input() map: Array<string>;
   @Input() display: RadioDisplay = 'default';
   @Input() look: RadioLook = 'radio';
 
   @ViewChildren('radio') radios: QueryList<ElementRef>;
+
+  private _options: Array<SelectOption>;
 
   ngDoCheck(): void {
     this.watchModel();
@@ -92,9 +95,15 @@ export class BsRadiosComponent extends DataInputBase implements DoCheck {
 
   detectPropertiesChanges(propName: string): void {
     if (propName === 'disabled') this.enableOrDisableRadios();
+    if (propName === 'map') this.mapOptions();
     if (propName === 'options') {
       this.refreshRadios();
     }
+  }
+
+  mapOptions(): void {
+    this._options = clone(this.options);
+    this.options = mapSelectOptions(this._options, this.map);
   }
 
   bindClickEvents(event: any): any {
