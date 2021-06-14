@@ -23,8 +23,8 @@ import parseValue from '../common/utils/parse-value';
     <div
       class="input-group {{ inputSize }}"
       [ngClass]="{
-        'is-invalid': error,
-        'is-valid': touched && highlightOnValid && !error
+        'is-invalid': error && !disabled,
+        'is-valid': touched && highlightOnValid && !error && !disabled
       }"
     >
       <div *ngIf="startSlot" class="input-group-prepend">
@@ -42,8 +42,8 @@ import parseValue from '../common/utils/parse-value';
         [ngClass]="{
           'has-prepend': startSlot || startSlotHtml,
           'has-append': endSlot || endSlotHtml,
-          'is-invalid': error,
-          'is-valid': touched && highlightOnValid && !error
+          'is-invalid': error && !disabled,
+          'is-valid': touched && highlightOnValid && !error && !disabled
         }"
         id="{{ id }}-bs"
       >
@@ -290,7 +290,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
         '.select2-selection',
       );
 
-      if (this.error) {
+      if (this.error && !this.disabled) {
         select2Selection.addClass('custom-select');
         select2Selection.addClass('is-invalid');
       } else {
@@ -302,7 +302,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
           select2Selection.addClass('is-valid');
         }
 
-        if (!this.highlightOnValid || !this.touched) {
+        if (!this.highlightOnValid || !this.touched || this.disabled === true) {
           select2Selection.removeClass('form-control');
           select2Selection.removeClass('is-valid');
         }
@@ -327,6 +327,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
     setTimeout(() => {
       if (this.select2 !== undefined) {
         if (this.disabled === undefined) this.disabled = false;
+        this.addOrRemoveValidationClasses();
         this.select2.select2('enable', [!this.disabled]);
       }
     });

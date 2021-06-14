@@ -11,8 +11,8 @@ import parseValue from '../common/utils/parse-value';
     <div
       class="input-group {{ inputSize }}"
       [ngClass]="{
-        'is-invalid': error,
-        'is-valid': touched && highlightOnValid && !error
+        'is-invalid': error && !disabled,
+        'is-valid': touched && highlightOnValid && !error && !disabled
       }"
     >
       <div *ngIf="startSlot" class="input-group-prepend">
@@ -30,8 +30,8 @@ import parseValue from '../common/utils/parse-value';
         [attr.disabled]="disabled"
         class="form-control"
         [ngClass]="{
-          'is-invalid': error,
-          'is-valid': touched && highlightOnValid && !error
+          'is-invalid': error && !disabled,
+          'is-valid': touched && highlightOnValid && !error && !disabled
         }"
         id="{{ id }}-bs"
         (focusout)="focusout($event)"

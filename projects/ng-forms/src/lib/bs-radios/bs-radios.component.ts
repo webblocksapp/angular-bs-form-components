@@ -31,8 +31,9 @@ import { parseValue, clone, mapSelectOptions } from '../common/utils';
           type="radio"
           class="custom-control-input"
           [ngClass]="{
-            'is-invalid': error,
-            'is-valid': touched && highlightOnValid && !error
+            'is-invalid': error && !option.disabled,
+            'is-valid':
+              touched && highlightOnValid && !error && !option.disabled
           }"
           id="{{ id }}-{{ i }}-bs"
           name="{{ name }}-{{ id }}-bs[]"
@@ -127,13 +128,9 @@ export class BsRadiosComponent extends DataInputBase implements DoCheck {
   }
 
   enableOrDisableRadios(): void {
-    setTimeout(() => {
-      if (this.radios !== undefined) {
-        this.radios.forEach((radioElementRef) => {
-          const radio = radioElementRef.nativeElement;
-          radio.disabled = this.disabled;
-        });
-      }
+    this.options.forEach((option) => {
+      const disabled = this.disabled || undefined;
+      option.disabled = disabled;
     });
   }
 

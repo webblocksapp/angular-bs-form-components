@@ -23,8 +23,8 @@ import parseValue from '../common/utils/parse-value';
     <div
       class="input-group {{ inputSize }}"
       [ngClass]="{
-        'is-invalid': error,
-        'is-valid': touched && highlightOnValid && !error
+        'is-invalid': error && !disabled,
+        'is-valid': touched && highlightOnValid && !error && !disabled
       }"
     >
       <div *ngIf="startSlot" class="input-group-prepend">
@@ -304,6 +304,7 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
     if (this.select !== undefined) {
       setTimeout(() => {
         if (this.disabled === undefined) this.disabled = false;
+        this.addOrRemoveValidationClasses();
         this.select.prop('disabled', this.disabled);
         this.refreshSelect();
       });
@@ -351,7 +352,7 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
     const inputGroup = this.select.closest('.input-group');
     const selectButton = this.select.parent().find('button.form-control');
 
-    if (this.error) {
+    if (this.error && !this.disabled) {
       inputGroup.addClass('is-invalid');
       selectButton.addClass('is-invalid');
     } else {
@@ -363,7 +364,7 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
         selectButton.addClass('is-valid');
       }
 
-      if (!this.highlightOnValid || !this.touched) {
+      if (!this.highlightOnValid || !this.touched || this.disabled === true) {
         inputGroup.removeClass('is-valid');
         selectButton.removeClass('is-valid');
       }

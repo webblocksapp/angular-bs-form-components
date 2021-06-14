@@ -31,8 +31,9 @@ import { parseValue, mapSelectOptions, clone } from '../common/utils';
           type="checkbox"
           class="custom-control-input"
           [ngClass]="{
-            'is-invalid': error,
-            'is-valid': touched && highlightOnValid && !error
+            'is-invalid': error && !option.disabled,
+            'is-valid':
+              touched && highlightOnValid && !error && !option.disabled
           }"
           id="{{ id }}-{{ i }}-bs"
           [value]="option.value"
@@ -125,13 +126,9 @@ export class BsChecksComponent extends DataInputBase implements DoCheck {
   }
 
   enableOrDisableCheckboxes(): void {
-    setTimeout(() => {
-      if (this.checkboxes !== undefined) {
-        this.checkboxes.forEach((checkboxElementRef) => {
-          const checkbox = checkboxElementRef.nativeElement;
-          checkbox.disabled = this.disabled;
-        });
-      }
+    this.options.forEach((option) => {
+      const disabled = this.disabled || undefined;
+      option.disabled = disabled;
     });
   }
 
