@@ -1,0 +1,25 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <bs-datepicker
+      size="small"
+      startSlot="Small size"
+      #dataInput
+      placeholder="Birth Date 1"
+      name="birthDate1"
+    ></bs-datepicker>
+    <bs-datepicker
+      #dataInput
+      startSlot="Default size"
+      placeholder="Birth Date 2"
+      name="birthDate2"
+    ></bs-datepicker>
+    <bs-datepicker
+      size="large"
+      startSlot="Large size"
+      #dataInput
+      placeholder="Birth Date 3"
+      name="birthDate3"
+    ></bs-datepicker>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+</data-groups>
