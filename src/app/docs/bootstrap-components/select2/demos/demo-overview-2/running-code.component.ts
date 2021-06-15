@@ -7,9 +7,6 @@ import { ExampleDto } from './example.dto';
   templateUrl: './running-code.component.html',
 })
 export class RunningCodeComponent {
-  public theme =
-    localStorage.getItem('theme') === 'default' ? 'bootstrap' : undefined;
-
   public Array = Array;
   public exampleModels: BaseModelArray = new BaseModelArray(ExampleDto);
   public numberOfRecords = 1;

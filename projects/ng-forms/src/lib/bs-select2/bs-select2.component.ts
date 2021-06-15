@@ -17,73 +17,86 @@ import parseValue from '../common/utils/parse-value';
 @Component({
   selector: 'bs-select2',
   template: `
-    <label class="form-label" *ngIf="label" attr.for="{{ id }}-bs">{{
-      label
-    }}</label>
-    <div
-      class="input-group {{ inputSize }}"
-      [ngClass]="{
-        'is-invalid': error && !disabled,
-        'is-valid': touched && highlightOnValid && !error && !disabled
-      }"
-    >
-      <div *ngIf="startSlot" class="input-group-prepend">
-        <span class="input-group-text">{{ startSlot }}</span>
-      </div>
-      <div *ngIf="startSlotHtml" class="input-group-prepend">
-        <span class="input-group-text" [innerHTML]="startSlotHtml"></span>
-      </div>
-
-      <select
-        #select2ElementRef
-        style="width: 100%"
-        [attr.name]="name"
-        class="form-control select2"
+    <div class="form-group">
+      <label class="form-label" *ngIf="label" attr.for="{{ id }}-bs">{{
+        label
+      }}</label>
+      <div
+        class="input-group {{ inputSize }}"
         [ngClass]="{
-          'has-prepend': startSlot || startSlotHtml,
-          'has-append': endSlot || endSlotHtml,
           'is-invalid': error && !disabled,
           'is-valid': touched && highlightOnValid && !error && !disabled
         }"
-        id="{{ id }}-bs"
       >
-        <option *ngIf="placeholder && !multiple"></option>
-        <ng-container *ngFor="let option of options">
-          <option
-            *ngIf="option.group === undefined"
-            [attr.disabled]="option.disabled"
-            [attr.selected]="option.selected"
-            [value]="option.value"
-          >
-            {{ option.viewValue }}
-          </option>
+        <div *ngIf="startSlot" class="input-group-prepend">
+          <span class="input-group-text">{{ startSlot }}</span>
+        </div>
+        <div *ngIf="startSlotHtml" class="input-group-prepend">
+          <span class="input-group-text" [innerHTML]="startSlotHtml"></span>
+        </div>
 
-          <optgroup *ngIf="option.group !== undefined" [label]="option.group">
+        <select
+          #select2ElementRef
+          style="width: 100%"
+          [attr.name]="name"
+          class="select2"
+          [ngClass]="{
+            'has-prepend': startSlot || startSlotHtml,
+            'has-append': endSlot || endSlotHtml,
+            'is-invalid': error && !disabled,
+            'is-valid': touched && highlightOnValid && !error && !disabled
+          }"
+          id="{{ id }}-bs"
+        >
+          <option *ngIf="placeholder && !multiple"></option>
+          <ng-container *ngFor="let option of options">
             <option
-              *ngFor="let option of option.groupValues"
+              *ngIf="option.group === undefined"
               [attr.disabled]="option.disabled"
               [attr.selected]="option.selected"
               [value]="option.value"
             >
               {{ option.viewValue }}
             </option>
-          </optgroup>
-        </ng-container>
-      </select>
 
-      <div *ngIf="endSlot" class="input-group-append">
-        <span class="input-group-text">{{ endSlot }}</span>
+            <optgroup *ngIf="option.group !== undefined" [label]="option.group">
+              <option
+                *ngFor="let option of option.groupValues"
+                [attr.disabled]="option.disabled"
+                [attr.selected]="option.selected"
+                [value]="option.value"
+              >
+                {{ option.viewValue }}
+              </option>
+            </optgroup>
+          </ng-container>
+        </select>
+
+        <div *ngIf="endSlot" class="input-group-append">
+          <span class="input-group-text">{{ endSlot }}</span>
+        </div>
+        <div *ngIf="endSlotHtml" class="input-group-append">
+          <span class="input-group-text" [innerHTML]="endSlotHtml"></span>
+        </div>
       </div>
-      <div *ngIf="endSlotHtml" class="input-group-append">
-        <span class="input-group-text" [innerHTML]="endSlotHtml"></span>
-      </div>
+      <small *ngIf="help" class="form-text text-muted">
+        {{ help }}
+      </small>
+      <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
     </div>
-    <small *ngIf="help" class="form-text text-muted">
-      {{ help }}
-    </small>
-    <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
   `,
-  styleUrls: ['./bs-select2.component.css'],
+  styles: [
+    `
+      .ng-select2 .select2-container--bootstrap4 .select2-selection--single,
+      .ng-select2 .select2-container--bootstrap4 .select2-selection--multiple {
+        height: 100% !important;
+      }
+
+      .ng-select2 .select2-selection__rendered {
+        padding-top: 4px;
+      }
+    `,
+  ],
   encapsulation: ViewEncapsulation.None,
 })
 export class BsSelect2Component extends DataInputBase implements DoCheck {
@@ -91,7 +104,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
   @ViewChild('select2ElementRef', { read: ElementRef })
   select2ElementRef: ElementRef;
 
-  @Input() theme: string;
+  @Input() theme: string = 'bootstrap4';
   @Input() liveSearch: boolean;
   @Input() options: Array<SelectOption> | Array<SelectOptionGroup>;
   @Input() map: Array<string>;
@@ -114,7 +127,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
   @Input() selectionCssClass: string;
   @Input() selectOnClose: boolean = false;
   @Input() tags: boolean = false;
-  @Input() width: string = 'resolve';
+  @Input() width: string = 'auto';
   @Input() scrollAfterSelect: boolean = false;
 
   @Output() selectEvent: EventEmitter<any> = new EventEmitter();
@@ -277,35 +290,18 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
 
   addOrRemoveValidationClasses(): void {
     setTimeout(() => {
-      /**
-       * For a custom bootstrap theme, make the border-color property important inside this
-       * style line of css classes on your bootstrap custom main theme stylesheet,
-       * to show the invalid border color on select2 component
-       *
-       * .was-validated .custom-select:invalid, .custom-select.is-invalid {
-       *   border-color: #your-color !important;
-       * }
-       */
       const select2Selection = $(this.select2.data('select2').$container).find(
         '.select2-selection',
       );
 
-      if (this.error && !this.disabled) {
-        select2Selection.addClass('custom-select');
-        select2Selection.addClass('is-invalid');
-      } else {
-        select2Selection.removeClass('custom-select');
-        select2Selection.removeClass('is-invalid');
+      select2Selection.removeClass('is-invalid');
 
-        if (this.highlightOnValid && this.touched) {
-          select2Selection.addClass('form-control');
-          select2Selection.addClass('is-valid');
-        }
+      if (this.highlightOnValid && this.touched) {
+        select2Selection.addClass('is-valid');
+      }
 
-        if (!this.highlightOnValid || !this.touched || this.disabled === true) {
-          select2Selection.removeClass('form-control');
-          select2Selection.removeClass('is-valid');
-        }
+      if (!this.highlightOnValid || !this.touched || this.disabled === true) {
+        select2Selection.removeClass('is-valid');
       }
     });
   }
@@ -336,8 +332,6 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
   refreshSelect2(): void {
     if (this.select2 !== undefined) {
       setTimeout(() => {
-        this.addFormControlClass();
-        this.addFormControlClassDelayed();
         this.disableSelect2WhenOptionsAreEmpty();
         this.addOrRemoveValidationClasses();
         this.buildSelect2Configs();
@@ -346,21 +340,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
     }
   }
 
-  addFormControlClass(): void {
-    const select2Container = $(this.select2.data('select2').$container);
-    select2Container.addClass('form-control');
-  }
-
-  addFormControlClassDelayed(): void {
-    setTimeout(() => {
-      const select2Container = $(this.select2.data('select2').$container);
-      select2Container.addClass('form-control');
-    });
-  }
-
   refresh(): void {
-    this.addFormControlClass();
-    this.addOrRemoveValidationClasses();
     this.initSelectedOptions();
   }
 }

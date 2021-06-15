@@ -8,9 +8,6 @@ import { DemoOptionsDto } from '../demo-options/demo-options.dto';
   templateUrl: './running-code.component.html',
 })
 export class RunningCodeComponent {
-  public theme =
-    localStorage.getItem('theme') === 'default' ? 'bootstrap' : undefined;
-
   public exampleModel: BaseModel = new BaseModel(ExampleDto);
   public demoOptionsModel: BaseModel = new BaseModel(DemoOptionsDto);
   public demoOptions: DemoOptionsDto = this.demoOptionsModel.getDto();

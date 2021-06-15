@@ -1,6 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
-import { ThemeService } from '../../services/theme.service';
-import { NgSmartAdminService } from '../../services/ng-smart-admin.service';
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-menu-header',
@@ -19,27 +17,6 @@ import { NgSmartAdminService } from '../../services/ng-smart-admin.service';
               Documentation
             </a>
           </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              href="#"
-              id="navbarDropdown"
-              role="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Themes
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item" (click)="setTheme('default')">
-                Default Bootstrap theme
-              </a>
-              <a class="dropdown-item" (click)="setTheme('smartAdmin')">
-                Smart Admin
-              </a>
-            </div>
-          </li>
         </ul>
       </div>
     </nav>
@@ -51,27 +28,7 @@ import { NgSmartAdminService } from '../../services/ng-smart-admin.service';
       }
     `,
   ],
-  providers: [ThemeService],
 })
-export class MenuHeaderComponent implements OnInit {
+export class MenuHeaderComponent {
   @HostBinding('class') class = 'row';
-
-  constructor(
-    private readonly themeService: ThemeService,
-    private readonly ngSmartAdminService: NgSmartAdminService,
-  ) {}
-
-  ngOnInit(): void {
-    const { theme } = localStorage;
-    this.setTheme(theme);
-  }
-
-  setTheme(theme = 'default'): void {
-    localStorage.setItem('theme', theme);
-    this.themeService.setTheme(theme);
-
-    if (theme === 'smartAdmin') {
-      this.ngSmartAdminService.refreshDom();
-    }
-  }
 }
