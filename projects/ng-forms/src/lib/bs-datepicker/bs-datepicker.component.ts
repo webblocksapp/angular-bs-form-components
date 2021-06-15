@@ -107,7 +107,7 @@ export class BsDatepickerComponent extends DataInputBase implements DoCheck {
   @Input() minViewMode: string = 'days';
   @Input() multidate: boolean | number = false;
   @Input() multidateSeparator: string = ', ';
-  @Input() orientation: string = 'auto';
+  @Input() orientation: 'left' | 'right' | 'top' | 'bottom' | 'auto' = 'auto';
   @Input() showOnFocus: boolean = true;
   @Input() startDate: string;
   @Input() startView: string = 'days';
@@ -131,7 +131,6 @@ export class BsDatepickerComponent extends DataInputBase implements DoCheck {
 
   private datepicker: any;
   private datepickerConfigs: any = {};
-  private focused: boolean = false;
   private watchedProperties = [
     'configs',
     'autoclose',
@@ -173,30 +172,6 @@ export class BsDatepickerComponent extends DataInputBase implements DoCheck {
   setConfigsAfterViewInit(): void {
     this.initJQueryEl();
     this.initDatepicker();
-  }
-
-  bindFocusoutEvents(event: any): any {
-    const value = this.getValue();
-    this.fillModel(value);
-
-    setTimeout(() => {
-      if (
-        value !== null &&
-        value !== '' &&
-        value !== undefined &&
-        this.focused
-      ) {
-        this.validateField();
-        this.focused = false;
-      }
-    }, 100);
-
-    return event;
-  }
-
-  bindFocusEvents(event: any): any {
-    this.focused = true;
-    return event;
   }
 
   detectPropertiesChanges(propName: string): void {
@@ -282,11 +257,8 @@ export class BsDatepickerComponent extends DataInputBase implements DoCheck {
 
     this.datepicker.on('hide', (event) => {
       const value = this.getValue();
-
-      if (isNull(value) && !this.focused) {
-        this.validateField();
-      }
-
+      this.fillModel(value);
+      this.validateField();
       this.hideEvent.emit(event);
     });
 
@@ -295,11 +267,6 @@ export class BsDatepickerComponent extends DataInputBase implements DoCheck {
     });
 
     this.datepicker.on('changeDate', (event) => {
-      const value = this.getValue();
-
-      this.fillModel(value);
-      this.validateField();
-
       this.changeDateEvent.emit(event);
     });
 

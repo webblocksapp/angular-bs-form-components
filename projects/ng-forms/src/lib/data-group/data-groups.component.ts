@@ -137,15 +137,15 @@ export class DataGroupsComponent
 
       this.dataInputComponents.forEach((dataInputComponent) => {
         const value = model.getValue(dataInputComponent.name);
+        const isTouched = model.getIsTouched(dataInputComponent.name);
+
         dataInputComponent.model = model;
 
         if (model.getSubmitted()) {
           dataInputComponent.touched = true;
-        }
-        if (
+        } else if (
           model.getSubmitted() === false &&
-          (isNull(value) ||
-            model.getIsTouched(dataInputComponent.name) === false)
+          (isNull(value) || isTouched === false)
         ) {
           dataInputComponent.touched = false;
         }

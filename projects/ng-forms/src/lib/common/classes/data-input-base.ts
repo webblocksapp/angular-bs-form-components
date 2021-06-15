@@ -378,11 +378,12 @@ export abstract class DataInputBase
         .validateField(this.name)
         .then(() => {
           this.setError();
-          this.setTouched();
-          this.bindEventsAfterValidateField();
         })
         .catch((error) => {
           this.setError(error[0]);
+        })
+        .finally(() => {
+          this.setTouched();
           this.bindEventsAfterValidateField();
         });
     }
@@ -438,7 +439,9 @@ export abstract class DataInputBase
   private subscribeToModelChanges(): void {
     const subject = this.model.getChange();
     this.changes$ = subject.subscribe(() => {
-      this.touched = this.model.getSubmitted() ? true : false;
+      this.touched = this.model.getSubmitted()
+        ? true
+        : this.model.getIsTouched(this.name);
       this.setError(this.model.getError(this.name));
     });
   }
