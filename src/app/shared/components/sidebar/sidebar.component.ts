@@ -1,19 +1,17 @@
-import { Component, HostBinding } from '@angular/core';
+import { Component, HostBinding, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
   template: `
     <ul class="navbar-nav">
       <ng-container *ngFor="let menuItem of sidebarMenu; let i = index">
-        <li
-          class="nav-item dropdown pl-3"
-          [ngClass]="{ 'border-top border-bottom': menuItem.division }"
-          *ngIf="menuItem.division === undefined"
-        >
+        <li class="nav-item dropdown pl-3">
           <a
             class="nav-link"
             (click)="expandChild(i)"
             [routerLink]="menuItem.path"
+            [routerLinkActive]="!menuItem.children ? 'active-link' : ''"
+            [ngClass]="{ 'bg-light text-secondary': menuItem.children }"
             role="button"
           >
             {{ menuItem.title }}
@@ -40,6 +38,7 @@ import { Component, HostBinding } from '@angular/core';
               <a
                 class="nav-link"
                 [routerLink]="menuItemChild.path"
+                routerLinkActive="active-link"
                 role="button"
               >
                 {{ menuItemChild.title }}
@@ -47,23 +46,36 @@ import { Component, HostBinding } from '@angular/core';
             </li>
           </ul>
         </li>
-        <li
-          class="nav-item dropdown pt-2 pb-2 pl-3 bg-light text-secondary"
-          *ngIf="menuItem.division === true"
-        >
-          {{ menuItem.title }}
-        </li>
       </ng-container>
     </ul>
   `,
+  styles: [
+    `
+      a.active-link {
+        font-weight: bolder;
+      }
+
+      :host .nav-item {
+        padding-left: 0px !important;
+      }
+
+      :host .nav-link {
+        padding-left: 17px;
+      }
+
+      :host .nav-item .navbar-nav {
+        padding-left: 17px;
+      }
+    `,
+  ],
 })
-export class SidebarComponent {
+export class SidebarComponent implements OnInit {
   @HostBinding('class') class = 'sidebar border';
 
   public sidebarMenu: any = [
     {
       title: 'Introduction',
-      path: '/docs',
+      path: '/docs/introduction',
     },
     {
       title: 'Setup',
@@ -71,47 +83,53 @@ export class SidebarComponent {
     },
     {
       title: 'Main components',
-      division: true,
-    },
-    {
-      title: 'Data Groups',
-      path: '/docs/data-groups',
+      collapsed: true,
+      children: [
+        {
+          title: 'Data Groups',
+          path: '/docs/data-groups',
+        },
+      ],
     },
     {
       title: 'Bootstrap components',
-      division: true,
-    },
-    {
-      title: 'Input',
-      path: '/docs/bootstrap/input',
-    },
-    {
-      title: 'Select',
-      path: '/docs/bootstrap/select',
-    },
-    {
-      title: 'Select2',
-      path: '/docs/bootstrap/select2',
-    },
-    {
-      title: 'Checks',
-      path: '/docs/bootstrap/checks',
-    },
-    {
-      title: 'Radios',
-      path: '/docs/bootstrap/radios',
-    },
-    {
-      title: 'File',
       collapsed: true,
-    },
-    {
-      title: 'Datepicker',
-      path: '/docs/bootstrap/datepicker',
+      children: [
+        {
+          title: 'Input',
+          path: '/docs/bootstrap/input',
+        },
+        {
+          title: 'Select',
+          path: '/docs/bootstrap/select',
+        },
+        {
+          title: 'Select2',
+          path: '/docs/bootstrap/select2',
+        },
+        {
+          title: 'Checks',
+          path: '/docs/bootstrap/checks',
+        },
+        {
+          title: 'Radios',
+          path: '/docs/bootstrap/radios',
+        },
+        {
+          title: 'Datepicker',
+          path: '/docs/bootstrap/datepicker',
+        },
+      ],
     },
   ];
 
+  ngOnInit(): void {
+    const menuItemIndex = +localStorage.getItem('menuItemIndex') || 0;
+    this.expandChild(menuItemIndex);
+  }
+
   expandChild(index): void {
+    localStorage.setItem('menuItemIndex', index);
     this.sidebarMenu.forEach((menuItem, i) => {
       if (index !== i) {
         menuItem.collapsed = true;

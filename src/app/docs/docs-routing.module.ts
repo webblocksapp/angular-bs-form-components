@@ -7,9 +7,13 @@ import { IntroductionComponent } from './introduction/introduction.component';
 const routes: Routes = [
   {
     path: '',
+    redirectTo: 'introduction',
+  },
+  {
+    path: '',
     component: DocsComponent,
     children: [
-      { path: '', component: IntroductionComponent },
+      { path: 'introduction', component: IntroductionComponent },
       { path: 'setup', component: SetupComponent },
       {
         path: 'data-groups',

@@ -12,6 +12,7 @@ import { MarkerDirective } from '@shared/directives/marker.directive';
 export class DocsBase implements AfterViewInit, OnDestroy {
   @ViewChildren(MarkerDirective) targets: QueryList<MarkerDirective>;
 
+  public Object = Object;
   public markers: any = [];
 
   ngAfterViewInit(): void {

@@ -16,22 +16,14 @@ import { DocsBase } from '@shared/classes';
 
           <h5 marker class="mt-3"><b>Dependencies</b></h5>
           <p>
-            Once installed <b>NG Forms</b> into your project, the following
-            dependencies will be added automatically:
+            Once installed <b>NG Data Groups</b> into your project, the
+            following dependencies will be added automatically:
           </p>
 
           <ul class="mb-5">
-            <li><code>"@fortawesome/fontawesome-free": "^5.1.0-9"</code></li>
-            <li><code>"@webblocksapp/class-validator": "^0.12.2"</code></li>
-            <li><code>"@ttskch/select2-bootstrap4-theme": "^1.5.2",</code></li>
-            <li><code>"@types/jquery": "^3.5.3"</code></li>
-            <li><code>"bootstrap": "^4.5.2"</code></li>
-            <li><code>"bootstrap-datepicker": "^1.9.0"</code></li>
-            <li><code>"bootstrap-select": "^1.13.18"</code></li>
-            <li><code>"jquery": "^3.5.1"</code></li>
-            <li><code>"select2": "^4.0.13"</code></li>
-            <li><code>"popper.js": "^1.14.3"</code></li>
-            <li><code>"uuid": "^8.3.0"</code></li>
+            <li *ngFor="let package of Object.keys(dependencies)">
+              <code>"{{ package }}": "{{ dependencies[package] }}"</code>
+            </li>
           </ul>
 
           <li>
@@ -56,7 +48,7 @@ import { DocsBase } from '@shared/classes';
         <h5 marker class="mt-4">About jQuery</h5>
 
         <p>
-          Most of Bootstrap components from NG Forms use Bootstrap 4.5 and
+          Most of Bootstrap components from NG Data Groups use Bootstrap 4.5 and
           jQuery, however it's not necessary to invoke jQuery methods to work
           with them.
         </p>
@@ -69,6 +61,13 @@ import { DocsBase } from '@shared/classes';
   `,
 })
 export class SetupComponent extends DocsBase {
+  public dependencies = {
+    '@types/lodash': '^4.14.168',
+    '@types/validator': '^13.1.3',
+    '@webblocksapp/class-validator': '0.13.1',
+    lodash: '^4.17.21',
+  };
+
   public tsconfigAppCode = `  ...
     "compilerOptions": {
       ...

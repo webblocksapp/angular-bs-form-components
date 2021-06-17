@@ -5,22 +5,17 @@ import { DocsBase } from '@shared/classes';
   selector: 'app-introduction',
   template: `
     <app-docs-container [markers]="markers">
-      <h3 marker>Introduction to NG Forms</h3>
+      <h3 marker>Introduction to NG Data Groups</h3>
 
       <div class="pt-3">
         <p>
-          NG Forms is an Angular Library designed to make easier form building
-          and validations. But not only that, you can create complex data
-          structures and convert them into UI data inputs easily.
+          NG Data Groups is an Angular Library designed to make easier form
+          building and validations. But not only that, you can create complex
+          data structures and convert them into UI data inputs easily.
         </p>
 
-        <h5 marker class="mt-4">Advantages of using NG Forms</h5>
+        <h5 marker class="mt-4">Advantages of using NG Data Groups</h5>
         <ul>
-          <li>
-            It makes a compilation of the most common used data input components
-            on the web industry. All of these components are angularized and
-            ready to use in an easy way.
-          </li>
           <li>
             It provides an small framework powered with a modified version of
             <code>typestack/class-validator</code> to validate complex data
