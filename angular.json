@@ -164,6 +164,44 @@
           }
         }
       }
+    },
+    "ng-bs4-form-components": {
+      "projectType": "library",
+      "root": "projects/ng-bs4-form-components",
+      "sourceRoot": "projects/ng-bs4-form-components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "tsConfig": "projects/ng-bs4-form-components/tsconfig.lib.json",
+            "project": "projects/ng-bs4-form-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/ng-bs4-form-components/tsconfig.lib.prod.json"
+            }
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ng-bs4-form-components/src/test.ts",
+            "tsConfig": "projects/ng-bs4-form-components/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-bs4-form-components/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ng-bs4-form-components/tsconfig.lib.json",
+              "projects/ng-bs4-form-components/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
     }
   },
   "defaultProject": "ng-data-groups-docs",

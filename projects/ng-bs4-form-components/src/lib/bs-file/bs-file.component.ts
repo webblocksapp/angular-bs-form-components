@@ -6,7 +6,7 @@ import {
   Input,
   ViewChild,
 } from '@angular/core';
-import { DataInputBase } from '../common/classes/data-input-base';
+import { DataInputBase } from '@webblocksapp/ng-data-groups';
 
 @Component({
   selector: 'bs-file',

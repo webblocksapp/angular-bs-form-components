@@ -6,9 +6,9 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { DataInputBase } from '../common/classes/data-input-base';
+import { DataInputBase, parseValue, clone } from '@webblocksapp/ng-data-groups';
+import { mapSelectOptions } from '../common/utils';
 import { RadioDisplay, RadioLook, SelectOption } from '../common/types';
-import { parseValue, clone, mapSelectOptions } from '../common/utils';
 
 @Component({
   selector: 'bs-radios',

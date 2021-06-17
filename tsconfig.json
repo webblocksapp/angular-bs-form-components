@@ -15,12 +15,21 @@
     "typeRoots": ["node_modules/@types", "./types"],
     "lib": ["es2018", "dom"],
     "paths": {
-      "ng-bs-form-components": [
-        "dist/ng-bs-form-components/ng-bs-form-components",
-        "dist/ng-bs-form-components"
+      "ng-data-groups": [
+        "dist/ng-data-groups/ng-data-groups",
+        "dist/ng-data-groups"
+      ],
+      "ng-bs4-form-components": [
+        "dist/ng-bs4-form-components/ng-bs4-form-components",
+        "dist/ng-bs4-form-components"
       ],
       "@shared/*": ["src/app/shared/*"],
-      "@webblocksapp/ng-data-groups": ["projects/ng-data-groups/src/public-api"]
+      "@webblocksapp/ng-data-groups": [
+        "projects/ng-data-groups/src/public-api"
+      ],
+      "@webblocksapp/ng-bs4-form-components": [
+        "projects/ng-bs4-form-components/src/public-api"
+      ]
     }
   },
   "angularCompilerOptions": {

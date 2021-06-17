@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { NgDataGroupsModule } from '@webblocksapp/ng-data-groups';
+import { NgBs4FormComponentsModule } from '@webblocksapp/ng-bs4-form-components';
 import { MenuHeaderComponent } from './components/menu-header/menu-header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { OverviewComponent } from './components/overview/overview.component';
@@ -8,7 +10,6 @@ import { DocsContainerComponent } from './components/docs-container/docs-contain
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { CodeExampleModule } from './components/code-example/code-example.module';
-import { NgDataGroupsModule } from '@webblocksapp/ng-data-groups';
 import { ApiTableModule } from './components/api-table/api-table.module';
 import { MarkerDirective } from './directives/marker.directive';
 
@@ -31,6 +32,7 @@ import { MarkerDirective } from './directives/marker.directive';
     CodeExampleModule,
     TabsComponent,
     NgDataGroupsModule,
+    NgBs4FormComponentsModule,
     ApiTableModule,
     MarkerDirective,
   ],
@@ -40,6 +42,7 @@ import { MarkerDirective } from './directives/marker.directive';
     HighlightModule,
     CodeExampleModule,
     NgDataGroupsModule,
+    NgBs4FormComponentsModule,
     ApiTableModule,
   ],
   providers: [

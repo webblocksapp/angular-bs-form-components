@@ -1,6 +1,5 @@
 import { Component, DoCheck, HostBinding } from '@angular/core';
-import { DataInputBase } from '../common/classes/data-input-base';
-import parseValue from '../common/utils/parse-value';
+import { DataInputBase, parseValue } from '@webblocksapp/ng-data-groups';
 
 @Component({
   selector: 'bs-input',

@@ -9,8 +9,7 @@ import {
   EventEmitter,
   DoCheck,
 } from '@angular/core';
-import { DataInputBase } from '../common/classes/data-input-base';
-import { isNull } from '../common/utils';
+import { DataInputBase, isNull } from '@webblocksapp/ng-data-groups';
 
 @Component({
   selector: 'bs-datepicker',

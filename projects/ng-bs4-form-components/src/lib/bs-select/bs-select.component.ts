@@ -9,10 +9,14 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { DataInputBase } from '../common/classes/data-input-base';
-import { SelectOption, SelectOptionGroup } from '../common/types';
-import { isNull, mapSelectOptions, clone } from '../common/utils';
-import parseValue from '../common/utils/parse-value';
+import {
+  DataInputBase,
+  isNull,
+  clone,
+  parseValue,
+} from '@webblocksapp/ng-data-groups';
+import { mapSelectOptions } from '../common/utils';
+import { SelectOptionGroup, SelectOption } from '../common/types';
 
 @Component({
   selector: 'bs-select',

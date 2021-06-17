@@ -6,9 +6,9 @@ import {
   QueryList,
   ViewChildren,
 } from '@angular/core';
-import { DataInputBase } from '../common/classes/data-input-base';
+import { DataInputBase, parseValue, clone } from '@webblocksapp/ng-data-groups';
+import { mapSelectOptions } from '../common/utils';
 import { CheckDisplay, CheckLook, SelectOption } from '../common/types';
-import { parseValue, mapSelectOptions, clone } from '../common/utils';
 
 @Component({
   selector: 'bs-checks',

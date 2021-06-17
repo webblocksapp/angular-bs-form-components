@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { BaseModelArray, SelectOption } from '@webblocksapp/ng-data-groups';
+import { BaseModelArray } from '@webblocksapp/ng-data-groups';
+import { SelectOption } from '@webblocksapp/ng-bs4-form-components';
 import { ExampleDto } from './example.dto';
 
 @Component({
