@@ -8,7 +8,7 @@ import { DocsContainerComponent } from './components/docs-container/docs-contain
 import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { CodeExampleModule } from './components/code-example/code-example.module';
-import { NgFormsModule } from 'projects/ng-forms/src/public-api';
+import { NgDataGroupsModule } from '@webblocksapp/ng-data-groups';
 import { ApiTableModule } from './components/api-table/api-table.module';
 import { MarkerDirective } from './directives/marker.directive';
 
@@ -30,7 +30,7 @@ import { MarkerDirective } from './directives/marker.directive';
     HighlightModule,
     CodeExampleModule,
     TabsComponent,
-    NgFormsModule,
+    NgDataGroupsModule,
     ApiTableModule,
     MarkerDirective,
   ],
@@ -39,7 +39,7 @@ import { MarkerDirective } from './directives/marker.directive';
     RouterModule,
     HighlightModule,
     CodeExampleModule,
-    NgFormsModule,
+    NgDataGroupsModule,
     ApiTableModule,
   ],
   providers: [

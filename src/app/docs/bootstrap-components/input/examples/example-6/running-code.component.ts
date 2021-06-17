@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseModelArray } from '@webblocksapp/ng-forms';
+import { BaseModelArray } from '@webblocksapp/ng-data-groups';
 import { UserDto } from './user.dto';
 
 @Component({

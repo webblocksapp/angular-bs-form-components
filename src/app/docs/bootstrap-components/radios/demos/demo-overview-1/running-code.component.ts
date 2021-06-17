@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseModel } from '@webblocksapp/ng-forms';
+import { BaseModel } from '@webblocksapp/ng-data-groups';
 import { ExampleDto } from './example.dto';
 import { DemoOptionsDto } from '../demo-options/demo-options.dto';
 

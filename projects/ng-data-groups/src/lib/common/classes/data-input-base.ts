@@ -21,7 +21,7 @@ import {
   MouseEventsInterface,
 } from '../interfaces';
 import * as uuid from 'uuid';
-import { BaseModel } from '../classes/base-model';
+import { BaseModel } from './base-model';
 import { InputType, InputSize } from '../types';
 import { capitalize, isNull } from '../utils';
 import { ValidationError } from '@webblocksapp/class-validator';

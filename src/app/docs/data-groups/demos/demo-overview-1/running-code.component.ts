@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { ValidationError } from '@webblocksapp/class-validator';
-import { BaseModel } from '@webblocksapp/ng-forms';
+import { BaseModel } from '@webblocksapp/ng-data-groups';
 import { ExampleDto1 } from './dtos/example-dto-1.dto';
 
 @Component({

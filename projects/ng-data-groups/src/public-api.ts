@@ -1,8 +1,8 @@
 /*
- * Public API Surface of ng-forms
+ * Public API Surface of ng-data-groups
  */
 
-export * from './lib/ng-forms.module';
+export * from './lib/ng-data-groups.module';
 export * from './lib/common/classes/data-input-base';
 export * from './lib/common/classes/base-model';
 export * from './lib/common/classes/base-model-array';

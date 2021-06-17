@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { BaseModel } from '@webblocksapp/ng-forms';
+import { BaseModel } from '@webblocksapp/ng-data-groups';
 
 @Component({
   selector: 'demo-options',

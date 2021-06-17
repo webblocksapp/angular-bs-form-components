@@ -20,7 +20,7 @@
         "dist/ng-bs-form-components"
       ],
       "@shared/*": ["src/app/shared/*"],
-      "@webblocksapp/ng-forms": ["projects/ng-forms/src/public-api"]
+      "@webblocksapp/ng-data-groups": ["projects/ng-data-groups/src/public-api"]
     }
   },
   "angularCompilerOptions": {

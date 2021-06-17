@@ -31,4 +31,4 @@ import { BsDatepickerModule } from './bs-datepicker/bs-datepicker.module';
     BsDatepickerModule,
   ],
 })
-export class NgFormsModule {}
+export class NgDataGroupsModule {}
