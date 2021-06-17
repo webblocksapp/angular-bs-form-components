@@ -1,11 +1,22 @@
 {
   "name": "ng-bs4-form-components",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "peerDependencies": {
     "@angular/common": "^10.1.6",
     "@angular/core": "^10.1.6"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "@fortawesome/fontawesome-free": "^5.1.0-9",
+    "@ttskch/select2-bootstrap4-theme": "^1.5.2",
+    "@types/jquery": "^3.5.3",
+    "@webblocksapp/ng-data-groups": "*",
+    "bootstrap": "^4.5.2",
+    "bootstrap-datepicker": "^1.9.0",
+    "bootstrap-select": "^1.13.18",
+    "jquery": "^3.5.1",
+    "moment": "^2.29.1",
+    "popper.js": "^1.14.3",
+    "select2": "^4.0.13",
+    "uuid": "^8.3.0"
   }
 }
