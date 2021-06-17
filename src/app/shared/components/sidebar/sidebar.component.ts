@@ -74,12 +74,8 @@ export class SidebarComponent implements OnInit {
 
   public sidebarMenu: any = [
     {
-      title: 'Introduction',
-      path: '/docs/introduction',
-    },
-    {
-      title: 'Setup',
-      path: '/docs/setup',
+      title: 'Quick start',
+      path: '/docs/quick-start',
     },
     {
       title: 'Main components',

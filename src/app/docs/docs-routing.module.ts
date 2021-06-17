@@ -1,20 +1,18 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { DocsComponent } from './docs.component';
-import { SetupComponent } from './getting-started/setup.component';
-import { IntroductionComponent } from './introduction/introduction.component';
+import { QuickStartComponent } from './quick-start/quick-start.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'introduction',
+    redirectTo: 'quick-start',
   },
   {
     path: '',
     component: DocsComponent,
     children: [
-      { path: 'introduction', component: IntroductionComponent },
-      { path: 'setup', component: SetupComponent },
+      { path: 'quick-start', component: QuickStartComponent },
       {
         path: 'data-groups',
         loadChildren: () =>

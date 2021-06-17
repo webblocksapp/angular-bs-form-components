@@ -42,7 +42,15 @@ import { DocsBase } from '@shared/classes';
 
           <li>Register inside <code>angular.json</code>:</li>
 
-          <pre><code class="mt-3" [highlight]='angularJsonCode'></code></pre>
+          <pre><code class="mt-3 mb-3" [highlight]='angularJsonCode'></code></pre>
+
+          <li>
+            Register the <code>NgDataGroupsModule</code> and
+            <code>NgBs4FormComponentsModule</code> on your
+            <code>app.module.ts</code> as follows:
+          </li>
+
+          <pre><code class="mt-3 mb-3" [highlight]='module'></code></pre>
         </ol>
 
         <h5 marker class="mt-4">About jQuery</h5>
@@ -113,5 +121,26 @@ export class IndexComponent extends DocsBase {
       ...
     ]
   ...
+  `;
+
+  public module = `
+    import { BrowserModule } from '@angular/platform-browser';
+    import { NgModule } from '@angular/core';
+    import { AppComponent } from './app.component';
+    ...
+    import { NgDataGroupsModule } from '@webblocksapp/ng-data-groups';
+    import { NgBs4FormComponentsModule } from '@webblocksapp/ng-bs4-form-components';
+
+    @NgModule({
+      declarations: [AppComponent],
+      imports: [
+        ...
+        NgDataGroupsModule,
+        NgBs4FormComponentsModule
+        ...
+      ],
+      bootstrap: [AppComponent],
+    })
+    export class AppModule {}
   `;
 }
