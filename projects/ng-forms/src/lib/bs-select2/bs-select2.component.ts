@@ -92,7 +92,7 @@ import parseValue from '../common/utils/parse-value';
         height: 100% !important;
       }
 
-      .ng-select2 .select2-selection__rendered {
+      .ng-select2 .input-group-lg .select2-selection__rendered {
         padding-top: 4px;
       }
     `,
@@ -134,6 +134,8 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
   @Output() clearEvent: EventEmitter<any> = new EventEmitter();
   @Output() closeEvent: EventEmitter<any> = new EventEmitter();
 
+  private validate: boolean = false;
+  private changed: boolean = false;
   private select2: any;
   private _options: Array<SelectOption> | Array<SelectOptionGroup>;
   private select2Configs: any = {};
@@ -210,6 +212,14 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
       }
 
       this.fillModel(value);
+
+      if (this.validate === true) {
+        this.validateField();
+      } else {
+        this.validate = true;
+      }
+
+      this.changed = true;
       this.change(event);
     });
 
@@ -224,7 +234,10 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
     });
 
     this.select2.on('select2:close', (event) => {
-      this.validateField();
+      if (!this.changed) {
+        this.validateField();
+      }
+      this.changed = false;
       this.closeEvent.emit(event.params.data);
     });
   }
@@ -309,6 +322,7 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
   initSelectedOptions(): void {
     setTimeout(() => {
       const selectedOptions = this.model.getValue(this.name) || null;
+      this.validate = false;
       this.select2.val(selectedOptions).trigger('change');
     });
   }
