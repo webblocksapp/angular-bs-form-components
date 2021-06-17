@@ -96,6 +96,10 @@ export class SidebarComponent implements OnInit {
       collapsed: true,
       children: [
         {
+          title: 'Setup',
+          path: '/docs/bootstrap/setup',
+        },
+        {
           title: 'Input',
           path: '/docs/bootstrap/input',
         },
