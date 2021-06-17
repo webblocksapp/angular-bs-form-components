@@ -23,14 +23,14 @@ import { DocsBase } from '@shared/classes';
           <ul class="mb-5">
             <li><code>"@fortawesome/fontawesome-free": "^5.1.0-9"</code></li>
             <li><code>"@webblocksapp/class-validator": "^0.12.2"</code></li>
+            <li><code>"@ttskch/select2-bootstrap4-theme": "^1.5.2",</code></li>
             <li><code>"@types/jquery": "^3.5.3"</code></li>
             <li><code>"bootstrap": "^4.5.2"</code></li>
             <li><code>"bootstrap-datepicker": "^1.9.0"</code></li>
             <li><code>"bootstrap-select": "^1.13.18"</code></li>
-            <li><code>"generic-type-guard": "^3.2.0"</code></li>
             <li><code>"jquery": "^3.5.1"</code></li>
             <li><code>"select2": "^4.0.13"</code></li>
-            <li><code>"select2-bootstrap-theme": "0.1.0-beta.10"</code></li>
+            <li><code>"popper.js": "^1.14.3"</code></li>
             <li><code>"uuid": "^8.3.0"</code></li>
           </ul>
 
@@ -89,12 +89,12 @@ export class SetupComponent extends DocsBase {
   public angularJsonCode = `  ...
     "styles": [
       ...
-      "node_modules/@fortawesome/fontawesome-free/css/all.css",
       "node_modules/bootstrap/dist/css/bootstrap.min.css",
-      "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
+      "node_modules/@fortawesome/fontawesome-free/css/all.css",
       "node_modules/bootstrap-select/dist/css/bootstrap-select.min.css",
+      "node_modules/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css",
       "node_modules/select2/dist/css/select2.min.css",
-      "node_modules/select2-bootstrap-theme/dist/select2-bootstrap.min.css"
+      "node_modules/@ttskch/select2-bootstrap4-theme/dist/select2-bootstrap4.min.css"
       ...
     ],
     "scripts": [
@@ -102,9 +102,9 @@ export class SetupComponent extends DocsBase {
       "node_modules/jquery/dist/jquery.min.js",
       "node_modules/popper.js/dist/umd/popper.js",
       "node_modules/bootstrap/dist/js/bootstrap.min.js",
-      "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
       "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
-      "node_modules/select2/dist/js/select2.min.js",
+      "node_modules/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js",
+      "node_modules/select2/dist/js/select2.min.js"
       ...
     ]
   ...
