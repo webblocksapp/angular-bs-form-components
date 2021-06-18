@@ -5,7 +5,6 @@ import {
   ViewChild,
   ViewEncapsulation,
   Input,
-  DoCheck,
   Output,
   EventEmitter,
 } from '@angular/core';
@@ -145,7 +144,7 @@ import { SelectOptionGroup, SelectOption } from '../common/types';
     `,
   ],
 })
-export class BsSelectComponent extends DataInputBase implements DoCheck {
+export class BsSelectComponent extends DataInputBase {
   @HostBinding('class') class = 'ng-select form-group';
   @ViewChild('selectElementRef', { read: ElementRef })
   selectElementRef: ElementRef;
@@ -203,10 +202,6 @@ export class BsSelectComponent extends DataInputBase implements DoCheck {
   setConfigsAfterViewInit(): void {
     this.initJQueryEl();
     this.initSelect();
-  }
-
-  ngDoCheck(): void {
-    this.watchModel();
   }
 
   bindWatchModelEvents(): void {

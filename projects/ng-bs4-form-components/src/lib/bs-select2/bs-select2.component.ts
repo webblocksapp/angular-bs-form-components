@@ -7,7 +7,6 @@ import {
   Output,
   ViewEncapsulation,
   EventEmitter,
-  DoCheck,
 } from '@angular/core';
 import {
   DataInputBase,
@@ -103,7 +102,7 @@ import { SelectOptionGroup, SelectOption } from '../common/types';
   ],
   encapsulation: ViewEncapsulation.None,
 })
-export class BsSelect2Component extends DataInputBase implements DoCheck {
+export class BsSelect2Component extends DataInputBase {
   @HostBinding('class') class = 'ng-select2 form-group';
   @ViewChild('select2ElementRef', { read: ElementRef })
   select2ElementRef: ElementRef;
@@ -174,10 +173,6 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
   setConfigsAfterViewInit(): void {
     this.initJQueryEl();
     this.initSelect2();
-  }
-
-  ngDoCheck(): void {
-    this.watchModel();
   }
 
   bindWatchModelEvents(): void {

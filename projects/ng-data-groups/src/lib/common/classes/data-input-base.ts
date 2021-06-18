@@ -12,6 +12,7 @@ import {
   NgZone,
   OnDestroy,
   AfterViewInit,
+  DoCheck,
 } from '@angular/core';
 
 import {
@@ -36,6 +37,7 @@ export abstract class DataInputBase
     AfterViewInit,
     OnChanges,
     OnDestroy,
+    DoCheck,
     DataInputBaseInterface,
     FormEventsInterface,
     KeyboardEventsInterface,
@@ -108,6 +110,10 @@ export abstract class DataInputBase
   ngAfterViewInit(): void {
     this.alwaysSetConfigsAfterViewInit();
     this.setConfigsAfterViewInit();
+  }
+
+  ngDoCheck(): void {
+    this.watchModel();
   }
 
   // ----------------------------------------------------------------

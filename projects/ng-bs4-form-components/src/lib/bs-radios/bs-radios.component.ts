@@ -1,6 +1,5 @@
 import {
   Component,
-  DoCheck,
   ElementRef,
   Input,
   QueryList,
@@ -76,7 +75,7 @@ import { RadioDisplay, RadioLook, SelectOption } from '../common/types';
     `,
   ],
 })
-export class BsRadiosComponent extends DataInputBase implements DoCheck {
+export class BsRadiosComponent extends DataInputBase {
   @Input() options: Array<any>;
   @Input() map: Array<string>;
   @Input() display: RadioDisplay = 'default';
@@ -85,10 +84,6 @@ export class BsRadiosComponent extends DataInputBase implements DoCheck {
   @ViewChildren('radio') radios: QueryList<ElementRef>;
 
   private _options: Array<SelectOption>;
-
-  ngDoCheck(): void {
-    this.watchModel();
-  }
 
   bindWatchModelEvents(): void {
     this.initCheckedOption();

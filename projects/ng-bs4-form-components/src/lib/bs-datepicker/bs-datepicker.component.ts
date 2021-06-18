@@ -7,7 +7,6 @@ import {
   ViewChild,
   ViewEncapsulation,
   EventEmitter,
-  DoCheck,
 } from '@angular/core';
 import { DataInputBase, isNull } from '@webblocksapp/ng-data-groups';
 
@@ -80,7 +79,7 @@ import { DataInputBase, isNull } from '@webblocksapp/ng-data-groups';
     `,
   ],
 })
-export class BsDatepickerComponent extends DataInputBase implements DoCheck {
+export class BsDatepickerComponent extends DataInputBase {
   @HostBinding('class') class = 'ng-datepicker form-group';
   @HostBinding('id') hostId: string;
 
@@ -178,10 +177,6 @@ export class BsDatepickerComponent extends DataInputBase implements DoCheck {
       if (this.watchedProperties.indexOf(propName) > -1)
         this.refreshDatepicker();
     }
-  }
-
-  ngDoCheck(): void {
-    this.watchModel();
   }
 
   bindWatchModelEvents(): void {

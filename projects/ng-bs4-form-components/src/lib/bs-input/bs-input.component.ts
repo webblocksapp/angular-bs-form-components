@@ -1,4 +1,4 @@
-import { Component, DoCheck, HostBinding } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 import { DataInputBase, parseValue } from '@webblocksapp/ng-data-groups';
 
 @Component({
@@ -70,12 +70,8 @@ import { DataInputBase, parseValue } from '@webblocksapp/ng-data-groups';
     `,
   ],
 })
-export class BsInputComponent extends DataInputBase implements DoCheck {
+export class BsInputComponent extends DataInputBase {
   @HostBinding('class') class = 'form-group';
-
-  ngDoCheck(): void {
-    this.watchModel();
-  }
 
   bindWatchModelEvents(): void {
     this.value = this.model.getValue(this.name);

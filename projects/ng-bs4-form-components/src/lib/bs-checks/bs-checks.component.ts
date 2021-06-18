@@ -1,6 +1,5 @@
 import {
   Component,
-  DoCheck,
   ElementRef,
   Input,
   QueryList,
@@ -75,7 +74,7 @@ import { CheckDisplay, CheckLook, SelectOption } from '../common/types';
     `,
   ],
 })
-export class BsChecksComponent extends DataInputBase implements DoCheck {
+export class BsChecksComponent extends DataInputBase {
   @Input() options: Array<SelectOption>;
   @Input() map: Array<string>;
   @Input() display: CheckDisplay = 'default';
@@ -84,10 +83,6 @@ export class BsChecksComponent extends DataInputBase implements DoCheck {
   @ViewChildren('checkbox') checkboxes: QueryList<ElementRef>;
 
   private _options: Array<SelectOption>;
-
-  ngDoCheck(): void {
-    this.watchModel();
-  }
 
   bindWatchModelEvents(): void {
     this.initCheckedOptions();
