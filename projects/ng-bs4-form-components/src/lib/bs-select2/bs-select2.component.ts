@@ -219,11 +219,11 @@ export class BsSelect2Component extends DataInputBase implements DoCheck {
 
       if (this.validate === true) {
         this.validateField();
+        this.changed = true;
       } else {
         this.validate = true;
       }
 
-      this.changed = true;
       this.change(event);
     });
 
