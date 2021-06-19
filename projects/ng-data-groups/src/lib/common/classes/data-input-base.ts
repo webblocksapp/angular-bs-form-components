@@ -422,16 +422,15 @@ export abstract class DataInputBase
       }
 
       let value = this.model.getValue(this.name);
-      let valueToDiff = null;
 
       if (typeof value !== 'object') {
-        valueToDiff = [value];
+        value = [value];
       }
 
-      const changes = this.modelDiffer.diff(valueToDiff);
+      const changes = this.modelDiffer.diff(value);
 
       if (changes) {
-        this.fillModel(value);
+        this.fillModel(this.model.getValue(this.name));
         this.bindWatchModelEvents();
       }
 
