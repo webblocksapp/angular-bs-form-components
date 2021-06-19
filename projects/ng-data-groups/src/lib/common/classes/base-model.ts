@@ -8,18 +8,16 @@ import { removeArrayIndex, getLastArrayIndex } from '../utils';
 export class BaseModel {
   private dtoObject: any;
   private errors: Array<ValidationError> = [];
-  private submitted: boolean = false;
-  private change: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
-    false,
-  );
-  private errorsChange: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
-    false,
-  );
-  public isValid: boolean = false;
-  public nested: Nested[] = [];
+
+  private change: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private validatingNestedFields: String[] = [];
   private index: number = 0;
   private map: Array<FieldMap> = [];
+
+  public isValid: boolean = false;
+  public nested: Nested[] = [];
+  public isSubmitted: boolean = false;
+  public isResetting: boolean = false;
 
   constructor(DtoClass: any, args?: BaseModelArgs) {
     this.setDto(DtoClass);
@@ -37,6 +35,14 @@ export class BaseModel {
 
   public getIndex(): number {
     return this.index;
+  }
+
+  public getMap(): Array<FieldMap> {
+    return this.map;
+  }
+
+  public setMap(map: Array<FieldMap>) {
+    this.map = map;
   }
 
   public setBaseModelArgs(args: BaseModelArgs) {
@@ -92,7 +98,8 @@ export class BaseModel {
     });
   }
 
-  public fill(data: any): void {
+  public fill(data: any, reset: boolean = true): void {
+    if (reset) this.reset();
     const objectKeys = Object.keys(data);
     objectKeys.forEach((key) => {
       const value = this.generateValue(data, key);
@@ -152,34 +159,38 @@ export class BaseModel {
     return true;
   }
 
-  public setSubmitted(flag: boolean): void {
-    this.submitted = flag;
+  public setIsSubmitted(flag: boolean) {
+    this.isSubmitted = flag;
   }
 
-  public getSubmitted(): boolean {
-    return this.submitted;
+  private setIsResetting(flag: boolean) {
+    this.isResetting = flag;
   }
 
-  private setErrors(errors: Array<ValidationError>): void {
-    errors.forEach((_error) => {
-      const hasError = this.errors.filter(
-        (error) => error.property === _error.property,
-      )[0];
+  public setErrors(errors: Array<ValidationError>, all: boolean = false): void {
+    if (all) {
+      this.errors = errors;
+    } else {
+      errors.forEach((_error) => {
+        const foundError = this.errors.find(
+          (error) => error.property === _error.property,
+        );
 
-      if (isEmpty(hasError)) {
-        this.errors.push(_error);
-      }
-    });
-
-    this.errors = this.errors.map((error) => {
-      for (let _error of errors) {
-        if (error.property === _error.property) {
-          return _error;
+        if (isEmpty(foundError)) {
+          this.errors.push(_error);
         }
-      }
+      });
 
-      return error;
-    });
+      this.errors = this.errors.map((error) => {
+        for (let _error of errors) {
+          if (error.property === _error.property) {
+            return _error;
+          }
+        }
+
+        return error;
+      });
+    }
   }
 
   private parseFieldName(fieldName: string): string {
@@ -321,12 +332,12 @@ export class BaseModel {
         }
 
         if (errors.length > 0) {
-          this.setErrors(errors);
+          this.setErrors(errors, true);
           resolve({ isValid: false, validatedData: null, errors });
           this.isValid = false;
         }
 
-        this.setSubmitted(true);
+        this.setIsSubmitted(true);
         this.emitChange();
       });
     });
@@ -369,21 +380,11 @@ export class BaseModel {
   }
 
   public emitChange(): void {
-    const currentValue = this.change.getValue();
-    this.change.next(!currentValue);
+    this.change.next(!this.change.getValue());
   }
 
-  public getChange(): BehaviorSubject<Boolean> {
+  public getChange(): BehaviorSubject<boolean> {
     return this.change;
-  }
-
-  public emitErrorsChange(): void {
-    const currentValue = this.errorsChange.getValue();
-    this.errorsChange.next(!currentValue);
-  }
-
-  public getErrorsChange(): BehaviorSubject<Boolean> {
-    return this.errorsChange;
   }
 
   public add(path: string, data: any = null): void {
@@ -473,7 +474,6 @@ export class BaseModel {
       });
 
     this.remapErrorsRecursive(path, index);
-    this.emitErrorsChange();
   }
 
   private remapErrorsRecursive(
@@ -517,11 +517,12 @@ export class BaseModel {
   }
 
   public reset(): void {
+    this.setIsResetting(true);
+    this.setIsSubmitted(false);
     this.cleanErrors();
     this.cleanMap();
-    this.setSubmitted(false);
     this.resetDto();
-    this.emitErrorsChange();
     this.emitChange();
+    this.setIsResetting(false);
   }
 }

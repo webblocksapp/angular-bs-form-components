@@ -18,7 +18,6 @@ import { isEmpty } from 'lodash';
 import { BaseModelArray } from '../common/classes/base-model-array';
 import { Subscription } from 'rxjs';
 import { DataInputBase } from '../common/classes/data-input-base';
-import { isNull } from '../common/utils';
 
 @Component({
   selector: 'data-groups',
@@ -46,7 +45,6 @@ export class DataGroupsComponent
   @Input()
   class = 'd-block';
 
-  @Input() noForm: boolean = false;
   @Input() model: any;
   @Input() groups: string[];
   @Input() enctype: string;
@@ -60,14 +58,12 @@ export class DataGroupsComponent
   dataGroupComponents: QueryList<DataGroupComponent>;
 
   private _model: Array<BaseModel>;
-  private firstMount: boolean = false;
   private changes$: Subscription;
-  private errorsChanges$: Subscription;
-  private allowNullErrors: boolean = false;
   private dataInputComponents: Array<DataInputBase>;
 
   ngOnInit(): void {
     this.initBaseModel();
+    this.subscribeToModelChanges();
   }
 
   ngAfterContentInit(): void {
@@ -94,39 +90,20 @@ export class DataGroupsComponent
     if (this.model instanceof BaseModel) {
       this._model = [this.model];
     }
-
-    if (this.firstMount === false) {
-      this.subscribeToModelChanges();
-      this.subscribeToModelErrorsChanges();
-      this.firstMount = true;
-    }
   }
 
   private subscribeToModelChanges(): void {
     const subject = this.model.getChange();
     this.changes$ = subject.subscribe(() => {
-      if (this.firstMount === true) {
-        setTimeout(() => {
-          this.initBaseModel();
-          this.inputModels();
-        });
-      }
-    });
-  }
-
-  private subscribeToModelErrorsChanges(): void {
-    const subject = this.model.getErrorsChange();
-    this.errorsChanges$ = subject.subscribe(() => {
-      this.allowNullErrors = true;
+      setTimeout(() => {
+        this.initBaseModel();
+        this.inputModels();
+      });
     });
   }
 
   private unsubscribeToModelChanges(): void {
     this.changes$.unsubscribe();
-  }
-
-  private unsubscribeToModelErrorsChanges(): void {
-    this.errorsChanges$.unsubscribe();
   }
 
   private inputModels(): void {
@@ -136,43 +113,11 @@ export class DataGroupsComponent
       this.dataInputComponents = dataGroupComponent.getDataInputComponents();
 
       this.dataInputComponents.forEach((dataInputComponent) => {
-        const value = model.getValue(dataInputComponent.name);
-        const isTouched = model.getIsTouched(dataInputComponent.name);
-
         dataInputComponent.model = model;
-
-        if (model.getSubmitted()) {
-          dataInputComponent.touched = true;
-        } else if (
-          model.getSubmitted() === false &&
-          (isNull(value) || isTouched === false)
-        ) {
-          dataInputComponent.touched = false;
-        }
-
-        dataInputComponent.usingDatagroup = true;
         dataInputComponent.highlightOnValid = this.highlightOnValid;
-        this.setErrorToComponent(model, dataInputComponent, index);
         dataInputComponent.refresh();
       });
     });
-
-    this.allowNullErrors = false;
-  }
-
-  private setErrorToComponent(
-    model: BaseModel,
-    dataInputComponent: DataInputBase,
-    index: number,
-  ) {
-    const error = model.getError(dataInputComponent.name);
-    if (!isEmpty(error) && !this.allowNullErrors) {
-      dataInputComponent.setError(error);
-    }
-
-    if (this.allowNullErrors && index === model.getIndex()) {
-      dataInputComponent.setError(error);
-    }
   }
 
   public submitData(): void {
@@ -221,7 +166,6 @@ export class DataGroupsComponent
 
   private unsubscribeAll() {
     this.unsubscribeToModelChanges();
-    this.unsubscribeToModelErrorsChanges();
   }
 
   ngOnDestroy(): void {

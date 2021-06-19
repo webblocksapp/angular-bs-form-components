@@ -10,7 +10,7 @@ type BaseModelArgs = {
 
 type FieldMap = {
   name: string;
-  touched: boolean;
+  touched?: boolean;
 };
 
 export { BaseModelArgs, Nested, FieldMap };

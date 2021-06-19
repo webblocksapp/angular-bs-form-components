@@ -88,9 +88,8 @@ export abstract class DataInputBase
   public error: string;
   public isReactiveForm: boolean = true;
   public touched: boolean = false;
-  public usingDatagroup: boolean = false;
   private modelDiffer: KeyValueDiffer<string, any>;
-  private modelMounted: boolean = false;
+  private modelWatcherMounted: boolean = false;
   private changes$: Subscription;
 
   constructor(private differs: KeyValueDiffers, public ngZone: NgZone) {}
@@ -141,6 +140,12 @@ export abstract class DataInputBase
 
   setComponentUniqueId(): void {
     if (this.id === undefined) this.id = uuid.v4();
+  }
+
+  initializeComponentNullValue(): void {
+    if (isNull(this.model.getValue(this.name))) {
+      this.fillModel(null);
+    }
   }
 
   getInputSize(): void {
@@ -372,7 +377,6 @@ export abstract class DataInputBase
       }
 
       this.model.setValue(this.name, value);
-      this.value = this.model.getValue(this.name);
     }
   }
 
@@ -395,10 +399,6 @@ export abstract class DataInputBase
     }
   }
 
-  setTouched() {
-    this.touched = true;
-  }
-
   bindEventsAfterValidateField(): void {}
 
   setError(error: ValidationError = null): void {
@@ -406,9 +406,10 @@ export abstract class DataInputBase
       const { constraints } = error;
       this.error = (Object.values(constraints)[0] as string) || '';
       this.error = capitalize(this.error);
-      this.setTouched();
     } else {
-      this.error = '';
+      if (!isNull(this.model.getValue(this.name)) || this.model.isResetting) {
+        this.error = '';
+      }
     }
   }
 
@@ -421,22 +422,25 @@ export abstract class DataInputBase
       }
 
       let value = this.model.getValue(this.name);
+      let valueToDiff = null;
 
       if (typeof value !== 'object') {
-        value = [value];
+        valueToDiff = [value];
       }
 
-      const changes = this.modelDiffer.diff(value);
+      const changes = this.modelDiffer.diff(valueToDiff);
 
       if (changes) {
+        this.fillModel(value);
         this.bindWatchModelEvents();
       }
 
-      if (this.modelMounted === false && this.usingDatagroup === false) {
+      if (this.modelWatcherMounted === false) {
+        this.initializeComponentNullValue();
         this.subscribeToModelChanges();
       }
 
-      this.modelMounted = true;
+      this.modelWatcherMounted = true;
     }
   }
 
@@ -445,11 +449,19 @@ export abstract class DataInputBase
   private subscribeToModelChanges(): void {
     const subject = this.model.getChange();
     this.changes$ = subject.subscribe(() => {
-      this.touched = this.model.getSubmitted()
-        ? true
-        : this.model.getIsTouched(this.name);
+      this.setTouched();
       this.setError(this.model.getError(this.name));
     });
+  }
+
+  private setTouched() {
+    if (isNull(this.model.getValue(this.name))) {
+      this.touched = false;
+    } else {
+      this.touched = this.model.isSubmitted
+        ? true
+        : this.model.getIsTouched(this.name);
+    }
   }
 
   private unSubscribeToModelChanges(): void {
