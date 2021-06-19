@@ -434,7 +434,7 @@ export class BsSelectComponent extends DataInputBase {
   }
 
   refresh(): void {
-    if (this.model.getSubmitted()) {
+    if (this.model.isSubmitted) {
       this.setOnValidated();
     }
 
