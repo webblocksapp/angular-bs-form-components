@@ -4,12 +4,12 @@ export class DemoOptionsDto {
   size: string = 'default';
   autoclose: string = 'yes';
   calendarWeeks: string = 'no';
-  daysOfWeekDisabled: Array<number>;
-  daysOfWeekHighlighted: Array<number>;
+  daysOfWeekDisabled: Array<number> = null;
+  daysOfWeekHighlighted: Array<number> = null;
   enableOnReadonly: string = 'yes';
   readonly: string = 'no';
   disabled: string = 'no';
-  endDate: string;
+  endDate: string = null;
   format: string = 'yyyy-mm-dd';
   placeholder: string = 'YYYY-MM-DD';
   immediateUpdates: string = 'no';
@@ -17,7 +17,7 @@ export class DemoOptionsDto {
   minViewMode: string = 'days';
   orientation: string = 'auto';
   showOnFocus: string = 'yes';
-  startDate: string;
+  startDate: string = null;
   showWeekDays: string = 'yes';
   todayBtn: string = 'no';
   todayHighlight: string = 'no';
