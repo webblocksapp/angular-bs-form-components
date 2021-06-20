@@ -1,0 +1,20 @@
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <text-input #dataInput label="Email" type="email" name="email"></text-input>
+    <text-input
+      #dataInput
+      label="Nick name"
+      name="nickName"
+      help="Your name alias that will be displayed on the chat"
+    ></text-input>
+  </data-group>
+  <div class="d-flex">
+    <button class="btn btn-primary">Send</button>
+    <button type="button" class="btn btn-secondary ml-3" (click)="populate()">
+      Populate
+    </button>
+    <button type="button" class="btn btn-info ml-3" (click)="clear()">
+      Clear
+    </button>
+  </div>
+</data-groups>

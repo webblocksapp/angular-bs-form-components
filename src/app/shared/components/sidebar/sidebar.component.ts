@@ -85,6 +85,10 @@ export class SidebarComponent implements OnInit {
           title: 'Data Groups',
           path: '/docs/data-groups',
         },
+        {
+          title: 'Data Input Base',
+          path: '/docs/data-input-base',
+        },
       ],
     },
     {

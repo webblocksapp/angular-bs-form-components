@@ -20,9 +20,11 @@ import { CodeBlockComponent } from './components/code-block.component';
         </div>
 
         <div *ngIf="!codeMode">
+          <ng-content select="[content]"></ng-content>
           <ng-content select="[running-code]"></ng-content>
         </div>
         <div *ngIf="codeMode">
+          <ng-content select="[content-code]"></ng-content>
           <ul class="nav nav-tabs">
             <ng-container *ngFor="let tab of tabs">
               <li

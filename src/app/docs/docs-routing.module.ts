@@ -19,6 +19,11 @@ const routes: Routes = [
           import('./data-groups/index.module').then((m) => m.IndexModule),
       },
       {
+        path: 'data-input-base',
+        loadChildren: () =>
+          import('./data-input-base/index.module').then((m) => m.IndexModule),
+      },
+      {
         path: 'bootstrap/setup',
         loadChildren: () =>
           import('./bootstrap-components/setup/index.module').then(

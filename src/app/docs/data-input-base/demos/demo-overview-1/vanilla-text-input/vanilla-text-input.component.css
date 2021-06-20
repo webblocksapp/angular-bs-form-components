@@ -1,0 +1,26 @@
+:host > div {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 17px;
+}
+
+.help-text {
+  opacity: 0.6;
+}
+
+.is-valid label {
+  color: rgb(0, 201, 174);
+}
+
+.is-valid input {
+  border: 1px solid rgb(0, 201, 174);
+}
+
+.is-invalid input {
+  border: 1px solid rgb(236, 23, 140);
+}
+
+.is-invalid label,
+.is-invalid .error-feedback {
+  color: rgb(236, 23, 140);
+}

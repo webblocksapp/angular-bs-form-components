@@ -9,21 +9,27 @@ import { DocsBase } from '@shared/classes';
 
       <div class="pt-3">
         <p>
-          NG Data Groups is an Angular Library designed to make easier form
-          building and validations. But not only that, you can create complex
-          data structures and convert them into UI data inputs easily.
+          NG Data Groups is an small Angular framework designed to make easier
+          form building and validations. But not only that, you can create
+          complex data structures and convert them into UI data inputs easily
+          with validations.
         </p>
 
         <h5 marker class="mt-4">Advantages of using NG Data Groups</h5>
         <ul>
           <li>
-            It provides an small framework powered with a modified version of
-            <code>typestack/class-validator</code> to validate complex data
-            models from UI data form input components easily.
+            Build complex forms easily and quickly with conditional and nested
+            validations.
+          </li>
+          <li>Powered with Bootstrap 4 Form components.</li>
+          <li>
+            Equipped with a modified version of
+            <code>typestack/class-validator</code>, to validate data in forms or
+            complex UIs.
           </li>
           <li>
-            You can use it's core functionalities when building your custom
-            components to manage data.
+            It comes with the <code>DataInputBase</code> class which will help
+            you to build custom form or data UI components.
           </li>
         </ul>
 
