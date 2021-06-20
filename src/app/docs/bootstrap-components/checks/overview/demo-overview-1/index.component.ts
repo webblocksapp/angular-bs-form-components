@@ -5,6 +5,10 @@ declare var require: any;
 @Component({
   selector: 'demo-overview-1',
   template: `
+    <p>
+      Bootstrap checks improves the form a check input is handled, inheriting
+      the bootstrap stylesheets.
+    </p>
     <code-example label="Bootstrap checks overview">
       <code-block type="running-code">
         <running-code></running-code>
@@ -51,11 +55,16 @@ export class IndexComponent implements OnInit {
   public dtoCode2: string;
 
   ngOnInit() {
-    this.htmlCode1 = require('!raw-loader!./running-code.component.html').default;
-    this.htmlCode2 = require('!raw-loader!../demo-options/demo-options.component.html').default;
-    this.componentCode1 = require('!raw-loader!./running-code.component.ts').default;
-    this.componentCode2 = require('!raw-loader!../demo-options/demo-options.component.ts').default;
+    this.htmlCode1 =
+      require('!raw-loader!./running-code.component.html').default;
+    this.htmlCode2 =
+      require('!raw-loader!../demo-options/demo-options.component.html').default;
+    this.componentCode1 =
+      require('!raw-loader!./running-code.component.ts').default;
+    this.componentCode2 =
+      require('!raw-loader!../demo-options/demo-options.component.ts').default;
     this.dtoCode1 = require('!raw-loader!./example.dto.ts').default;
-    this.dtoCode2 = require('!raw-loader!../demo-options/demo-options.dto.ts').default;
+    this.dtoCode2 =
+      require('!raw-loader!../demo-options/demo-options.dto.ts').default;
   }
 }

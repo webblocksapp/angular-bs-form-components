@@ -5,6 +5,14 @@ declare var require: any;
 @Component({
   selector: 'demo-overview-3',
   template: `
+    <marker>Validating nested objects</marker>
+    <p>
+      With NG Data Groups you can easily make complex validations on nested
+      objects, using the <code>BaseModelArray</code> class, configuring on the
+      constructor the model attributes that contains a nested object. The same
+      approach can be done with the <code>BaseModel</code> class if you are not
+      going to manipulate an array of models.
+    </p>
     <code-example>
       <code-block type="running-code">
         <running-code></running-code>
@@ -45,8 +53,10 @@ export class IndexComponent implements OnInit {
   public dtoCode3: string;
 
   ngOnInit() {
-    this.htmlCode = require('!raw-loader!./running-code.component.html').default;
-    this.componentCode = require('!raw-loader!./running-code.component.ts').default;
+    this.htmlCode =
+      require('!raw-loader!./running-code.component.html').default;
+    this.componentCode =
+      require('!raw-loader!./running-code.component.ts').default;
     this.dtoCode1 = require('!raw-loader!./dtos/host.dto.ts').default;
     this.dtoCode2 = require('!raw-loader!./dtos/guest.dto.ts').default;
     this.dtoCode3 = require('!raw-loader!./dtos/detail.dto.ts').default;

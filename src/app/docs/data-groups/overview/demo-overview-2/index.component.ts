@@ -5,6 +5,13 @@ declare var require: any;
 @Component({
   selector: 'demo-overview-2',
   template: `
+    <marker>Working with multiple data models</marker>
+    <p>
+      With <code>data-groups</code> component you can easily fill and validate
+      multiple data models. For example you are building a software for a
+      library and you need to create and validate multiple books in a form. The
+      following example shows how to do that in an easy way.
+    </p>
     <code-example label="Multiple data models">
       <code-block type="running-code">
         <running-code></running-code>
@@ -44,8 +51,10 @@ export class IndexComponent implements OnInit {
   public dtoCode: string;
 
   ngOnInit() {
-    this.htmlCode = require('!raw-loader!./running-code.component.html').default;
-    this.componentCode = require('!raw-loader!./running-code.component.ts').default;
+    this.htmlCode =
+      require('!raw-loader!./running-code.component.html').default;
+    this.componentCode =
+      require('!raw-loader!./running-code.component.ts').default;
     this.dtoCode = require('!raw-loader!./dtos/book.dto.ts').default;
   }
 }

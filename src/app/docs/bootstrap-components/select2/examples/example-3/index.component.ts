@@ -5,6 +5,7 @@ declare var require: any;
 @Component({
   selector: 'example-3',
   template: `
+    <marker>Common events</marker>
     <code-example>
       <code-block type="running-code">
         <running-code></running-code>

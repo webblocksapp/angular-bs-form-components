@@ -5,6 +5,7 @@ declare var require: any;
 @Component({
   selector: 'example-3',
   template: `
+    <marker>Multiple selection</marker>
     <code-example>
       <code-block type="running-code">
         <running-code></running-code>
@@ -51,11 +52,16 @@ export class IndexComponent implements OnInit {
   public dtoCode2: string;
 
   ngOnInit() {
-    this.htmlCode1 = require('!raw-loader!./running-code.component.html').default;
-    this.htmlCode2 = require('!raw-loader!./example-options/example-options.component.html').default;
-    this.componentCode1 = require('!raw-loader!./running-code.component.ts').default;
-    this.componentCode2 = require('!raw-loader!./example-options/example-options.component.ts').default;
+    this.htmlCode1 =
+      require('!raw-loader!./running-code.component.html').default;
+    this.htmlCode2 =
+      require('!raw-loader!./example-options/example-options.component.html').default;
+    this.componentCode1 =
+      require('!raw-loader!./running-code.component.ts').default;
+    this.componentCode2 =
+      require('!raw-loader!./example-options/example-options.component.ts').default;
     this.dtoCode1 = require('!raw-loader!./example.dto.ts').default;
-    this.dtoCode2 = require('!raw-loader!./example-options/example-options.dto.ts').default;
+    this.dtoCode2 =
+      require('!raw-loader!./example-options/example-options.dto.ts').default;
   }
 }

@@ -5,6 +5,7 @@ declare var require: any;
 @Component({
   selector: 'example-4',
   template: `
+    <marker>Simulating api request</marker>
     <code-example>
       <code-block type="running-code">
         <running-code></running-code>

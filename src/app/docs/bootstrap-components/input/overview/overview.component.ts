@@ -10,7 +10,7 @@ import { DocsBase } from '@shared/classes';
 
     <demo-overview-1></demo-overview-1>
 
-    <h5 marker>Working with multiple inputs</h5>
+    <marker>Working with multiple inputs</marker>
     <p>
       With <code>data-groups</code> component you can easily fill and validate
       multiple inputs.

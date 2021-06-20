@@ -11,7 +11,7 @@ import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { CodeExampleModule } from './components/code-example/code-example.module';
 import { ApiTableModule } from './components/api-table/api-table.module';
-import { MarkerDirective } from './directives/marker.directive';
+import { MarkerComponent } from './components/marker/marker.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +20,7 @@ import { MarkerDirective } from './directives/marker.directive';
     SidebarComponent,
     DocsContainerComponent,
     TabsComponent,
-    MarkerDirective,
+    MarkerComponent,
   ],
   exports: [
     CommonModule,
@@ -34,7 +34,7 @@ import { MarkerDirective } from './directives/marker.directive';
     NgDataGroupsModule,
     NgBs4FormComponentsModule,
     ApiTableModule,
-    MarkerDirective,
+    MarkerComponent,
   ],
   imports: [
     CommonModule,

@@ -4,16 +4,11 @@ import { Component, ElementRef, Input, OnInit } from '@angular/core';
   selector: 'app-docs-container',
   template: `
     <div class="row">
-      <div
-        [ngClass]="{
-          'col-9': markers.length,
-          'col-12': !markers.length
-        }"
-      >
+      <div class="col-9">
         <ng-content></ng-content>
       </div>
-      <div *ngIf="markers.length" class="col-3">
-        <app-overview [markers]="markers"></app-overview>
+      <div class="col-3">
+        <app-overview *ngIf="markers.length" [markers]="markers"></app-overview>
       </div>
     </div>
   `,

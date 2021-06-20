@@ -5,6 +5,13 @@ declare var require: any;
 @Component({
   selector: 'demo-overview-1',
   template: `
+    <marker>Building a vanilla text input</marker>
+    <p>
+      The <b>Data Input Base</b> is the base class to be used for extending form
+      UI components to bind them with the NG Data Groups Framework. The
+      following example is a simple input component created from scratch
+      inheriting from the <code>DataInputBase</code> class.
+    </p>
     <code-example label="Demo:">
       <div content>
         Check the code <i class="i-btn fas fa-code"></i> to see more details.

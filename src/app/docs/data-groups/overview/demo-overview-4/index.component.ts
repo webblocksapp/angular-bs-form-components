@@ -5,6 +5,7 @@ declare var require: any;
 @Component({
   selector: 'demo-overview-4',
   template: `
+    <marker>Conditional validation</marker>
     <code-example label="Data groups overview">
       <code-block type="running-code">
         <running-code></running-code>
@@ -44,8 +45,10 @@ export class IndexComponent implements OnInit {
   public any: string;
 
   ngOnInit() {
-    this.htmlCode = require('!raw-loader!./running-code.component.html').default;
-    this.componentCode = require('!raw-loader!./running-code.component.ts').default;
+    this.htmlCode =
+      require('!raw-loader!./running-code.component.html').default;
+    this.componentCode =
+      require('!raw-loader!./running-code.component.ts').default;
     this.dtoCode1 = require('!raw-loader!./dtos/person.dto.ts').default;
     this.dtoCode2 = require('!raw-loader!./dtos/spouse.dto.ts').default;
     this.any = require('!raw-loader!./dtos/groups.ts').default;

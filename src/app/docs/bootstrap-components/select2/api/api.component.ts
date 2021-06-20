@@ -13,11 +13,11 @@ import ApiTableData from '@shared/components/api-table/api-table-data.type';
       "
     ></code>
 
-    <h5 marker>Properties</h5>
+    <marker>Properties</marker>
 
     <api-table [data]="properties"></api-table>
 
-    <h5 marker>Events</h5>
+    <marker>Events</marker>
 
     <api-table [data]="events"></api-table>
   `,
@@ -59,8 +59,7 @@ export class ApiComponent extends DocsBase {
         'Appends an slot with rendered html at the end of the select.',
     },
     {
-      name:
-        '@Input() options: Array&lt;SelectOption&gt; | Array&lt;SelectOptionGroup&gt;',
+      name: '@Input() options: Array&lt;SelectOption&gt; | Array&lt;SelectOptionGroup&gt;',
       description: 'The array of selectable options.',
     },
     {

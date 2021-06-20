@@ -5,7 +5,7 @@ import { DocsBase } from '@shared/classes';
   selector: 'app-introduction',
   template: `
     <app-docs-container [markers]="markers">
-      <h3 marker>Quick Start</h3>
+      <marker>Quick Start</marker>
 
       <div class="pt-3">
         <p>
@@ -15,7 +15,7 @@ import { DocsBase } from '@shared/classes';
           with validations.
         </p>
 
-        <h5 marker class="mt-4">Advantages of using NG Data Groups</h5>
+        <marker class="mt-4">Advantages of using NG Data Groups</marker>
         <ul>
           <li>
             Build complex forms easily and quickly with conditional and nested
@@ -33,7 +33,7 @@ import { DocsBase } from '@shared/classes';
           </li>
         </ul>
 
-        <h3 marker>Setup</h3>
+        <marker>Setup</marker>
 
         <div class="pt-3">
           <ol>
@@ -42,7 +42,7 @@ import { DocsBase } from '@shared/classes';
               <code>npm i @webblocksapp/ng-data-groups</code>
             </li>
 
-            <h5 marker class="mt-3"><b>Dependencies</b></h5>
+            <marker class="mt-3"><b>Dependencies</b></marker>
             <p>
               Once installed <b>NG Data Groups</b> into your project, the
               following dependencies will be added automatically:
@@ -55,7 +55,7 @@ import { DocsBase } from '@shared/classes';
             </ul>
           </ol>
 
-          <h5 marker class="mt-3"><b>Module's registration</b></h5>
+          <marker class="mt-3"><b>Module's registration</b></marker>
 
           <ol start="2">
             <li>
@@ -81,7 +81,7 @@ import { DocsBase } from '@shared/classes';
           </ul>
         </div>
 
-        <h5 marker class="mt-4">Getting started</h5>
+        <marker class="mt-4">Getting started</marker>
 
         <p>
           To get involved quickly with the NG Data Groups framework, check the

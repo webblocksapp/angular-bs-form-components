@@ -5,6 +5,11 @@ declare var require: any;
 @Component({
   selector: 'demo-overview-2',
   template: `
+    <marker>Working with multiple checks</marker>
+    <p>
+      With <code>data-groups</code> component you can easily fill and validate
+      multiple checks.
+    </p>
     <code-example label="Multiple checks">
       <code-block type="running-code">
         <running-code></running-code>
@@ -30,8 +35,10 @@ export class IndexComponent implements OnInit {
   public dtoCode1: string;
 
   ngOnInit() {
-    this.htmlCode1 = require('!raw-loader!./running-code.component.html').default;
-    this.componentCode1 = require('!raw-loader!./running-code.component.ts').default;
+    this.htmlCode1 =
+      require('!raw-loader!./running-code.component.html').default;
+    this.componentCode1 =
+      require('!raw-loader!./running-code.component.ts').default;
     this.dtoCode1 = require('!raw-loader!./example.dto.ts').default;
   }
 }

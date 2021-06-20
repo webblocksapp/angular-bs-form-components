@@ -5,6 +5,13 @@ declare var require: any;
 @Component({
   selector: 'example-4',
   template: `
+    <marker>Map select options</marker>
+    <p>
+      If you want to preserve the original data structure for select options,
+      you can use the <code>map</code> property which receives an array of three
+      positions (the last is optional):
+      <code>['value', 'viewValue', 'disabled']</code>.
+    </p>
     <code-example>
       <code-block type="running-code">
         <running-code></running-code>

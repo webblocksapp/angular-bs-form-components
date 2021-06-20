@@ -12,7 +12,7 @@ import { DocsBase } from '@shared/classes';
 
     <demo-overview-1></demo-overview-1>
 
-    <h5 marker>Working with multiple select2</h5>
+    <marker>Working with multiple select2</marker>
     <p>
       With <code>data-groups</code> component you can easily fill and validate
       multiple select2.

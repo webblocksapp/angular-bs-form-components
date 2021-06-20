@@ -5,6 +5,19 @@ declare var require: any;
 @Component({
   selector: 'demo-overview-1',
   template: `
+    <div class="alert alert-warning" role="alert">
+      This overview uses the <b>Bootstrap 4.x Form Components</b> package. If
+      you want to use your custom components, check the section of
+      <b>Building your own components</b> to make them compatible with the NG
+      Data Groups Framework.
+    </div>
+
+    <marker>Basic overview</marker>
+    <p>
+      Data groups are the encapsulation of a data model. To work with NG Data
+      Groups is mandatory to encapsulate an NG Data Group form component into a
+      data group because it binds the model data into each one.
+    </p>
     <code-example label="Data groups overview">
       <code-block type="running-code">
         <running-code></running-code>
@@ -44,8 +57,10 @@ export class IndexComponent implements OnInit {
   public dtoCode: string;
 
   ngOnInit() {
-    this.htmlCode = require('!raw-loader!./running-code.component.html').default;
-    this.componentCode = require('!raw-loader!./running-code.component.ts').default;
+    this.htmlCode =
+      require('!raw-loader!./running-code.component.html').default;
+    this.componentCode =
+      require('!raw-loader!./running-code.component.ts').default;
     this.dtoCode = require('!raw-loader!./dtos/example-dto-1.dto.ts').default;
   }
 }

@@ -5,6 +5,7 @@ declare var require: any;
 @Component({
   selector: 'example-2',
   template: `
+    <marker>Password input with character validations</marker>
     <code-example>
       <code-block type="running-code">
         <running-code></running-code>
@@ -30,8 +31,10 @@ export class IndexComponent implements OnInit {
   public dtoCode: string;
 
   ngOnInit() {
-    this.htmlCode = require('!raw-loader!./running-code.component.html').default;
-    this.componentCode = require('!raw-loader!./running-code.component.ts').default;
+    this.htmlCode =
+      require('!raw-loader!./running-code.component.html').default;
+    this.componentCode =
+      require('!raw-loader!./running-code.component.ts').default;
     this.dtoCode = require('!raw-loader!./example.dto.ts').default;
   }
 }

@@ -5,6 +5,7 @@ declare var require: any;
 @Component({
   selector: 'example-2',
   template: `
+    <marker>DatePicker with different sizes</marker>
     <code-example>
       <code-block type="running-code">
         <running-code></running-code>

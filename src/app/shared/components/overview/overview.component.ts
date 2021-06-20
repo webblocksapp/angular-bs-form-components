@@ -5,7 +5,6 @@ import {
   Input,
   ViewChild,
 } from '@angular/core';
-import { MarkerDirective } from '@shared/directives/marker.directive';
 
 @Component({
   selector: 'app-overview',
@@ -15,9 +14,9 @@ import { MarkerDirective } from '@shared/directives/marker.directive';
         <li
           class="nav-item dropdown"
           *ngFor="let marker of markers"
-          (click)="scrollToMarker(marker.elementRef.nativeElement)"
+          (click)="scrollToMarker(marker)"
         >
-          {{ marker.elementRef.nativeElement.innerText }}
+          {{ marker.innerText }}
         </li>
       </ul>
     </div>
@@ -46,8 +45,7 @@ import { MarkerDirective } from '@shared/directives/marker.directive';
 })
 export class OverviewComponent implements AfterViewInit {
   @ViewChild('markersWrapper', { read: ElementRef }) markersWrapper: ElementRef;
-
-  @Input() markers: Array<MarkerDirective>;
+  @Input() markers: Array<any>;
 
   ngAfterViewInit(): void {
     this.updatePosition();
