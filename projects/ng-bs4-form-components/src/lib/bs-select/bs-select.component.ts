@@ -380,7 +380,7 @@ export class BsSelectComponent extends DataInputBase {
   refreshSelectedOptions(): void {
     if (this.model !== undefined) {
       const selectedOptions = [];
-      const currentSelectedOptions = this.model.getValue(this.name) || [];
+      const currentSelectedOptions = this.value || [];
       currentSelectedOptions.forEach((value) => {
         if (selectedOptions.length < this.maxOptions) {
           selectedOptions.push(value);
@@ -393,7 +393,7 @@ export class BsSelectComponent extends DataInputBase {
 
   initSelectedOptions(): void {
     setTimeout(() => {
-      this.select.selectpicker('val', this.model.getValue(this.name) || '');
+      this.select.selectpicker('val', this.value || '');
     });
   }
 

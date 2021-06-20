@@ -96,7 +96,7 @@ export class BsDatepickerComponent extends DataInputBase {
   @Input() defaultViewDate: string = 'day';
   @Input() disableTouchKeyboard: boolean = false;
   @Input() enableOnReadonly: boolean = true;
-  @Input() endDate: string;
+  @Input() endDate: string = null;
   @Input() forceParse: boolean = true;
   @Input() format: string = 'yyyy-mm-dd';
   @Input() immediateUpdates: boolean = false;
@@ -107,7 +107,7 @@ export class BsDatepickerComponent extends DataInputBase {
   @Input() multidateSeparator: string = ', ';
   @Input() orientation: 'left' | 'right' | 'top' | 'bottom' | 'auto' = 'auto';
   @Input() showOnFocus: boolean = true;
-  @Input() startDate: string;
+  @Input() startDate: string = null;
   @Input() startView: string = 'days';
   @Input() showWeekDays: boolean = true;
   @Input() title: string;
@@ -297,7 +297,7 @@ export class BsDatepickerComponent extends DataInputBase {
   }
 
   setValue(): void {
-    const value = this.model.getValue(this.name);
+    const value = this.value;
 
     if (!isNull(value)) {
       if (this.multidate === true) {
@@ -343,10 +343,10 @@ export class BsDatepickerComponent extends DataInputBase {
   refreshDatepicker(): void {
     this.datepicker.datepicker('destroy');
     this.initDatepicker();
-    this.datepicker.datepicker('update', this.model.getValue(this.name));
+    this.datepicker.datepicker('update', this.value);
   }
 
   refresh(): void {
-    this.datepicker.datepicker('update', this.model.getValue(this.name));
+    this.datepicker.datepicker('update', this.value);
   }
 }

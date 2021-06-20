@@ -131,7 +131,7 @@ export class BsChecksComponent extends DataInputBase {
     setTimeout(() => {
       this.checkboxes.forEach((checkboxElementRef) => {
         const checkbox = checkboxElementRef.nativeElement;
-        const values = this.model.getValue(this.name) || [];
+        const values = this.value || [];
 
         // tslint:disable-next-line: triple-equals
         const filteredValue = values.filter((value) => value == checkbox.value);

@@ -133,7 +133,7 @@ export class BsRadiosComponent extends DataInputBase {
     setTimeout(() => {
       this.radios.forEach((radioElementRef) => {
         const radio = radioElementRef.nativeElement;
-        const value = this.model.getValue(this.name);
+        const value = this.value;
 
         // tslint:disable-next-line: triple-equals
         if (radio.value == value) {

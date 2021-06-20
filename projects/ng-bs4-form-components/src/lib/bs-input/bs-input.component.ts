@@ -73,10 +73,6 @@ import { DataInputBase, parseValue } from '@webblocksapp/ng-data-groups';
 export class BsInputComponent extends DataInputBase {
   @HostBinding('class') class = 'form-group';
 
-  bindWatchModelEvents(): void {
-    this.value = this.model.getValue(this.name);
-  }
-
   bindFocusoutEvents(event: any): any {
     this.validateField();
     return event;

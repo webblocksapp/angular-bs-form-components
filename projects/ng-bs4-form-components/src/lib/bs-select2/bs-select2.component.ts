@@ -320,7 +320,7 @@ export class BsSelect2Component extends DataInputBase {
 
   initSelectedOptions(): void {
     setTimeout(() => {
-      const selectedOptions = this.model.getValue(this.name) || null;
+      const selectedOptions = this.value || null;
       this.validate = false;
       this.select2.val(selectedOptions).trigger('change');
     });

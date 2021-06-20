@@ -60,7 +60,6 @@ export abstract class DataInputBase
   @Input() endSlot: string;
   @Input() endSlotHtml: string;
   @Input() autocomplete: boolean;
-  @Input() value: any = null;
   @Input() model: BaseModel;
   @Input() highlightOnValid = false;
 
@@ -88,6 +87,9 @@ export abstract class DataInputBase
   public error: string;
   public isReactiveForm: boolean = true;
   public touched: boolean = false;
+  public isValid: boolean = false;
+  public isInvalid: boolean = false;
+  public value: any = null;
   private modelDiffer: KeyValueDiffer<string, any>;
   private modelWatcherMounted: boolean = false;
   private changes$: Subscription;
@@ -132,8 +134,24 @@ export abstract class DataInputBase
 
   alwaysDetectPropertiesChanges(propName: string): void {
     if (propName === 'size') this.getInputSize();
-    if (propName === 'disabled') this.computeDisabledProperty();
+    if (propName === 'disabled') {
+      this.computeDisabledProperty();
+      this.computeIsValidProperty();
+      this.computeIsInvalidValidProperty();
+    }
+    if (propName === 'highlightOnValid') this.computeIsValidProperty();
     if (propName === 'readonly') this.computeReadonlyProperty();
+  }
+
+  computeIsValidProperty(): void {
+    this.isValid =
+      this.touched && this.highlightOnValid && !this.error && !this.disabled
+        ? true
+        : false;
+  }
+
+  computeIsInvalidValidProperty(): void {
+    this.isInvalid = this.error && !this.disabled ? true : false;
   }
 
   detectPropertiesChanges(propName: string): void {}
@@ -143,7 +161,7 @@ export abstract class DataInputBase
   }
 
   initializeComponentNullValue(): void {
-    if (isNull(this.model.getValue(this.name))) {
+    if (isNull(this.value)) {
       this.fillModel(null);
     }
   }
@@ -377,6 +395,7 @@ export abstract class DataInputBase
       }
 
       this.model.setValue(this.name, value);
+      this.value = value;
     }
   }
 
@@ -407,10 +426,13 @@ export abstract class DataInputBase
       this.error = (Object.values(constraints)[0] as string) || '';
       this.error = capitalize(this.error);
     } else {
-      if (!isNull(this.model.getValue(this.name)) || this.model.isResetting) {
+      if (!isNull(this.value) || this.model.isResetting) {
         this.error = '';
       }
     }
+
+    this.computeIsValidProperty();
+    this.computeIsInvalidValidProperty();
   }
 
   refresh(): void {}
@@ -430,7 +452,7 @@ export abstract class DataInputBase
       const changes = this.modelDiffer.diff(value);
 
       if (changes) {
-        this.fillModel(this.model.getValue(this.name));
+        this.fillModel(this.model.getValue(this.name) || null);
         this.bindWatchModelEvents();
       }
 
@@ -454,13 +476,15 @@ export abstract class DataInputBase
   }
 
   private setTouched() {
-    if (isNull(this.model.getValue(this.name))) {
+    if (isNull(this.value)) {
       this.touched = false;
     } else {
       this.touched = this.model.isSubmitted
         ? true
         : this.model.getIsTouched(this.name);
     }
+
+    this.computeIsValidProperty();
   }
 
   private unSubscribeToModelChanges(): void {
