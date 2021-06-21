@@ -1,1 +1,20 @@
-<p>running code works!</p>
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <select-input
+      #dataInput
+      label="City"
+      name="city"
+      placeholder="Select a city"
+      [options]="selectOptions"
+    ></select-input>
+  </data-group>
+  <div class="d-flex">
+    <button class="btn btn-primary">Send</button>
+    <button type="button" class="btn btn-secondary ml-3" (click)="populate()">
+      Populate
+    </button>
+    <button type="button" class="btn btn-info ml-3" (click)="clear()">
+      Clear
+    </button>
+  </div>
+</data-groups>

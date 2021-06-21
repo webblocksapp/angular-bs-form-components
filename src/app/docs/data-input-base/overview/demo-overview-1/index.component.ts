@@ -70,7 +70,8 @@ declare var require: any;
           </li>
         </ul>
         <p>
-          You can check the other properties and methods on the API section.
+          You can check the other properties and methods on the
+          <a href="/docs/data-input-base/api" target="blank">API section</a>.
         </p>
       </code-block>
       <code-block
@@ -96,7 +97,7 @@ declare var require: any;
       >
         <p>
           Here is were magic occurs when our Angular components extends from the
-          <code>DataInputBase</code> component. To trigger the validation
+          <code>DataInputBase</code> class. To trigger the validation
           highlighting, it's important to define which events will take care of
           that. Here the validation is triggered when the component is focused
           out using the framework's method <code>bindFocusoutEvents</code>.
@@ -165,10 +166,10 @@ export class IndexComponent implements OnInit {
     this.dtoCode = require('!raw-loader!./example.dto.ts').default;
 
     this.customComponentHtml1 =
-      require(`!raw-loader!../../../../shared/components/vanilla-components/vanilla-text-input/vanilla-text-input.component.html`).default;
+      require(`!raw-loader!../../../../shared/components/vanilla-components/text-input/text-input.component.html`).default;
     this.customComponentCss1 =
-      require(`!raw-loader!../../../../shared/components/vanilla-components/vanilla-text-input/vanilla-text-input.component.css`).default;
+      require(`!raw-loader!../../../../shared/components/vanilla-components/text-input/text-input.component.css`).default;
     this.customComponentTs1 =
-      require(`!raw-loader!../../../../shared/components/vanilla-components/vanilla-text-input/vanilla-text-input.component.ts`).default;
+      require(`!raw-loader!../../../../shared/components/vanilla-components/text-input/text-input.component.ts`).default;
   }
 }
