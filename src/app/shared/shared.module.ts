@@ -12,6 +12,7 @@ import { TabsComponent } from './components/tabs/tabs.component';
 import { CodeExampleModule } from './components/code-example/code-example.module';
 import { ApiTableModule } from './components/api-table/api-table.module';
 import { MarkerComponent } from './components/marker/marker.component';
+import { VanillaComponentsModule } from './components/vanilla-components/vanilla-components.module';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { MarkerComponent } from './components/marker/marker.component';
     NgBs4FormComponentsModule,
     ApiTableModule,
     MarkerComponent,
+    VanillaComponentsModule,
   ],
   imports: [
     CommonModule,
@@ -44,6 +46,7 @@ import { MarkerComponent } from './components/marker/marker.component';
     NgDataGroupsModule,
     NgBs4FormComponentsModule,
     ApiTableModule,
+    VanillaComponentsModule,
   ],
   providers: [
     {

@@ -163,11 +163,12 @@ export class IndexComponent implements OnInit {
     this.componentCode =
       require('!raw-loader!./running-code.component.ts').default;
     this.dtoCode = require('!raw-loader!./example.dto.ts').default;
+
     this.customComponentHtml1 =
-      require('!raw-loader!./vanilla-text-input/vanilla-text-input.component.html').default;
+      require(`!raw-loader!../../../../shared/components/vanilla-components/vanilla-text-input/vanilla-text-input.component.html`).default;
     this.customComponentCss1 =
-      require('!raw-loader!./vanilla-text-input/vanilla-text-input.component.css').default;
+      require(`!raw-loader!../../../../shared/components/vanilla-components/vanilla-text-input/vanilla-text-input.component.css`).default;
     this.customComponentTs1 =
-      require('!raw-loader!./vanilla-text-input/vanilla-text-input.component.ts').default;
+      require(`!raw-loader!../../../../shared/components/vanilla-components/vanilla-text-input/vanilla-text-input.component.ts`).default;
   }
 }

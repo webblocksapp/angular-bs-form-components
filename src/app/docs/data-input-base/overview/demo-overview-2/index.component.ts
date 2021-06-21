@@ -5,8 +5,11 @@ declare var require: any;
 @Component({
   selector: 'demo-overview-2',
   template: `
-    <marker>Building a vanilla</marker>
-    <p>Example paragraph.</p>
+    <marker>Building a vanilla select</marker>
+    <p>
+      As the example before, here we will have a select component built from
+      scratch inheriting from the <code>DataInputBase</code> class.
+    </p>
     <code-example label="Data groups Overview">
       <code-block type="running-code">
         <running-code></running-code>
