@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TextInputComponent } from './vanilla-text-input/vanilla-text-input.component';
+import { TextInputComponent } from './text-input/text-input.component';
+import { SelectInputComponent } from './select-input/select-input.component';
 
 @NgModule({
-  declarations: [TextInputComponent],
+  declarations: [TextInputComponent, SelectInputComponent],
   imports: [CommonModule],
-  exports: [TextInputComponent],
+  exports: [TextInputComponent, SelectInputComponent],
 })
 export class VanillaComponentsModule {}

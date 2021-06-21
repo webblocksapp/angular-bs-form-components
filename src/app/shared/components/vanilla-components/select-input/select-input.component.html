@@ -1,0 +1,24 @@
+<div
+  [ngClass]="{
+    'is-invalid': isInvalid,
+    'is-valid': isValid
+  }"
+>
+  <label>{{ label }}</label>
+  <select
+    [id]="id"
+    [name]="name"
+    [id]="id + '-my-component'"
+    [value]="value"
+    (change)="change($event)"
+  >
+    <option hidden *ngIf="placeholder" [value]="null">{{ placeholder }}</option>
+    <option *ngFor="let option of options" [value]="option.value">
+      {{ option.viewValue }}
+    </option>
+  </select>
+  <small class="help-text" *ngIf="help">{{ help }}</small>
+  <small class="error-feedback" *ngIf="error">
+    {{ error }}
+  </small>
+</div>
