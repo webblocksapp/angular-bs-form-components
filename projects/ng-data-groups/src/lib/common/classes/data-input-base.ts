@@ -23,7 +23,7 @@ import {
 } from '../interfaces';
 import * as uuid from 'uuid';
 import { BaseModel } from './base-model';
-import { InputType, InputSize } from '../types';
+import { InputType } from '../types';
 import { capitalize, isNull } from '../utils';
 import { ValidationError } from '@webblocksapp/class-validator';
 import { Subscription } from 'rxjs';
@@ -50,7 +50,7 @@ export abstract class DataInputBase
   @Input() label: string;
   @Input() name: string;
   @Input() type: InputType = 'text';
-  @Input() size: InputSize = 'default';
+  @Input() size: any;
   @Input() placeholder: string;
   @Input() disabled: boolean;
   @Input() readonly: boolean;
@@ -83,7 +83,6 @@ export abstract class DataInputBase
   @Output() mousewheelEvent: EventEmitter<MouseEvent> = new EventEmitter();
   @Output() wheelEvent: EventEmitter<MouseEvent> = new EventEmitter();
 
-  public inputSize: string;
   public error: string;
   public isReactiveForm: boolean = true;
   public touched: boolean = false;
@@ -133,7 +132,6 @@ export abstract class DataInputBase
   setConfigsAfterViewInit(): void {}
 
   alwaysDetectPropertiesChanges(propName: string): void {
-    if (propName === 'size') this.getInputSize();
     if (propName === 'disabled') {
       this.computeDisabledProperty();
       this.computeIsValidProperty();
@@ -163,23 +161,6 @@ export abstract class DataInputBase
   initializeComponentNullValue(): void {
     if (isNull(this.value)) {
       this.fillModel(null);
-    }
-  }
-
-  getInputSize(): void {
-    switch (this.size) {
-      case 'default':
-        this.inputSize = '';
-        break;
-      case 'large':
-        this.inputSize = 'input-group-lg';
-        break;
-      case 'small':
-        this.inputSize = 'input-group-sm';
-        break;
-      default:
-        this.inputSize = '';
-        break;
     }
   }
 

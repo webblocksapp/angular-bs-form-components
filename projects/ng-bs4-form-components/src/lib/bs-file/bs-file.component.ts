@@ -15,10 +15,12 @@ import { DataInputBase } from '@webblocksapp/ng-data-groups';
       label
     }}</label>
     <div
-      class="input-group {{ inputSize }}"
+      class="input-group"
       [ngClass]="{
         'is-invalid': error,
-        'is-valid': touched && highlightOnValid && !error
+        'is-valid': touched && highlightOnValid && !error,
+        'input-group-lg': size === 'large',
+        'input-group-sm': size === 'small'
       }"
     >
       <div *ngIf="startSlot" class="input-group-prepend">

@@ -8,10 +8,12 @@ import { DataInputBase, parseValue } from '@webblocksapp/ng-data-groups';
       label
     }}</label>
     <div
-      class="input-group {{ inputSize }}"
+      class="input-group"
       [ngClass]="{
         'is-invalid': error && !disabled,
-        'is-valid': touched && highlightOnValid && !error && !disabled
+        'is-valid': touched && highlightOnValid && !error && !disabled,
+        'input-group-lg': size === 'large',
+        'input-group-sm': size === 'small'
       }"
     >
       <div *ngIf="startSlot" class="input-group-prepend">

@@ -1,5 +1,4 @@
-import { KeyValueDiffer } from '@angular/core';
-import { InputType, InputSize } from '../types';
+import { InputType } from '../types';
 
 export interface DataInputBaseInterface {
   /**
@@ -53,7 +52,7 @@ export interface DataInputBaseInterface {
   /**
    * Form input size.
    */
-  size: InputSize;
+  size: any;
   /**
    * Form input error.
    */
@@ -74,10 +73,6 @@ export interface DataInputBaseInterface {
    * Enables or disables field autocomplete.
    */
   autocomplete: boolean;
-  /**
-   * Computes component size class.
-   */
-  getInputSize(): void;
   /**
    * Computes disabled state
    */
