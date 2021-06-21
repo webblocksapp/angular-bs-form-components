@@ -3,8 +3,8 @@ import { DataInputBase, parseValue } from '@webblocksapp/ng-data-groups';
 
 @Component({
   selector: 'text-input',
-  templateUrl: 'vanilla-text-input.component.html',
-  styleUrls: ['vanilla-text-input.component.css'],
+  templateUrl: 'text-input.component.html',
+  styleUrls: ['text-input.component.css'],
 })
 export class TextInputComponent extends DataInputBase {
   bindFocusoutEvents(event: any): any {
