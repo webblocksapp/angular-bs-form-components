@@ -7,15 +7,16 @@ declare var require: any;
   template: `
     <marker>Building a vanilla text input</marker>
     <p>
-      The <b>Data Input Base</b> is the base class to be used for extending form
-      UI components to bind them with the NG Data Groups Framework. The
-      following example is a simple input component created from scratch
+      The following example is a simple input component created from scratch
       inheriting from the <code>DataInputBase</code> class.
     </p>
     <code-example label="Demo:">
       <div content>
         Check the code <i class="i-btn fas fa-code"></i> to see more details.
       </div>
+      <code-block type="running-code">
+        <running-code></running-code>
+      </code-block>
       <div content-code>
         <ul>
           <li>
@@ -28,9 +29,6 @@ declare var require: any;
           </li>
         </ul>
       </div>
-      <code-block type="running-code">
-        <running-code></running-code>
-      </code-block>
       <code-block
         label="Vanilla Text Input HTML"
         type="custom-component-html-1"
@@ -86,7 +84,8 @@ declare var require: any;
           directly written on the component but they can be global if you are
           using a css framework like bootstrap, material, etc... The
           <code>is-valid</code> and <code>is-invalid</code> css classes may vary
-          according to the css framework you are working with.
+          according to the css framework you are working with or simply to have
+          another name.
         </p>
       </code-block>
       <code-block

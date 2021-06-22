@@ -1,1 +1,29 @@
-<p>running code works!</p>
+<data-groups [model]="exampleModel" [highlightOnValid]="true">
+  <data-group>
+    <multi-select-input
+      #dataInput
+      label="Fruits"
+      help="Select at least 2 fruits"
+      name="fruits"
+      [options]="fruits"
+      size="auto"
+    ></multi-select-input>
+    <multi-select-input
+      #dataInput
+      label="Cities"
+      help="Select at least 1 city"
+      name="cities"
+      [options]="cities"
+      [size]="10"
+    ></multi-select-input>
+  </data-group>
+  <div class="d-flex">
+    <button class="btn btn-primary">Send</button>
+    <button type="button" class="btn btn-secondary ml-3" (click)="populate()">
+      Populate
+    </button>
+    <button type="button" class="btn btn-info ml-3" (click)="clear()">
+      Clear
+    </button>
+  </div>
+</data-groups>
