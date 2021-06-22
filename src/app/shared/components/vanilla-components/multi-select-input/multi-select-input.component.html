@@ -6,12 +6,13 @@
 >
   <label>{{ label }}</label>
   <select
+    #select
     [id]="id + '-my-component'"
+    multiple
     [name]="name"
-    [value]="value"
-    (change)="change($event)"
+    (focusout)="focusout($event)"
+    [size]="size"
   >
-    <option hidden *ngIf="placeholder" [value]="null">{{ placeholder }}</option>
     <option *ngFor="let option of options" [value]="option.value">
       {{ option.viewValue }}
     </option>
