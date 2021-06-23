@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ElementRef, ViewChild } from '@angular/core';
 import ApiTableData from './api-table-data.type';
 
 @Component({
@@ -8,7 +8,14 @@ import ApiTableData from './api-table-data.type';
       <thead>
         <tr class="table-active">
           <th>Name</th>
-          <th>Description</th>
+          <th>
+            <span #descriptionTitle>
+              <ng-content select="[description-title]"></ng-content>
+            </span>
+            <ng-container *ngIf="!hasDescriptionTitle">
+              Description
+            </ng-container>
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -39,4 +46,14 @@ import ApiTableData from './api-table-data.type';
 })
 export class ApiTableComponent {
   @Input() data: ApiTableData[];
+  @ViewChild('descriptionTitle') descriptionTitle: ElementRef;
+
+  public hasDescriptionTitle = false;
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.hasDescriptionTitle =
+        this.descriptionTitle.nativeElement.children.length > 0;
+    });
+  }
 }

@@ -12,6 +12,8 @@
     [value]="value"
     (focusout)="focusout($event)"
     (input)="input($event)"
+    [attr.disabled]="disabled"
+    [attr.readonly]="readonly"
   />
   <small class="help-text" *ngIf="help">{{ help }}</small>
   <small class="error-feedback" *ngIf="error">

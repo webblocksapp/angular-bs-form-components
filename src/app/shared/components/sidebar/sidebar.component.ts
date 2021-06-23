@@ -82,12 +82,12 @@ export class SidebarComponent implements OnInit {
       collapsed: true,
       children: [
         {
-          title: 'Data Groups',
-          path: '/docs/data-groups',
-        },
-        {
           title: 'Data Input Base',
           path: '/docs/data-input-base',
+        },
+        {
+          title: 'Data Groups',
+          path: '/docs/data-groups',
         },
       ],
     },

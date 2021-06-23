@@ -61,7 +61,7 @@ export abstract class DataInputBase
   @Input() endSlotHtml: string;
   @Input() autocomplete: boolean;
   @Input() model: BaseModel;
-  @Input() highlightOnValid = false;
+  @Input() highlightOnValid: boolean = false;
 
   @Output() focusEvent: EventEmitter<FocusEvent> = new EventEmitter();
   @Output() focusoutEvent: EventEmitter<FocusEvent> = new EventEmitter();
@@ -105,6 +105,7 @@ export abstract class DataInputBase
       this.alwaysDetectPropertiesChanges(propName);
       this.detectPropertiesChanges(propName);
     }
+    this.setConfigsOnChanges();
   }
 
   ngAfterViewInit(): void {
@@ -114,6 +115,7 @@ export abstract class DataInputBase
 
   ngDoCheck(): void {
     this.watchModel();
+    this.setConfigsOnDoCheck();
   }
 
   // ----------------------------------------------------------------
@@ -125,11 +127,17 @@ export abstract class DataInputBase
     this.setComponentUniqueId();
   }
 
-  setConfigsOnInit(): void {}
-
   alwaysSetConfigsAfterViewInit(): void {}
 
+  setConfigsOnInit(): void {}
+
   setConfigsAfterViewInit(): void {}
+
+  setConfigsOnChanges(): void {}
+
+  setConfigsOnDoCheck(): void {}
+
+  setConfigsOnDestroy(): void {}
 
   alwaysDetectPropertiesChanges(propName: string): void {
     if (propName === 'disabled') {
@@ -138,18 +146,27 @@ export abstract class DataInputBase
       this.computeIsInvalidValidProperty();
     }
     if (propName === 'highlightOnValid') this.computeIsValidProperty();
-    if (propName === 'readonly') this.computeReadonlyProperty();
+    if (propName === 'readonly') {
+      this.computeReadonlyProperty();
+      this.computeIsValidProperty();
+      this.computeIsInvalidValidProperty();
+    }
   }
 
   computeIsValidProperty(): void {
     this.isValid =
-      this.touched && this.highlightOnValid && !this.error && !this.disabled
+      this.touched &&
+      this.highlightOnValid &&
+      !this.error &&
+      !this.disabled &&
+      !this.readonly
         ? true
         : false;
   }
 
   computeIsInvalidValidProperty(): void {
-    this.isInvalid = this.error && !this.disabled ? true : false;
+    this.isInvalid =
+      this.error && !this.disabled && !this.readonly ? true : false;
   }
 
   detectPropertiesChanges(propName: string): void {}
@@ -476,5 +493,6 @@ export abstract class DataInputBase
 
   ngOnDestroy(): void {
     this.unSubscribeToModelChanges();
+    this.setConfigsOnDestroy();
   }
 }

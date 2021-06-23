@@ -29,6 +29,7 @@ import { DataInputBase, parseValue } from '@webblocksapp/ng-data-groups';
         [type]="type"
         [attr.placeholder]="placeholder"
         [attr.disabled]="disabled"
+        [attr.readonly]="readonly"
         class="form-control"
         [ngClass]="{
           'is-invalid': error && !disabled,
