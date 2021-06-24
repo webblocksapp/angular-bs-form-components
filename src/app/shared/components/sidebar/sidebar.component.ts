@@ -1,4 +1,4 @@
-import { Component, HostBinding, OnInit } from '@angular/core';
+import { Component, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,29 +8,19 @@ import { Component, HostBinding, OnInit } from '@angular/core';
         <li class="nav-item dropdown pl-3">
           <a
             class="nav-link"
-            (click)="expandChild(i)"
             [routerLink]="menuItem.path"
             [routerLinkActive]="!menuItem.children ? 'active-link' : ''"
-            [ngClass]="{ 'bg-light text-secondary': menuItem.children }"
+            [ngClass]="{
+              'bg-light text-secondary no-hover': menuItem.children
+            }"
             role="button"
           >
             {{ menuItem.title }}
             <span class="ml-2" *ngIf="menuItem.children !== undefined">
-              <i
-                class="fa"
-                [ngClass]="{
-                  'fa-caret-down': menuItem.collapsed === true,
-                  'fa-caret-up': menuItem.collapsed === false
-                }"
-              ></i>
+              <i class="fa"></i>
             </span>
           </a>
-          <ul
-            class="navbar-nav"
-            *ngIf="
-              menuItem.children !== undefined && menuItem.collapsed === false
-            "
-          >
+          <ul class="navbar-nav">
             <li
               class="nav-item dropdown pl-3"
               *ngFor="let menuItemChild of menuItem.children"
@@ -66,10 +56,16 @@ import { Component, HostBinding, OnInit } from '@angular/core';
       :host .nav-item .navbar-nav {
         padding-left: 17px;
       }
+
+      .no-hover:hover {
+        background-color: #f8f9fa !important;
+        color: #6c757d !important;
+        cursor: default;
+      }
     `,
   ],
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
   @HostBinding('class') class = 'sidebar border';
 
   public sidebarMenu: any = [
@@ -78,8 +74,7 @@ export class SidebarComponent implements OnInit {
       path: '/docs/quick-start',
     },
     {
-      title: 'Main components',
-      collapsed: true,
+      title: 'Fundamentals',
       children: [
         {
           title: 'Data Input Base',
@@ -93,7 +88,6 @@ export class SidebarComponent implements OnInit {
     },
     {
       title: 'Bootstrap components',
-      collapsed: true,
       children: [
         {
           title: 'Setup',
@@ -126,20 +120,4 @@ export class SidebarComponent implements OnInit {
       ],
     },
   ];
-
-  ngOnInit(): void {
-    const menuItemIndex = +localStorage.getItem('menuItemIndex') || 0;
-    this.expandChild(menuItemIndex);
-  }
-
-  expandChild(index): void {
-    localStorage.setItem('menuItemIndex', index);
-    this.sidebarMenu.forEach((menuItem, i) => {
-      if (index !== i) {
-        menuItem.collapsed = true;
-      } else {
-        menuItem.collapsed = !menuItem.collapsed;
-      }
-    });
-  }
 }
