@@ -1,0 +1,46 @@
+<data-groups
+  (submitEvent)="submit($event)"
+  [model]="exampleModel"
+  [highlightOnValid]="true"
+>
+  <data-group>
+    <bs-input
+      #dataInput
+      label="Email"
+      name="email"
+      placeholder="example@mail.com"
+    ></bs-input>
+    <bs-select
+      #dataInput
+      placeholder="Select one city"
+      label="City"
+      name="city"
+      [options]="cities"
+    ></bs-select>
+    <bs-select
+      #dataInput
+      placeholder="Select at least one food"
+      label="Favorite foods"
+      name="favoriteFoods"
+      [options]="favoriteFoods"
+      [multiple]="true"
+    ></bs-select>
+  </data-group>
+  <button class="btn btn-primary">Submit</button>
+  <button type="button" class="btn ml-3 btn-secondary" (click)="populate()">
+    Populate
+  </button>
+  <button type="button" class="btn ml-3 btn-info" (click)="clear()">
+    Clear
+  </button>
+</data-groups>
+<div *ngIf="isValid === false" class="alert alert-danger mt-3">
+  <pre>
+    <code [highlight]="output"></code>
+  </pre>
+</div>
+<div *ngIf="isValid === true" class="alert alert-success mt-3">
+  <pre>
+    <code [highlight]="output"></code>
+  </pre>
+</div>

@@ -81,6 +81,10 @@ export class SidebarComponent {
           path: '/docs/data-input-base',
         },
         {
+          title: 'Base Model',
+          path: '/docs/base-model',
+        },
+        {
           title: 'Data Groups',
           path: '/docs/data-groups',
         },

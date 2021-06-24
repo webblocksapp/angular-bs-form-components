@@ -11,7 +11,7 @@
     [value]="value"
     (change)="change($event)"
   >
-    <option hidden *ngIf="placeholder" [value]="null">{{ placeholder }}</option>
+    <option hidden [value]="null">{{ placeholder }}</option>
     <option *ngFor="let option of options" [value]="option.value">
       {{ option.viewValue }}
     </option>
