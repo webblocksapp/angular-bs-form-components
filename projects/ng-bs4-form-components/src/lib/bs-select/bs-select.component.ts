@@ -317,8 +317,9 @@ export class BsSelectComponent extends DataInputBase {
     this.select.on('change', this.select, (event) => {
       let value = parseValue(this.select.val());
 
-      if (this.multiple && !Array.isArray(value) && value) {
-        value = [value];
+      if (this.multiple && value) {
+        if (!Array.isArray(value)) value = [value];
+        value = value.map((item) => parseValue(item));
       }
 
       this.onShown = false;
@@ -343,6 +344,19 @@ export class BsSelectComponent extends DataInputBase {
       this.changed = false;
       this.hiddenEvent.emit(event);
     });
+
+    const selectButton = this.select.parent().find('button.form-control');
+    selectButton.on('keydown', (event) => {
+      if (event.key === 'Enter') {
+        this.model.detectPressEnter(event);
+      }
+    });
+
+    selectButton.on('focusout', () => {
+      if (isNull(this.value) && !this.onShown) {
+        this.validateField();
+      }
+    });
   }
 
   bindEventsAfterValidateField(): void {
@@ -357,24 +371,26 @@ export class BsSelectComponent extends DataInputBase {
   }
 
   addOrRemoveValidationClasses(): void {
-    const inputGroup = this.select.closest('.input-group');
-    const selectButton = this.select.parent().find('button.form-control');
+    if (this.select !== undefined) {
+      const inputGroup = this.select.closest('.input-group');
+      const selectButton = this.select.parent().find('button.form-control');
 
-    if (this.error && !this.disabled) {
-      inputGroup.addClass('is-invalid');
-      selectButton.addClass('is-invalid');
-    } else {
-      inputGroup.removeClass('is-invalid');
-      selectButton.removeClass('is-invalid');
+      if (this.error && !this.disabled) {
+        inputGroup.addClass('is-invalid');
+        selectButton.addClass('is-invalid');
+      } else {
+        inputGroup.removeClass('is-invalid');
+        selectButton.removeClass('is-invalid');
 
-      if (this.highlightOnValid && this.touched) {
-        inputGroup.addClass('is-valid');
-        selectButton.addClass('is-valid');
-      }
+        if (this.highlightOnValid && this.touched) {
+          inputGroup.addClass('is-valid');
+          selectButton.addClass('is-valid');
+        }
 
-      if (!this.highlightOnValid || !this.touched || this.disabled === true) {
-        inputGroup.removeClass('is-valid');
-        selectButton.removeClass('is-valid');
+        if (!this.highlightOnValid || !this.touched || this.disabled === true) {
+          inputGroup.removeClass('is-valid');
+          selectButton.removeClass('is-valid');
+        }
       }
     }
   }

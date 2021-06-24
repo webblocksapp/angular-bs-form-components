@@ -81,6 +81,11 @@ export class BsInputComponent extends DataInputBase {
     return event;
   }
 
+  bindKeydownEvents(event: any): any {
+    this.model.detectPressEnter(event);
+    return event;
+  }
+
   bindInputEvents(event: any): any {
     const value = parseValue(event.target.value);
 

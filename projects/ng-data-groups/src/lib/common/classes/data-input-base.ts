@@ -470,6 +470,7 @@ export abstract class DataInputBase
     this.changes$ = subject.subscribe(() => {
       this.setTouched();
       this.setError(this.model.getError(this.name));
+      this.refresh();
     });
   }
 

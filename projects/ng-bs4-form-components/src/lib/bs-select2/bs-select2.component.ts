@@ -144,6 +144,7 @@ export class BsSelect2Component extends DataInputBase {
   private select2: any;
   private _options: Array<SelectOption> | Array<SelectOptionGroup>;
   private select2Configs: any = {};
+  private onShown: boolean = false;
   private watchedProperties = [
     'theme',
     'liveSearch',
@@ -208,8 +209,9 @@ export class BsSelect2Component extends DataInputBase {
     this.select2.on('change', (event) => {
       let value = parseValue(this.select2.select2('val'));
 
-      if (this.multiple && !Array.isArray(value) && value) {
-        value = [value];
+      if (this.multiple && value) {
+        if (!Array.isArray(value)) value = [value];
+        value = value.map((item) => parseValue(item));
       }
 
       this.fillModel(value);
@@ -222,6 +224,10 @@ export class BsSelect2Component extends DataInputBase {
       }
 
       this.change(event);
+    });
+
+    this.select2.on('select2:open', (event) => {
+      this.onShown = true;
     });
 
     this.select2.on('select2:select', (event) => {
@@ -239,7 +245,22 @@ export class BsSelect2Component extends DataInputBase {
         this.validateField();
       }
       this.changed = false;
+      this.onShown = false;
       this.closeEvent.emit(event.params.data);
+    });
+
+    const select2Button = this.select2.parent().find('.select2-selection');
+    select2Button.on('keydown', (event) => {
+      if (event.key === 'Enter') {
+        this.select2.select2('close');
+        this.model.detectPressEnter(event);
+      }
+    });
+
+    select2Button.on('focusout', () => {
+      if (isNull(this.value) && !this.onShown) {
+        this.validateField();
+      }
     });
   }
 

@@ -1,6 +1,6 @@
 import { validate, ValidationError } from '@webblocksapp/class-validator';
 import { ValidatorOptions } from '@webblocksapp/class-validator';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { BaseModelArgs, Nested, FieldMap } from '../types/base-model-args.type';
 import { set, get, isEmpty } from 'lodash';
 import { removeArrayIndex, getLastArrayIndex } from '../utils';
@@ -8,7 +8,11 @@ import { removeArrayIndex, getLastArrayIndex } from '../utils';
 export class BaseModel {
   private dtoObject: any;
   private errors: Array<ValidationError> = [];
-
+  private enterPressed: boolean = false;
+  private enterPress: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
+    false,
+  );
+  private enterPress$: Subscription;
   private change: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private validatingNestedFields: String[] = [];
   private index: number = 0;
@@ -387,6 +391,14 @@ export class BaseModel {
     return this.change;
   }
 
+  public emitEnterPress(): void {
+    this.enterPress.next(!this.enterPress.getValue());
+  }
+
+  public getEnterPress(): BehaviorSubject<boolean> {
+    return this.enterPress;
+  }
+
   public add(path: string, data: any = null): void {
     const foundNested = this.nested.find((item) => item.path === path);
     const nestedObject = get(this.dtoObject, path);
@@ -524,5 +536,31 @@ export class BaseModel {
     this.resetDto();
     this.emitChange();
     this.setIsResetting(false);
+  }
+
+  public detectPressEnter(
+    event: KeyboardEvent,
+    keyNames: Array<string> = [],
+  ): void {
+    const allKeyNames = ['Enter', ...keyNames];
+    if (allKeyNames.indexOf(event.key) > -1) {
+      this.enterPressed = true;
+      this.emitEnterPress();
+    }
+  }
+
+  public onEnterPress(callback: Function): void {
+    const subject = this.getEnterPress();
+    this.enterPress$ = subject.subscribe(() => {
+      if (this.enterPressed) {
+        callback();
+      }
+    });
+  }
+
+  public unbindOnEnterPress(): void {
+    if (this.enterPress$ !== undefined) {
+      this.enterPress$.unsubscribe();
+    }
   }
 }
