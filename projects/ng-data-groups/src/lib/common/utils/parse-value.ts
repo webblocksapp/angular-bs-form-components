@@ -7,6 +7,14 @@ const parseValue = (value: any) => {
     return false;
   }
 
+  if (value === '') {
+    return '';
+  }
+
+  if (value === null) {
+    return null;
+  }
+
   return isNaN(value) ? value : +value;
 };
 
