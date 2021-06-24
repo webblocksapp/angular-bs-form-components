@@ -7,3 +7,4 @@ export * from './lib/common/classes/base-model';
 export * from './lib/common/classes/base-model-array';
 export * from './lib/common/types';
 export * from './lib/common/utils';
+export * from './lib/data-group/types';
