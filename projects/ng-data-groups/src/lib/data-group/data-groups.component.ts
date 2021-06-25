@@ -10,6 +10,7 @@ import {
   HostBinding,
   OnDestroy,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { DataGroupComponent } from './components/data-group.component';
 import { BaseModel } from '../common/classes/base-model';
@@ -18,11 +19,12 @@ import { isEmpty } from 'lodash';
 import { BaseModelArray } from '../common/classes/base-model-array';
 import { Subscription } from 'rxjs';
 import { DataInputBase } from '../common/classes/data-input-base';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'data-groups',
   template: `
-    <form (ngSubmit)="submitData()">
+    <form #form (ngSubmit)="submitData()">
       <ng-content></ng-content>
     </form>
   `,
@@ -56,6 +58,8 @@ export class DataGroupsComponent
 
   @ContentChildren(DataGroupComponent, { descendants: true })
   dataGroupComponents: QueryList<DataGroupComponent>;
+
+  @ViewChild('form', { read: NgForm }) form: NgForm;
 
   private _model: Array<BaseModel>;
   private changes$: Subscription;
@@ -113,6 +117,7 @@ export class DataGroupsComponent
       this.dataInputComponents = dataGroupComponent.getDataInputComponents();
 
       this.dataInputComponents.forEach((dataInputComponent) => {
+        dataInputComponent.form = this.form;
         dataInputComponent.model = model;
         dataInputComponent.highlightOnValid = this.highlightOnValid;
         dataInputComponent.refresh();

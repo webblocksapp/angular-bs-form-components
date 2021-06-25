@@ -27,6 +27,7 @@ import { InputType } from '../types';
 import { capitalize, isNull } from '../utils';
 import { ValidationError } from '@webblocksapp/class-validator';
 import { Subscription } from 'rxjs';
+import { NgForm } from '@angular/forms';
 
 // tslint:disable-next-line: no-conflicting-lifecycle
 @Directive()
@@ -89,6 +90,7 @@ export abstract class DataInputBase
   public isValid: boolean = false;
   public isInvalid: boolean = false;
   public value: any = null;
+  public form: NgForm;
   private modelDiffer: KeyValueDiffer<string, any>;
   private modelWatcherMounted: boolean = false;
   private changes$: Subscription;
@@ -372,6 +374,10 @@ export abstract class DataInputBase
 
   bindWheelEvents(event: any): any {
     return event;
+  }
+
+  submitForm(): void {
+    if (this.form !== undefined) this.form.ngSubmit.emit();
   }
 
   // --------------------------------------

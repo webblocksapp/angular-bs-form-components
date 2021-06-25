@@ -250,10 +250,13 @@ export class BsSelect2Component extends DataInputBase {
     });
 
     const select2Button = this.select2.parent().find('.select2-selection');
+    const form = this.select2.closest('form')[0];
+
     select2Button.on('keydown', (event) => {
       if (event.key === 'Enter') {
         this.select2.select2('close');
         this.model.detectPressEnter(event);
+        this.submitForm();
       }
     });
 

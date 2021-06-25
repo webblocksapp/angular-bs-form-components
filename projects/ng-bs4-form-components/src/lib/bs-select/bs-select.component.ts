@@ -346,9 +346,11 @@ export class BsSelectComponent extends DataInputBase {
     });
 
     const selectButton = this.select.parent().find('button.form-control');
+
     selectButton.on('keydown', (event) => {
       if (event.key === 'Enter') {
         this.model.detectPressEnter(event);
+        this.submitForm();
       }
     });
 
