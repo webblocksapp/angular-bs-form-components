@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseModel, ValidationResult } from '@webblocksapp/ng-data-groups';
+import { BaseModel } from '@webblocksapp/ng-data-groups';
 import { ExampleDto } from './example.dto';
 
 @Component({
@@ -49,7 +49,7 @@ export class RunningCodeComponent implements OnInit {
   }
 
   public submit(): void {
-    this.exampleModel.validate().then((validationResult: ValidationResult) => {
+    this.exampleModel.validate().then((validationResult) => {
       const { isValid, errors, validatedData } = validationResult;
       this.isValid = isValid;
 

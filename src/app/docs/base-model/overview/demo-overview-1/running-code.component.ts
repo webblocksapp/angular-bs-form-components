@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { BaseModel, ValidationResult } from '@webblocksapp/ng-data-groups';
+import { BaseModel } from '@webblocksapp/ng-data-groups';
 import { ExampleDto } from './example.dto';
 
 @Component({
@@ -42,7 +42,7 @@ export class RunningCodeComponent {
   }
 
   public submit(event): void {
-    event.then((validationResult: ValidationResult) => {
+    event.then((validationResult) => {
       const { isValid, errors, validatedData } = validationResult;
       this.isValid = isValid;
 

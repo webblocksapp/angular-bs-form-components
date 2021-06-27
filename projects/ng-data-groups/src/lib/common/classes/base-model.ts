@@ -9,6 +9,7 @@ import {
 } from '../types/base-model-args.type';
 import { set, get, isEmpty } from 'lodash';
 import { removeArrayIndex, getLastArrayIndex } from '../utils';
+import { ValidationResult } from '../../data-group/types';
 
 export class BaseModel {
   private dtoObject: any;
@@ -22,9 +23,9 @@ export class BaseModel {
   private validatingNestedFields: String[] = [];
   private index: number = 0;
   private map: Array<FieldMap> = [];
+  private nested: Nested[] = [];
 
   public isValid: boolean = false;
-  public nested: Nested[] = [];
   public configs: Configs;
   public isSubmitted: boolean = false;
   public isResetting: boolean = false;
@@ -321,7 +322,9 @@ export class BaseModel {
     return errors.find((error) => error.property === fieldName) || null;
   }
 
-  public validate(validatorOptions?: ValidatorOptions): Promise<any> {
+  public validate(
+    validatorOptions?: ValidatorOptions,
+  ): Promise<ValidationResult> {
     return new Promise((resolve) => {
       validatorOptions = Object.assign(
         {
@@ -357,7 +360,7 @@ export class BaseModel {
   public validateField(
     fieldName: string,
     validatorOptions?: ValidatorOptions,
-  ): Promise<any> {
+  ): Promise<ValidationResult> {
     return new Promise((resolve, reject) => {
       validatorOptions = Object.assign(
         {
