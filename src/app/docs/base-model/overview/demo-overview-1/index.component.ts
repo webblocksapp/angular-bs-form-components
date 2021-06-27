@@ -30,6 +30,13 @@ declare var require: any;
           <code>name</code> attribute which it's value is the property
           registered on the model's DTO.
         </p>
+        <p>
+          Finally the <code>data-groups</code> selector wraps all our form UI
+          elements into a native HTML <code>form</code> component. If you need
+          to create a complex UI that is not a form but needs to pass, validate
+          and submit data, take a look on to the
+          <i>Base Model without data-groups</i> example.
+        </p>
       </code-block>
       <code-block type="component" [code]="componentCode" language="typescript">
         <p>
@@ -45,8 +52,8 @@ declare var require: any;
         <p>
           Finally, we can see how the submit action is handled thanks to the
           <code>submitEvent</code> from the <code>data-groups</code> component.
-          It returns as event a promise that contains the validation status, the
-          errors and the validated data ready to be send to the backend.
+          It returns as event a promise that contains the validation status,
+          errors and validated data ready to be send to the backend.
         </p>
       </code-block>
       <code-block type="dto" [code]="dtoCode" language="typescript">

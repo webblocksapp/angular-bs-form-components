@@ -5,17 +5,11 @@ import { IndexComponent } from './index.component';
 import { IndexRoutingModule } from './index-routing.module';
 import { OverviewComponent } from './overview/overview.component';
 import { ApiComponent } from './api/api.component';
-import { ExamplesComponent } from './examples/examples.component';
 import { DemoOverview1Module } from './overview/demo-overview-1/demo-overview-1.module';
 import { DemoOverview2Module } from './overview/demo-overview-2/demo-overview-2.module';
 
 @NgModule({
-  declarations: [
-    IndexComponent,
-    OverviewComponent,
-    ApiComponent,
-    ExamplesComponent,
-  ],
+  declarations: [IndexComponent, OverviewComponent, ApiComponent],
   imports: [
     CommonModule,
     SharedModule,
