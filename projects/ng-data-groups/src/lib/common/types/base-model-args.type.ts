@@ -4,8 +4,13 @@ type Nested = {
   multiple?: boolean;
 };
 
+type Configs = {
+  highlightOnValid?: boolean;
+};
+
 type BaseModelArgs = {
-  nested: Nested[];
+  nested?: Nested[];
+  configs?: Configs;
 };
 
 type FieldMap = {
@@ -13,4 +18,4 @@ type FieldMap = {
   touched?: boolean;
 };
 
-export { BaseModelArgs, Nested, FieldMap };
+export { BaseModelArgs, Nested, FieldMap, Configs };

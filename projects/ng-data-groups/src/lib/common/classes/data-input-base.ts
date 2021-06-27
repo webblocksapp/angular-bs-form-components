@@ -13,6 +13,7 @@ import {
   OnDestroy,
   AfterViewInit,
   DoCheck,
+  AfterContentInit,
 } from '@angular/core';
 
 import {
@@ -36,6 +37,7 @@ export abstract class DataInputBase
   implements
     OnInit,
     AfterViewInit,
+    AfterContentInit,
     OnChanges,
     OnDestroy,
     DoCheck,
@@ -91,7 +93,8 @@ export abstract class DataInputBase
   public isInvalid: boolean = false;
   public value: any = null;
   public form: NgForm;
-  private modelDiffer: KeyValueDiffer<string, any>;
+  private modelValueDiffer: KeyValueDiffer<string, any>;
+  private modelConfigsDiffer: KeyValueDiffer<string, any>;
   private modelWatcherMounted: boolean = false;
   private changes$: Subscription;
 
@@ -108,6 +111,11 @@ export abstract class DataInputBase
       this.detectPropertiesChanges(propName);
     }
     this.setConfigsOnChanges();
+  }
+
+  ngAfterContentInit() {
+    this.alwaysSetConfigsAfterContentInit();
+    this.setConfigsAfterContentInit();
   }
 
   ngAfterViewInit(): void {
@@ -129,9 +137,13 @@ export abstract class DataInputBase
     this.setComponentUniqueId();
   }
 
+  alwaysSetConfigsAfterContentInit(): void {}
+
   alwaysSetConfigsAfterViewInit(): void {}
 
   setConfigsOnInit(): void {}
+
+  setConfigsAfterContentInit(): void {}
 
   setConfigsAfterViewInit(): void {}
 
@@ -209,6 +221,10 @@ export abstract class DataInputBase
         this.readonly = undefined;
         break;
     }
+  }
+
+  computeHighlightOnValid(): void {
+    this.highlightOnValid = this.model?.configs?.highlightOnValid || false;
   }
 
   // --------------------------------------
@@ -443,22 +459,9 @@ export abstract class DataInputBase
 
   watchModel(): void {
     if (this.model !== undefined && this.name !== undefined) {
-      if (this.modelDiffer === undefined) {
-        this.modelDiffer = this.differs.find(this.model).create();
-      }
-
-      let value = this.model.getValue(this.name);
-
-      if (typeof value !== 'object') {
-        value = [value];
-      }
-
-      const changes = this.modelDiffer.diff(value);
-
-      if (changes) {
-        this.fillModel(this.model.getValue(this.name) || null);
-        this.bindWatchModelEvents();
-      }
+      this.initDiffers();
+      this.watchModelValueChanges();
+      this.watchModelConfigsChanges();
 
       if (this.modelWatcherMounted === false) {
         this.initializeComponentNullValue();
@@ -469,7 +472,53 @@ export abstract class DataInputBase
     }
   }
 
+  initDiffers(): void {
+    if (this.modelValueDiffer === undefined) {
+      this.modelValueDiffer = this.differs.find(this.model).create();
+    }
+
+    if (this.modelConfigsDiffer === undefined) {
+      this.modelConfigsDiffer = this.differs.find(this.model).create();
+    }
+  }
+
+  watchModelValueChanges(): void {
+    if (this.modelValueDiffer !== undefined) {
+      let value = this.model.getValue(this.name);
+
+      if (typeof value !== 'object') {
+        value = [value];
+      }
+
+      const valueChange = this.modelValueDiffer.diff(value);
+
+      if (valueChange) {
+        this.fillModel(this.model.getValue(this.name) || null);
+        this.bindWatchModelEvents();
+      }
+    }
+  }
+
+  watchModelConfigsChanges(): void {
+    if (this.modelConfigsDiffer !== undefined) {
+      let configs = this.model?.configs;
+
+      if (configs !== undefined) {
+        const configsChange = this.modelConfigsDiffer.diff(configs);
+
+        if (configsChange) {
+          this.runModelConfigsEvents();
+        }
+      }
+    }
+  }
+
   bindWatchModelEvents(): void {}
+
+  private runModelConfigsEvents(): void {
+    this.computeHighlightOnValid();
+    this.refresh();
+  }
 
   private subscribeToModelChanges(): void {
     const subject = this.model.getChange();

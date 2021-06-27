@@ -1,7 +1,12 @@
 import { validate, ValidationError } from '@webblocksapp/class-validator';
 import { ValidatorOptions } from '@webblocksapp/class-validator';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { BaseModelArgs, Nested, FieldMap } from '../types/base-model-args.type';
+import {
+  BaseModelArgs,
+  Nested,
+  FieldMap,
+  Configs,
+} from '../types/base-model-args.type';
 import { set, get, isEmpty } from 'lodash';
 import { removeArrayIndex, getLastArrayIndex } from '../utils';
 
@@ -20,6 +25,7 @@ export class BaseModel {
 
   public isValid: boolean = false;
   public nested: Nested[] = [];
+  public configs: Configs;
   public isSubmitted: boolean = false;
   public isResetting: boolean = false;
 
@@ -51,6 +57,7 @@ export class BaseModel {
 
   public setBaseModelArgs(args: BaseModelArgs) {
     this.nested = args?.nested;
+    this.configs = args?.configs;
   }
 
   private initNested(): void {

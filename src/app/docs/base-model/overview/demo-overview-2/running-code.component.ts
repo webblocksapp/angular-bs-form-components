@@ -7,7 +7,10 @@ import { ExampleDto } from './example.dto';
   templateUrl: './running-code.component.html',
 })
 export class RunningCodeComponent implements OnInit {
-  public exampleModel: BaseModel = new BaseModel(ExampleDto);
+  public modelConfigs = { highlightOnValid: true };
+  public exampleModel: BaseModel = new BaseModel(ExampleDto, {
+    configs: this.modelConfigs,
+  });
   public output: string;
   public isValid: boolean;
 
