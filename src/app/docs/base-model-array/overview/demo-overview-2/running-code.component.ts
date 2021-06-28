@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseModel } from '@webblocksapp/ng-data-groups';
+import { BaseModelArray } from '@webblocksapp/ng-data-groups';
 import { ExampleDto } from './example.dto';
 
 @Component({
@@ -8,17 +8,35 @@ import { ExampleDto } from './example.dto';
 })
 export class RunningCodeComponent implements OnInit {
   public modelConfigs = { highlightOnValid: true };
-  public exampleModel: BaseModel = new BaseModel(ExampleDto, {
+  public exampleModel: BaseModelArray = new BaseModelArray(ExampleDto, {
     configs: this.modelConfigs,
   });
   public output: string;
   public isValid: boolean;
+  public maxNumberOfRecords: number = 3;
+  public Array = Array;
 
-  private sampleData: ExampleDto = {
-    email: 'test@mail.com',
-    city: 2,
-    favoriteFoods: [3, 1],
-  };
+  private sampleData: ExampleDto[] = [
+    {
+      email: 'test@gmail.com',
+      city: 2,
+      favoriteFoods: [3, 1],
+    },
+    {
+      email: 'test@outlook.com',
+      city: 4,
+      favoriteFoods: [2, 4],
+    },
+    {
+      email: 'test@hotmail.com',
+      city: 1,
+      favoriteFoods: [1, 5],
+    },
+  ];
+
+  ngOnInit(): void {
+    this.exampleModel.onEnterPress(() => this.submit());
+  }
 
   public cities = [
     { value: 1, viewValue: 'Bogotá' },
@@ -34,8 +52,12 @@ export class RunningCodeComponent implements OnInit {
     { value: 4, viewValue: 'Hot dog' },
   ];
 
-  ngOnInit(): void {
-    this.exampleModel.onEnterPress(() => this.submit());
+  public addRecord(): void {
+    this.exampleModel.add();
+  }
+
+  public deleteRecord(index: number): void {
+    this.exampleModel.delete(index);
   }
 
   public populate(): void {
@@ -43,9 +65,13 @@ export class RunningCodeComponent implements OnInit {
     this.exampleModel.fill(this.sampleData);
   }
 
-  public clear(): void {
+  public clear(index?: number): void {
     this.isValid = undefined;
-    this.exampleModel.reset();
+    this.exampleModel.reset(index);
+  }
+
+  public update(index?: number): void {
+    this.exampleModel.find(index).fill(this.sampleData[index]);
   }
 
   public submit(): void {
