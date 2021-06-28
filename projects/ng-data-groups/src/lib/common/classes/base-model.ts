@@ -545,7 +545,6 @@ export class BaseModel {
   public reset(args?: any): void {
     this.setIsResetting(true);
     if (!args?.ignoreIsSubmitted) this.setIsSubmitted(false);
-    if (!args?.ignoreMountedOnEnterPress) this.setMountedOnEnterPress(false);
     this.cleanErrors();
     this.cleanMap();
     this.resetDto();

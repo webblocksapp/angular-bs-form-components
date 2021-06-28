@@ -37,6 +37,7 @@ export class BaseModelArray {
       i = index;
       if (this.models[index] !== undefined) {
         this.models[index].setIndex(index);
+        this.models[index].setMountedOnEnterPress(false);
         this.models[index].fill(item);
       } else {
         const model = new BaseModel(this.dtoClass, this.args);
@@ -140,9 +141,11 @@ export class BaseModelArray {
       if (all) {
         let i = 0;
         this.models[i].reset();
+        this.models[i].setMountedOnEnterPress(false);
         this.deleteFromNext(i);
         this.setLength();
         this.subscribeToAllChanges();
+        this.models[i].setMountedOnEnterPress(true);
       } else {
         this.models.forEach((model) => {
           model.reset();
