@@ -5,7 +5,7 @@ declare var require: any;
 @Component({
   selector: 'demo-overview-2',
   template: `
-    <marker>Base Model without <code>data-groups</code></marker>
+    <marker>Base Model Array without <code>data-groups</code></marker>
     <code-example>
       <code-block type="running-code">
         <running-code></running-code>

@@ -85,6 +85,10 @@ export class SidebarComponent {
           path: '/docs/base-model',
         },
         {
+          title: 'Base Model Array',
+          path: '/docs/base-model-array',
+        },
+        {
           title: 'Data Groups',
           path: '/docs/data-groups',
         },

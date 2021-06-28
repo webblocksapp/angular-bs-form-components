@@ -1,0 +1,40 @@
+<div>
+  <bs-input
+    [model]="exampleModel"
+    label="Email"
+    name="email"
+    placeholder="example@mail.com"
+  ></bs-input>
+  <bs-select2
+    [model]="exampleModel"
+    placeholder="Select one city"
+    label="City"
+    name="city"
+    [options]="cities"
+  ></bs-select2>
+  <bs-select
+    [model]="exampleModel"
+    placeholder="Select at least one food"
+    label="Favorite foods"
+    name="favoriteFoods"
+    [options]="favoriteFoods"
+    [multiple]="true"
+  ></bs-select>
+  <button class="btn btn-primary" (click)="submit()">Submit</button>
+  <button type="button" class="btn ml-3 btn-secondary" (click)="populate()">
+    Populate
+  </button>
+  <button type="button" class="btn ml-3 btn-info" (click)="clear()">
+    Clear
+  </button>
+</div>
+<div *ngIf="isValid === false" class="alert alert-danger mt-3">
+  <pre>
+    <code [highlight]="output"></code>
+  </pre>
+</div>
+<div *ngIf="isValid === true" class="alert alert-success mt-3">
+  <pre>
+    <code [highlight]="output"></code>
+  </pre>
+</div>

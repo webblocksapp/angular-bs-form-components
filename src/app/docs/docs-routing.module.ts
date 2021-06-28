@@ -29,6 +29,11 @@ const routes: Routes = [
           import('./base-model/index.module').then((m) => m.IndexModule),
       },
       {
+        path: 'base-model-array',
+        loadChildren: () =>
+          import('./base-model-array/index.module').then((m) => m.IndexModule),
+      },
+      {
         path: 'bootstrap/setup',
         loadChildren: () =>
           import('./bootstrap-components/setup/index.module').then(

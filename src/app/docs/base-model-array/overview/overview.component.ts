@@ -5,15 +5,12 @@ import { DocsBase } from '@shared/classes';
   selector: 'app-overview',
   template: `
     <p>
-      The <code>BaseModel</code> class is where is defined all the data model
-      that will receive a form UI or complex UI component that manage data and
-      needs to validate it. A <code>BaseModel</code> instance can be injected
-      only on components that have extended from the
-      <code>DataInputBase</code> class. Main responsibilities of this class are
-      to validate, fill and clear data from an UI component.
+      The <code>BaseModelArray</code> lets manipulate an array of
+      <code>BaseModel</code> instances when we need to input, validate and
+      submit multiple records at same time.
     </p>
     <p>
-      A <code>BaseModel</code> instance can be used inside a
+      A <code>BaseModelArray</code> instance can be used inside a
       <code>data-groups</code> component or independently. This second way is
       preferred if we are going to use a more complex UI that manage data that
       is not properly a form.
@@ -23,7 +20,7 @@ import { DocsBase } from '@shared/classes';
       <a href="/docs/bootstrap/setup" target="blank"
         >Bootstrap 4.x Form Components</a
       >. These extends from the <code>DataInputBase</code> class, making them
-      compatible with the <code>BaseModel</code> instances.
+      compatible with the <code>BaseModelArray</code> instances.
     </p>
     <demo-overview-1></demo-overview-1>
     <demo-overview-2></demo-overview-2>
