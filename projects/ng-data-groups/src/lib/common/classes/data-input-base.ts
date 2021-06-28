@@ -446,7 +446,7 @@ export abstract class DataInputBase
       this.error = (Object.values(constraints)[0] as string) || '';
       this.error = capitalize(this.error);
     } else {
-      if (!isNull(this.value) || this.model.isResetting) {
+      if (!isNull(this.model.getValue(this.name)) || this.model.isResetting) {
         this.error = '';
       }
     }
@@ -530,7 +530,7 @@ export abstract class DataInputBase
   }
 
   private setTouched() {
-    if (isNull(this.value)) {
+    if (isNull(this.model.getValue(this.name))) {
       this.touched = false;
     } else {
       this.touched = this.model.isSubmitted

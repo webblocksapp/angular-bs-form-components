@@ -11,19 +11,29 @@ export class BaseModelArray {
   private change: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
     false,
   );
-  public isValid: boolean = false;
+
   private changes$: Subscription[] = [];
   private args: BaseModelArgs;
+  public isValid: boolean = false;
+  public length: number = 0;
 
   constructor(DtoClass: any, args?: BaseModelArgs) {
     this.args = args;
     this.dtoClass = DtoClass;
     this.array = [new BaseModel(this.dtoClass, this.args)];
+    this.setLength();
     this.subscribeToAllChanges();
   }
 
-  public fill(data: Array<any>): void {
+  private setLength(): void {
+    this.length = this.array.length;
+  }
+
+  public fill(data: Array<any>, reset: boolean = true): void {
+    let i = 0;
+
     data.forEach((item: any, index) => {
+      i = index;
       if (this.array[index] !== undefined) {
         this.array[index].setIndex(index);
         this.array[index].fill(item);
@@ -35,7 +45,16 @@ export class BaseModelArray {
       }
     });
 
+    if (reset) {
+      this.deleteFromNext(i);
+    }
+
+    this.setLength();
     this.subscribeToAllChanges();
+  }
+
+  private deleteFromNext(index) {
+    this.array.splice(index + 1, this.array.length - 1);
   }
 
   public isFilled(index: number = undefined): boolean {
@@ -76,6 +95,7 @@ export class BaseModelArray {
     }
     this.array.push(model);
     model.setIndex(this.array.length - 1);
+    this.setLength();
     this.addChangeSubscription(model);
     this.emitChange();
   }
@@ -94,6 +114,7 @@ export class BaseModelArray {
 
     this.array = this.array.map((item, i) => {
       if (clonedArray[i] !== undefined) {
+        item.setIndex(i);
         item.setMap(clonedArray[i].getMap());
         item.setErrors(clonedArray[i].getErrors(), true);
         item.fill(clonedArray[i].getDto(), false);
@@ -103,6 +124,7 @@ export class BaseModelArray {
       return item;
     });
 
+    this.setLength();
     this.emitChange();
   }
 
@@ -110,13 +132,21 @@ export class BaseModelArray {
     return this.array.length;
   }
 
-  public reset(index: number = undefined): void {
+  public reset(index: number = undefined, all: boolean = true): void {
     if (index === undefined) {
-      this.array.forEach((model) => {
-        model.reset();
-      });
+      if (all) {
+        let i = 0;
+        this.array[i].reset();
+        this.deleteFromNext(i);
+        this.setLength();
+        this.subscribeToAllChanges();
+      } else {
+        this.array.forEach((model) => {
+          model.reset();
+        });
+      }
     } else {
-      this.array[index].reset();
+      this.array[index].reset({ ignoreIsSubmitted: true });
     }
   }
 

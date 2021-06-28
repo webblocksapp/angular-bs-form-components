@@ -452,9 +452,9 @@ export class BaseModel {
     nestedObject = nestedObject.filter(
       (item) => nestedObject.indexOf(item) !== index,
     );
+
     set(this.dtoObject, path, nestedObject);
     this.remapErrors(path, index);
-
     this.emitChange();
   }
 
@@ -538,9 +538,9 @@ export class BaseModel {
     return this.remapErrorsRecursive(childFieldName, index, path, errors);
   }
 
-  public reset(): void {
+  public reset(args?: any): void {
     this.setIsResetting(true);
-    this.setIsSubmitted(false);
+    if (!args?.ignoreIsSubmitted) this.setIsSubmitted(false);
     this.cleanErrors();
     this.cleanMap();
     this.resetDto();
