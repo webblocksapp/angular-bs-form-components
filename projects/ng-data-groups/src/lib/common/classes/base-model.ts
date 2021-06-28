@@ -14,7 +14,7 @@ import { ValidationResult } from '../../data-group/types';
 export class BaseModel {
   private dtoObject: any;
   private errors: Array<ValidationError> = [];
-  private enterPressed: boolean = false;
+  private mountedOnEnterPress: boolean = false;
   private enterPress: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(
     false,
   );
@@ -538,9 +538,14 @@ export class BaseModel {
     return this.remapErrorsRecursive(childFieldName, index, path, errors);
   }
 
+  public setMountedOnEnterPress(flag: boolean) {
+    this.mountedOnEnterPress = flag;
+  }
+
   public reset(args?: any): void {
     this.setIsResetting(true);
     if (!args?.ignoreIsSubmitted) this.setIsSubmitted(false);
+    if (!args?.ignoreMountedOnEnterPress) this.setMountedOnEnterPress(false);
     this.cleanErrors();
     this.cleanMap();
     this.resetDto();
@@ -554,7 +559,6 @@ export class BaseModel {
   ): void {
     const allKeyNames = ['Enter', ...keyNames];
     if (allKeyNames.indexOf(event.key) > -1) {
-      this.enterPressed = true;
       this.emitEnterPress();
     }
   }
@@ -562,10 +566,11 @@ export class BaseModel {
   public onEnterPress(callback: Function): void {
     const subject = this.getEnterPress();
     this.enterPress$ = subject.subscribe(() => {
-      if (this.enterPressed) {
+      if (this.mountedOnEnterPress) {
         callback();
       }
     });
+    this.mountedOnEnterPress = true;
   }
 
   public unbindOnEnterPress(): void {

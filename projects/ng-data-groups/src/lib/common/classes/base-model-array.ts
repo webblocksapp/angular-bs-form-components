@@ -7,26 +7,27 @@ import { cloneDeep } from 'lodash';
 
 export class BaseModelArray {
   private dtoClass: any;
-  private array: Array<BaseModel> = [];
+  private models: Array<BaseModel> = [];
   private change: BehaviorSubject<Boolean> = new BehaviorSubject<Boolean>(
     false,
   );
-
-  private changes$: Subscription[] = [];
+  private onEnterPressCallback: Function;
+  private modelsChanges$: Subscription[] = [];
   private args: BaseModelArgs;
+
   public isValid: boolean = false;
   public length: number = 0;
 
   constructor(DtoClass: any, args?: BaseModelArgs) {
     this.args = args;
     this.dtoClass = DtoClass;
-    this.array = [new BaseModel(this.dtoClass, this.args)];
+    this.models = [new BaseModel(this.dtoClass, this.args)];
     this.setLength();
     this.subscribeToAllChanges();
   }
 
   private setLength(): void {
-    this.length = this.array.length;
+    this.length = this.models.length;
   }
 
   public fill(data: Array<any>, reset: boolean = true): void {
@@ -34,14 +35,14 @@ export class BaseModelArray {
 
     data.forEach((item: any, index) => {
       i = index;
-      if (this.array[index] !== undefined) {
-        this.array[index].setIndex(index);
-        this.array[index].fill(item);
+      if (this.models[index] !== undefined) {
+        this.models[index].setIndex(index);
+        this.models[index].fill(item);
       } else {
         const model = new BaseModel(this.dtoClass, this.args);
         model.setIndex(index);
         model.fill(item);
-        this.array.push(model);
+        this.models.push(model);
       }
     });
 
@@ -54,12 +55,12 @@ export class BaseModelArray {
   }
 
   private deleteFromNext(index) {
-    this.array.splice(index + 1, this.array.length - 1);
+    this.models.splice(index + 1, this.models.length - 1);
   }
 
   public isFilled(index: number = undefined): boolean {
     if (index === undefined) {
-      for (let model of this.array) {
+      for (let model of this.models) {
         if (model.isFilled() === false) {
           return false;
         }
@@ -67,17 +68,17 @@ export class BaseModelArray {
 
       return true;
     } else {
-      return this.array[index].isFilled();
+      return this.models[index].isFilled();
     }
   }
 
   public get(): Array<BaseModel> {
-    return this.array;
+    return this.models;
   }
 
   public getDtos(): Array<any> {
     const dtos = [];
-    this.array.forEach((model) => {
+    this.models.forEach((model) => {
       dtos.push(model.getDto());
     });
 
@@ -85,7 +86,7 @@ export class BaseModelArray {
   }
 
   public find(index: number): BaseModel {
-    return this.array[index];
+    return this.models[index];
   }
 
   public add(data: any = null): void {
@@ -93,35 +94,37 @@ export class BaseModelArray {
     if (data) {
       model.fill(data);
     }
-    this.array.push(model);
-    model.setIndex(this.array.length - 1);
+    this.models.push(model);
+    model.setIndex(this.models.length - 1);
     this.setLength();
-    this.addChangeSubscription(model);
+    this.addModelChangeSubscription(model);
+    this.subscribeToEnterPress(model);
     this.emitChange();
   }
 
   public delete(index: number): void {
-    let clonedArray = cloneDeep(this.array);
-    this.array.splice(-1, 1);
+    let clonedModels = cloneDeep(this.models);
+    this.models.splice(-1, 1);
 
-    clonedArray = clonedArray.filter((item) => {
-      if (clonedArray.indexOf(item) !== index) {
+    clonedModels = clonedModels.filter((model) => {
+      if (clonedModels.indexOf(model) !== index) {
         return true;
       }
 
-      this.deleteChangeSubscription(index);
+      this.unsubscribeToEnterPress(model);
+      this.deleteModelChangeSubscription(index);
     });
 
-    this.array = this.array.map((item, i) => {
-      if (clonedArray[i] !== undefined) {
-        item.setIndex(i);
-        item.setMap(clonedArray[i].getMap());
-        item.setErrors(clonedArray[i].getErrors(), true);
-        item.fill(clonedArray[i].getDto(), false);
-        item.emitChange();
+    this.models = this.models.map((model, i) => {
+      if (clonedModels[i] !== undefined) {
+        model.setIndex(i);
+        model.setMap(clonedModels[i].getMap());
+        model.setErrors(clonedModels[i].getErrors(), true);
+        model.fill(clonedModels[i].getDto(), false);
+        model.emitChange();
       }
 
-      return item;
+      return model;
     });
 
     this.setLength();
@@ -129,24 +132,27 @@ export class BaseModelArray {
   }
 
   public count(): number {
-    return this.array.length;
+    return this.models.length;
   }
 
   public reset(index: number = undefined, all: boolean = true): void {
     if (index === undefined) {
       if (all) {
         let i = 0;
-        this.array[i].reset();
+        this.models[i].reset();
         this.deleteFromNext(i);
         this.setLength();
         this.subscribeToAllChanges();
       } else {
-        this.array.forEach((model) => {
+        this.models.forEach((model) => {
           model.reset();
         });
       }
     } else {
-      this.array[index].reset({ ignoreIsSubmitted: true });
+      this.models[index].reset({
+        ignoreIsSubmitted: true,
+        ignoreMountedOnEnterPress: true,
+      });
     }
   }
 
@@ -156,7 +162,7 @@ export class BaseModelArray {
   ): Promise<any> {
     if (index === undefined) {
       const promises = [];
-      this.array.forEach((model) => {
+      this.models.forEach((model) => {
         promises.push(
           new Promise((resolve) => {
             resolve(model.validate(validatorOptions));
@@ -194,7 +200,7 @@ export class BaseModelArray {
       });
     } else {
       return new Promise((resolve) => {
-        resolve(this.array[index].validate(validatorOptions));
+        resolve(this.models[index].validate(validatorOptions));
         this.emitChange();
       });
     }
@@ -211,33 +217,63 @@ export class BaseModelArray {
 
   private subscribeToAllChanges(): void {
     this.unSubscribeToAllChanges();
-    this.array.forEach((item) => {
-      this.addChangeSubscription(item);
+    this.models.forEach((model) => {
+      this.addModelChangeSubscription(model);
+      this.subscribeToEnterPress(model);
     });
   }
 
-  private generateChangeSubscription(model: BaseModel): Subscription {
-    const subject = model.getChange();
-    return subject.subscribe(() => {
+  private generateModelChangeSubscription(model: BaseModel): Subscription {
+    const modelChangesSubject = model.getChange();
+    return modelChangesSubject.subscribe(() => {
       const currentValue = this.change.getValue();
       this.change.next(!currentValue);
     });
   }
 
-  private addChangeSubscription(model: BaseModel): void {
-    const subscription = this.generateChangeSubscription(model);
-    this.changes$.push(subscription);
+  private addModelChangeSubscription(model: BaseModel): void {
+    const modelChangeSubscription = this.generateModelChangeSubscription(model);
+    this.modelsChanges$.push(modelChangeSubscription);
   }
 
-  private deleteChangeSubscription(index): void {
-    this.changes$[index].unsubscribe();
-    this.changes$ = this.changes$.filter((item, i) => i !== index);
+  private deleteModelChangeSubscription(index): void {
+    this.modelsChanges$[index].unsubscribe();
+    this.modelsChanges$ = this.modelsChanges$.filter((item, i) => i !== index);
   }
 
   private unSubscribeToAllChanges(): void {
-    this.changes$.forEach((modelChanges$) => {
+    this.modelsChanges$.forEach((modelChanges$) => {
       modelChanges$.unsubscribe();
     });
-    this.changes$ = [];
+    this.unbindOnEnterPress();
+    this.modelsChanges$ = [];
+  }
+
+  public onEnterPress(callback: Function): void {
+    this.models.forEach((model) => {
+      model.onEnterPress(callback);
+    });
+
+    this.onEnterPressCallback = callback;
+  }
+
+  public unbindOnEnterPress(): void {
+    if (this.onEnterPressCallback !== undefined) {
+      this.models.forEach((model) => {
+        model.unbindOnEnterPress();
+      });
+    }
+  }
+
+  public subscribeToEnterPress(model): void {
+    if (this.onEnterPressCallback !== undefined) {
+      model.onEnterPress(this.onEnterPressCallback);
+    }
+  }
+
+  public unsubscribeToEnterPress(model): void {
+    if (this.onEnterPressCallback !== undefined) {
+      model.unbindOnEnterPress();
+    }
   }
 }
