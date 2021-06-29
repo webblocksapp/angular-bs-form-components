@@ -17,13 +17,27 @@ export class BaseModelArray {
 
   public isValid: boolean = false;
   public length: number = 0;
+  public minLength: number;
+  public maxLength: number;
 
   constructor(DtoClass: any, args?: BaseModelArgs) {
     this.args = args;
     this.dtoClass = DtoClass;
-    this.models = [new BaseModel(this.dtoClass, this.args)];
+    this.setBaseModelArrayArgs(args);
+    this.setModels();
     this.setLength();
     this.subscribeToAllChanges();
+  }
+
+  private setBaseModelArrayArgs(args: BaseModelArgs) {
+    this.minLength = args?.configs?.minLength || 1;
+    this.maxLength = args?.configs?.maxLength;
+  }
+
+  private setModels() {
+    for (let i = 0; i < this.minLength; i++) {
+      this.models.push(new BaseModel(this.dtoClass, this.args));
+    }
   }
 
   private setLength(): void {
@@ -33,8 +47,13 @@ export class BaseModelArray {
   public fill(data: Array<any>, reset: boolean = true): void {
     let i = 0;
 
-    data.forEach((item: any, index) => {
+    for (const [index, item] of data.entries()) {
       i = index;
+
+      if (this.maxLength !== undefined && i >= this.maxLength) {
+        break;
+      }
+
       if (this.models[index] !== undefined) {
         this.models[index].setIndex(index);
         this.models[index].setMountedOnEnterPress(false);
@@ -45,7 +64,7 @@ export class BaseModelArray {
         model.fill(item);
         this.models.push(model);
       }
-    });
+    }
 
     if (reset) {
       this.deleteFromNext(i);
@@ -139,23 +158,27 @@ export class BaseModelArray {
   public reset(index: number = undefined, all: boolean = true): void {
     if (index === undefined) {
       if (all) {
-        let i = 0;
-        this.models[i].reset();
-        this.models[i].setMountedOnEnterPress(false);
-        this.deleteFromNext(i);
+        for (let i = 0; i < this.minLength; i++) {
+          this.models[i].reset();
+          this.models[i].setMountedOnEnterPress(false);
+        }
+
+        this.deleteFromNext(this.minLength - 1);
         this.setLength();
         this.subscribeToAllChanges();
-        this.models[i].setMountedOnEnterPress(true);
+
+        for (let i = 0; i < this.minLength; i++) {
+          this.models[i].setMountedOnEnterPress(true);
+        }
       } else {
         this.models.forEach((model) => {
           model.reset();
         });
       }
     } else {
-      this.models[index].reset({
-        ignoreIsSubmitted: true,
-        ignoreMountedOnEnterPress: true,
-      });
+      const isSubmitted = this.models[index].isSubmitted;
+      this.models[index].reset();
+      this.models[index].setIsSubmitted(isSubmitted);
     }
   }
 

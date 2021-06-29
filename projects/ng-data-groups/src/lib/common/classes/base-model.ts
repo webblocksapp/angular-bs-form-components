@@ -542,9 +542,9 @@ export class BaseModel {
     this.mountedOnEnterPress = flag;
   }
 
-  public reset(args?: any): void {
+  public reset(): void {
     this.setIsResetting(true);
-    if (!args?.ignoreIsSubmitted) this.setIsSubmitted(false);
+    this.setIsSubmitted(false);
     this.cleanErrors();
     this.cleanMap();
     this.resetDto();

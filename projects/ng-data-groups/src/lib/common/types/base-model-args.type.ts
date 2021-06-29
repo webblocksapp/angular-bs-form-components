@@ -6,6 +6,8 @@ type Nested = {
 
 type Configs = {
   highlightOnValid?: boolean;
+  minLength?: number;
+  maxLength?: number;
 };
 
 type BaseModelArgs = {
