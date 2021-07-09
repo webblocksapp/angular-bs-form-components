@@ -4,6 +4,7 @@ import { BaseModel } from './base-model';
 import { Subscription } from 'rxjs';
 import { BaseModelArgs } from '../types';
 import { cloneDeep } from 'lodash';
+import { ValidationResult } from '../../data-group/types';
 
 export class BaseModelArray {
   private dtoClass: any;
@@ -78,7 +79,7 @@ export class BaseModelArray {
     this.models.splice(index + 1, this.models.length - 1);
   }
 
-  public isFilled(index: number = undefined): boolean {
+  public isFilled(index?: number): boolean {
     if (index === undefined) {
       for (let model of this.models) {
         if (model.isFilled() === false) {
@@ -155,7 +156,7 @@ export class BaseModelArray {
     return this.models.length;
   }
 
-  public reset(index: number = undefined, all: boolean = true): void {
+  public reset(index?: number, all: boolean = true): void {
     if (index === undefined) {
       if (all) {
         for (let i = 0; i < this.minLength; i++) {
@@ -185,9 +186,9 @@ export class BaseModelArray {
   public validate(
     validatorOptions?: ValidatorOptions,
     index?: number,
-  ): Promise<any> {
+  ): Promise<ValidationResult> {
     if (index === undefined) {
-      const promises = [];
+      const promises: Array<Promise<ValidationResult>> = [];
       this.models.forEach((model) => {
         promises.push(
           new Promise((resolve) => {
