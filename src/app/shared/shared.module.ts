@@ -13,6 +13,7 @@ import { CodeExampleModule } from './components/code-example/code-example.module
 import { ApiTableModule } from './components/api-table/api-table.module';
 import { MarkerComponent } from './components/marker/marker.component';
 import { VanillaComponentsModule } from './components/vanilla-components/vanilla-components.module';
+import { GoogleAdComponent } from './components/google-ad/google-ad.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { VanillaComponentsModule } from './components/vanilla-components/vanilla
     DocsContainerComponent,
     TabsComponent,
     MarkerComponent,
+    GoogleAdComponent,
   ],
   exports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { VanillaComponentsModule } from './components/vanilla-components/vanilla
     ApiTableModule,
     MarkerComponent,
     VanillaComponentsModule,
+    GoogleAdComponent,
   ],
   imports: [
     CommonModule,

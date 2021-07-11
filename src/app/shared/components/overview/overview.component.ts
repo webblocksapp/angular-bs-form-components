@@ -10,34 +10,40 @@ import {
   selector: 'app-overview',
   template: `
     <div #markersWrapper class="pl-3 position-absolute" *ngIf="markers.length">
-      <ul class="navbar-nav">
-        <li
-          class="nav-item dropdown"
-          *ngFor="let marker of markers"
-          (click)="scrollToMarker(marker)"
-        >
-          {{ marker.innerText }}
-        </li>
-      </ul>
+      <div class="markers-container">
+        <ul class="navbar-nav">
+          <li
+            class="nav-item dropdown"
+            *ngFor="let marker of markers"
+            (click)="scrollToMarker(marker)"
+          >
+            {{ marker.innerText }}
+          </li>
+        </ul>
+      </div>
+      <div class="mt-3 d-flex justify-content-center">
+        <google-ad></google-ad>
+      </div>
     </div>
   `,
   styles: [
     `
-      :host > div {
+      .markers-container {
         border-left: 3px solid gray;
+        padding-left: 17px;
       }
 
-      :host > div li {
+      .markers-container li {
         cursor: pointer;
         margin-bottom: 10px;
         font-size: 14px;
       }
 
-      :host > div li:hover {
+      .markers-container li:hover {
         color: #737373;
       }
 
-      :host .active {
+      .active {
         color: #737373;
       }
     `,
