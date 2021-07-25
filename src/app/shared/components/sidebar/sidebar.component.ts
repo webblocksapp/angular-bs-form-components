@@ -95,7 +95,7 @@ export class SidebarComponent {
       ],
     },
     {
-      title: 'Bootstrap components',
+      title: 'Bootstrap4 components',
       children: [
         {
           title: 'Setup',
