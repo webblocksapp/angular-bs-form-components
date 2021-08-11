@@ -1,12 +1,12 @@
 {
   "name": "@webblocksapp/ng-data-groups",
-  "version": "1.0.0",
+  "version": "1.0.0-alpha",
   "description": "Easy forms on Angular.",
   "author": "Mauricio Rivera",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git://github.com/webblocksapp/angular-bs-form-components.git"
+    "url": "git://github.com/webblocksapp/ng-data-groups.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
@@ -14,14 +14,8 @@
   "tags": [
     "angular forms",
     "easy forms on angular",
-    "bootstrap components for angular",
     "typescript"
   ],
-  "peerDependencies": {
-    "@angular/common": "^9.0.7",
-    "@angular/core": "^9.0.7",
-    "tslib": "^1.10.0"
-  },
   "dependencies": {
     "@types/lodash": "^4.14.168",
     "@types/validator": "^13.1.3",

@@ -1,14 +1,24 @@
 {
-  "name": "ng-bs4-form-components",
-  "version": "1.0.0",
-  "peerDependencies": {
-    "@angular/common": "^10.1.6",
-    "@angular/core": "^10.1.6"
+  "name": "@webblocksapp/ng-bs4-form-components",
+  "version": "1.0.0-alpha",
+  "description": "Bootstrap 4 components compatible with NG Data Groups.",
+  "author": "Mauricio Rivera",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/webblocksapp/ng-data-groups.git"
   },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "tags": [
+    "angular forms",
+    "easy forms on angular",
+    "typescript"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.1.0-9",
     "@ttskch/select2-bootstrap4-theme": "^1.5.2",
-    "@types/jquery": "^3.5.3",
     "@webblocksapp/ng-data-groups": "*",
     "bootstrap": "^4.5.2",
     "bootstrap-datepicker": "^1.9.0",
@@ -17,5 +27,8 @@
     "moment": "^2.29.1",
     "popper.js": "^1.14.3",
     "select2": "^4.0.13"
+  },
+  "devDependencies": {
+    "@types/jquery": "^3.5.3"
   }
 }

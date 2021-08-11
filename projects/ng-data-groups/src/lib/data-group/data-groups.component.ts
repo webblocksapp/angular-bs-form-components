@@ -54,7 +54,8 @@ export class DataGroupsComponent
   @Input() highlightOnValid: boolean = false;
   @Input() autocomplete: boolean = false;
 
-  @Output() submitEvent: EventEmitter<any> = new EventEmitter();
+  @Output() submitEvent: EventEmitter<Promise<ValidationResult>> =
+    new EventEmitter();
 
   @ContentChildren(DataGroupComponent, { descendants: true })
   dataGroupComponents: QueryList<DataGroupComponent>;

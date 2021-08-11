@@ -22,10 +22,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "aot": true,
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "src/styles.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
@@ -100,13 +97,8 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.css"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.css"],
             "scripts": []
           }
         },
@@ -118,9 +110,7 @@
               "tsconfig.spec.json",
               "e2e/tsconfig.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         },
         "e2e": {
@@ -141,42 +131,40 @@
         }
       }
     },
-    "ng-forms": {
+    "ng-data-groups": {
       "projectType": "library",
-      "root": "projects/ng-forms",
-      "sourceRoot": "projects/ng-forms/src",
+      "root": "projects/ng-data-groups",
+      "sourceRoot": "projects/ng-data-groups/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ng-forms/tsconfig.lib.json",
-            "project": "projects/ng-forms/ng-package.json"
+            "tsConfig": "projects/ng-data-groups/tsconfig.lib.json",
+            "project": "projects/ng-data-groups/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ng-forms/tsconfig.lib.prod.json"
+              "tsConfig": "projects/ng-data-groups/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ng-forms/src/test.ts",
-            "tsConfig": "projects/ng-forms/tsconfig.spec.json",
-            "karmaConfig": "projects/ng-forms/karma.conf.js"
+            "main": "projects/ng-data-groups/src/test.ts",
+            "tsConfig": "projects/ng-data-groups/tsconfig.spec.json",
+            "karmaConfig": "projects/ng-data-groups/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "projects/ng-forms/tsconfig.lib.json",
-              "projects/ng-forms/tsconfig.spec.json"
+              "projects/ng-data-groups/tsconfig.lib.json",
+              "projects/ng-data-groups/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }
@@ -214,9 +202,7 @@
               "projects/ng-bs4-form-components/tsconfig.lib.json",
               "projects/ng-bs4-form-components/tsconfig.spec.json"
             ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
+            "exclude": ["**/node_modules/**"]
           }
         }
       }

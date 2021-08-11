@@ -30,9 +30,7 @@ import { ValidationError } from '@webblocksapp/class-validator';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
-// tslint:disable-next-line: no-conflicting-lifecycle
 @Directive()
-// tslint:disable-next-line: directive-class-suffix
 export abstract class DataInputBase
   implements
     OnInit,
